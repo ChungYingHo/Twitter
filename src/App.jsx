@@ -7,7 +7,6 @@ function App() {
       <p>test test</p>
       <h1>merge to main test</h1>
       <h2>merge test</h2>
-      <h3>merge merge test</h3>
     </div>
   );
 }
