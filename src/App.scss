@@ -1,0 +1,15 @@
+.app {
+  outline: red solid 2px;
+  margin: 0 auto;
+  width: 960px;
+  font-family: 'Noto Sans TC', sans-serif;
+
+  @media (min-width: 1200px) {
+    width: 1140px;
+  }
+}
+
+// 測試 bootstrap grid 用，用完刪掉
+p {
+  outline: blue solid 2px;
+}
