@@ -7,7 +7,7 @@ const StyledContainer = styled.div`
   background-color: #f5f8fa;
   width: 100%;
   height: 54px;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #657786;
 `;
 const StyledLabel = styled.label`
   font-size: 14;
