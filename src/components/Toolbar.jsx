@@ -43,10 +43,10 @@ const Nav = styled.div`
         gap: 16px;
         font-weight: 700;
         font-size: 18px;
-        color: ${props => (props.isActive ? "#ff5b00" : "inherit")};
+        color: ${props => (props.isActive ? "#ff6600" : "inherit")};
         cursor: pointer;
         & path{
-            fill: ${props => (props.isActive ? "#ff5b00" : "#000000")};
+            fill: ${props => (props.isActive ? "#ff6600" : "#000000")};
         }
     }
 `
@@ -57,7 +57,7 @@ const Btn = styled.button`
     padding: 8px 24px;
     border-radius: 50px;
     border: transparent solid;
-    background-color: #ff5b00;
+    background-color: #ff6600;
     font-weight: 400;
     font-size: 20px;
     color: #ffffff;
