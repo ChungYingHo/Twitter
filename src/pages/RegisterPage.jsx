@@ -11,12 +11,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
-  const [username, setUserName] = useState("");
+  const [account, setAccount] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [checkPassword, setCheckPassword] = useState("");
 
   const handleClick = () => {
-    if (username.length === 0) {
+    if (account.length === 0) {
       return;
     }
     if (email.length === 0) {
@@ -24,6 +26,10 @@ const RegisterPage = () => {
     }
 
     if (password.length === 0) {
+      return;
+    }
+
+    if (account.length === 0) {
       return;
     }
   };
@@ -36,27 +42,55 @@ const RegisterPage = () => {
       <AuthInputContainer>
         <AuthInput
           label={"帳號"}
-          value={username}
+          name={account}
+          value={account}
           placeholder={"請輸入帳號"}
-          onChange={(nameInputValue) => setUserName(nameInputValue)}
+          onChange={(accountInputValue) => setAccount(accountInputValue)}
         />
       </AuthInputContainer>
+
+      <AuthInputContainer>
+        <AuthInput
+          label={"名稱"}
+          name={name}
+          value={name}
+          placeholder={"請輸入使用者名稱"}
+          onChange={(nameInputValue) => setName(nameInputValue)}
+        />
+      </AuthInputContainer>
+
       <AuthInputContainer>
         <AuthInput
           label={"Email"}
+          name={email}
           value={email}
           placeholder={"請輸入Email"}
           onChange={(emailInputValue) => setEmail(emailInputValue)}
         />
       </AuthInputContainer>
+
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
+          name={password}
           value={password}
           placeholder={"請輸入密碼"}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
         />
       </AuthInputContainer>
+
+      <AuthInputContainer>
+        <AuthInput
+          label={"密碼"}
+          name={checkPassword}
+          value={checkPassword}
+          placeholder={"請再次輸入密碼"}
+          onChange={(passwordInputValue) =>
+            setCheckPassword(passwordInputValue)
+          }
+        />
+      </AuthInputContainer>
+
       <AuthButton onClick={handleClick}>註冊</AuthButton>
       <Link to="/login">
         <AuthLinkText>取消</AuthLinkText>
