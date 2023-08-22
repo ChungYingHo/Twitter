@@ -12,7 +12,7 @@ const StyedContainer = styled.div`
 const StyledAuthInputContainer = styled.div`
   width: 356px;
   height: 78px;
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 const StyledButton = styled.button`
@@ -46,7 +46,7 @@ const StyledLinkWrapper = styled.div`
 `;
 
 const StyledTittle = styled.h3`
-  margin: 24px 0 20px 0;
+  margin: 24px 0 30px 0;
   font-weight: 700;
 `;
 
