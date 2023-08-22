@@ -5,6 +5,7 @@ import {
   AuthLinkText,
   AuthLinkWrapper,
   AuthTittle,
+  AuthSpan,
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
@@ -51,7 +52,7 @@ const LoginPage = () => {
         <Link to="/register">
           <AuthLinkText>註冊</AuthLinkText>
         </Link>
-        <span>・</span>
+        <AuthSpan>・</AuthSpan>
         <Link to="/admin_login">
           <AuthLinkText>後台登入</AuthLinkText>
         </Link>
