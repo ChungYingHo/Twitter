@@ -1,12 +1,11 @@
 import styled from 'styled-components'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import PopularCard from './commons/PopularCard'
+import PopularCard from './PopularCard'
 // 測試用 dummydata
 import users from '../dummyData/popularUsers'
 
 const Container = styled.div`
-    outline: blue solid 2px;
     margin-top: 16px;
     padding: 0;
     height: 731px;
