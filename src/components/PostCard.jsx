@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import React, { useState, useEffect } from 'react'
-import {ReactComponent as Like} from '../../assets/like.svg'
-import {ReactComponent as Reply} from '../../assets/reply.svg'
+import {ReactComponent as Like} from '../assets/like.svg'
+import {ReactComponent as Reply} from '../assets/reply.svg'
 
 const Container = styled.div`
     height: 153px;
@@ -93,7 +93,7 @@ function TimeDifference({ timestamp }) {
   return <span>{timeDiff}</span>;
 }
 
-export default function PostCard({name, account, avatar, content, timestamp}){
+export default function PostCard({name, account, avatar, content, timestamp, reply, like}){
     
     return(
         <Container>
@@ -107,11 +107,11 @@ export default function PostCard({name, account, avatar, content, timestamp}){
                 <Interact>
                     <div>
                         <Reply/>
-                        <p>16</p>
+                        <p>{reply}</p>
                     </div>
                     <div>
                         <Like/>
-                        <p>20</p>
+                        <p>{like}</p>
                     </div>
                 </Interact>
             </Post>

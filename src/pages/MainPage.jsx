@@ -2,13 +2,15 @@ import styled from 'styled-components'
 import { useState } from 'react'
 import Toolbar from "../components/Toolbar";
 import PopularBar from "../components/PopularBar";
-import PostCard from '../components/commons/PostCard';
+import PostCard from '../components/PostCard';
+import NewPost from '../components/NewPost';
 // 測試資料
 import posts from '../dummyData/posts'
 
 const Container = styled.div`
   padding: 0;
   border: #e6ecf0 solid 1px;
+  position: relative;
 `
 
 const Header = styled.div`
@@ -74,12 +76,28 @@ const Btn = styled.button`
 `
 
 const CardContainer = styled.div`
-  outline: green solid 2px;
   margin-top: 16px;
+`
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
 `
 
 
 const MainPage = () => {
+  const [isNewPostOpen, setIsNewPostOpen] = useState(false)
+  const openNewPost = () => {
+    setIsNewPostOpen(true);
+  }
+  const closeNewPost = () => {
+    setIsNewPostOpen(false);
+  }
   return (
     <>
       <Toolbar />
@@ -87,13 +105,15 @@ const MainPage = () => {
           <Header>
             <h4>首頁</h4>
           </Header>
-          <PostContainer>
+          <PostContainer onClick={openNewPost}>
             <Title>
               <img src="https://i.imgur.com/jUZg5Mm.png" />
               <h5>有什麼新鮮事？</h5>
             </Title>
             <Btn>推文</Btn>
           </PostContainer>
+          <Overlay isOpen={isNewPostOpen} onClick={closeNewPost} />
+          {isNewPostOpen && <NewPost onClick={closeNewPost}/>}
           <CardContainer>
             {posts.map(data=>{
               return(
@@ -104,6 +124,8 @@ const MainPage = () => {
                   avatar={data.user.avatar}
                   content={data.description}
                   timestamp={data.createdAt}
+                  reply={data.repliesCount}
+                  like={data.likesCount}
                 />
               )
             })}
