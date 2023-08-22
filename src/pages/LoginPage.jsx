@@ -3,9 +3,11 @@ import {
   AuthInputContainer,
   AuthButton,
   AuthLinkText,
+  AuthLinkWrapper,
+  AuthTittle,
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
-import { AuthInput } from "components";
+import AuthInput from "../components/AuthInput";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -27,8 +29,7 @@ const LoginPage = () => {
       <div>
         <Logo />
       </div>
-      <h1>登入 Todo</h1>
-
+      <AuthTittle>登入Alphitter</AuthTittle>
       <AuthInputContainer>
         <AuthInput
           label={"帳號"}
@@ -37,7 +38,6 @@ const LoginPage = () => {
           onChange={(nameInputValue) => setUserName(nameInputValue)}
         />
       </AuthInputContainer>
-
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
@@ -47,9 +47,15 @@ const LoginPage = () => {
         />
       </AuthInputContainer>
       <AuthButton onClick={handleClick}>登入</AuthButton>
-      <Link to="/signup">
-        <AuthLinkText>註冊</AuthLinkText>
-      </Link>
+      <AuthLinkWrapper>
+        <Link to="/register">
+          <AuthLinkText>註冊</AuthLinkText>
+        </Link>
+        <span>・</span>
+        <Link to="/admin_login">
+          <AuthLinkText>後台登入</AuthLinkText>
+        </Link>
+      </AuthLinkWrapper>
     </AuthContainer>
   );
 };
