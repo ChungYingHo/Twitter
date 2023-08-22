@@ -14,6 +14,7 @@ function App() {
           <Route path="*" element={<Toolbar />}></Route>
         </Routes>
       </BrowserRouter>
+      <div className="col">Here is main/profile</div>
     </div>
   );
 }
