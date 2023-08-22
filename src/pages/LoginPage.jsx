@@ -13,11 +13,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {
-  const [username, setUserName] = useState("");
+  const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
 
   const handleClick = () => {
-    if (username.length === 0) {
+    if (account.length === 0) {
       return;
     }
     if (password.length === 0) {
@@ -34,9 +34,9 @@ const LoginPage = () => {
       <AuthInputContainer>
         <AuthInput
           label={"帳號"}
-          value={username}
+          value={account}
           placeholder={"請輸入帳號"}
-          onChange={(nameInputValue) => setUserName(nameInputValue)}
+          onChange={(accountInputValue) => setAccount(accountInputValue)}
         />
       </AuthInputContainer>
       <AuthInputContainer>
