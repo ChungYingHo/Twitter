@@ -19,13 +19,12 @@ const StyledButton = styled.button`
   border-radius: 30px;
   background-color: #ff6600;
   border: none;
-
   color: white;
   width: 356px;
   font-family: "Noto Sans TC", sans-serif;
   font-weight: bold;
   padding: 6px 0;
-  margin: 2rem 0 1rem 0;
+  margin: 1rem 0;
 
   &.hover {
     cursor: pointer;
@@ -36,20 +35,23 @@ const StyledLinkText = styled.div`
   color: #0062ff;
   font-size: 16px;
   font-weight: 400;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 `;
 
 const StyledLinkWrapper = styled.div`
-  width: 150px;
+  width: 356px;
   display: flex;
-  justify-content: space-around;
-  margin-left: 200px;
-  padding-bottom: 20px;
+  justify-content: flex-end;
+  margin: rem 0;
 `;
 
 const StyledTittle = styled.h3`
   margin: 24px 0 20px 0;
   font-weight: 700;
+`;
+
+const StyledSpan = styled.span`
+  margin: 0 10px;
 `;
 export {
   StyedContainer as AuthContainer,
@@ -58,4 +60,5 @@ export {
   StyledLinkText as AuthLinkText,
   StyledLinkWrapper as AuthLinkWrapper,
   StyledTittle as AuthTittle,
+  StyledSpan as AuthSpan,
 };
