@@ -6,7 +6,6 @@ import PopularCard from './commons/PopularCard'
 import users from '../dummyData/popularUsers'
 
 const Container = styled.div`
-    outline: blue solid 2px;
     margin-top: 16px;
     padding: 0;
     height: 731px;
