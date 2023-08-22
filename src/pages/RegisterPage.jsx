@@ -21,6 +21,11 @@ const RegisterPage = () => {
     if (account.length === 0) {
       return;
     }
+
+    if (name.length === 0) {
+      return;
+    }
+
     if (email.length === 0) {
       return;
     }
@@ -29,7 +34,7 @@ const RegisterPage = () => {
       return;
     }
 
-    if (account.length === 0) {
+    if (checkPassword.length === 0) {
       return;
     }
   };
@@ -85,8 +90,8 @@ const RegisterPage = () => {
           name={checkPassword}
           value={checkPassword}
           placeholder={"請再次輸入密碼"}
-          onChange={(passwordInputValue) =>
-            setCheckPassword(passwordInputValue)
+          onChange={(checkPasswordInputValue) =>
+            setCheckPassword(checkPasswordInputValue)
           }
         />
       </AuthInputContainer>
