@@ -11,17 +11,29 @@ import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { login } from "../api/auth";
 
 const LoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (account.length === 0) {
       return;
     }
     if (password.length === 0) {
       return;
+    }
+
+    const { success, token, error } = await login({
+      account,
+      password,
+    });
+    if (success) {
+      localStorage.setItem("UserToken", token);
+    } else {
+      setError(error);
     }
   };
 
@@ -47,6 +59,7 @@ const LoginPage = () => {
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
         />
       </AuthInputContainer>
+      {error && <div>{error}</div>}
       <AuthButton onClick={handleClick}>登入</AuthButton>
       <AuthLinkWrapper>
         <Link to="/register">
