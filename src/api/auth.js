@@ -4,21 +4,37 @@ const apiURL = "https://sheltered-river-86590-4f6cb06448e2.herokuapp.com/api";
 
 export const login = async ({ account, password }) => {
   try {
-    const { data } = await axios.post(`${apiURL}/users/signin`, {
+    const res = await axios.post(`${apiURL}/users/signin`, {
       account,
       password,
     });
 
-    console.log(data);
+    console.log(res);
 
-    const { token } = data;
-    if (token) {
-      return { success: true, ...data };
+    if (!res || !res.data) {
+      throw Error("nothing returned");
     }
 
-    return { success: false, data, error: "token not found" };
+    if (res.status >= 400 || res.data.status !== "success") {
+      throw Error("request has error");
+    }
+
+    const userData = res.data.data?.user;
+    const userToken = res.data.data?.token;
+
+    if (!userData) {
+      throw Error("no user data");
+    }
+    if (!userToken) {
+      throw Error("no user token");
+    }
+
+    return { success: true, userData, userToken };
   } catch (error) {
     console.error("[Login Failed]:", error);
-    return { success: false, error: "login fail" };
+    return {
+      success: false,
+      errorMessage: error?.message,
+    };
   }
 };
