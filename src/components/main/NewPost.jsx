@@ -52,18 +52,15 @@ const Btn = styled(style.StyledBtn)`
     right: 16px;
 `
 
-export default function NewPost({onClick}){
-    return(
-        <Container>
-            <div className='header'>
-                <Close className='icon' onClick={onClick}/>
-            </div>
-            <div className='info'>
-                <img src="https://i.imgur.com/jUZg5Mm.png" alt='avatar'/>
-                <p>有什麼新鮮事？</p>
-            </div>
-            <textarea minLength='1' maxLength='140'></textarea>
-            <Btn>推文</Btn>
-        </Container>
-    )
+export default function NewPost() {
+  return (
+    <>
+      <div className="info">
+        <img src="https://i.imgur.com/jUZg5Mm.png" alt="avatar" />
+        <p>有什麼新鮮事？</p>
+      </div>
+      <textarea minLength="1" maxLength="140"></textarea>
+      <Btn>推文</Btn>
+    </>
+  );
 }

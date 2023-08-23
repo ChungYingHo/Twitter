@@ -1,12 +1,11 @@
-import styled from 'styled-components'
-import { useState } from 'react'
-import Toolbar from "../components/Toolbar";
+import styled from "styled-components";
+import { useState } from "react";
 import PopularBar from "../components/PopularBar";
 import PostCard from '../components/main/PostCard';
 import NewPost from '../components/main/NewPost';
 import * as style from '../components/common/common.styled'
 // 測試資料
-import posts from '../dummyData/posts'
+import posts from "../dummyData/posts";
 
 const Container = styled.div`
     padding: 0;
@@ -30,7 +29,7 @@ const PostContainer = styled.div`
   margin-top: 24px;
   border-bottom: ${style.colors.lightGray} solid 10px;
   position: relative;
-`
+`;
 
 const PostTitle = styled.div`
     width: 558.61px;
@@ -76,13 +75,14 @@ const Overlay = styled.div`
 
 
 const MainPage = () => {
-  const [isNewPostOpen, setIsNewPostOpen] = useState(false)
+  const [isNewPostOpen, setIsNewPostOpen] = useState(false);
   const openNewPost = () => {
     setIsNewPostOpen(true);
-  }
+  };
   const closeNewPost = () => {
     setIsNewPostOpen(false);
-  }
+  };
+
   return (
     <>
       <Container className='col'>
