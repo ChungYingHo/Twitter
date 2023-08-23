@@ -36,7 +36,7 @@ const Container = styled.div`
         }
     }
     textarea{
-        width: 100%;
+        width: calc(100% - 32px);
         height: 40%;
         resize: none;
         border: transparent solid;
@@ -73,7 +73,7 @@ export default function NewPost({onClick}){
                 <Close className='icon' onClick={onClick}/>
             </div>
             <div className='info'>
-                <img src="https://i.imgur.com/jUZg5Mm.png"/>
+                <img src="https://i.imgur.com/jUZg5Mm.png" alt='avatar'/>
                 <p>有什麼新鮮事？</p>
             </div>
             <textarea minLength='1' maxLength='140'></textarea>

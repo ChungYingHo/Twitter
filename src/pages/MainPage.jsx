@@ -86,7 +86,7 @@ const Overlay = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+  display: ${({ $isOpen }) => ($isOpen ? 'block' : 'none')};
 `
 
 
@@ -107,12 +107,12 @@ const MainPage = () => {
           </Header>
           <PostContainer onClick={openNewPost}>
             <Title>
-              <img src="https://i.imgur.com/jUZg5Mm.png" />
+              <img src="https://i.imgur.com/jUZg5Mm.png" alt='avatar'/>
               <h5>有什麼新鮮事？</h5>
             </Title>
             <Btn>推文</Btn>
           </PostContainer>
-          <Overlay isOpen={isNewPostOpen} onClick={closeNewPost} />
+          <Overlay $isOpen={isNewPostOpen} onClick={closeNewPost} />
           {isNewPostOpen && <NewPost onClick={closeNewPost}/>}
           <CardContainer>
             {posts.map(data=>{

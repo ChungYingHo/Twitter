@@ -43,8 +43,8 @@ const InfoContainer = styled.div`
 const Btn = styled.button`
     height: 40px;
     border-radius: 50px;
-    ${({isFollowed})=>
-        isFollowed ?
+    ${({$isFollowed})=>
+        $isFollowed  ?
             `width: 96px;
              background-color: #ff6600;
              border: #ff6600 solid 1px;
@@ -69,7 +69,7 @@ export default function PopularCard({avatar, name, account, isFollowed, onClick,
                 <p className='name'>{name}</p>
                 <p className='account'>@{account}</p>
             </InfoContainer>
-            <Btn isFollowed={isFollowed} onClick={onClick}>{isFollowed ? '正在跟隨' : '跟隨'}</Btn>
+            <Btn $isFollowed={isFollowed} onClick={onClick}>{isFollowed ? '正在跟隨' : '跟隨'}</Btn>
         </Container>
     )
 }

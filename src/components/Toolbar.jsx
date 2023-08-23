@@ -43,10 +43,10 @@ const Nav = styled.div`
         gap: 16px;
         font-weight: 700;
         font-size: 18px;
-        color: ${props => (props.isActive ? "#ff6600" : "inherit")};
         cursor: pointer;
+        color: ${({$isActive}) => ($isActive ? "#ff6600" : "inherit")};
         & path{
-            fill: ${props => (props.isActive ? "#ff6600" : "#000000")};
+            fill: ${({$isActive}) => ($isActive ? "#ff6600" : "#000000")};
         }
     }
 `
@@ -99,19 +99,19 @@ export default function Toolbar(){
         <Container className='col-2'>
             <Logo/>
             <ToolContainer>
-                <Nav isActive={activePage === 'home'} onClick={() => setActivePage('home')}>
+                <Nav $isActive={activePage === 'home'} onClick={() => setActivePage('home')}>
                     <div>
                         <Home />
                         首頁
                     </div>
                 </Nav>
-                <Nav isActive={activePage === 'profile'} onClick={() => setActivePage('profile')}>
+                <Nav $isActive={activePage === 'profile'} onClick={() => setActivePage('profile')}>
                     <div>
                         <Info />
                         個人資料
                     </div>
                 </Nav>
-                <Nav isActive={activePage === 'setting'} onClick={() => setActivePage('setting')}>
+                <Nav $isActive={activePage === 'setting'} onClick={() => setActivePage('setting')}>
                     <div>
                         <Setting />
                         設定
