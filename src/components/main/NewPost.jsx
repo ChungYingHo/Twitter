@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import {ReactComponent as Close} from '../../assets/close.svg'
 import * as style from '../common/common.styled'
 
 const Container = styled.div`

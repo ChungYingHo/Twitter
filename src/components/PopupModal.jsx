@@ -72,5 +72,3 @@ const PopupModal = ({ isOpen, closeModal, children }) => {
 };
 
 export default PopupModal;
-
-<div className=""></div>;

@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import PopularBar from "../components/PopularBar";
 import PostCard from '../components/main/PostCard';
-import NewPost from '../components/main/NewPost';
+import PopupModal from "../components/PopupModal";
+import NewPost from '../components/main/NewPost'
 import * as style from '../components/common/common.styled'
 // 測試資料
 import posts from "../dummyData/posts";
@@ -99,8 +100,9 @@ const MainPage = () => {
             <Btn>推文</Btn>
           </PostContainer>
 
-          <Overlay $isOpen={isNewPostOpen} onClick={closeNewPost} />
-          {isNewPostOpen && <NewPost onClick={closeNewPost}/>}
+          <PopupModal>
+            <NewPost/>
+          </PopupModal>
 
           <CardContainer>
             {posts.map(data=>{
