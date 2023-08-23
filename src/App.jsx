@@ -6,6 +6,7 @@ import {
   AdminLoginPage,
   MainPage,
   SettingPage,
+  UserPage,
 } from "../src/pages/index";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="admin_login" element={<AdminLoginPage />}></Route>
           <Route path="setting" element={<SettingPage />}></Route>
           <Route path="*" element={<MainPage />}></Route>
+          <Route path="user" element={<UserPage />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
