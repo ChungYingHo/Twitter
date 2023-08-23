@@ -76,6 +76,7 @@ const Overlay = styled.div`
 
 const MainPage = () => {
   const [isNewPostOpen, setIsNewPostOpen] = useState(false);
+  // test
   const openNewPost = () => {
     setIsNewPostOpen(true);
   };
