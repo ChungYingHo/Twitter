@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PopularBar from "../components/PopularBar";
 import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
-import PostCard from "../components/PostCard";
+import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
 
 const UserMainContainer = styled.div`
