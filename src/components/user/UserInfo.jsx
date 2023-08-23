@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import defaultUserBanner from "../../assets/defaultUserBanner.png";
 import dummyUserPic from "../../assets/dummyUserPic.jpg";
-import { Link } from "react-router-dom";
 
 const UserMainContainer = styled.div`
   width: 100%;
@@ -97,9 +96,7 @@ const UserInfo = () => {
       <UserInfoWrapper>
         <UserPicBtnWrapper>
           <UserPic src={dummyUserPic} />
-          <Link to="/setting">
-            <UserEditBtn>編輯個人資料</UserEditBtn>
-          </Link>
+          <UserEditBtn>編輯個人資料</UserEditBtn>
         </UserPicBtnWrapper>
 
         <UserAccountNameWrapper>

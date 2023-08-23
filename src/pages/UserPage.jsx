@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PopularBar from "../components/PopularBar";
 import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
+import PostCard from "../components/PostCard";
 import styled from "styled-components";
 
 const UserMainContainer = styled.div`
@@ -43,6 +44,13 @@ const StyledLink = styled(Link)`
   color: #171725;
 `;
 
+const SwitchZoneContainer = styled.div`
+  width: 100%;
+  height: 660px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+`;
+
 const UserPage = () => {
   return (
     <>
@@ -59,6 +67,14 @@ const UserPage = () => {
           </StyledLink>
           <UserInfo />
           <SubToolBar />
+          <SwitchZoneContainer>
+            <PostCard />
+            <PostCard />
+            <PostCard />
+            <PostCard />
+            <PostCard />
+            <PostCard />
+          </SwitchZoneContainer>
         </UserMainContainer>
       </div>
       <PopularBar />
