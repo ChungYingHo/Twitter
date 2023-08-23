@@ -26,14 +26,14 @@ const LoginPage = () => {
       return;
     }
 
-    const { success, token, error } = await login({
+    const { success, userToken, errorMessage } = await login({
       account,
       password,
     });
     if (success) {
-      localStorage.setItem("UserToken", token);
+      localStorage.setItem("UserToken", userToken);
     } else {
-      setError(error);
+      setError(errorMessage);
     }
   };
 
