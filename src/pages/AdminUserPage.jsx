@@ -1,11 +1,12 @@
 import styled from 'styled-components'
-import AdminUserCard from '../components/AdminUserCard'
+import AdminUserCard from '../components/admin/AdminUserCard'
+import * as style from '../components/common/common.styled'
 // dummy data
 import users from '../dummyData/users'
 
 const Container = styled.div`
   padding: 0;
-  border: #e6ecf0 solid 1px;
+  border: ${style.styledBorder};
   position: relative;
 `
 
@@ -13,7 +14,7 @@ const Header = styled.div`
   width: 100%;
   height: 51px;
   margin-top: 24px;
-  border-bottom: #e6ecf0 solid 1px;
+  border-bottom: ${style.styledBorder};
   h4{
     font-weight: 700;
     font-size: 24px;
@@ -24,7 +25,6 @@ const Header = styled.div`
 const CardContainer = styled.div`
   margin-top: 16px;
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
 `
 
@@ -39,7 +39,7 @@ export default function AdminUserPage(){
                     {users.map(user=>{
                         return(
                             <AdminUserCard
-                                key={user.id}    
+                                key={user.id}
                                 name={user.name}
                                 account={user.account}
                                 banner={user.banner}

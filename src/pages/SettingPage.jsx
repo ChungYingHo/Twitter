@@ -8,7 +8,6 @@ import {
   SettingButton,
   SettingHr,
 } from "../components/common/setting.styled";
-import ToolBar from "../components/Toolbar";
 import { useState } from "react";
 // import { Link } from "react-router-dom";
 
@@ -43,7 +42,6 @@ const SettingPage = () => {
 
   return (
     <>
-      <ToolBar />
       <SettingContainer>
         <SettingTittleContainer>
           <SettingTittle>帳戶設定</SettingTittle>

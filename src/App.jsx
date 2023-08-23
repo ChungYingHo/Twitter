@@ -10,7 +10,7 @@ import {
   AdminUserPage,
   UserPage,
 } from "../src/pages/index";
-import { AdminLayout } from "./layout/layout";
+import { AdminLayout, MainLayout } from "./layout/layout";
 
 function App() {
   return (
@@ -20,13 +20,16 @@ function App() {
           <Route path="register" element={<RegisterPage />}></Route>
           <Route path="login" element={<LoginPage />}></Route>
           <Route path="admin_login" element={<AdminLoginPage />}></Route>
-          <Route path="setting" element={<SettingPage />}></Route>
-          <Route element={<AdminLayout />}>
-            <Route path="admin_tweets" element={<AdminTweetPage />}></Route>
-            <Route path="admin_users" element={<AdminUserPage />}></Route>
+          <Route element={<MainLayout/>}>
+              <Route path="*" element={<MainPage />}></Route>
+              <Route path="main" element={<MainPage />}></Route>
+              <Route path="user" element={<UserPage />}></Route>
+              <Route path="setting" element={<SettingPage />}></Route>
           </Route>
-          <Route path="*" element={<MainPage />}></Route>
-          <Route path="user" element={<UserPage />}></Route>
+          <Route element={<AdminLayout />}>
+              <Route path="admin_tweets" element={<AdminTweetPage />}></Route>
+              <Route path="admin_users" element={<AdminUserPage />}></Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

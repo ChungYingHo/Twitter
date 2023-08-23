@@ -1,6 +1,5 @@
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
 import { Link } from "react-router-dom";
-import ToolBar from "../components/Toolbar";
 import PopularBar from "../components/PopularBar";
 import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
@@ -47,7 +46,6 @@ const StyledLink = styled(Link)`
 const UserPage = () => {
   return (
     <>
-      <ToolBar />
       <div className="col">
         <UserMainContainer>
           <StyledLink to="/main">

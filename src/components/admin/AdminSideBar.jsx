@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import {ReactComponent as acLogo} from '../assets/logo.svg'
-import {ReactComponent as Home} from '../assets/home.svg'
-import {ReactComponent as User} from '../assets/personInfo.svg'
-import {ReactComponent as Logout} from '../assets/logout.svg'
+import { Link, useLocation } from 'react-router-dom'
+import {ReactComponent as acLogo} from '../../assets/logo.svg'
+import {ReactComponent as Home} from '../../assets/home.svg'
+import {ReactComponent as User} from '../../assets/personInfo.svg'
+import {ReactComponent as Logout} from '../../assets/logout.svg'
 
 const Container = styled.div`
     position: relative;
@@ -74,7 +74,17 @@ const FooterContainer = styled.div`
 `
 
 export default function AdminSideBar(){
-    const [activePage, setActivePage] = useState('home')
+    const getActivePage = (pathname) => {
+        if (pathname === '/admin_tweets') {
+            return 'home';
+        } else if (pathname === '/admin_users') {
+            return 'user';
+        }
+        return 'default';
+    }
+    const location = useLocation()
+    const [activePage, setActivePage] = useState(getActivePage(location.pathname))
+
     return(
         <Container className='col-2'>
             <Logo/>

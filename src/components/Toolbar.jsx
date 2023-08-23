@@ -1,13 +1,12 @@
 import styled from 'styled-components'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import {ReactComponent as acLogo} from '../assets/logo.svg'
 import {ReactComponent as Home} from '../assets/home.svg'
 import {ReactComponent as Info} from '../assets/personInfo.svg'
 import {ReactComponent as Setting} from '../assets/setting.svg'
 import {ReactComponent as Logout} from '../assets/logout.svg'
-
-
+import * as style from '../components/common/common.styled'
 
 const Container = styled.div`
     position: relative;
@@ -31,10 +30,16 @@ const ToolContainer = styled.div`
     gap: 8px;
 `
 
-const Nav = styled.div`
+const Nav = styled(Link)`
     height: 58px;
     display: flex;
     align-items: center;
+    text-decoration: none;
+    color: #000000;
+
+    &:hover{
+        color: #000000;
+    }
 
     div{
         padding-left: 16px;
@@ -51,23 +56,11 @@ const Nav = styled.div`
     }
 `
 
-const Btn = styled.button`
+const Btn = styled(style.StyledBtn)`
     height: 46px;
     width: 100%;
     padding: 8px 24px;
-    border-radius: 50px;
-    border: transparent solid;
-    background-color: #ff6600;
-    font-weight: 400;
     font-size: 20px;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &:active{
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) inset
-    }
 `
 
 const FooterContainer = styled.div`
@@ -93,25 +86,36 @@ const FooterContainer = styled.div`
 
 
 export default function Toolbar(){
-    const [activePage, setActivePage] = useState('home')
+    const getActivePage = (pathname) => {
+        if (pathname === '/main') {
+            return 'home';
+        } else if (pathname === '/user') {
+            return 'user';
+        } else if (pathname === '/setting'){
+            return 'setting'
+        }
+        return 'default';
+    }
+    const location = useLocation()
+    const [activePage, setActivePage] = useState(getActivePage(location.pathname))
 
     return(
         <Container className='col-2'>
             <Logo/>
             <ToolContainer>
-                <Nav $isActive={activePage === 'home'} onClick={() => setActivePage('home')}>
+                <Nav $isActive={activePage === 'home'} onClick={() => setActivePage('home')} to='/main'>
                     <div>
                         <Home />
                         首頁
                     </div>
                 </Nav>
-                <Nav $isActive={activePage === 'profile'} onClick={() => setActivePage('profile')}>
+                <Nav $isActive={activePage === 'user'} onClick={() => setActivePage('user')} to='/user'>
                     <div>
                         <Info />
                         個人資料
                     </div>
                 </Nav>
-                <Nav $isActive={activePage === 'setting'} onClick={() => setActivePage('setting')}>
+                <Nav $isActive={activePage === 'setting'} onClick={() => setActivePage('setting')} to='/setting'>
                     <div>
                         <Setting />
                         設定

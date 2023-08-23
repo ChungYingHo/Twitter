@@ -1,11 +1,12 @@
 import styled from 'styled-components'
-import AdminPostCard from '../components/AdminPostCard'
+import AdminPostCard from '../components/admin/AdminPostCard'
+import * as style from '../components/common/common.styled'
 // dummy data
 import posts from '../dummyData/posts'
 
 const Container = styled.div`
   padding: 0;
-  border: #e6ecf0 solid 1px;
+  border: ${style.styledBorder};
   position: relative;
 `
 
@@ -13,7 +14,7 @@ const Header = styled.div`
   width: 100%;
   height: 51px;
   margin-top: 24px;
-  border-bottom: #e6ecf0 solid 1px;
+  border-bottom: ${style.styledBorder};
   h4{
     font-weight: 700;
     font-size: 24px;
@@ -39,6 +40,7 @@ export default function AdminTweetPage(){
                     {posts.map(data=>{
                         return(
                             <AdminPostCard
+                            key={data.user.id}
                             name={data.user.name}
                             account={data.user.name}
                             avatar={data.user.avatar}

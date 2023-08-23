@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import {ReactComponent as Close} from '../assets/close.svg'
+import {ReactComponent as Close} from '../../assets/close.svg'
+import * as style from '../common/common.styled'
 
 const Container = styled.div`
     height: 300px;
@@ -10,10 +11,10 @@ const Container = styled.div`
     gap: 8px;
     position: absolute;
     top: 56px;
-    background-color: #ffffff;
+    background-color: ${style.colors.white};
     .header{
         height: 41px;
-        border-bottom: #e6ecf0 solid 1px;
+        border-bottom: ${style.styledBorder};
         .icon{
             margin-left: 16px;
             cursor: pointer;
@@ -23,13 +24,11 @@ const Container = styled.div`
         display: flex;
         align-items: center;
         img{
-            width: 50px;
-            height: 50px;
-            border-radius: 100%;
+            ${style.styledImg}
             margin-left: 16px;
         }
         p{
-            margin: 0;
+            margin: 0 0 0 8px;
             font-weight: 400;
             font-size: 16px;
             color: #6c757d;
@@ -45,25 +44,12 @@ const Container = styled.div`
     }
 `
 
-const Btn = styled.button`
+const Btn = styled(style.StyledBtn)`
     width: 64px;
     height: 40px;
-    border-radius: 50px;
-    border: transparent solid;
-    background-color: #ff6600;
-    font-weight: 400;
-    font-size: 16px;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: absolute;
     bottom: 16px;
     right: 16px;
-
-    &:active{
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) inset
-    }
 `
 
 export default function NewPost({onClick}){
