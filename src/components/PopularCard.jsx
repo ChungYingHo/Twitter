@@ -61,7 +61,8 @@ const Btn = styled.button`
 `
 
 
-export default function PopularCard({avatar, name, account, isFollowed, onClick, ...props}){
+export default function PopularCard({avatar, name, account, isFollowed, onClick}){
+
     return(
         <Container>
             <Img src={avatar}/>

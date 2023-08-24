@@ -5,7 +5,7 @@ import {ReactComponent as Reply} from '../../assets/reply.svg'
 import * as style from '../common/common.styled'
 
 const Container = styled.div`
-    height: 153px;
+    height: fit-content;
     border-bottom: ${style.styledBorder};
     display: flex;
     img{
@@ -24,7 +24,8 @@ const Post = styled.div`
     gap: 8px;
     .content{
         height: 78px;
-        ${style.styledContentFont}
+        ${style.styledContentFont};
+        word-wrap: break-word;
     }
 `
 
@@ -45,6 +46,7 @@ const Interact = styled.div`
     width: 120px;
     display: flex;
     justify-content: space-between;
+    margin-bottom: 8px;
     div{
         width: 40px;
         display: flex;

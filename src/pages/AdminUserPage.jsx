@@ -6,12 +6,12 @@ import users from '../dummyData/users'
 
 const Container = styled.div`
   padding: 0;
-  border: ${style.styledBorder};
+  border-left: ${style.styledBorder};
   position: relative;
 `
 
 const Header = styled.div`
-  width: 100%;
+  width: calc(100% + 100px);
   height: 51px;
   margin-top: 24px;
   border-bottom: ${style.styledBorder};

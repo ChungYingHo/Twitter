@@ -8,7 +8,7 @@ const Container = styled.div`
     height: 314px;
     border-radius: 10px 10px 0 0;
     background-color: ${style.colors.Gray};
-    margin: 8px 0 0 8px;
+    margin-left: 8px;
     position: relative;
     .bg-img{
         width: 100%;
