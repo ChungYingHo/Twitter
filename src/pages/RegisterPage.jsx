@@ -9,6 +9,9 @@ import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { register } from "../api/auth";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const RegisterPage = () => {
   const [account, setAccount] = useState("");
@@ -16,26 +19,34 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
+  const [error, setError] = useState(null);
 
-  const handleClick = () => {
-    if (account.length === 0) {
+  const navigate = useNavigate();
+
+  const handleClick = async () => {
+    if (
+      account.length === 0 ||
+      name.length === 0 ||
+      email.length === 0 ||
+      password.length === 0 ||
+      checkPassword.length === 0
+    ) {
+      Swal.fire("註冊欄未填寫完整");
       return;
     }
 
-    if (name.length === 0) {
-      return;
-    }
-
-    if (email.length === 0) {
-      return;
-    }
-
-    if (password.length === 0) {
-      return;
-    }
-
-    if (checkPassword.length === 0) {
-      return;
+    const { success, errorMessage } = await register({
+      name,
+      account,
+      email,
+      password,
+      checkPassword,
+    });
+    if (success) {
+      Swal.fire("註冊成功，請重新登入");
+      navigate("/login");
+    } else {
+      setError(errorMessage);
     }
   };
 
@@ -95,7 +106,7 @@ const RegisterPage = () => {
           }
         />
       </AuthInputContainer>
-
+      {error && <div>{error}</div>}
       <AuthButton onClick={handleClick}>註冊</AuthButton>
       <Link to="/login">
         <AuthLinkText>取消</AuthLinkText>

@@ -10,19 +10,20 @@ import {
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+
   const handleClick = async () => {
-    if (account.length === 0) {
-      return;
-    }
-    if (password.length === 0) {
+    if (account.length === 0 || password.length === 0) {
+      Swal.fire("請輸入完整帳號密碼");
       return;
     }
 
@@ -32,6 +33,7 @@ const LoginPage = () => {
     });
     if (success) {
       localStorage.setItem("UserToken", userToken);
+      navigate("/main");
     } else {
       setError(errorMessage);
     }
@@ -51,6 +53,7 @@ const LoginPage = () => {
           onChange={(accountInputValue) => setAccount(accountInputValue)}
         />
       </AuthInputContainer>
+
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
