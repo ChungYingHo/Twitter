@@ -9,6 +9,7 @@ import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { register } from "../api/auth";
 
 const RegisterPage = () => {
   const [account, setAccount] = useState("");
@@ -16,26 +17,31 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
+  const [error, setError] = useState(null);
 
-  const handleClick = () => {
-    if (account.length === 0) {
+  const handleClick = async () => {
+    if (
+      account.length === 0 ||
+      name.length === 0 ||
+      email.length === 0 ||
+      password.length === 0 ||
+      checkPassword.length === 0
+    ) {
+      alert("請輸入完整註冊清單");
       return;
     }
 
-    if (name.length === 0) {
-      return;
-    }
-
-    if (email.length === 0) {
-      return;
-    }
-
-    if (password.length === 0) {
-      return;
-    }
-
-    if (checkPassword.length === 0) {
-      return;
+    const { success, userToken, errorMessage } = await register({
+      name,
+      account,
+      email,
+      password,
+      checkPassword,
+    });
+    if (success) {
+      localStorage.setItem("UserToken", userToken);
+    } else {
+      setError(errorMessage);
     }
   };
 
@@ -95,7 +101,7 @@ const RegisterPage = () => {
           }
         />
       </AuthInputContainer>
-
+      {error && <div>{error}</div>}
       <AuthButton onClick={handleClick}>註冊</AuthButton>
       <Link to="/login">
         <AuthLinkText>取消</AuthLinkText>

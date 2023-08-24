@@ -9,8 +9,6 @@ export const login = async ({ account, password }) => {
       password,
     });
 
-    console.log(res);
-
     if (!res || !res.data) {
       throw Error("nothing returned");
     }
@@ -30,6 +28,48 @@ export const login = async ({ account, password }) => {
     }
 
     return { success: true, userData, userToken };
+  } catch (error) {
+    console.error("[Login Failed]:", error);
+    return {
+      success: false,
+      errorMessage: error?.message,
+    };
+  }
+};
+
+export const register = async ({
+  name,
+  account,
+  email,
+  password,
+  checkPassword,
+}) => {
+  try {
+    const res = await axios.post(`${apiURL}/users`, {
+      name,
+      account,
+      email,
+      password,
+      checkPassword,
+    });
+
+    console.log(res);
+
+    if (!res || !res.data) {
+      throw Error("nothing returned");
+    }
+
+    if (res.status >= 400 || res.data.status !== "success") {
+      throw Error("request has error");
+    }
+
+    const userData = res.data.data?.user;
+
+    if (!userData) {
+      throw Error("no user data");
+    }
+
+    return { success: true, userData };
   } catch (error) {
     console.error("[Login Failed]:", error);
     return {
