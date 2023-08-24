@@ -7,7 +7,7 @@ const StyledContainer = styled.div`
   background-color: #f5f8fa;
   width: 100%;
   height: 54px;
-  border-bottom: 2px solid #657786;
+  border-bottom: 2px solid rgb(101, 119, 134);
   &:active,
   &:hover {
     border-bottom: 2px solid #50b5ff;

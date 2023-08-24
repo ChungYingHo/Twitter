@@ -19,13 +19,11 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
 
   const handleClick = async () => {
-    if (account.length === 0) {
-      return;
+    if (account.length === 0 || account.length > 50) {
     }
     if (password.length === 0) {
       return;
     }
-
     const { success, userToken, errorMessage } = await login({
       account,
       password,
@@ -51,6 +49,7 @@ const LoginPage = () => {
           onChange={(accountInputValue) => setAccount(accountInputValue)}
         />
       </AuthInputContainer>
+
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
