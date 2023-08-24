@@ -22,23 +22,13 @@ const SettingPage = () => {
   const [checkPassword, setCheckPassword] = useState("");
 
   const handleClick = () => {
-    if (account.length === 0) {
-      return;
-    }
-
-    if (name.length === 0) {
-      return;
-    }
-
-    if (email.length === 0) {
-      return;
-    }
-
-    if (password.length === 0) {
-      return;
-    }
-
-    if (checkPassword.length === 0) {
+    if (
+      account.length === 0 ||
+      name.length === 0 ||
+      email.length === 0 ||
+      password.length === 0 ||
+      checkPassword.length === 0
+    ) {
       return;
     }
   };
