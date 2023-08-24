@@ -4,7 +4,7 @@ import dummyUserPic from "../../assets/dummyUserPic.jpg";
 import defaultUserBanner from "../../assets/defaultUserBanner.png";
 import AuthInput from "../AuthInput";
 import { ReactComponent as PhotoIcon } from "../../assets/photo.svg";
-import { ReactComponent as CloseIcon } from "../../assets/close.svg";
+import { ReactComponent as CloseIcon } from "../../assets/close-white.svg";
 
 const PopupContainer = styled.div`
   border: 1px solid red;
