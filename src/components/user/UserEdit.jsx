@@ -4,6 +4,7 @@ import dummyUserPic from "../../assets/dummyUserPic.jpg";
 import defaultUserBanner from "../../assets/defaultUserBanner.png";
 import AuthInput from "../AuthInput";
 import { ReactComponent as PhotoIcon } from "../../assets/photo.svg";
+import { ReactComponent as CloseIcon } from "../../assets/close.svg";
 
 const PopupContainer = styled.div`
   border: 1px solid red;
@@ -12,10 +13,32 @@ const PopupContainer = styled.div`
   position: relative;
 `;
 
+const PopupBannerWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background-color: #17172580;
+    opacity: 75%;
+  }
+`;
+
 const PopupBanner = styled.img`
   width: 100%;
   height: 200px;
-  opacity: 75%;
+`;
+
+const BannerIconWrapper = styled.div`
+  border: 1px solid yellow;
+  width: 80px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const MainWrapper = styled.div`
@@ -47,7 +70,7 @@ const PopupUserPic = styled.img`
   height: 140px;
   object-fit: cover;
   border-radius: 50%;
-  border: 5px solid white;
+  border: 5px solid #ffffff;
   position: relative;
 `;
 
@@ -80,7 +103,13 @@ const UserEdit = () => {
   return (
     <div className="col">
       <PopupContainer>
-        <PopupBanner src={defaultUserBanner} />
+        <PopupBannerWrapper>
+          <PopupBanner src={defaultUserBanner} />
+          <BannerIconWrapper>
+            <PhotoIcon />
+            <CloseIcon />
+          </BannerIconWrapper>
+        </PopupBannerWrapper>
         <MainWrapper>
           <PicWrapper>
             <PopupUserPic src={dummyUserPic} />
