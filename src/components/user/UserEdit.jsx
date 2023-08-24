@@ -35,7 +35,6 @@ const PopupBanner = styled.img`
 `;
 
 const BannerIconWrapper = styled.div`
-  border: 1px solid black;
   width: 100%;
   height: 200px;
   position: relative;
@@ -47,7 +46,6 @@ const BannerIconWrapper = styled.div`
 `;
 
 const IconLayoutWrapper = styled.div`
-  border: 1px solid blue;
   display: flex;
   justify-content: space-between;
   width: 80px;
@@ -55,7 +53,7 @@ const IconLayoutWrapper = styled.div`
 
 const MainWrapper = styled.div`
   position: relative;
-  top: -70px;
+  top: -275px;
   padding: 0 13px;
 `;
 
