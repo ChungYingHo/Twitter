@@ -10,6 +10,8 @@ import AuthInput from "../components/AuthInput";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { register } from "../api/auth";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const RegisterPage = () => {
   const [account, setAccount] = useState("");
@@ -19,6 +21,8 @@ const RegisterPage = () => {
   const [checkPassword, setCheckPassword] = useState("");
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+
   const handleClick = async () => {
     if (
       account.length === 0 ||
@@ -27,7 +31,7 @@ const RegisterPage = () => {
       password.length === 0 ||
       checkPassword.length === 0
     ) {
-      alert("請輸入完整註冊清單");
+      Swal.fire("註冊欄未填寫完整");
       return;
     }
 
@@ -40,6 +44,8 @@ const RegisterPage = () => {
     });
     if (success) {
       localStorage.setItem("UserToken", userToken);
+      Swal.fire("註冊成功，請重新登入");
+      navigate("/login");
     } else {
       setError(errorMessage);
     }
