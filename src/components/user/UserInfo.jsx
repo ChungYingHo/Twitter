@@ -1,11 +1,15 @@
 import styled from "styled-components";
 import defaultUserBanner from "../../assets/defaultUserBanner.png";
 import dummyUserPic from "../../assets/dummyUserPic.jpg";
+import UserEdit from "./UserEdit";
+import { useState } from "react";
+import PopupModal from "../PopupModal";
 
 const UserMainContainer = styled.div`
   width: 100%;
   height: 378px;
   position: relative;
+  background-color: white;
 `;
 
 const UserBanner = styled.img`
@@ -89,6 +93,14 @@ const UserFollowNum = styled.p`
 `;
 
 const UserInfo = () => {
+  const [isNewPostOpen, setIsNewPostOpen] = useState(false);
+  const openNewPost = () => {
+    setIsNewPostOpen(true);
+  };
+  const closeNewPost = () => {
+    setIsNewPostOpen(false);
+  };
+
   return (
     <UserMainContainer>
       <UserBanner src={defaultUserBanner} />
@@ -96,7 +108,10 @@ const UserInfo = () => {
       <UserInfoWrapper>
         <UserPicBtnWrapper>
           <UserPic src={dummyUserPic} />
-          <UserEditBtn>編輯個人資料</UserEditBtn>
+          <UserEditBtn onClick={openNewPost}>編輯個人資料</UserEditBtn>
+          <PopupModal isOpen={isNewPostOpen} closeModal={closeNewPost}>
+            <UserEdit />
+          </PopupModal>
         </UserPicBtnWrapper>
 
         <UserAccountNameWrapper>

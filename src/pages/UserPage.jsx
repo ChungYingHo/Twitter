@@ -6,6 +6,7 @@ import SubToolBar from "../components/user/SubToolBar";
 import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
 import ReplyCard from "../components/reply/ReplyCard";
+import UserEdit from "../components/user/UserEdit";
 
 // dummyData
 import posts from "../dummyData/posts";
@@ -81,7 +82,7 @@ const UserPage = () => {
           <UserInfo />
           <SubToolBar />
           <SwitchZoneContainer>
-            {/* {posts.map((data) => {
+            {posts.map((data) => {
               return (
                 <PostCardWrapper>
                   <PostCard
@@ -96,8 +97,9 @@ const UserPage = () => {
                   />
                 </PostCardWrapper>
               );
-            })} */}
+            })}
 
+            {/* 
             {replies.map((reply) => {
               return (
                 <ReplyCardWrapper>
@@ -111,7 +113,7 @@ const UserPage = () => {
                   />
                 </ReplyCardWrapper>
               );
-            })}
+            })} */}
           </SwitchZoneContainer>
         </UserMainContainer>
       </div>
