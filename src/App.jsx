@@ -23,7 +23,7 @@ function App() {
           <Route path="admin_login" element={<AdminLoginPage />}></Route>
           <Route element={<MainLayout/>}>
               <Route path="*" element={<MainPage />}></Route>
-              <Route path="main" element={<MainPage />}></Route>
+              <Route path="/main" element={<MainPage />}></Route>
               <Route path="user" element={<UserPage />}></Route>
               <Route path="setting" element={<SettingPage />}></Route>
               <Route path="main/:tweet_id" element={<MainReplyList />}></Route>

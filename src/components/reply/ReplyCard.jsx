@@ -9,6 +9,7 @@ const Container = styled.div`
     border-bottom: ${style.styledBorder};
     display: flex;
     overflow: hidden;
+
     img{
         ${style.styledImg};
         margin-left: 24px;
@@ -42,6 +43,7 @@ const Info = styled.div`
 `
 
 export default function ReplyCard({name, account, avatar, content, timestamp, replyAccount}){
+
     return(
         <Container>
             <img src={avatar} alt='avatar'/>
@@ -50,7 +52,9 @@ export default function ReplyCard({name, account, avatar, content, timestamp, re
                     <p className='name'>{name}</p>
                     <p className='account'>@{account}・<TimeDiff timestamp={timestamp}/></p>
                 </Info>
+
                 <p className='reply-user'>回覆 @{replyAccount}</p>
+
                 <p className='content'>{content}</p>
             </Post>
         </Container>

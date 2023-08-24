@@ -10,6 +10,7 @@ import * as style from "../components/common/common.styled";
 import { displayTime } from "../components/reply/displayTime";
 // API
 import { getSingleTweet, getReplies } from "../api/main";
+
 // dummy data
 import replies from "../dummyData/replies";
 
@@ -38,6 +39,7 @@ const Header = styled.div`
 const PostContainer = styled.div`
   outline: red solid 2px;
   height: fit-content;
+
   margin-top: 16px;
   border-bottom: ${style.styledBorder};
   position: relative;
@@ -47,6 +49,7 @@ const PersonInfo = styled.div`
     margin: 0 16px;
     height: fit-content;
     min-height: 205px;
+
     border-bottom: ${style.styledBorder};
 `
 
@@ -202,6 +205,7 @@ export default function MainReplyList(){
                 </CardContainer>
             </>
         )}
+
       </Container>
       <PopularBar />
     </>
