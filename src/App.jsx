@@ -9,6 +9,7 @@ import {
   AdminTweetPage,
   AdminUserPage,
   UserPage,
+  MainReplyList,
 } from "../src/pages/index";
 import { AdminLayout, MainLayout } from "./layout/layout";
 
@@ -22,9 +23,10 @@ function App() {
           <Route path="admin_login" element={<AdminLoginPage />}></Route>
           <Route element={<MainLayout/>}>
               <Route path="*" element={<MainPage />}></Route>
-              <Route path="main" element={<MainPage />}></Route>
+              <Route path="/main" element={<MainPage />}></Route>
               <Route path="user" element={<UserPage />}></Route>
               <Route path="setting" element={<SettingPage />}></Route>
+              <Route path="tweet" element={<MainReplyList />}></Route>
           </Route>
           <Route element={<AdminLayout />}>
               <Route path="admin_tweets" element={<AdminTweetPage />}></Route>

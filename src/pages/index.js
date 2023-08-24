@@ -6,6 +6,7 @@ import SettingPage from "./SettingPage";
 import AdminTweetPage from "./AdminTweetPage";
 import AdminUserPage from "./AdminUserPage";
 import UserPage from "./UserPage";
+import MainReplyList from "./MainReplyList";
 
 export {
   LoginPage,
@@ -16,4 +17,5 @@ export {
   AdminTweetPage,
   AdminUserPage,
   UserPage,
+  MainReplyList
 };

@@ -13,6 +13,7 @@ const Container = styled.div`
   border: ${style.styledBorder};
   position: relative;
 `;
+
 const Header = styled.div`
   width: 100%;
   height: 51px;
