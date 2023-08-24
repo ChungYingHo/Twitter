@@ -22,7 +22,7 @@ const SubToolBtn = styled.button`
 `;
 
 const SubToolBar = () => {
-  const [activePage, setActivePage] = useState("home");
+  const [activePage, setActivePage] = useState("post");
 
   return (
     <SubToolContainer>
