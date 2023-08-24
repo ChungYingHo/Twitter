@@ -8,9 +8,10 @@ import { ReactComponent as CloseIcon } from "../../assets/close-white.svg";
 
 const PopupContainer = styled.div`
   border: 1px solid red;
-  height: 560px;
+  height: 553px;
   border-radius: 10px;
   position: relative;
+  background-color: #ffffff;
 `;
 
 const PopupBannerWrapper = styled.div`
@@ -111,47 +112,46 @@ const UserEdit = () => {
   const [introduction, setIntro] = useState("");
 
   return (
-    <div className="col">
-      <PopupContainer>
-        <PopupBannerWrapper>
-          <PopupBanner src={defaultUserBanner} />
-          <BannerIconWrapper>
-            <IconLayoutWrapper>
-              <PhotoIcon />
-              <CloseIcon />
-            </IconLayoutWrapper>
-          </BannerIconWrapper>
-        </PopupBannerWrapper>
-        <MainWrapper>
-          <PicWrapper>
-            <PopupUserPic src={dummyUserPic} />
-          </PicWrapper>
-          <PhotoIconWrapper>
+    <PopupContainer>
+      <PopupBannerWrapper>
+        <PopupBanner src={defaultUserBanner} />
+        <BannerIconWrapper>
+          <IconLayoutWrapper>
             <PhotoIcon />
-          </PhotoIconWrapper>
+            <CloseIcon />
+          </IconLayoutWrapper>
+        </BannerIconWrapper>
+      </PopupBannerWrapper>
+      <MainWrapper>
+        <PicWrapper>
+          <PopupUserPic src={dummyUserPic} />
+        </PicWrapper>
+        <PhotoIconWrapper>
+          <PhotoIcon />
+        </PhotoIconWrapper>
 
-          <NameInputContainer>
-            <AuthInput
-              label={"名稱"}
-              name={name}
-              value={name}
-              placeholder={"請輸入帳號"}
-              onChange={(nameInput) => setName(nameInput)}
-            />
-          </NameInputContainer>
+        <NameInputContainer>
+          <AuthInput
+            label={"名稱"}
+            name={name}
+            value={name}
+            placeholder={"請輸入帳號"}
+            onChange={(nameInput) => setName(nameInput)}
+          />
+        </NameInputContainer>
 
-          <IntroInputContainer>
-            <AuthInput
-              label={"自我介紹"}
-              name={introduction}
-              value={introduction}
-              placeholder={"Egg Head"}
-              onChange={(introInput) => setIntro(introInput)}
-            />
-          </IntroInputContainer>
-        </MainWrapper>
-      </PopupContainer>
-    </div>
+        <IntroInputContainer>
+          <AuthInput
+            label={"自我介紹"}
+            name={introduction}
+            value={introduction}
+            placeholder={"Egg Head"}
+            onChange={(introInput) => setIntro(introInput)}
+            isLarge={true}
+          />
+        </IntroInputContainer>
+      </MainWrapper>
+    </PopupContainer>
   );
 };
 
