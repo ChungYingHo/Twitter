@@ -1,8 +1,11 @@
 .app {
+  outline: blue solid 2px;
   margin: 0 auto;
   width: 960px;
+  height: fit-content;
   font-family: 'Noto Sans TC', sans-serif;
-  gap: 2%;
+  display: flex;
+  justify-content: space-between;
 
   @media (min-width: 1200px) {
     width: 1140px;
