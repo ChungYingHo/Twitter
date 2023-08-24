@@ -9,8 +9,10 @@ import { ReactComponent as Logout } from "../assets/logout.svg";
 import * as style from "../components/common/common.styled";
 
 const Container = styled.div`
+  outline: yellow solid 2px;
   position: relative;
   height: 100vh;
+  width: 15.6%;
 `;
 
 const Logo = styled(acLogo)`
@@ -108,7 +110,7 @@ export default function Toolbar() {
   };
 
   return (
-    <Container className="col-2">
+    <Container>
       <Logo />
       <ToolContainer>
         <Nav

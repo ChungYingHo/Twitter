@@ -1,14 +1,21 @@
 import styled from "styled-components";
 import PopularBar from "../components/PopularBar";
 import ReplyCard from "../components/reply/ReplyCard";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
 import { ReactComponent as Reply } from "../assets/reply@30.svg";
 import { ReactComponent as Like } from "../assets/like@30.svg";
 import * as style from "../components/common/common.styled";
+import { displayTime } from "../components/reply/displayTime";
+// API
+import { getSingleTweet, getReplies } from "../api/main";
+
 // dummy data
 import replies from "../dummyData/replies";
 
 const Container = styled.div`
+  width: 56.2%;
   padding: 0;
   border: ${style.styledBorder};
   position: relative;
@@ -30,8 +37,9 @@ const Header = styled.div`
 `
 
 const PostContainer = styled.div`
-outline: red solid 2px;
-  height: 335px;
+  outline: red solid 2px;
+  height: fit-content;
+
   margin-top: 16px;
   border-bottom: ${style.styledBorder};
   position: relative;
@@ -39,7 +47,9 @@ outline: red solid 2px;
 
 const PersonInfo = styled.div`
     margin: 0 16px;
-    height: 205px;
+    height: fit-content;
+    min-height: 205px;
+
     border-bottom: ${style.styledBorder};
 `
 
@@ -59,10 +69,11 @@ const Title = styled.div`
 `
 
 const Content = styled.p`
-    height: 108px;
+    min-height: 108px;
     font-weight: 400;
     font-size: 24px;
     margin-bottom: 8px;
+    overflow-wrap: break-word;
 `
 
 const Date = styled.p`
@@ -110,54 +121,91 @@ const CardContainer = styled.div`
 
 
 export default function MainReplyList(){
+    const { tweet_id } = useParams()
+    // 抓特定貼文
+    const [tweet, setTweet] = useState(null)
+    useEffect(() => {
+        const fetchSingleTweet = async () => {
+            try {
+                const tweetData = await getSingleTweet({ tweet_id: parseInt(tweet_id) });
+                setTweet(tweetData);
+                console.log(tweetData)
+            } catch (error) {
+                console.error('Fetching Single Tweet Failed:', error);
+            }
+            };
+            fetchSingleTweet();
+    }, [tweet_id])
+    // 抓這篇貼文的全部回覆
+    const [replies, setReplies] = useState([])
+    useEffect(() => {
+        const fetchingReplies = async ()=>{
+            try{
+                const repliesData = await getReplies({ tweet_id: parseInt(tweet_id) });
+                setReplies(repliesData)
+                console.log(repliesData)
+            } catch (error){
+                console.error('Fetching Replies Failed:', error)
+            }
+        }
+        fetchingReplies()
+    }, [tweet_id])
+
     return(
         <>
-      <Container className="col">
+      <Container>
         <Header>
           <LeftArrow />
           <h4>推文</h4>
         </Header>
-        <PostContainer>
-            <PersonInfo>
-                <Title>
-                    <img src="https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/664.jpg" alt="avatar" />
-                    <div>
-                        <p className="name">name</p>
-                        <p className="account">@account</p>
-                    </div>
-                </Title>
-                <Content>123456789123456789</Content>
-                <Date>上午10:55・2022年11月05日</Date>
-            </PersonInfo>
-            <Counts>
-                <div>
-                    <p className="num">808</p>
-                    <p className="string">回覆</p>
-                </div>
-                <div>
-                    <p className="num">520</p>
-                    <p className="string">喜歡次數</p>
-                </div>
-            </Counts>
-            <Interact>
-                <Reply/>
-                <Like/>
-            </Interact>
-        </PostContainer>
-        <CardContainer>
-            {replies.map(reply=>{
-                return(
-                    <ReplyCard
-                        key={reply.id}
-                        name={reply.User.name}
-                        account={reply.User.account}
-                        avatar={reply.User.avatar}
-                        content={reply.comment}
-                        timestamp={reply.createdAt}
-                    />
-                )
-            })}
-        </CardContainer>
+        {tweet && replies && (
+            <>
+                <PostContainer>
+                    <PersonInfo>
+                        <Title>
+                            <img src={tweet.User.avatar} alt="avatar" />
+                            <div>
+                                <p className="name">{tweet.User.name}</p>
+                                <p className="account">@{tweet.User.account}</p>
+                            </div>
+                        </Title>
+                        <Content>{tweet.description}</Content>
+                        <Date>{displayTime(tweet.createdAt)}</Date>
+                    </PersonInfo>
+                    <Counts>
+                        <div>
+                            <p className="num">{tweet.repliesCount}</p>
+                            <p className="string">回覆</p>
+                        </div>
+                        <div>
+                            <p className="num">{tweet.likesCount}</p>
+                            <p className="string">喜歡次數</p>
+                        </div>
+                    </Counts>
+                    <Interact>
+                        <Reply/>
+                        <Like/>
+                    </Interact>
+                </PostContainer>
+
+                <CardContainer>
+                    {replies.map(reply=>{
+                        return(
+                            <ReplyCard
+                                key={reply.id}
+                                name={reply.User.name}
+                                account={reply.User.account}
+                                avatar={reply.User.avatar}
+                                content={reply.comment}
+                                timestamp={reply.createdAt}
+                                replyAccount={tweet.User.account}
+                            />
+                        )
+                    })}
+                </CardContainer>
+            </>
+        )}
+
       </Container>
       <PopularBar />
     </>

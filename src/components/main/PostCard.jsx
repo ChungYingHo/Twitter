@@ -6,6 +6,7 @@ import * as style from '../common/common.styled'
 
 const Container = styled.div`
     height: fit-content;
+    max-width: 100%;
     border-bottom: ${style.styledBorder};
     display: flex;
     img{
@@ -16,6 +17,7 @@ const Container = styled.div`
 
 const Post = styled.div`
     height: 100%;
+    overflow: hidden;
     margin-right: 24px;
     margin-left: 8px;
     flex: 1;
@@ -23,9 +25,9 @@ const Post = styled.div`
     flex-direction: column;
     gap: 8px;
     .content{
-        height: 78px;
+        height: auto;
         ${style.styledContentFont};
-        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 `
 
@@ -54,6 +56,7 @@ const Interact = styled.div`
         justify-content: space-between;
         p{
             ${style.styledIconFont}
+            color: ${style.colors.darkGray};
         }
     }
 `

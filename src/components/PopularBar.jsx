@@ -6,9 +6,11 @@ import PopularCard from './PopularCard'
 import users from '../dummyData/popularUsers'
 
 const Container = styled.div`
+    outline: purple solid 2px;
     margin-top: 16px;
     padding: 0;
     height: 731px;
+    width: 23.9%;
     background-color: #fafafb;
     border-radius: 16px;
 `
@@ -44,7 +46,7 @@ export default function PopularBar(){
     }
 
     return(
-        <Container className='col-3'>
+        <Container>
             <Title>
                 <div>推薦跟隨</div>
             </Title>
