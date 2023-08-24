@@ -4,7 +4,7 @@ import { useState } from "react";
 const SubToolContainer = styled.div`
   border-bottom: 1px solid #e6ecf0;
   height: 53px;
-  margin-top: 20px;
+  margin: 20px 0 16px 0;
 `;
 
 const SubToolBtn = styled.button`

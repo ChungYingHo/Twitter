@@ -52,6 +52,10 @@ const SwitchZoneContainer = styled.div`
   scroll-behavior: smooth;
 `;
 
+const PostCardWrapper = styled.div`
+  padding-bottom: 16px;
+`;
+
 const UserPage = () => {
   return (
     <>
@@ -71,16 +75,18 @@ const UserPage = () => {
           <SwitchZoneContainer>
             {posts.map((data) => {
               return (
-                <PostCard
-                  key={data.id}
-                  name={data.user.name}
-                  account={data.user.name}
-                  avatar={data.user.avatar}
-                  content={data.description}
-                  timestamp={data.createdAt}
-                  reply={data.repliesCount}
-                  like={data.likesCount}
-                />
+                <PostCardWrapper>
+                  <PostCard
+                    key={data.id}
+                    name={data.user.name}
+                    account={data.user.name}
+                    avatar={data.user.avatar}
+                    content={data.description}
+                    timestamp={data.createdAt}
+                    reply={data.repliesCount}
+                    like={data.likesCount}
+                  />
+                </PostCardWrapper>
               );
             })}
           </SwitchZoneContainer>
