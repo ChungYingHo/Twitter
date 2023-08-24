@@ -35,7 +35,7 @@ const RegisterPage = () => {
       return;
     }
 
-    const { success, userToken, errorMessage } = await register({
+    const { success, errorMessage } = await register({
       name,
       account,
       email,
@@ -43,7 +43,6 @@ const RegisterPage = () => {
       checkPassword,
     });
     if (success) {
-      localStorage.setItem("UserToken", userToken);
       Swal.fire("註冊成功，請重新登入");
       navigate("/login");
     } else {

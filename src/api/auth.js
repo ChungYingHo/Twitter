@@ -69,7 +69,7 @@ export const register = async ({
       throw Error("no user data");
     }
 
-    return { success: true, userData };
+    return { success: true };
   } catch (error) {
     console.error("[Login Failed]:", error);
     return {
