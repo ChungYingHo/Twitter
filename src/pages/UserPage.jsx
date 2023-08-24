@@ -14,7 +14,9 @@ import posts from "../dummyData/posts";
 // import replies from "../dummyData/replies";
 
 const Container = styled.div`
+  outline: green solid 2px;
   padding: 0;
+  width: 56.2%;
   border: ${style.styledBorder};
   position: relative;
 `;
@@ -71,7 +73,7 @@ const PostCardWrapper = styled.div`
 const UserPage = () => {
   return (
     <>
-      <Container className="col">
+      <Container>
         <StyledLink to="/main">
           <UserTittleWrapper>
             <LeftArrow />
