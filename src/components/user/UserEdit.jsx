@@ -35,10 +35,22 @@ const PopupBanner = styled.img`
 `;
 
 const BannerIconWrapper = styled.div`
-  border: 1px solid yellow;
-  width: 80px;
+  border: 1px solid black;
+  width: 100%;
+  height: 200px;
+  position: relative;
+  top: -200px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const IconLayoutWrapper = styled.div`
+  border: 1px solid blue;
   display: flex;
   justify-content: space-between;
+  width: 80px;
 `;
 
 const MainWrapper = styled.div`
@@ -106,8 +118,10 @@ const UserEdit = () => {
         <PopupBannerWrapper>
           <PopupBanner src={defaultUserBanner} />
           <BannerIconWrapper>
-            <PhotoIcon />
-            <CloseIcon />
+            <IconLayoutWrapper>
+              <PhotoIcon />
+              <CloseIcon />
+            </IconLayoutWrapper>
           </BannerIconWrapper>
         </PopupBannerWrapper>
         <MainWrapper>
