@@ -5,24 +5,26 @@ import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
 import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
-import ReplyCard from "../components/reply/ReplyCard";
-import UserEdit from "../components/user/UserEdit";
+import * as style from "../components/common/common.styled";
+// import ReplyCard from "../components/reply/ReplyCard";
+// import UserEdit from "../components/user/UserEdit";
 
 // dummyData
 import posts from "../dummyData/posts";
-import replies from "../dummyData/replies";
+// import replies from "../dummyData/replies";
 
-const UserMainContainer = styled.div`
-  border-left: 1px solid #e6ecf0;
-  border-right: 1px solid #e6ecf0;
-  height: 100%;
+const Container = styled.div`
+  padding: 0;
+  border: ${style.styledBorder};
+  position: relative;
 `;
 
 const UserTittleWrapper = styled.div`
-  width: 100%;
-  height: 59px;
-  margin-top: 16px;
   padding: 0 30px;
+  width: 100%;
+  height: 51px;
+  margin-top: 24px;
+
   display: flex;
   align-items: center;
 `;
@@ -31,7 +33,7 @@ const UserNameWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-top: 5px;
+  padding-top: 1px;
   margin-left: 16px;
 `;
 
@@ -46,9 +48,10 @@ const UserPostCount = styled.p`
 `;
 
 const StyledLink = styled(Link)`
-  border: 1px solid blue;
   text-decoration: none;
   color: #171725;
+  margin: 0;
+  padding: 0;
 `;
 
 const SwitchZoneContainer = styled.div`
@@ -62,44 +65,43 @@ const PostCardWrapper = styled.div`
   padding-bottom: 16px;
 `;
 
-const ReplyCardWrapper = styled.div`
-  padding-bottom: 16px;
-`;
+// const ReplyCardWrapper = styled.div`
+//   padding-bottom: 16px;
+// `;
 const UserPage = () => {
   return (
     <>
-      <div className="col">
-        <UserMainContainer>
-          <StyledLink to="/main">
-            <UserTittleWrapper>
-              <LeftArrow />
-              <UserNameWrapper>
-                <UserName>Egg Head</UserName>
-                <UserPostCount>25 推文</UserPostCount>
-              </UserNameWrapper>
-            </UserTittleWrapper>
-          </StyledLink>
-          <UserInfo />
-          <SubToolBar />
-          <SwitchZoneContainer>
-            {posts.map((data) => {
-              return (
-                <PostCardWrapper>
-                  <PostCard
-                    key={data.id}
-                    name={data.user.name}
-                    account={data.user.name}
-                    avatar={data.user.avatar}
-                    content={data.description}
-                    timestamp={data.createdAt}
-                    reply={data.repliesCount}
-                    like={data.likesCount}
-                  />
-                </PostCardWrapper>
-              );
-            })}
+      <Container className="col">
+        <StyledLink to="/main">
+          <UserTittleWrapper>
+            <LeftArrow />
+            <UserNameWrapper>
+              <UserName>Egg Head</UserName>
+              <UserPostCount>25 推文</UserPostCount>
+            </UserNameWrapper>
+          </UserTittleWrapper>
+        </StyledLink>
+        <UserInfo />
+        <SubToolBar />
+        <SwitchZoneContainer>
+          {posts.map((data) => {
+            return (
+              <PostCardWrapper>
+                <PostCard
+                  key={data.id}
+                  name={data.user.name}
+                  account={data.user.name}
+                  avatar={data.user.avatar}
+                  content={data.description}
+                  timestamp={data.createdAt}
+                  reply={data.repliesCount}
+                  like={data.likesCount}
+                />
+              </PostCardWrapper>
+            );
+          })}
 
-            {/* 
+          {/* 
             {replies.map((reply) => {
               return (
                 <ReplyCardWrapper>
@@ -114,9 +116,8 @@ const UserPage = () => {
                 </ReplyCardWrapper>
               );
             })} */}
-          </SwitchZoneContainer>
-        </UserMainContainer>
-      </div>
+        </SwitchZoneContainer>
+      </Container>
       <PopularBar />
     </>
   );
