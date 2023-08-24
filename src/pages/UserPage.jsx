@@ -5,6 +5,7 @@ import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
 import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
+import posts from "../dummyData/posts";
 
 const UserMainContainer = styled.div`
   border-left: 1px solid #e6ecf0;
@@ -68,12 +69,20 @@ const UserPage = () => {
           <UserInfo />
           <SubToolBar />
           <SwitchZoneContainer>
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
+            {posts.map((data) => {
+              return (
+                <PostCard
+                  key={data.id}
+                  name={data.user.name}
+                  account={data.user.name}
+                  avatar={data.user.avatar}
+                  content={data.description}
+                  timestamp={data.createdAt}
+                  reply={data.repliesCount}
+                  like={data.likesCount}
+                />
+              );
+            })}
           </SwitchZoneContainer>
         </UserMainContainer>
       </div>
