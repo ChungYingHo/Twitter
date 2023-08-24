@@ -8,6 +8,10 @@ const StyledContainer = styled.div`
   width: 100%;
   height: 54px;
   border-bottom: 2px solid #657786;
+  &:active,
+  &:hover {
+    border-bottom: 2px solid #50b5ff;
+  }
 `;
 const StyledLabel = styled.label`
   font-size: 14;
