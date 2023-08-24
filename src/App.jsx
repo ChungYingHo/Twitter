@@ -26,7 +26,7 @@ function App() {
               <Route path="/main" element={<MainPage />}></Route>
               <Route path="user" element={<UserPage />}></Route>
               <Route path="setting" element={<SettingPage />}></Route>
-              <Route path="tweet" element={<MainReplyList />}></Route>
+              <Route path="main/:tweet_id" element={<MainReplyList />}></Route>
           </Route>
           <Route element={<AdminLayout />}>
               <Route path="admin_tweets" element={<AdminTweetPage />}></Route>

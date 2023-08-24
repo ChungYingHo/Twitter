@@ -1,15 +1,18 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import PopularBar from "../components/PopularBar";
 import PostCard from "../components/main/PostCard";
 import PopupModal from "../components/PopupModal";
 import NewPost from "../components/main/NewPost"
 import * as style from "../components/common/common.styled";
-// 測試資料
-import posts from "../dummyData/posts";
+// 引用 api
+import { getTweets } from "../api/main";
 
 const Container = styled.div`
+  outline: green solid 2px;
   padding: 0;
+  width: 56.2%;
   border: ${style.styledBorder};
   position: relative;
 `;
@@ -51,6 +54,8 @@ const PostTitle = styled.div`
 `;
 
 const CardContainer = styled.div`
+  outline: red solid 2px;
+  width: 100%;
   margin-top: 16px;
   display: flex;
   flex-direction: column;
@@ -65,8 +70,19 @@ const Btn = styled(style.StyledBtn)`
   right: 24px;
 `;
 
+const Nav = styled(Link)`
+  text-decoration: none;
+  color: black;
+  &:hover{
+    text-decoration: none;
+    color: black;
+  }
+`
+
 const MainPage = () => {
   const [isNewPostOpen, setIsNewPostOpen] = useState(false);
+  const [posts, setPosts] = useState([])
+
   const openNewPost = () => {
     setIsNewPostOpen(true);
   };
@@ -74,9 +90,23 @@ const MainPage = () => {
     setIsNewPostOpen(false);
   };
 
+  useEffect(() => {
+    const fetchTweets = async () => {
+      try {
+        const tweetData = await getTweets();
+        const sortedTweets = tweetData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        setPosts(sortedTweets);
+        console.log(sortedTweets)
+      } catch (error) {
+        console.error("Fetching Tweets Failed:", error);
+      }
+    };
+    fetchTweets();
+  }, [])
+
   return (
     <>
-      <Container className="col">
+      <Container>
         <Header>
           <h4>首頁</h4>
         </Header>
@@ -96,16 +126,18 @@ const MainPage = () => {
         <CardContainer>
           {posts.map((data) => {
             return (
-              <PostCard
-                key={data.id}
-                name={data.user.name}
-                account={data.user.name}
-                avatar={data.user.avatar}
-                content={data.description}
-                timestamp={data.createdAt}
-                reply={data.repliesCount}
-                like={data.likesCount}
-              />
+              <Nav key={data.id} to={`main/${data.id}`} className="post-link">
+                  <PostCard
+                      key={data.id}
+                      name={data.User.name}
+                      account={data.User.account}
+                      avatar={data.User.avatar}
+                      content={data.description}
+                      timestamp={data.createdAt}
+                      reply={data.repliesCount}
+                      like={data.likesCount}
+                  />
+              </Nav>
             );
           })}
         </CardContainer>
