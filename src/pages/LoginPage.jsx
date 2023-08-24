@@ -19,11 +19,11 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
 
   const handleClick = async () => {
-    if (account.length === 0 || account.length > 50) {
-    }
-    if (password.length === 0) {
+    if (account.length === 0 || password.length === 0) {
+      alert("帳號訊息未輸入完整");
       return;
     }
+
     const { success, userToken, errorMessage } = await login({
       account,
       password,
