@@ -92,6 +92,23 @@ const UserFollowNum = styled.p`
   font-size: 14px;
 `;
 
+const HeaderTittle = styled.h5`
+  font-size: 16px;
+  color: #1c1c1c;
+  font-weight: 700;
+  margin: 0;
+`;
+
+const HeaderBtn = styled.button`
+  width: 64px;
+  height: 40px;
+  color: white;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 50px;
+  background-color: #ff6600;
+`;
+
 const UserInfo = () => {
   const [isNewPostOpen, setIsNewPostOpen] = useState(false);
   const openNewPost = () => {
@@ -109,7 +126,12 @@ const UserInfo = () => {
         <UserPicBtnWrapper>
           <UserPic src={dummyUserPic} />
           <UserEditBtn onClick={openNewPost}>編輯個人資料</UserEditBtn>
-          <PopupModal isOpen={isNewPostOpen} closeModal={closeNewPost}>
+          <PopupModal
+            isOpen={isNewPostOpen}
+            closeModal={closeNewPost}
+            headerTitle={<HeaderTittle>編輯個人資料</HeaderTittle>}
+            headerButton={<HeaderBtn>儲存</HeaderBtn>}
+          >
             <UserEdit />
           </PopupModal>
         </UserPicBtnWrapper>
