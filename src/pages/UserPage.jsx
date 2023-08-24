@@ -5,7 +5,11 @@ import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
 import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
+import ReplyCard from "../components/reply/ReplyCard";
+
+// dummyData
 import posts from "../dummyData/posts";
+import replies from "../dummyData/replies";
 
 const UserMainContainer = styled.div`
   border-left: 1px solid #e6ecf0;
@@ -41,6 +45,7 @@ const UserPostCount = styled.p`
 `;
 
 const StyledLink = styled(Link)`
+  border: 1px solid blue;
   text-decoration: none;
   color: #171725;
 `;
@@ -56,6 +61,9 @@ const PostCardWrapper = styled.div`
   padding-bottom: 16px;
 `;
 
+const ReplyCardWrapper = styled.div`
+  padding-bottom: 16px;
+`;
 const UserPage = () => {
   return (
     <>
@@ -73,7 +81,7 @@ const UserPage = () => {
           <UserInfo />
           <SubToolBar />
           <SwitchZoneContainer>
-            {posts.map((data) => {
+            {/* {posts.map((data) => {
               return (
                 <PostCardWrapper>
                   <PostCard
@@ -87,6 +95,21 @@ const UserPage = () => {
                     like={data.likesCount}
                   />
                 </PostCardWrapper>
+              );
+            })} */}
+
+            {replies.map((reply) => {
+              return (
+                <ReplyCardWrapper>
+                  <ReplyCard
+                    key={reply.id}
+                    name={reply.User.name}
+                    account={reply.User.account}
+                    avatar={reply.User.avatar}
+                    content={reply.comment}
+                    timestamp={reply.createdAt}
+                  />
+                </ReplyCardWrapper>
               );
             })}
           </SwitchZoneContainer>
