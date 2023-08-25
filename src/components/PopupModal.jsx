@@ -17,7 +17,6 @@ const Container = styled.div`
   border-radius: 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
   position: absolute;
   top: 56px;
   background-color: #ffffff;
@@ -55,15 +54,40 @@ const Container = styled.div`
   }
 `;
 
-const PopupModal = ({ isOpen, closeModal, children }) => {
+const Header = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+`;
+
+const HeaderWrapper = styled.div`
+  width: 600px;
+  margin-left: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const PopupModal = ({
+  isOpen,
+  closeModal,
+  children,
+  headerTitle,
+  headerButton,
+}) => {
   return (
     <>
       <Overlay open={isOpen} onClick={closeModal} />
       {isOpen && (
         <Container>
-          <div className="header">
+          <Header>
             <Close className="icon" onClick={closeModal} />
-          </div>
+            <HeaderWrapper>
+              {headerTitle}
+              {headerButton}
+            </HeaderWrapper>
+          </Header>
           {children}
         </Container>
       )}

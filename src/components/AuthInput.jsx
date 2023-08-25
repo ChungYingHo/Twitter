@@ -6,7 +6,7 @@ const StyledContainer = styled.div`
   justify-content: space-around;
   background-color: #f5f8fa;
   width: 100%;
-  height: 54px;
+  height: 100%;
   border-bottom: 2px solid rgb(101, 119, 134);
   &:active,
   &:hover {
@@ -26,16 +26,32 @@ const StyledInput = styled.input`
   border-radius: 0px;
 `;
 
-const AuthInput = ({ label, type, placeholder, value, onChange }) => {
+const StyledTextarea = styled.textarea`
+  outline: none;
+  border: none;
+  background-color: #f5f8fa;
+  border-radius: 0px;
+`;
+
+const AuthInput = ({ label, type, placeholder, value, onChange, isLarge }) => {
   return (
     <StyledContainer>
       <StyledLabel>{label}</StyledLabel>
-      <StyledInput
-        type={type || "text"}
-        placeholder={placeholder || ""}
-        value={value || ""}
-        onChange={(event) => onChange?.(event.target.value)}
-      />
+      {isLarge ? (
+        <StyledTextarea
+          placeholder={placeholder || ""}
+          value={value || ""}
+          onChange={(event) => onChange?.(event.target.value)}
+          rows="5"
+        />
+      ) : (
+        <StyledInput
+          type={type || "text"}
+          placeholder={placeholder || ""}
+          value={value || ""}
+          onChange={(event) => onChange?.(event.target.value)}
+        />
+      )}
     </StyledContainer>
   );
 };

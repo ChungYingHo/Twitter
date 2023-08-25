@@ -1,11 +1,15 @@
 import styled from "styled-components";
 import defaultUserBanner from "../../assets/defaultUserBanner.png";
 import dummyUserPic from "../../assets/dummyUserPic.jpg";
+import UserEdit from "./UserEdit";
+import { useState } from "react";
+import PopupModal from "../PopupModal";
 
 const UserMainContainer = styled.div`
   width: 100%;
   height: 378px;
   position: relative;
+  background-color: white;
 `;
 
 const UserBanner = styled.img`
@@ -88,7 +92,32 @@ const UserFollowNum = styled.p`
   font-size: 14px;
 `;
 
+const HeaderTittle = styled.h5`
+  font-size: 16px;
+  color: #1c1c1c;
+  font-weight: 700;
+  margin: 0;
+`;
+
+const HeaderBtn = styled.button`
+  width: 64px;
+  height: 40px;
+  color: white;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 50px;
+  background-color: #ff6600;
+`;
+
 const UserInfo = () => {
+  const [isNewPostOpen, setIsNewPostOpen] = useState(false);
+  const openNewPost = () => {
+    setIsNewPostOpen(true);
+  };
+  const closeNewPost = () => {
+    setIsNewPostOpen(false);
+  };
+
   return (
     <UserMainContainer>
       <UserBanner src={defaultUserBanner} />
@@ -96,7 +125,15 @@ const UserInfo = () => {
       <UserInfoWrapper>
         <UserPicBtnWrapper>
           <UserPic src={dummyUserPic} />
-          <UserEditBtn>編輯個人資料</UserEditBtn>
+          <UserEditBtn onClick={openNewPost}>編輯個人資料</UserEditBtn>
+          <PopupModal
+            isOpen={isNewPostOpen}
+            closeModal={closeNewPost}
+            headerTitle={<HeaderTittle>編輯個人資料</HeaderTittle>}
+            headerButton={<HeaderBtn>儲存</HeaderBtn>}
+          >
+            <UserEdit />
+          </PopupModal>
         </UserPicBtnWrapper>
 
         <UserAccountNameWrapper>
