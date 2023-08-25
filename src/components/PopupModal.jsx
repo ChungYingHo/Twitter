@@ -34,11 +34,12 @@ const Container = styled.div`
 
 const Header = styled.div`
   width: 100%;
-  height: 40px;
+  height: 49px;
   display: flex;
   align-items: center;
   padding: 10px;
   border-bottom: ${style.styledBorder};
+  margin-top: 8px;
 `;
 
 const HeaderWrapper = styled.div`

@@ -2,6 +2,8 @@ import styled from "styled-components";
 import * as style from '../common/common.styled'
 
 const Container = styled.div`
+  height: fit-content;
+  min-height: 280px;
   margin-top: 16px;
   .info {
     display: flex;
@@ -20,7 +22,7 @@ const Container = styled.div`
   }
   textarea {
     width: calc(100% - 32px);
-    height: 40%;
+    height: 150px;
     resize: none;
     border: transparent solid;
     outline: none;
