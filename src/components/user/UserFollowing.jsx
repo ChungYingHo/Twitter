@@ -5,7 +5,7 @@ import { ReactComponent as LeftArrow } from "../../assets/left-arrow.svg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import FollowrSubTool from "./FollowSubTool";
-import FollowCard from "./FollowerCard";
+import FollowCard from "./FollowCard";
 
 // dummyData
 import users from "../../dummyData/popularUsers";
