@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SubToolContainer = styled.div`
   display: flex;
@@ -22,24 +23,34 @@ const SubToolBtn = styled.button`
   cursor: pointer;
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+`;
+
 const FollowrSubTool = () => {
   const [activePage, setActivePage] = useState("followers");
 
   return (
     <SubToolContainer>
-      <SubToolBtn
-        $isActive={activePage === "followers"}
-        onClick={() => setActivePage("followers")}
-      >
-        追隨者
-      </SubToolBtn>
+      <StyledLink to="/user/followers">
+        <SubToolBtn
+          $isActive={activePage === "followers"}
+          onClick={() => setActivePage("followers")}
+        >
+          追隨者
+        </SubToolBtn>
+      </StyledLink>
 
-      <SubToolBtn
-        $isActive={activePage === "following"}
-        onClick={() => setActivePage("following")}
-      >
-        正在追隨
-      </SubToolBtn>
+      <StyledLink to="/user/following">
+        <SubToolBtn
+          $isActive={activePage === "following"}
+          onClick={() => setActivePage("following")}
+        >
+          正在追隨
+        </SubToolBtn>
+      </StyledLink>
     </SubToolContainer>
   );
 };
