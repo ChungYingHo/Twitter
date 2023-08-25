@@ -7,6 +7,8 @@ import AdminTweetPage from "./AdminTweetPage";
 import AdminUserPage from "./AdminUserPage";
 import UserPage from "./UserPage";
 import MainReplyList from "./MainReplyList";
+import UserFollowing from "../components/user/UserFollowing";
+import UserFollowers from "../components/user/UserFollowers";
 
 export {
   LoginPage,
@@ -17,5 +19,7 @@ export {
   AdminTweetPage,
   AdminUserPage,
   UserPage,
-  MainReplyList
+  MainReplyList,
+  UserFollowers,
+  UserFollowing,
 };

@@ -10,6 +10,8 @@ import {
   AdminUserPage,
   UserPage,
   MainReplyList,
+  UserFollowing,
+  UserFollowers,
 } from "../src/pages/index";
 import { AdminLayout, MainLayout } from "./layout/layout";
 
@@ -21,16 +23,19 @@ function App() {
           <Route path="register" element={<RegisterPage />}></Route>
           <Route path="login" element={<LoginPage />}></Route>
           <Route path="admin_login" element={<AdminLoginPage />}></Route>
-          <Route element={<MainLayout/>}>
-              <Route path="*" element={<MainPage />}></Route>
-              <Route path="/main" element={<MainPage />}></Route>
-              <Route path="user" element={<UserPage />}></Route>
-              <Route path="setting" element={<SettingPage />}></Route>
-              <Route path="main/:tweet_id" element={<MainReplyList />}></Route>
+          <Route element={<MainLayout />}>
+            <Route path="*" element={<MainPage />}></Route>
+            <Route path="/main" element={<MainPage />}></Route>
+            <Route path="user" element={<UserPage />}>
+              <Route path="/followers" element={<UserFollowers />}></Route>
+              <Route path="/following" element={<UserFollowing />}></Route>
+            </Route>
+            <Route path="setting" element={<SettingPage />}></Route>
+            <Route path="main/:tweet_id" element={<MainReplyList />}></Route>
           </Route>
           <Route element={<AdminLayout />}>
-              <Route path="admin_tweets" element={<AdminTweetPage />}></Route>
-              <Route path="admin_users" element={<AdminUserPage />}></Route>
+            <Route path="admin_tweets" element={<AdminTweetPage />}></Route>
+            <Route path="admin_users" element={<AdminUserPage />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
