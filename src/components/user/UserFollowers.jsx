@@ -5,7 +5,7 @@ import { ReactComponent as LeftArrow } from "../../assets/left-arrow.svg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import FollowrSubTool from "./FollowSubTool";
-import FollowrCard from "./FollowerCard";
+import FollowCard from "./FollowerCard";
 
 // dummyData
 import users from "../../dummyData/popularUsers";
@@ -86,7 +86,7 @@ const UserFollowers = () => {
         <FollowrSubTool />
         {usersData.map((data) => {
           return (
-            <FollowrCard
+            <FollowCard
               id={data.user.id}
               name={data.user.name}
               avatar={data.user.avatar}

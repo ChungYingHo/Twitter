@@ -74,7 +74,7 @@ const UserIntro = styled.p`
   color: #171725;
 `;
 
-export default function FollowrCard({
+export default function FollowCard({
   name,
   avatar,
   introduction,
