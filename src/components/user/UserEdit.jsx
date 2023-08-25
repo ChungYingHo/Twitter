@@ -7,7 +7,6 @@ import { ReactComponent as PhotoIcon } from "../../assets/photo.svg";
 import { ReactComponent as CloseIcon } from "../../assets/close-white.svg";
 
 const PopupContainer = styled.div`
-  border: 1px solid red;
   height: 553px;
   border-radius: 10px;
   position: relative;
@@ -31,7 +30,7 @@ const PopupBannerWrapper = styled.div`
 `;
 
 const PopupBanner = styled.img`
-  width: 100%;
+  width: 640px;
   height: 200px;
 `;
 
@@ -97,13 +96,11 @@ const PhotoIconWrapper = styled.div`
 `;
 
 const NameInputContainer = styled.div`
-  border: 1px solid green;
   height: 54px;
   margin-bottom: 20px;
 `;
 
 const IntroInputContainer = styled.div`
-  border: 1px solid pink;
   margin-bottom: 20px;
 `;
 
