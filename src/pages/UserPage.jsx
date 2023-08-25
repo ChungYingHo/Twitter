@@ -1,17 +1,18 @@
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import PopularBar from "../components/PopularBar";
 import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
 import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
-// import ReplyCard from "../components/reply/ReplyCard";
-// import UserEdit from "../components/user/UserEdit";
+import ReplyCard from "../components/reply/ReplyCard";
+import UserEdit from "../components/user/UserEdit";
 
 // dummyData
 import posts from "../dummyData/posts";
-// import replies from "../dummyData/replies";
+import replies from "../dummyData/replies";
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -67,10 +68,12 @@ const PostCardWrapper = styled.div`
   padding-bottom: 16px;
 `;
 
-// const ReplyCardWrapper = styled.div`
-//   padding-bottom: 16px;
-// `;
+const ReplyCardWrapper = styled.div`
+  padding-bottom: 16px;
+`;
 const UserPage = () => {
+  const [activePage, setActivePage] = useState("post");
+
   return (
     <>
       <Container>
@@ -84,27 +87,28 @@ const UserPage = () => {
           </UserTittleWrapper>
         </StyledLink>
         <UserInfo />
-        <SubToolBar />
+        <SubToolBar activePage={activePage} setActivePage={setActivePage} />
         <SwitchZoneContainer>
-          {posts.map((data) => {
-            return (
-              <PostCardWrapper>
-                <PostCard
-                  key={data.id}
-                  name={data.user.name}
-                  account={data.user.name}
-                  avatar={data.user.avatar}
-                  content={data.description}
-                  timestamp={data.createdAt}
-                  reply={data.repliesCount}
-                  like={data.likesCount}
-                />
-              </PostCardWrapper>
-            );
-          })}
+          {activePage === "post" &&
+            posts.map((data) => {
+              return (
+                <PostCardWrapper>
+                  <PostCard
+                    key={data.id}
+                    name={data.user.name}
+                    account={data.user.name}
+                    avatar={data.user.avatar}
+                    content={data.description}
+                    timestamp={data.createdAt}
+                    reply={data.repliesCount}
+                    like={data.likesCount}
+                  />
+                </PostCardWrapper>
+              );
+            })}
 
-          {/* 
-            {replies.map((reply) => {
+          {activePage === "reply" &&
+            replies.map((reply) => {
               return (
                 <ReplyCardWrapper>
                   <ReplyCard
@@ -117,7 +121,25 @@ const UserPage = () => {
                   />
                 </ReplyCardWrapper>
               );
-            })} */}
+            })}
+
+          {activePage === "like" &&
+            posts.map((data) => {
+              return (
+                <PostCardWrapper>
+                  <PostCard
+                    key={data.id}
+                    name={data.user.name}
+                    account={data.user.name}
+                    avatar={data.user.avatar}
+                    content={data.description}
+                    timestamp={data.createdAt}
+                    reply={data.repliesCount}
+                    like={data.likesCount}
+                  />
+                </PostCardWrapper>
+              );
+            })}
         </SwitchZoneContainer>
       </Container>
       <PopularBar />
