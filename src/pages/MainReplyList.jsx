@@ -11,9 +11,6 @@ import { displayTime } from "../components/reply/displayTime";
 // API
 import { getSingleTweet, getReplies } from "../api/main";
 
-// dummy data
-import replies from "../dummyData/replies";
-
 const Container = styled.div`
   width: 56.2%;
   padding: 0;
@@ -22,6 +19,7 @@ const Container = styled.div`
 `
 
 const Header = styled.div`
+  outline: red solid 2px;
   width: 100%;
   height: 51px;
   margin-top: 24px;
@@ -76,7 +74,7 @@ const Content = styled.p`
     overflow-wrap: break-word;
 `
 
-const Date = styled.p`
+const StyledDate = styled.p`
     ${style.styledAccount};
     font-weight: 500;
 `
@@ -142,8 +140,9 @@ export default function MainReplyList(){
         const fetchingReplies = async ()=>{
             try{
                 const repliesData = await getReplies({ tweet_id: parseInt(tweet_id) });
-                setReplies(repliesData)
-                console.log(repliesData)
+                const sortedReplies = repliesData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                setReplies(sortedReplies);
+                console.log(sortedReplies)
             } catch (error){
                 console.error('Fetching Replies Failed:', error)
             }
@@ -170,7 +169,7 @@ export default function MainReplyList(){
                             </div>
                         </Title>
                         <Content>{tweet.description}</Content>
-                        <Date>{displayTime(tweet.createdAt)}</Date>
+                        <StyledDate>{displayTime(tweet.createdAt)}</StyledDate>
                     </PersonInfo>
                     <Counts>
                         <div>
