@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import * as style from './common/common.styled'
 import { ReactComponent as Close } from "../assets/close.svg";
 
 const Overlay = styled.div`
@@ -12,7 +13,7 @@ const Overlay = styled.div`
 `;
 
 const Container = styled.div`
-  height: 300px;
+  height: fit-content;
   width: 640px;
   border-radius: 14px;
   display: flex;
@@ -20,6 +21,7 @@ const Container = styled.div`
   position: fixed;
   top: 56px;
   background-color: #ffffff;
+  z-index: 2;
   .header {
     height: 41px;
     border-bottom: #e6ecf0 solid 1px;
@@ -28,37 +30,15 @@ const Container = styled.div`
       cursor: pointer;
     }
   }
-  .info {
-    display: flex;
-    align-items: center;
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 100%;
-      margin-left: 16px;
-    }
-    p {
-      margin: 0;
-      font-weight: 400;
-      font-size: 16px;
-      color: #6c757d;
-    }
-  }
-  textarea {
-    width: calc(100% - 32px);
-    height: 40%;
-    resize: none;
-    border: transparent solid;
-    outline: none;
-    margin: 0 16px;
-  }
 `;
 
 const Header = styled.div`
   width: 100%;
+  height: 40px;
   display: flex;
   align-items: center;
   padding: 10px;
+  border-bottom: ${style.styledBorder};
 `;
 
 const HeaderWrapper = styled.div`

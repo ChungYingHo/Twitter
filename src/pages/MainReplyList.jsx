@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import PopularBar from "../components/PopularBar";
 import ReplyCard from "../components/reply/ReplyCard";
+import PopupModal from "../components/PopupModal";
+import NewReply from "../components/reply/NewReply";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
@@ -149,9 +151,17 @@ export default function MainReplyList(){
         }
         fetchingReplies()
     }, [tweet_id])
+    // 彈出回覆視窗
+    const [isNewPostOpen, setIsNewPostOpen] = useState(false)
+    const openNewPost = () => {
+        setIsNewPostOpen(true);
+    };
+    const closeNewPost = () => {
+        setIsNewPostOpen(false);
+    }
 
     return(
-        <>
+    <>
       <Container>
         <Header>
           <LeftArrow />
@@ -159,6 +169,15 @@ export default function MainReplyList(){
         </Header>
         {tweet && replies && (
             <>
+                <PopupModal isOpen={isNewPostOpen} closeModal={closeNewPost}>
+                    <NewReply
+                        name={tweet.User.name}
+                        account={tweet.User.account}
+                        timestamp={tweet.createdAt}
+                        avatar={tweet.User.avatar}
+                        content={tweet.description}
+                    />
+                </PopupModal>
                 <PostContainer>
                     <PersonInfo>
                         <Title>
@@ -182,7 +201,7 @@ export default function MainReplyList(){
                         </div>
                     </Counts>
                     <Interact>
-                        <Reply/>
+                        <Reply onClick={openNewPost}/>
                         <Like/>
                     </Interact>
                 </PostContainer>
