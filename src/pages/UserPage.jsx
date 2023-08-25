@@ -54,6 +54,10 @@ const StyledLink = styled(Link)`
   color: #171725;
   margin: 0;
   padding: 0;
+
+  &:hover {
+    color: #171725;
+  }
 `;
 
 const SwitchZoneContainer = styled.div`

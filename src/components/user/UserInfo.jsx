@@ -3,6 +3,7 @@ import defaultUserBanner from "../../assets/defaultUserBanner.png";
 import dummyUserPic from "../../assets/dummyUserPic.jpg";
 import UserEdit from "./UserEdit";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import PopupModal from "../PopupModal";
 
 const UserMainContainer = styled.div`
@@ -109,6 +110,13 @@ const HeaderBtn = styled.button`
   background-color: #ff6600;
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #171725;
+  margin: 0;
+  padding: 0;
+`;
+
 const UserInfo = () => {
   const [isNewPostOpen, setIsNewPostOpen] = useState(false);
   const openNewPost = () => {
@@ -146,15 +154,19 @@ const UserInfo = () => {
           </UserIntroduction>
 
           <UserFollowWrapper>
-            <UserFollowbox>
-              <UserFollowNum>34個</UserFollowNum>
-              <UserFollowTittle>跟隨中</UserFollowTittle>
-            </UserFollowbox>
+            <StyledLink to="/user/following">
+              <UserFollowbox>
+                <UserFollowNum>34個</UserFollowNum>
+                <UserFollowTittle>跟隨中</UserFollowTittle>
+              </UserFollowbox>
+            </StyledLink>
 
-            <UserFollowbox>
-              <UserFollowNum>59位</UserFollowNum>
-              <UserFollowTittle>跟隨者</UserFollowTittle>
-            </UserFollowbox>
+            <StyledLink to="/user/followers">
+              <UserFollowbox>
+                <UserFollowNum>59位</UserFollowNum>
+                <UserFollowTittle>跟隨者</UserFollowTittle>
+              </UserFollowbox>
+            </StyledLink>
           </UserFollowWrapper>
         </UserAccountNameWrapper>
       </UserInfoWrapper>
