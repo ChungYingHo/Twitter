@@ -2,13 +2,12 @@ import styled from "styled-components";
 import * as style from "../common/common.styled";
 
 const Container = styled.div`
-  border: 1px solid green;
   min-height: 143px;
   height: fit-content;
   max-width: 100%;
   border-bottom: ${style.styledBorder};
   display: flex;
-  margin-bottom: 16px;
+  margin: 16px 0;
   img {
     ${style.styledImg};
     margin-left: 24px;
@@ -87,18 +86,13 @@ export default function FollowrCard({
       <Avatar src={avatar} alt="avatar" />
       <MainWrapper>
         <TopWrapper>
-          <Name>Victor D</Name>
+          <Name>{name}</Name>
           <Btn $isFollowed={isFollowed} onClick={onClick}>
             {isFollowed ? "正在跟隨" : "跟隨"}
           </Btn>
         </TopWrapper>
         <UserIntroWrapper>
-          <UserIntro>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione,
-            officiis. Quis atque odit quo nostrum nam vel, aliquid odio veniam
-            fugiat numquam illum provident reprehenderit incidunt non,
-            recusandae distinctio! Quia!
-          </UserIntro>
+          <UserIntro>{introduction}</UserIntro>
         </UserIntroWrapper>
       </MainWrapper>
     </Container>

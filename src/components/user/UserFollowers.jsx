@@ -3,7 +3,12 @@ import * as style from "../common/common.styled";
 import PopularBar from "../PopularBar";
 import { ReactComponent as LeftArrow } from "../../assets/left-arrow.svg";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import FollowrSubTool from "./FollowSubTool";
+import FollowrCard from "./FollowerCard";
+
+// dummyData
+import users from "../../dummyData/popularUsers";
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -51,6 +56,21 @@ const StyledLink = styled(Link)`
 `;
 
 const UserFollowers = () => {
+  const [usersData, setUsersData] = useState(users);
+
+  const handleFollow = (userId) => {
+    setUsersData((prevUsersData) =>
+      prevUsersData.map((user) =>
+        user.user.id === userId
+          ? {
+              ...user,
+              user: { ...user.user, isFollowed: !user.user.isFollowed },
+            }
+          : user
+      )
+    );
+  };
+
   return (
     <>
       <Container>
@@ -64,6 +84,18 @@ const UserFollowers = () => {
           </Header>
         </StyledLink>
         <FollowrSubTool />
+        {usersData.map((data) => {
+          return (
+            <FollowrCard
+              id={data.user.id}
+              name={data.user.name}
+              avatar={data.user.avatar}
+              introduction={data.user.introduction}
+              isFollowed={data.user.isFollowed}
+              onClick={() => handleFollow(data.user.id)}
+            />
+          );
+        })}
       </Container>
       <PopularBar />
     </>
