@@ -6,6 +6,7 @@
   font-family: 'Noto Sans TC', sans-serif;
   display: flex;
   justify-content: space-between;
+  position: relative;
 
   @media (min-width: 1200px) {
     width: 1140px;

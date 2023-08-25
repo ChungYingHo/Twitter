@@ -1,13 +1,15 @@
 import styled from 'styled-components'
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import {ReactComponent as acLogo} from '../../assets/logo.svg'
 import {ReactComponent as Home} from '../../assets/home.svg'
 import {ReactComponent as User} from '../../assets/personInfo.svg'
 import {ReactComponent as Logout} from '../../assets/logout.svg'
 
 const Container = styled.div`
-    position: relative;
+    outline: red solid 2px;
+    width: 15.6%;
+    position: sticky;
     height: 100vh;
 `
 
@@ -85,8 +87,16 @@ export default function AdminSideBar(){
     const location = useLocation()
     const [activePage, setActivePage] = useState(getActivePage(location.pathname))
 
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        console.log(localStorage);
+        localStorage.removeItem("AdminToken");
+        navigate("/admin_login");
+    };
+
     return(
-        <Container className='col-2'>
+        <Container>
             <Logo/>
             <ToolContainer>
                 <Nav to='/admin_tweets' $isActive={activePage === 'home'} onClick={() => setActivePage('home')}>
@@ -102,7 +112,7 @@ export default function AdminSideBar(){
                     </div>
                 </Nav>
             </ToolContainer>
-            <FooterContainer>
+            <FooterContainer onClick={handleClick}>
                 <div>
                     <Logout/>
                     登出
