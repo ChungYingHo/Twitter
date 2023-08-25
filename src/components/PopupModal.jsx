@@ -13,11 +13,11 @@ const Overlay = styled.div`
 
 const Container = styled.div`
   height: 300px;
-  width: 100%;
+  width: 640px;
   border-radius: 14px;
   display: flex;
   flex-direction: column;
-  position: absolute;
+  position: fixed;
   top: 56px;
   background-color: #ffffff;
   .header {
