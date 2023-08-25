@@ -3,6 +3,7 @@ import * as style from "../common/common.styled";
 import PopularBar from "../PopularBar";
 import { ReactComponent as LeftArrow } from "../../assets/left-arrow.svg";
 import { Link } from "react-router-dom";
+import FollowrSubTool from "./FollowSubTool";
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -62,6 +63,7 @@ const UserFollowers = () => {
             </HeaderTittleWrapper>
           </Header>
         </StyledLink>
+        <FollowrSubTool />
       </Container>
       <PopularBar />
     </>
