@@ -9,18 +9,32 @@ import {
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+// api
+import { adminLogin } from "../api/admin";
 
 const AdminLoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null)
 
-  const handleClick = () => {
-    if (account.length === 0) {
+  const navigate = useNavigate()
+
+  const handleClick = async () => {
+    if (account.length === 0 || password.length === 0) {
+      Swal.fire("請輸入完整帳號密碼");
       return;
     }
-    if (password.length === 0) {
-      return;
+    const { success, adminToken, errorMessage } = await adminLogin({
+      account,
+      password,
+    });
+    if (success) {
+      localStorage.setItem("AdminToken", adminToken);
+      navigate("/admin_tweets");
+    } else {
+      setError(errorMessage);
     }
   };
 
@@ -46,6 +60,7 @@ const AdminLoginPage = () => {
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
         />
       </AuthInputContainer>
+      {error && <div>{error}</div>}
       <AuthButton onClick={handleClick}>登入</AuthButton>
       <AuthLinkWrapper>
         <Link to="/login">

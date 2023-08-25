@@ -1,10 +1,13 @@
 import styled from 'styled-components'
+import { useState, useEffect } from 'react'
 import AdminPostCard from '../components/admin/AdminPostCard'
 import * as style from '../components/common/common.styled'
-// dummy data
-import posts from '../dummyData/posts'
+// api
+import { adminGetTweets, adminDeleteTweet } from '../api/admin'
 
 const Container = styled.div`
+  outline: blue solid 2px;
+  width: 83%;
   padding: 0;
   border: ${style.styledBorder};
   position: relative;
@@ -23,6 +26,7 @@ const Header = styled.div`
 `
 
 const CardContainer = styled.div`
+  width: 100%;
   margin-top: 16px;
   display: flex;
   flex-direction: column;
@@ -30,9 +34,41 @@ const CardContainer = styled.div`
 `
 
 export default function AdminTweetPage(){
+    const [posts, setPosts] = useState([])
+    useEffect(() => {
+    const fetchTweets = async () => {
+        try {
+          const tweetData = await adminGetTweets();
+          console.log(tweetData)
+          const sortedTweets = tweetData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          setPosts(sortedTweets);
+          console.log(sortedTweets)
+        } catch (error) {
+          console.error("Admin fetching Tweets Failed:", error);
+        }
+      };
+      fetchTweets();
+    }, [])
+
+    const handleDelete = async (id)=>{
+      try{
+        const success = await adminDeleteTweet({ id });
+        if (success) {
+          setPosts((prevPosts) =>
+            prevPosts.filter((post) =>
+              post.id !== id));
+          console.log('Delete successful');
+        } else {
+          console.log('Delete failed');
+        }
+      } catch (error){
+        console.error("Delete Tweet Failed:", error)
+      }
+    }
+
     return(
         <>
-            <Container className='col'>
+            <Container>
                 <Header>
                     <h4>推文清單</h4>
                 </Header>
@@ -40,12 +76,13 @@ export default function AdminTweetPage(){
                     {posts.map(data=>{
                         return(
                             <AdminPostCard
-                            key={data.user.id}
-                            name={data.user.name}
-                            account={data.user.name}
-                            avatar={data.user.avatar}
+                            key={data.id}
+                            name={data.User.name}
+                            account={data.User.name}
+                            avatar={data.User.avatar}
                             content={data.description}
                             timestamp={data.createdAt}
+                            onClick={()=>handleDelete(data.id)}
                             />
                         )
                     })}

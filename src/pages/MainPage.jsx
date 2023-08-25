@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PopularBar from "../components/PopularBar";
 import PostCard from "../components/main/PostCard";
 import PopupModal from "../components/PopupModal";
@@ -70,18 +70,10 @@ const Btn = styled(style.StyledBtn)`
   right: 24px;
 `;
 
-const Nav = styled(Link)`
-  text-decoration: none;
-  color: black;
-  &:hover{
-    text-decoration: none;
-    color: black;
-  }
-`
-
 const MainPage = () => {
   const [isNewPostOpen, setIsNewPostOpen] = useState(false);
   const [posts, setPosts] = useState([])
+  const navigate = useNavigate()
 
   const openNewPost = () => {
     setIsNewPostOpen(true);
@@ -126,7 +118,7 @@ const MainPage = () => {
         <CardContainer>
           {posts.map((data) => {
             return (
-              <Nav key={data.id} to={`main/${data.id}`} className="post-link">
+              <div key={data.id} onClick={() => navigate(`/main/${data.id}`)} className="post-link">
                   <PostCard
                       key={data.id}
                       name={data.User.name}
@@ -137,7 +129,7 @@ const MainPage = () => {
                       reply={data.repliesCount}
                       like={data.likesCount}
                   />
-              </Nav>
+              </div>
             );
           })}
         </CardContainer>
