@@ -21,9 +21,7 @@ const SubToolBtn = styled.button`
   cursor: pointer;
 `;
 
-const SubToolBar = () => {
-  const [activePage, setActivePage] = useState("post");
-
+const SubToolBar = ({ activePage, setActivePage }) => {
   return (
     <SubToolContainer>
       <SubToolBtn
@@ -34,15 +32,15 @@ const SubToolBar = () => {
       </SubToolBtn>
 
       <SubToolBtn
-        $isActive={activePage === "replies"}
-        onClick={() => setActivePage("replies")}
+        $isActive={activePage === "reply"}
+        onClick={() => setActivePage("reply")}
       >
         回覆
       </SubToolBtn>
 
       <SubToolBtn
-        $isActive={activePage === "likes"}
-        onClick={() => setActivePage("likes")}
+        $isActive={activePage === "like"}
+        onClick={() => setActivePage("like")}
       >
         喜歡的內容
       </SubToolBtn>
