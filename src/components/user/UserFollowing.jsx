@@ -87,6 +87,7 @@ const UserFollowing = () => {
         {usersData.map((data) => {
           return (
             <FollowCard
+              key={data.user.id}
               id={data.user.id}
               name={data.user.name}
               avatar={data.user.avatar}
