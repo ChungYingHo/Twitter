@@ -22,10 +22,10 @@ const UserBanner = styled.img`
 const UserInfoWrapper = styled.div`
   position: relative;
   top: -75px;
-  padding: 0 16px;
 `;
 
 const UserPicBtnWrapper = styled.div`
+  padding: 0 16px;
   display: flex;
   justify-content: space-between;
 `;
@@ -53,6 +53,7 @@ const UserPic = styled.img`
 
 const UserAccountNameWrapper = styled.div`
   margin-top: 5px;
+  padding: 0 16px;
 `;
 
 const UserName = styled.h5`
@@ -134,15 +135,16 @@ const UserInfo = () => {
         <UserPicBtnWrapper>
           <UserPic src={dummyUserPic} />
           <UserEditBtn onClick={openNewPost}>編輯個人資料</UserEditBtn>
-          <PopupModal
-            isOpen={isNewPostOpen}
-            closeModal={closeNewPost}
-            headerTitle={<HeaderTittle>編輯個人資料</HeaderTittle>}
-            headerButton={<HeaderBtn>儲存</HeaderBtn>}
-          >
-            <UserEdit />
-          </PopupModal>
         </UserPicBtnWrapper>
+
+        <PopupModal
+          isOpen={isNewPostOpen}
+          closeModal={closeNewPost}
+          headerTitle={<HeaderTittle>編輯個人資料</HeaderTittle>}
+          headerButton={<HeaderBtn>儲存</HeaderBtn>}
+        >
+          <UserEdit />
+        </PopupModal>
 
         <UserAccountNameWrapper>
           <UserName>Egg Head</UserName>
