@@ -3,12 +3,12 @@ import TimeDiff from '../main/TimeDiff'
 import * as style from '../common/common.styled'
 
 const Container = styled.div`
+    outline: red solid 2px;
     min-height: 133px;
     height: fit-content;
     width: 100%;
     border-bottom: ${style.styledBorder};
     display: flex;
-    overflow: hidden;
 
     img{
         ${style.styledImg};
@@ -17,12 +17,15 @@ const Container = styled.div`
 `
 
 const Post = styled.div`
+    outline: green solid 2px;
     height: 100%;
     width: calc(100% - 74px);
     margin-left: 8px;
+    margin-right: 24px;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    overflow: hidden;
     .content{
         height: 78px;
         ${style.styledContentFont}

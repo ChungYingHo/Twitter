@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import PopularBar from "../components/PopularBar";
 import ReplyCard from "../components/reply/ReplyCard";
+import PopupModal from "../components/PopupModal";
+import NewReply from "../components/reply/NewReply";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
@@ -11,9 +13,6 @@ import { displayTime } from "../components/reply/displayTime";
 // API
 import { getSingleTweet, getReplies } from "../api/main";
 
-// dummy data
-import replies from "../dummyData/replies";
-
 const Container = styled.div`
   width: 56.2%;
   padding: 0;
@@ -22,6 +21,7 @@ const Container = styled.div`
 `
 
 const Header = styled.div`
+  outline: red solid 2px;
   width: 100%;
   height: 51px;
   margin-top: 24px;
@@ -76,7 +76,7 @@ const Content = styled.p`
     overflow-wrap: break-word;
 `
 
-const Date = styled.p`
+const StyledDate = styled.p`
     ${style.styledAccount};
     font-weight: 500;
 `
@@ -142,17 +142,26 @@ export default function MainReplyList(){
         const fetchingReplies = async ()=>{
             try{
                 const repliesData = await getReplies({ tweet_id: parseInt(tweet_id) });
-                setReplies(repliesData)
-                console.log(repliesData)
+                const sortedReplies = repliesData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                setReplies(sortedReplies);
+                console.log(sortedReplies)
             } catch (error){
                 console.error('Fetching Replies Failed:', error)
             }
         }
         fetchingReplies()
     }, [tweet_id])
+    // 彈出回覆視窗
+    const [isNewPostOpen, setIsNewPostOpen] = useState(false)
+    const openNewPost = () => {
+        setIsNewPostOpen(true);
+    };
+    const closeNewPost = () => {
+        setIsNewPostOpen(false);
+    }
 
     return(
-        <>
+    <>
       <Container>
         <Header>
           <LeftArrow />
@@ -160,6 +169,15 @@ export default function MainReplyList(){
         </Header>
         {tweet && replies && (
             <>
+                <PopupModal isOpen={isNewPostOpen} closeModal={closeNewPost}>
+                    <NewReply
+                        name={tweet.User.name}
+                        account={tweet.User.account}
+                        timestamp={tweet.createdAt}
+                        avatar={tweet.User.avatar}
+                        content={tweet.description}
+                    />
+                </PopupModal>
                 <PostContainer>
                     <PersonInfo>
                         <Title>
@@ -170,7 +188,7 @@ export default function MainReplyList(){
                             </div>
                         </Title>
                         <Content>{tweet.description}</Content>
-                        <Date>{displayTime(tweet.createdAt)}</Date>
+                        <StyledDate>{displayTime(tweet.createdAt)}</StyledDate>
                     </PersonInfo>
                     <Counts>
                         <div>
@@ -183,7 +201,7 @@ export default function MainReplyList(){
                         </div>
                     </Counts>
                     <Interact>
-                        <Reply/>
+                        <Reply onClick={openNewPost}/>
                         <Like/>
                     </Interact>
                 </PostContainer>
