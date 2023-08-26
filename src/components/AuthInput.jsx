@@ -34,7 +34,6 @@ const StyledTextarea = styled.textarea`
   resize: none;
   line-height: 26px;
   font-size: 16px;
-  columns: 5;
 `;
 
 const AuthInput = ({ label, type, placeholder, value, onChange, isLarge }) => {
