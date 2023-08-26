@@ -104,7 +104,7 @@ export default function Toolbar() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    // console.log(localStorage);
+    console.log(localStorage);
     localStorage.removeItem("UserToken");
     localStorage.removeItem("userIntro");
     localStorage.removeItem("userAccount");
