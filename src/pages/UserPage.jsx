@@ -8,7 +8,6 @@ import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
 import ReplyCard from "../components/reply/ReplyCard";
-import UserEdit from "../components/user/UserEdit";
 
 // dummyData
 import posts from "../dummyData/posts";
