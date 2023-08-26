@@ -38,15 +38,20 @@ const Btn = styled(style.StyledBtn)`
   right: 16px;
 `;
 
-export default function NewPost() {
+export default function NewPost({ postContent, setPostContent, handlePostSubmit }) {
   return (
     <Container>
       <div className="info">
         <img src="https://i.imgur.com/jUZg5Mm.png" alt="avatar" />
         <p>有什麼新鮮事？</p>
       </div>
-      <textarea minLength="1" maxLength="140"></textarea>
-      <Btn>推文</Btn>
+      <textarea
+        minLength="1"
+        maxLength="140"
+        value={postContent}
+        onChange={(e) => setPostContent(e.target.value)}
+        ></textarea>
+      <Btn onClick={handlePostSubmit}>推文</Btn>
     </Container>
   );
 }

@@ -7,7 +7,7 @@ import PopupModal from "../components/PopupModal";
 import NewPost from "../components/main/NewPost"
 import * as style from "../components/common/common.styled";
 // 引用 api
-import { getTweets } from "../api/main";
+import { getTweets, postTweets } from "../api/main";
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -73,15 +73,17 @@ const Btn = styled(style.StyledBtn)`
 const MainPage = () => {
   const [isNewPostOpen, setIsNewPostOpen] = useState(false);
   const [posts, setPosts] = useState([])
+  const [postContent, setPostContent] = useState('')
   const navigate = useNavigate()
 
+  // 控管彈出視窗
   const openNewPost = () => {
     setIsNewPostOpen(true);
   };
   const closeNewPost = () => {
     setIsNewPostOpen(false);
   };
-
+  // 抓取所有貼文
   useEffect(() => {
     const fetchTweets = async () => {
       try {
@@ -95,6 +97,25 @@ const MainPage = () => {
     };
     fetchTweets();
   }, [])
+  // 發送貼文
+  const handlePostSubmit = async () => {
+    try {
+      const response = await postTweets({ description: postContent });
+      console.log('Post successful:', response);
+      // 清空 textarea 內容
+      setPostContent('');
+      // 刷新主畫面上的貼文列表
+      const updatedTweets = await getTweets();
+      const sortedTweets = updatedTweets.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      setPosts(sortedTweets);
+      // 關閉發文彈出視窗
+      closeNewPost();
+    } catch (error) {
+      console.error('Posting Tweet Failed:', error);
+    }
+  }
 
   return (
     <>
@@ -111,8 +132,12 @@ const MainPage = () => {
           <Btn>推文</Btn>
         </PostContainer>
 
-        <PopupModal isOpen={isNewPostOpen} closeModal={closeNewPost}>
-          <NewPost />
+        <PopupModal isOpen={isNewPostOpen} closeModal={closeNewPost} >
+          <NewPost
+            postContent={postContent}
+            setPostContent={setPostContent}
+            handlePostSubmit={handlePostSubmit}
+          />
         </PopupModal>
 
         <CardContainer>
