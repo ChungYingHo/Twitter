@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/Twitter/static/css/main.b9a4f0f5.css",
+    "main.js": "/Twitter/static/js/main.8a738655.js",
+    "static/js/787.f649083d.chunk.js": "/Twitter/static/js/787.f649083d.chunk.js",
+    "static/media/defaultUserBanner.png": "/Twitter/static/media/defaultUserBanner.2c188dba73aaa8470c09.png",
+    "static/media/dummyUserPic.jpg": "/Twitter/static/media/dummyUserPic.061d30dc3b0a49e8b7fb.jpg",
+    "static/media/setting.svg": "/Twitter/static/media/setting.f816c687fe9a4bd78229ba4e78f87620.svg",
+    "static/media/logo.svg": "/Twitter/static/media/logo.47915af06818f4c704d399fc8b2142be.svg",
+    "static/media/logout.svg": "/Twitter/static/media/logout.bac6c5bef8b75bb72e63387f94e3463c.svg",
+    "index.html": "/Twitter/index.html",
+    "static/media/photo.svg": "/Twitter/static/media/photo.6da3794d4502b6135dec05acd97fec25.svg",
+    "static/media/personInfo.svg": "/Twitter/static/media/personInfo.4e5e4cc383d1861b0edc8c153f304e32.svg",
+    "static/media/home.svg": "/Twitter/static/media/home.ccd58cba7a107a31012f75ca317e3ee3.svg",
+    "static/media/reply.svg": "/Twitter/static/media/reply.57d3a6c624eecb4621ae2b8546cc47f4.svg",
+    "static/media/reply@30.svg": "/Twitter/static/media/reply@30.7b124f39876b9794409a8df2a0a783cd.svg",
+    "static/media/like@30.svg": "/Twitter/static/media/like@30.a15ea4701eb2fd9287249f38c8cf7bc0.svg",
+    "static/media/like.svg": "/Twitter/static/media/like.915942553f16ce9c0b2958538b5f00e9.svg",
+    "static/media/like@24.svg": "/Twitter/static/media/like@24.771cf028994c26308aeb9f726e328e0e.svg",
+    "static/media/posts.svg": "/Twitter/static/media/posts.7aa75d65f99411d71dc66ff6964796ba.svg",
+    "static/media/close-white.svg": "/Twitter/static/media/close-white.e8c2ae5e9a4459ae5fc72086c05c8f3b.svg",
+    "static/media/close.svg": "/Twitter/static/media/close.54c64c24062caf43c9a497991bd9830e.svg",
+    "static/media/left-arrow.svg": "/Twitter/static/media/left-arrow.5a11d6a8a2191decdf03869a77b345db.svg",
+    "main.b9a4f0f5.css.map": "/Twitter/static/css/main.b9a4f0f5.css.map",
+    "main.8a738655.js.map": "/Twitter/static/js/main.8a738655.js.map",
+    "787.f649083d.chunk.js.map": "/Twitter/static/js/787.f649083d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b9a4f0f5.css",
+    "static/js/main.8a738655.js"
+  ]
+}
