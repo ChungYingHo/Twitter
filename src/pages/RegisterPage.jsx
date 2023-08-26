@@ -5,6 +5,7 @@ import {
   AuthLinkText,
   AuthTittle,
   InputLength,
+  WarnMsg,
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
@@ -13,6 +14,7 @@ import { Link } from "react-router-dom";
 import { register } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import clsx from "clsx";
 
 const RegisterPage = () => {
   const [account, setAccount] = useState("");
@@ -56,7 +58,9 @@ const RegisterPage = () => {
       <Logo />
       <AuthTittle>建立您的帳號</AuthTittle>
 
-      <AuthInputContainer>
+      <AuthInputContainer
+        className={clsx("", { redLine: account.length > 30 })}
+      >
         <AuthInput
           maxlength="30"
           label={"帳號"}
@@ -66,10 +70,15 @@ const RegisterPage = () => {
           onChange={(accountInputValue) => setAccount(accountInputValue)}
           required
         />
-        <InputLength>{account.length}/30</InputLength>
+        <InputLength>
+          <WarnMsg className={clsx("", { warn: account.length > 30 })}>
+            字數超過上限!!
+          </WarnMsg>
+          <div>{account.length}/30</div>
+        </InputLength>
       </AuthInputContainer>
 
-      <AuthInputContainer>
+      <AuthInputContainer className={clsx("", { redLine: name.length > 50 })}>
         <AuthInput
           label={"名稱"}
           maxlength="50"
@@ -79,7 +88,12 @@ const RegisterPage = () => {
           onChange={(nameInputValue) => setName(nameInputValue)}
           required
         />
-        <InputLength>{name.length}/50</InputLength>
+        <InputLength>
+          <WarnMsg className={clsx("", { warn: name.length > 50 })}>
+            字數超過上限!!
+          </WarnMsg>
+          <div>{name.length}/50</div>
+        </InputLength>
       </AuthInputContainer>
 
       <AuthInputContainer>
@@ -94,7 +108,9 @@ const RegisterPage = () => {
         />
       </AuthInputContainer>
 
-      <AuthInputContainer>
+      <AuthInputContainer
+        className={clsx("", { redLine: password.length > 20 })}
+      >
         <AuthInput
           label={"密碼"}
           minlength="5"
@@ -105,10 +121,17 @@ const RegisterPage = () => {
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
           required
         />
-        <InputLength>{password.length}/20</InputLength>
+        <InputLength>
+          <WarnMsg className={clsx("", { warn: password.length > 20 })}>
+            字數超過上限!!
+          </WarnMsg>
+          <div>{password.length}/20</div>
+        </InputLength>
       </AuthInputContainer>
 
-      <AuthInputContainer>
+      <AuthInputContainer
+        className={clsx("", { redLine: checkPassword.length > 20 })}
+      >
         <AuthInput
           label={"密碼"}
           minlength="5"
@@ -121,7 +144,12 @@ const RegisterPage = () => {
           }
           required
         />
-        <InputLength>{checkPassword.length}/20</InputLength>
+        <InputLength>
+          <WarnMsg className={clsx("", { warn: checkPassword.length > 20 })}>
+            字數超過上限!!
+          </WarnMsg>
+          <div>{checkPassword.length}/20</div>
+        </InputLength>
       </AuthInputContainer>
       {error && <div>{error}</div>}
       <AuthButton onClick={handleClick}>註冊</AuthButton>

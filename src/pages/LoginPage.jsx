@@ -7,6 +7,7 @@ import {
   AuthTittle,
   AuthSpan,
   InputLength,
+  WarnMsg,
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
@@ -14,6 +15,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
 import Swal from "sweetalert2";
+import clsx from "clsx";
 
 const LoginPage = () => {
   const [account, setAccount] = useState("");
@@ -50,7 +52,9 @@ const LoginPage = () => {
         <Logo />
       </div>
       <AuthTittle>登入Alphitter</AuthTittle>
-      <AuthInputContainer>
+      <AuthInputContainer
+        className={clsx("", { redLine: account.length > 30 })}
+      >
         <AuthInput
           label={"帳號"}
           maxlength="30"
@@ -58,10 +62,17 @@ const LoginPage = () => {
           placeholder={"請輸入帳號"}
           onChange={(accountInputValue) => setAccount(accountInputValue)}
         />
-        <InputLength>{account.length}/30</InputLength>
+        <InputLength>
+          <WarnMsg className={clsx("", { warn: account.length > 30 })}>
+            字數超過上限!!
+          </WarnMsg>
+          <div>{account.length}/30</div>
+        </InputLength>
       </AuthInputContainer>
 
-      <AuthInputContainer>
+      <AuthInputContainer
+        className={clsx("", { redLine: password.length > 20 })}
+      >
         <AuthInput
           label={"密碼"}
           maxlength="20"
@@ -69,7 +80,12 @@ const LoginPage = () => {
           placeholder={"請輸入密碼"}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
         />
-        <InputLength>{password.length}/20</InputLength>
+        <InputLength>
+          <WarnMsg className={clsx("", { warn: password.length > 20 })}>
+            字數超過上限!!
+          </WarnMsg>
+          <div>{password.length}/20</div>
+        </InputLength>
       </AuthInputContainer>
       {error && <div>{error}</div>}
       <AuthButton onClick={handleClick}>登入</AuthButton>

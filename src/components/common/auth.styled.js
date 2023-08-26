@@ -13,6 +13,15 @@ const StyledAuthInputContainer = styled.div`
   width: 356px;
   height: 54px;
   margin-bottom: 24px;
+  border-bottom: 2px solid rgb(101, 119, 134);
+  &:hover,
+  &:active {
+    border-bottom: 2px solid #50b5ff;
+  }
+
+  &.redLine {
+    border-bottom: 2px solid #fc5a5a;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -59,9 +68,18 @@ const InputLength = styled.div`
   color: #696974;
   font-size: 12px;
   font-weight: 500;
+  padding-top: 4px;
 
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+`;
+
+const WarnMsg = styled.div`
+  visibility: hidden;
+  &.warn {
+    color: #fc5a5a;
+    visibility: visible;
+  }
 `;
 
 export {
@@ -73,4 +91,5 @@ export {
   StyledTittle as AuthTittle,
   StyledSpan as AuthSpan,
   InputLength,
+  WarnMsg,
 };
