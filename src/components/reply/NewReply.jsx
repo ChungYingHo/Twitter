@@ -9,9 +9,10 @@ const Container = styled.div`
 `
 
 const PostContainer = styled.div`
+    outline: orange solid 2px;
     width: 100%;
     height: fit-content;
-    min-height: 129px;
+    min-height: 130px;
     display: flex;
     img{
         ${style.styledImg}
@@ -58,11 +59,13 @@ const Info = styled.div`
 `
 
 const SubContainer = styled.div`
+    outline: purple solid 2px;
     height: fit-content;
     min-height: 290px;
     margin-top: 24px;
     .title{
         display: flex;
+        position: relative;
         img{
             ${style.styledImg}
             margin: 0 16px;
@@ -73,7 +76,17 @@ const SubContainer = styled.div`
             resize: none;
             border: transparent solid;
             outline: none;
-            margin: 8px 16px 0 0
+            margin: 8px 16px 0 0;
+        }
+        &::after{
+            content: "";
+            width: 2px;
+            height: 86px;
+            background-color: #b5b5be;
+            position: absolute;
+            top: -96px;
+            left: 41px;
+            transform: translateX(-50%);
         }
     }
 `
@@ -87,7 +100,6 @@ const Btn = styled(style.StyledBtn)`
 `;
 
 export default function NewReply({name, account, timestamp, avatar, content, replyContent, setReplyContent, handleReplySubmit}) {
-  console.log('newreply',{name, account, timestamp, avatar, content})
   return (
     <Container>
       <PostContainer>

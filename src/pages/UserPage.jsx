@@ -142,7 +142,6 @@ const UserPage = () => {
             })}
         </SwitchZoneContainer>
       </Container>
-      <PopularBar />
     </>
   );
 };
