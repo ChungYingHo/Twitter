@@ -6,24 +6,14 @@ import {
   AuthLinkWrapper,
   AuthTittle,
   AuthSpan,
+  InputLength,
 } from "../components/common/auth.styled";
-import styled from "styled-components";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
 import Swal from "sweetalert2";
-
-const InputLength = styled.div`
-  height: 20px;
-  color: #696974;
-  font-size: 12px;
-  font-weight: 500;
-
-  display: flex;
-  justify-content: flex-end;
-`;
 
 const LoginPage = () => {
   const [account, setAccount] = useState("");

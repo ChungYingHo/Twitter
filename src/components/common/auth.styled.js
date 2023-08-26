@@ -53,6 +53,17 @@ const StyledTittle = styled.h3`
 const StyledSpan = styled.span`
   margin: 0 10px;
 `;
+
+const InputLength = styled.div`
+  height: 20px;
+  color: #696974;
+  font-size: 12px;
+  font-weight: 500;
+
+  display: flex;
+  justify-content: flex-end;
+`;
+
 export {
   StyedContainer as AuthContainer,
   StyledAuthInputContainer as AuthInputContainer,
@@ -61,4 +72,5 @@ export {
   StyledLinkWrapper as AuthLinkWrapper,
   StyledTittle as AuthTittle,
   StyledSpan as AuthSpan,
+  InputLength,
 };

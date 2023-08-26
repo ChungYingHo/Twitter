@@ -4,6 +4,7 @@ import {
   AuthButton,
   AuthLinkText,
   AuthTittle,
+  InputLength,
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
@@ -65,6 +66,7 @@ const RegisterPage = () => {
           onChange={(accountInputValue) => setAccount(accountInputValue)}
           required
         />
+        <InputLength>{account.length}/30</InputLength>
       </AuthInputContainer>
 
       <AuthInputContainer>
@@ -77,6 +79,7 @@ const RegisterPage = () => {
           onChange={(nameInputValue) => setName(nameInputValue)}
           required
         />
+        <InputLength>{name.length}/50</InputLength>
       </AuthInputContainer>
 
       <AuthInputContainer>
@@ -102,6 +105,7 @@ const RegisterPage = () => {
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
           required
         />
+        <InputLength>{password.length}/20</InputLength>
       </AuthInputContainer>
 
       <AuthInputContainer>
@@ -117,6 +121,7 @@ const RegisterPage = () => {
           }
           required
         />
+        <InputLength>{checkPassword.length}/20</InputLength>
       </AuthInputContainer>
       {error && <div>{error}</div>}
       <AuthButton onClick={handleClick}>註冊</AuthButton>
