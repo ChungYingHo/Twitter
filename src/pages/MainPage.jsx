@@ -159,7 +159,6 @@ const MainPage = () => {
           })}
         </CardContainer>
       </Container>
-      <PopularBar />
     </>
   );
 };
