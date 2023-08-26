@@ -16,6 +16,7 @@ const Container = styled.div`
 `
 
 const Post = styled.div`
+    outline: blue solid 2px;
     height: 100%;
     overflow: hidden;
     margin-right: 24px;
@@ -32,14 +33,24 @@ const Post = styled.div`
 `
 
 const Info = styled.div`
+    outline: yellow solid 5px;
     display: flex;
     align-items: center;
     gap: 8px;
+    p{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
     .name{
+        outline: black solid 2px;
         ${style.styledName}
+        max-width: 40%;
     }
     .account{
+        outline: gray solid 2px;
         ${style.styledAccount}
+        max-width: 60%;
     }
 `
 

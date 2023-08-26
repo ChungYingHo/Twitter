@@ -4,7 +4,7 @@ import ReplyCard from "../components/reply/ReplyCard";
 import PopupModal from "../components/PopupModal";
 import NewReply from "../components/reply/NewReply";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
 import { ReactComponent as Reply } from "../assets/reply@30.svg";
 import { ReactComponent as Like } from "../assets/like@30.svg";
@@ -42,6 +42,10 @@ const Header = styled.div`
   }
 `
 
+const StyledArrow = styled(LeftArrow)`
+    cursor: pointer;
+`
+
 const PostContainer = styled.div`
   outline: red solid 2px;
   height: fit-content;
@@ -60,11 +64,26 @@ const PersonInfo = styled.div`
 `
 
 const Title = styled.div`
+    outline: black solid 2px;
     display: flex;
     margin-bottom: 8px;
     img{
         ${style.styledImg}
         margin-right: 8px;
+    }
+    div{
+        outline: blue solid 2px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        p{
+            outline: red solid 2px;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
     }
     .name{
         ${style.styledName}
@@ -128,6 +147,7 @@ const CardContainer = styled.div`
 
 export default function MainReplyList(){
     const { tweet_id } = useParams()
+    const navigate = useNavigate()
     // 抓特定貼文
     const [tweet, setTweet] = useState(null)
     useEffect(() => {
@@ -216,7 +236,7 @@ export default function MainReplyList(){
     <>
       <Container>
         <Header>
-          <LeftArrow />
+          <StyledArrow onClick={() => navigate(`/main`)}/>
           <h4>推文</h4>
         </Header>
         {tweet && replies && (
