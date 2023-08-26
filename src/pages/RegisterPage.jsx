@@ -63,6 +63,7 @@ const RegisterPage = () => {
           value={account}
           placeholder={"請輸入帳號"}
           onChange={(accountInputValue) => setAccount(accountInputValue)}
+          required
         />
       </AuthInputContainer>
 
@@ -74,6 +75,7 @@ const RegisterPage = () => {
           value={name}
           placeholder={"請輸入使用者名稱"}
           onChange={(nameInputValue) => setName(nameInputValue)}
+          required
         />
       </AuthInputContainer>
 
@@ -85,23 +87,27 @@ const RegisterPage = () => {
           value={email}
           placeholder={"請輸入Email"}
           onChange={(emailInputValue) => setEmail(emailInputValue)}
+          required
         />
       </AuthInputContainer>
 
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
+          minlength="5"
           maxlength="20"
           name={password}
           value={password}
           placeholder={"請輸入密碼"}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
+          required
         />
       </AuthInputContainer>
 
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
+          minlength="5"
           maxlength="20"
           name={checkPassword}
           value={checkPassword}
@@ -109,6 +115,7 @@ const RegisterPage = () => {
           onChange={(checkPasswordInputValue) =>
             setCheckPassword(checkPasswordInputValue)
           }
+          required
         />
       </AuthInputContainer>
       {error && <div>{error}</div>}

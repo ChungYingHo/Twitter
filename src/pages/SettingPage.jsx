@@ -85,17 +85,20 @@ const SettingPage = () => {
         <SettingInputContainer>
           <AuthInput
             label={"密碼"}
+            minlength="5"
             maxlength="20"
             name={password}
             value={password}
             placeholder={"請輸入密碼"}
             onChange={(passwordInputValue) => setPassword(passwordInputValue)}
+            required
           />
         </SettingInputContainer>
 
         <SettingInputContainer>
           <AuthInput
             label={"密碼再確認"}
+            minlength="5"
             maxlength="20"
             name={checkPassword}
             value={checkPassword}
@@ -103,6 +106,7 @@ const SettingPage = () => {
             onChange={(checkPasswordInputValue) =>
               setCheckPassword(checkPasswordInputValue)
             }
+            required
           />
         </SettingInputContainer>
 
