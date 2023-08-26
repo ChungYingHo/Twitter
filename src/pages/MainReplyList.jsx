@@ -11,7 +11,7 @@ import { ReactComponent as Like } from "../assets/like@30.svg";
 import * as style from "../components/common/common.styled";
 import { displayTime } from "../components/reply/displayTime";
 // API
-import { getSingleTweet, getReplies } from "../api/main";
+import { getSingleTweet, getReplies, postReply } from "../api/main";
 
 const Container = styled.div`
   width: 56.2%;
@@ -159,6 +159,24 @@ export default function MainReplyList(){
     const closeNewPost = () => {
         setIsNewPostOpen(false);
     }
+    // 新增一筆回覆
+    const [replyContent, setReplyContent] = useState('')
+    const handleReplySubmit = async ()=>{
+        try{
+            await postReply({tweet_id, comment: replyContent})
+            console.log('Reply successful!')
+            console.log('replyContent', replyContent)
+            // 發出去就清空 textarea
+            setReplyContent('')
+            const updatedReplies = await getReplies({ tweet_id: parseInt(tweet_id) })
+            const sortedUpdatedReplies = updatedReplies.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            setReplies(sortedUpdatedReplies)
+            closeNewPost()
+        } catch (error){
+            console.error('Replying Tweet Failed:', error)
+            console.log('replyContent', replyContent)
+        }
+    }
 
     return(
     <>
@@ -176,6 +194,9 @@ export default function MainReplyList(){
                         timestamp={tweet.createdAt}
                         avatar={tweet.User.avatar}
                         content={tweet.description}
+                        replyContent={replyContent}
+                        setReplyContent={setReplyContent}
+                        handleReplySubmit={handleReplySubmit}
                     />
                 </PopupModal>
                 <PostContainer>
