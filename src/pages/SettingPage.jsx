@@ -105,7 +105,6 @@ const SettingPage = () => {
           <SettingButton onClick={handleClick}>儲存</SettingButton>
         </SettingButtonWrapper>
       </Container>
-      <PopularBar />
     </>
   );
 };
