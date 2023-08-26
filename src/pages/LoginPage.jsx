@@ -48,6 +48,7 @@ const LoginPage = () => {
       <AuthInputContainer>
         <AuthInput
           label={"帳號"}
+          maxlength="30"
           value={account}
           placeholder={"請輸入帳號"}
           onChange={(accountInputValue) => setAccount(accountInputValue)}
@@ -57,6 +58,7 @@ const LoginPage = () => {
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
+          maxlength="20"
           value={password}
           placeholder={"請輸入密碼"}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}

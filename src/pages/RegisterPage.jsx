@@ -57,6 +57,7 @@ const RegisterPage = () => {
 
       <AuthInputContainer>
         <AuthInput
+          maxlength="30"
           label={"帳號"}
           name={account}
           value={account}
@@ -68,6 +69,7 @@ const RegisterPage = () => {
       <AuthInputContainer>
         <AuthInput
           label={"名稱"}
+          maxlength="50"
           name={name}
           value={name}
           placeholder={"請輸入使用者名稱"}
@@ -77,6 +79,7 @@ const RegisterPage = () => {
 
       <AuthInputContainer>
         <AuthInput
+          type="email"
           label={"Email"}
           name={email}
           value={email}
@@ -88,6 +91,7 @@ const RegisterPage = () => {
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
+          maxlength="20"
           name={password}
           value={password}
           placeholder={"請輸入密碼"}
@@ -98,6 +102,7 @@ const RegisterPage = () => {
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
+          maxlength="20"
           name={checkPassword}
           value={checkPassword}
           placeholder={"請再次輸入密碼"}
