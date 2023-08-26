@@ -31,6 +31,10 @@ const StyledTextarea = styled.textarea`
   border: none;
   background-color: #f5f8fa;
   border-radius: 0px;
+  resize: none;
+  line-height: 26px;
+  font-size: 16px;
+  columns: 5;
 `;
 
 const AuthInput = ({ label, type, placeholder, value, onChange, isLarge }) => {
@@ -42,7 +46,7 @@ const AuthInput = ({ label, type, placeholder, value, onChange, isLarge }) => {
           placeholder={placeholder || ""}
           value={value || ""}
           onChange={(event) => onChange?.(event.target.value)}
-          rows="5"
+          rows="4"
         />
       ) : (
         <StyledInput
