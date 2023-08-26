@@ -98,7 +98,6 @@ const UserFollowing = () => {
           );
         })}
       </Container>
-      <PopularBar />
     </>
   );
 };
