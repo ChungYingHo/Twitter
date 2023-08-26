@@ -95,9 +95,8 @@ const UserPage = () => {
           {activePage === "post" &&
             posts.map((data) => {
               return (
-                <PostCardWrapper>
+                <PostCardWrapper key={data.id}>
                   <PostCard
-                    key={data.id}
                     name={data.user.name}
                     account={data.user.name}
                     avatar={data.user.avatar}
@@ -113,9 +112,8 @@ const UserPage = () => {
           {activePage === "reply" &&
             replies.map((reply) => {
               return (
-                <ReplyCardWrapper>
+                <ReplyCardWrapper key={reply.id}>
                   <ReplyCard
-                    key={reply.id}
                     name={reply.User.name}
                     account={reply.User.account}
                     avatar={reply.User.avatar}
@@ -129,9 +127,8 @@ const UserPage = () => {
           {activePage === "like" &&
             posts.map((data) => {
               return (
-                <PostCardWrapper>
+                <PostCardWrapper key={data.id}>
                   <PostCard
-                    key={data.id}
                     name={data.user.name}
                     account={data.user.name}
                     avatar={data.user.avatar}
