@@ -7,12 +7,23 @@ import {
   AuthTittle,
   AuthSpan,
 } from "../components/common/auth.styled";
+import styled from "styled-components";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
 import Swal from "sweetalert2";
+
+const InputLength = styled.div`
+  height: 20px;
+  color: #696974;
+  font-size: 12px;
+  font-weight: 500;
+
+  display: flex;
+  justify-content: flex-end;
+`;
 
 const LoginPage = () => {
   const [account, setAccount] = useState("");
@@ -57,6 +68,7 @@ const LoginPage = () => {
           placeholder={"請輸入帳號"}
           onChange={(accountInputValue) => setAccount(accountInputValue)}
         />
+        <InputLength>{account.length}/30</InputLength>
       </AuthInputContainer>
 
       <AuthInputContainer>
@@ -67,6 +79,7 @@ const LoginPage = () => {
           placeholder={"請輸入密碼"}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
         />
+        <InputLength>{password.length}/20</InputLength>
       </AuthInputContainer>
       {error && <div>{error}</div>}
       <AuthButton onClick={handleClick}>登入</AuthButton>
