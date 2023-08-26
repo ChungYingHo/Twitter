@@ -83,7 +83,7 @@ const UserFollowing = () => {
             </HeaderTittleWrapper>
           </Header>
         </StyledLink>
-        <FollowrSubTool />
+        <FollowrSubTool activePage="following" />
         {usersData.map((data) => {
           return (
             <FollowCard
