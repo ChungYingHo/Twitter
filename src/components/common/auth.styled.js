@@ -11,8 +11,17 @@ const StyedContainer = styled.div`
 
 const StyledAuthInputContainer = styled.div`
   width: 356px;
-  height: 78px;
-  margin-top: 10px;
+  height: 54px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid rgb(101, 119, 134);
+  &:hover,
+  &:active {
+    border-bottom: 2px solid #50b5ff;
+  }
+
+  &.redLine {
+    border-bottom: 2px solid #fc5a5a;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -53,6 +62,26 @@ const StyledTittle = styled.h3`
 const StyledSpan = styled.span`
   margin: 0 10px;
 `;
+
+const InputLength = styled.div`
+  height: 20px;
+  color: #696974;
+  font-size: 12px;
+  font-weight: 500;
+  padding-top: 4px;
+
+  display: flex;
+  justify-content: space-between;
+`;
+
+const WarnMsg = styled.div`
+  visibility: hidden;
+  &.warn {
+    color: #fc5a5a;
+    visibility: visible;
+  }
+`;
+
 export {
   StyedContainer as AuthContainer,
   StyledAuthInputContainer as AuthInputContainer,
@@ -61,4 +90,6 @@ export {
   StyledLinkWrapper as AuthLinkWrapper,
   StyledTittle as AuthTittle,
   StyledSpan as AuthSpan,
+  InputLength,
+  WarnMsg,
 };

@@ -83,22 +83,23 @@ const UserFollowers = () => {
             </HeaderTittleWrapper>
           </Header>
         </StyledLink>
-        <FollowrSubTool />
+        <FollowrSubTool activePage="followers" />
         {usersData.map((data) => {
           return (
-            <FollowCard
-              key={data.user.id}
-              id={data.user.id}
-              name={data.user.name}
-              avatar={data.user.avatar}
-              introduction={data.user.introduction}
-              isFollowed={data.user.isFollowed}
-              onClick={() => handleFollow(data.user.id)}
-            />
+            <>
+              <FollowCard
+                key={data.user.id}
+                id={data.user.id}
+                name={data.user.name}
+                avatar={data.user.avatar}
+                introduction={data.user.introduction}
+                isFollowed={data.user.isFollowed}
+                onClick={() => handleFollow(data.user.id)}
+              />
+            </>
           );
         })}
       </Container>
-      <PopularBar />
     </>
   );
 };
