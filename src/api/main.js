@@ -76,3 +76,25 @@ export const postReply = async ({tweet_id, comment}) => {
     throw error
   }
 }
+
+// 喜愛這篇貼文
+export const likeTweet = async ({tweet_id}) => {
+  try {
+    const res = await axiosInstance.post(`${apiURL}/tweets/${tweet_id}/like`);
+    return res.data
+  } catch (error) {
+    console.error('[Like Tweet failed]: ', error);
+    throw error
+  }
+}
+
+// 取消喜愛這篇貼文
+export const dislikeTweet = async ({tweet_id}) => {
+  try {
+    const res = await axiosInstance.post(`${apiURL}/tweets/${tweet_id}/unlike`);
+    return res.data
+  } catch (error) {
+    console.error('[Dislike Tweet failed]: ', error);
+    throw error
+  }
+}

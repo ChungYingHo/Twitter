@@ -8,10 +8,16 @@ import { useParams } from "react-router-dom";
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
 import { ReactComponent as Reply } from "../assets/reply@30.svg";
 import { ReactComponent as Like } from "../assets/like@30.svg";
+import { ReactComponent as LikeFill } from "../assets/like@30_fill.svg";
 import * as style from "../components/common/common.styled";
 import { displayTime } from "../components/reply/displayTime";
 // API
-import { getSingleTweet, getReplies, postReply } from "../api/main";
+import { getSingleTweet,
+         getReplies,
+         postReply,
+         likeTweet,
+        dislikeTweet
+    } from "../api/main";
 
 const Container = styled.div`
   width: 56.2%;
@@ -177,6 +183,34 @@ export default function MainReplyList(){
             console.log('replyContent', replyContent)
         }
     }
+    // 喜愛這篇貼文
+    const handleLike = async ()=>{
+        try{
+            await likeTweet({tweet_id})
+            console.log('Like Successful!')
+            setTweet((prevTweet) => ({
+                ...prevTweet,
+                isLiked: true,
+                likesCount: prevTweet.likesCount + 1,
+            }))
+        } catch(error){
+            console.error('Like Tweet failed:', error)
+        }
+    }
+    // 取消喜愛這篇貼文
+    const handleDislike = async ()=>{
+        try{
+            await dislikeTweet({tweet_id})
+            console.log('Dislike Successful!')
+            setTweet((prevTweet) => ({
+                ...prevTweet,
+                isLiked: false,
+                likesCount: prevTweet.likesCount - 1,
+            }))
+        } catch(error){
+            console.error('Dislike Tweet failed:', error)
+        }
+    }
 
     return(
     <>
@@ -223,7 +257,7 @@ export default function MainReplyList(){
                     </Counts>
                     <Interact>
                         <Reply onClick={openNewPost}/>
-                        <Like/>
+                        {tweet.isLiked ? <LikeFill onClick={handleDislike}/> : <Like onClick={handleLike}/>}
                     </Interact>
                 </PostContainer>
 
