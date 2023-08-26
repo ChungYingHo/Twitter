@@ -63,23 +63,18 @@ const SubContainer = styled.div`
     margin-top: 24px;
     .title{
         display: flex;
-        align-items: center;
         img{
             ${style.styledImg}
             margin: 0 16px;
         }
-        p{
-            ${style.styledContentFont}
-            color: ${style.colors.darkGray};
+        textarea {
+            width: calc(100% - 32px);
+            height: 170px;
+            resize: none;
+            border: transparent solid;
+            outline: none;
+            margin: 8px 16px 0 0
         }
-    }
-    textarea {
-        width: calc(100% - 32px);
-        height: 170px;
-        resize: none;
-        border: transparent solid;
-        outline: none;
-        margin: 8px 16px 0 16px;
     }
 `
 
@@ -91,7 +86,7 @@ const Btn = styled(style.StyledBtn)`
   right: 16px;
 `;
 
-export default function NewReply({name, account, timestamp, avatar, content}) {
+export default function NewReply({name, account, timestamp, avatar, content, replyContent, setReplyContent, handleReplySubmit}) {
   console.log('newreply',{name, account, timestamp, avatar, content})
   return (
     <Container>
@@ -109,10 +104,15 @@ export default function NewReply({name, account, timestamp, avatar, content}) {
       <SubContainer>
         <div className="title">
             <img src="https://i.imgur.com/jUZg5Mm.png" alt="avatar" />
-            <p>推你的回覆</p>
+            <textarea
+            minLength="1"
+            maxLength="140"
+            value={replyContent}
+            onChange={(e) => setReplyContent(e.target.value)}
+            placeholder="推你的回覆"
+            ></textarea>
         </div>
-        <textarea minLength="1" maxLength="140"></textarea>
-        <Btn>回覆</Btn>
+        <Btn onClick={handleReplySubmit}>回覆</Btn>
       </SubContainer>
     </Container>
   );

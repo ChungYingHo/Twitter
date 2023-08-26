@@ -26,7 +26,11 @@ const Post = styled.div`
     flex-direction: column;
     gap: 8px;
     overflow: hidden;
+    p{
+        margin: 0;
+    }
     .content{
+        outline: blue solid 3px;
         height: 78px;
         ${style.styledContentFont}
         overflow-wrap: break-word;
@@ -55,9 +59,7 @@ export default function ReplyCard({name, account, avatar, content, timestamp, re
                     <p className='name'>{name}</p>
                     <p className='account'>@{account}・<TimeDiff timestamp={timestamp}/></p>
                 </Info>
-
                 <p className='reply-user'>回覆 @{replyAccount}</p>
-
                 <p className='content'>{content}</p>
             </Post>
         </Container>
