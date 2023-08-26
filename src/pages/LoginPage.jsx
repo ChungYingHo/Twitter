@@ -27,12 +27,16 @@ const LoginPage = () => {
       return;
     }
 
-    const { success, userToken, errorMessage } = await login({
+    const { success, userToken, errorMessage, userData } = await login({
       account,
       password,
     });
     if (success) {
       localStorage.setItem("UserToken", userToken);
+      localStorage.setItem("userAccount", userData.account);
+      localStorage.setItem("userAvatar", userData.avatar);
+      localStorage.setItem("userBanner", userData.banner);
+      localStorage.setItem("userIntro", userData.introduction);
       navigate("/main");
     } else {
       setError(errorMessage);
