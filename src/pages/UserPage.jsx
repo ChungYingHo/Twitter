@@ -85,8 +85,8 @@ const UserPage = () => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const userData = await getUser();
-        setUserData(userData);
+        const data = await getUser();
+        setUserData(data);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
