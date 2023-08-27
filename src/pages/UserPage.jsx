@@ -1,13 +1,14 @@
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
 import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
 import ReplyCard from "../components/reply/ReplyCard";
-import { getUser, editUser, getUserTweets } from "../api/user";
+import { getUser, getUserTweets } from "../api/user";
+import { UserContext } from "../context/UserContext";
 
 // dummyData
 import posts from "../dummyData/posts";
@@ -76,40 +77,29 @@ const ReplyCardWrapper = styled.div`
 `;
 const UserPage = () => {
   const [activePage, setActivePage] = useState("post");
-  const [userDatas, setUserData] = useState([]);
+  const [userDatas, setUserDatas] = useState([]);
   const [userTweets, setUserTweets] = useState([]);
+  const { userData, setUserData } = useContext(UserContext);
+
+  console.log(userData);
 
   // 拿取特定使用者資料
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const userData = await getUser();
-        setUserData(userData);
+        const data = await getUser();
+        setUserData(data);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
     };
-    getUserData();
-  }, []);
+
+    if (!userData) {
+      getUserData();
+    }
+  }, [userData, setUserData]);
 
   // console.log("getUserData", userDatas);
-
-  const handleSave = async ({ userName, introduction, avatar, banner }) => {
-    console.log({
-      userName,
-      introduction,
-      avatar,
-      banner,
-    });
-
-    const editUserData = await editUser({
-      userName,
-      introduction,
-      avatar,
-      banner,
-    });
-    setUserData(editUserData);
-  };
 
   // 獲取user推文
   useEffect(() => {
@@ -126,27 +116,26 @@ const UserPage = () => {
 
   console.log("getUserTweet", userTweets);
 
-  return (
+  return userData ? (
     <>
       <Container>
         <StyledLink to="/main">
           <UserTittleWrapper>
             <LeftArrow />
             <UserNameWrapper>
-              <UserName>{userDatas.name}</UserName>
+              <UserName>{userData.name}</UserName>
               <UserPostCount>25 推文</UserPostCount>
             </UserNameWrapper>
           </UserTittleWrapper>
         </StyledLink>
         <UserInfo
-          name={userDatas.name}
-          account={userDatas.account}
-          introduction={userDatas.introduction}
-          followersCount={userDatas.followersCount}
-          followingsCount={userDatas.followingsCount}
-          avatar={userDatas.avatar}
-          banner={userDatas.banner}
-          handleSave={handleSave}
+          name={userData.name}
+          account={userData.account}
+          introduction={userData.introduction}
+          followersCount={userData.followersCount}
+          followingsCount={userData.followingsCount}
+          avatar={userData.avatar}
+          banner={userData.banner}
         />
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
         <SwitchZoneContainer>
@@ -201,7 +190,7 @@ const UserPage = () => {
         </SwitchZoneContainer>
       </Container>
     </>
-  );
+  ) : null;
 };
 
 export default UserPage;
