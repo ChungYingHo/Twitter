@@ -1,16 +1,16 @@
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
 import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
 import ReplyCard from "../components/reply/ReplyCard";
+import { UserContext } from "../context/UserContext";
 // api
 import { checkPermission } from "../api/Permission";
 import { getUser, getUserTweets } from "../api/user";
-
 
 // dummyData
 import posts from "../dummyData/posts";
@@ -79,31 +79,32 @@ const ReplyCardWrapper = styled.div`
 `;
 const UserPage = () => {
   const [activePage, setActivePage] = useState("post");
-  const [userDatas, setUserData] = useState([]);
-  const navigate = useNavigate()
+  const [userTweets, setUserTweets] = useState({});
+  const { userData, setUserData } = useContext(UserContext);
+  const navigate = useNavigate();
 
   // 驗證 token
-    useEffect(() => {
-        const checkTokenIsValid = async () => {
-        const authToken = localStorage.getItem('UserToken');
-        if (!authToken) {
-            navigate('/login');
-        }
-        const result = await checkPermission(authToken);
-        if (!result) {
-            navigate('/login');
-        }
-        };
+  useEffect(() => {
+    const checkTokenIsValid = async () => {
+      const authToken = localStorage.getItem("UserToken");
+      if (!authToken) {
+        navigate("/login");
+      }
+      const result = await checkPermission(authToken);
+      if (!result) {
+        navigate("/login");
+      }
+    };
 
-        checkTokenIsValid();
-    }, [navigate])
+    checkTokenIsValid();
+  }, [navigate]);
 
   // 拿取特定使用者資料
   useEffect(() => {
     const getUserData = async () => {
       try {
         const data = await getUser();
-        console.log(data);
+        // console.log(data);
         setUserData(data);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
