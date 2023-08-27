@@ -73,6 +73,7 @@ const UserIntroduction = styled.p`
   font-weight: 400;
   line-height: 22px;
   margin-bottom: 5px;
+  color: #171725;
 `;
 
 const UserFollowWrapper = styled.div`
