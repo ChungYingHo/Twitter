@@ -10,7 +10,6 @@ import { getTweets, postTweets } from "../api/main";
 import { checkPermission } from "../api/Permission";
 
 const Container = styled.div`
-  outline: green solid 2px;
   padding: 0;
   width: 56.2%;
   border: ${style.styledBorder};
@@ -54,7 +53,6 @@ const PostTitle = styled.div`
 `;
 
 const CardContainer = styled.div`
-  outline: red solid 2px;
   width: 100%;
   margin-top: 16px;
   display: flex;

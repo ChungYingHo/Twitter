@@ -9,7 +9,6 @@ const Container = styled.div`
 `
 
 const PostContainer = styled.div`
-    outline: orange solid 2px;
     width: 100%;
     height: fit-content;
     min-height: 130px;
@@ -59,7 +58,6 @@ const Info = styled.div`
 `
 
 const SubContainer = styled.div`
-    outline: purple solid 2px;
     height: fit-content;
     min-height: 290px;
     margin-top: 24px;

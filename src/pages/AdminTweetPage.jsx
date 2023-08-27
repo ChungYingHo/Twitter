@@ -8,7 +8,6 @@ import { adminGetTweets, adminDeleteTweet } from '../api/admin'
 import { checkAdminPermission } from '../api/Permission'
 
 const Container = styled.div`
-  outline: blue solid 2px;
   width: 83%;
   padding: 0;
   border: ${style.styledBorder};

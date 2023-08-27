@@ -16,7 +16,6 @@ import { getUser, editUser } from "../api/setting";
 import { checkPermission } from "../api/Permission";
 
 const Container = styled.div`
-  outline: green solid 2px;
   padding: 0;
   width: 56.2%;
   border: ${style.styledBorder};

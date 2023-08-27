@@ -7,7 +7,6 @@ import {ReactComponent as User} from '../../assets/personInfo.svg'
 import {ReactComponent as Logout} from '../../assets/logout.svg'
 
 const Container = styled.div`
-    outline: red solid 2px;
     width: 15.6%;
     position: sticky;
     height: 100vh;

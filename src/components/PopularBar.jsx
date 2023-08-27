@@ -5,7 +5,6 @@ import PopularCard from './PopularCard'
 import { getPopUsers, followUser, disFollowUser } from '../api/popular'
 
 const Container = styled.div`
-    outline: purple solid 2px;
     margin-top: 16px;
     padding: 0;
     height: fit-content;
