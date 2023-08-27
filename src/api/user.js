@@ -30,3 +30,13 @@ export const getUser = async () => {
     console.error("[Get User failed]: ", error);
   }
 };
+
+export const patchUser = async (payload) => {
+  const { name, introduction, avator, banner } = payload;
+  try {
+    const res = await axiosInstance.patch(`${apiURL}/users/${userId}`);
+    return res.data;
+  } catch (error) {
+    console.error("[Patch User failed]: ", error);
+  }
+};
