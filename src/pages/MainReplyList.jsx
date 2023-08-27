@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import PopularBar from "../components/PopularBar";
 import ReplyCard from "../components/reply/ReplyCard";
 import PopupModal from "../components/PopupModal";
 import NewReply from "../components/reply/NewReply";
@@ -297,7 +296,6 @@ export default function MainReplyList(){
         )}
 
       </Container>
-      <PopularBar />
     </>
     )
 }
