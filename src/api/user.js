@@ -22,6 +22,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+// 獲取user資料
 export const getUser = async () => {
   try {
     const res = await axiosInstance.get(`${apiURL}/users/${userId}`);
@@ -31,10 +32,16 @@ export const getUser = async () => {
   }
 };
 
+// 編輯user資料
 export const patchUser = async (payload) => {
   const { name, introduction, avator, banner } = payload;
   try {
-    const res = await axiosInstance.patch(`${apiURL}/users/${userId}`);
+    const res = await axiosInstance.patch(`${apiURL}/users/${userId}`, {
+      name,
+      introduction,
+      avator,
+      banner,
+    });
     return res.data;
   } catch (error) {
     console.error("[Patch User failed]: ", error);
