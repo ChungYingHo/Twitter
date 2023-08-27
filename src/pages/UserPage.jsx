@@ -1,13 +1,13 @@
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import PopularBar from "../components/PopularBar";
+import { useState, useEffect } from "react";
 import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
 import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
 import ReplyCard from "../components/reply/ReplyCard";
+import { getUser } from "../api/user";
 
 // dummyData
 import posts from "../dummyData/posts";
@@ -76,6 +76,22 @@ const ReplyCardWrapper = styled.div`
 `;
 const UserPage = () => {
   const [activePage, setActivePage] = useState("post");
+  const [userDatas, setUserData] = useState([]);
+
+  // 拿取特定使用者資料
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const getUserData = await getUser();
+        setUserData(getUserData);
+      } catch (error) {
+        console.error("[GetUserData Failed]", error);
+      }
+    };
+    getUserData();
+  }, []);
+
+  console.log("getUserData", userDatas);
 
   return (
     <>
@@ -84,12 +100,20 @@ const UserPage = () => {
           <UserTittleWrapper>
             <LeftArrow />
             <UserNameWrapper>
-              <UserName>Egg Head</UserName>
+              <UserName>{userDatas.name}</UserName>
               <UserPostCount>25 推文</UserPostCount>
             </UserNameWrapper>
           </UserTittleWrapper>
         </StyledLink>
-        <UserInfo />
+        <UserInfo
+          name={userDatas.name}
+          account={userDatas.account}
+          introduction={userDatas.introduction}
+          followersCount={userDatas.followersCount}
+          followingsCount={userDatas.followingsCount}
+          avatar={userDatas.avatar}
+          banner={userDatas.banner}
+        />
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
         <SwitchZoneContainer>
           {activePage === "post" &&

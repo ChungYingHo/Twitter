@@ -110,6 +110,7 @@ export default function Toolbar() {
     localStorage.removeItem("userAccount");
     localStorage.removeItem("userAvatar");
     localStorage.removeItem("userBanner");
+    localStorage.removeItem("userID");
 
     navigate("/login");
   };

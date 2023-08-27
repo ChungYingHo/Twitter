@@ -117,7 +117,7 @@ const RegisterPage = () => {
           maxlength="20"
           name={password}
           value={password}
-          placeholder={"請輸入密碼"}
+          placeholder={"請設定密碼"}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
           required
         />
@@ -133,7 +133,7 @@ const RegisterPage = () => {
         className={clsx("", { redLine: checkPassword.length > 20 })}
       >
         <AuthInput
-          label={"密碼"}
+          label={"密碼確認"}
           minlength="5"
           maxlength="20"
           name={checkPassword}
