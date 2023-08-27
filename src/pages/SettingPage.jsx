@@ -89,7 +89,7 @@ const SettingPage = () => {
             maxlength="20"
             name={password}
             value={password}
-            placeholder={"請輸入密碼"}
+            placeholder={"請設定密碼"}
             onChange={(passwordInputValue) => setPassword(passwordInputValue)}
             required
           />
@@ -102,7 +102,7 @@ const SettingPage = () => {
             maxlength="20"
             name={checkPassword}
             value={checkPassword}
-            placeholder={"請輸入密碼"}
+            placeholder={"請再次輸入密碼"}
             onChange={(checkPasswordInputValue) =>
               setCheckPassword(checkPasswordInputValue)
             }
