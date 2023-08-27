@@ -8,8 +8,9 @@ import styled from "styled-components";
 import * as style from "../components/common/common.styled";
 import ReplyCard from "../components/reply/ReplyCard";
 // api
-import { getUser } from "../api/user";
 import { checkPermission } from "../api/Permission";
+import { getUser, getUserTweets } from "../api/user";
+
 
 // dummyData
 import posts from "../dummyData/posts";
@@ -101,49 +102,65 @@ const UserPage = () => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const getUserData = await getUser();
-        setUserData(getUserData);
+        const data = await getUser();
+        console.log(data);
+        setUserData(data);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
     };
     getUserData();
+  }, [setUserData]);
+
+  console.log("getUserData", userData);
+
+  // 獲取user推文
+  useEffect(() => {
+    const getUserTweet = async () => {
+      try {
+        const userTweet = await getUserTweets();
+        setUserTweets(userTweet);
+      } catch (error) {
+        console.error("[GetUserData Failed]", error);
+      }
+    };
+    getUserTweet();
   }, []);
 
-  console.log("getUserData", userDatas);
+  console.log("getUserTweet", userTweets);
 
-  return (
+  return userData ? (
     <>
       <Container>
         <StyledLink to="/main">
           <UserTittleWrapper>
             <LeftArrow />
             <UserNameWrapper>
-              <UserName>{userDatas.name}</UserName>
+              <UserName>{userData.name}</UserName>
               <UserPostCount>25 推文</UserPostCount>
             </UserNameWrapper>
           </UserTittleWrapper>
         </StyledLink>
         <UserInfo
-          name={userDatas.name}
-          account={userDatas.account}
-          introduction={userDatas.introduction}
-          followersCount={userDatas.followersCount}
-          followingsCount={userDatas.followingsCount}
-          avatar={userDatas.avatar}
-          banner={userDatas.banner}
+          name={userData.name}
+          account={userData.account}
+          introduction={userData.introduction}
+          followersCount={userData.followersCount}
+          followingsCount={userData.followingsCount}
+          avatar={userData.avatar}
+          banner={userData.banner}
         />
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
         <SwitchZoneContainer>
           {activePage === "post" &&
-            posts.map((data) => {
+            userTweets.map((data) => {
               return (
                 <PostCardWrapper key={data.id}>
                   <PostCard
-                    name={data.user.name}
-                    account={data.user.name}
-                    avatar={data.user.avatar}
-                    content={data.description}
+                    name={data.User.name}
+                    account={data.User.name}
+                    avatar={data.User.avatar}
+                    content={data.User.in}
                     timestamp={data.createdAt}
                     reply={data.repliesCount}
                     like={data.likesCount}
@@ -186,7 +203,7 @@ const UserPage = () => {
         </SwitchZoneContainer>
       </Container>
     </>
-  );
+  ) : null;
 };
 
 export default UserPage;

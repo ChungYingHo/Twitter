@@ -14,11 +14,13 @@ import {
   UserFollowers,
 } from "../src/pages/index";
 import { AdminLayout, MainLayout } from "./layout/layout";
+import { UserContextProvider } from "./context/UserContext";
 
 const basename = process.env.PUBLIC_URL
 
 function App() {
   return (
+
     <div className="app row">
       <BrowserRouter basename={basename}>
         <Routes>
@@ -32,6 +34,7 @@ function App() {
               <Route path="/user" element={<UserPage />}></Route>
               <Route path="/user/followers" element={<UserFollowers />}></Route>
               <Route path="/user/following" element={<UserFollowing />}></Route>
+
               <Route path="setting" element={<SettingPage />}></Route>
               <Route path="main/:tweet_id" element={<MainReplyList />}></Route>
           </Route>
@@ -42,6 +45,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
+
   );
 }
 

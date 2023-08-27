@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import * as style from '../common/common.styled'
-
+import * as style from "../common/common.styled";
+import { UserContext } from "../../context/UserContext";
+import { useContext } from "react";
 const Container = styled.div`
   height: fit-content;
   min-height: 280px;
@@ -22,7 +23,7 @@ const Container = styled.div`
       margin-right: 16px;
     }
   }
-`
+`;
 
 const Btn = styled(style.StyledBtn)`
   width: 64px;
@@ -32,11 +33,17 @@ const Btn = styled(style.StyledBtn)`
   right: 16px;
 `;
 
-export default function NewPost({ postContent, setPostContent, handlePostSubmit }) {
+export default function NewPost({
+  postContent,
+  setPostContent,
+  handlePostSubmit,
+}) {
+  const { userData, setUserData } = useContext(UserContext);
+
   return (
     <Container>
       <div className="info">
-        <img src="https://i.imgur.com/jUZg5Mm.png" alt="avatar" />
+        <img src={userData.avatar} alt="avatar" />
         <textarea
           minLength="1"
           maxLength="140"
@@ -45,7 +52,7 @@ export default function NewPost({ postContent, setPostContent, handlePostSubmit 
           placeholder="有什麼新鮮事？"
         ></textarea>
       </div>
-      
+
       <Btn onClick={handlePostSubmit}>推文</Btn>
     </Container>
   );

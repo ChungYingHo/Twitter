@@ -38,10 +38,6 @@ const LoginPage = () => {
     });
     if (success) {
       localStorage.setItem("UserToken", userToken);
-      localStorage.setItem("userAccount", userData.account);
-      localStorage.setItem("userAvatar", userData.avatar);
-      localStorage.setItem("userBanner", userData.banner);
-      localStorage.setItem("userIntro", userData.introduction);
       localStorage.setItem("userID", userData.id);
       navigate("/main");
     } else {

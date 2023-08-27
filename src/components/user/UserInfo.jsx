@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import UserEdit from "./UserEdit";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import PopupModal from "../PopupModal";
+import { UserContext } from "../../context/UserContext";
 
 const UserMainContainer = styled.div`
   width: 100%;
@@ -67,10 +68,12 @@ const UserAccount = styled.p`
 `;
 
 const UserIntroduction = styled.p`
+  word-wrap: break-word;
   font-size: 14px;
   font-weight: 400;
   line-height: 22px;
   margin-bottom: 5px;
+  color: #171725;
 `;
 
 const UserFollowWrapper = styled.div`
@@ -116,15 +119,7 @@ const StyledLink = styled(Link)`
   padding: 0;
 `;
 
-const UserInfo = ({
-  name,
-  account,
-  introduction,
-  followingsCount,
-  followersCount,
-  avatar,
-  banner,
-}) => {
+const UserInfo = () => {
   const [isNewPostOpen, setIsNewPostOpen] = useState(false);
   const openNewPost = () => {
     setIsNewPostOpen(true);
@@ -133,13 +128,17 @@ const UserInfo = ({
     setIsNewPostOpen(false);
   };
 
+  const { userData } = useContext(UserContext);
+
+  console.log("data in userInfo", userData);
+
   return (
     <UserMainContainer>
-      <UserBanner src={banner} />
+      <UserBanner src={userData.banner} />
 
       <UserInfoWrapper>
         <UserPicBtnWrapper>
-          <UserPic src={avatar} />
+          <UserPic src={userData.avatar} />
           <UserEditBtn onClick={openNewPost}>編輯個人資料</UserEditBtn>
         </UserPicBtnWrapper>
 
@@ -148,38 +147,27 @@ const UserInfo = ({
           closeModal={closeNewPost}
           headerTitle={<HeaderTittle>編輯個人資料</HeaderTittle>}
           headerButton={<HeaderBtn>儲存</HeaderBtn>}
-          name={name}
-          account={account}
-          introduction={introduction}
-          avatar={avatar}
-          banner={banner}
         >
-          <UserEdit
-            userName={name}
-            account={account}
-            intro={introduction}
-            avatar={avatar}
-            banner={banner}
-          />
+          <UserEdit />
         </PopupModal>
 
         <UserAccountNameWrapper>
-          <UserName>{name}</UserName>
-          <UserAccount>@{account}</UserAccount>
+          <UserName>{userData.name}</UserName>
+          <UserAccount>@{userData.account}</UserAccount>
 
-          <UserIntroduction>{introduction}</UserIntroduction>
+          <UserIntroduction>{userData.introduction}</UserIntroduction>
 
           <UserFollowWrapper>
             <StyledLink to="/user/following">
               <UserFollowbox>
-                <UserFollowNum>{followingsCount}個</UserFollowNum>
+                <UserFollowNum>{userData.followingsCount}個</UserFollowNum>
                 <UserFollowTittle>跟隨中</UserFollowTittle>
               </UserFollowbox>
             </StyledLink>
 
             <StyledLink to="/user/followers">
               <UserFollowbox>
-                <UserFollowNum>{followersCount}位</UserFollowNum>
+                <UserFollowNum>{userData.followersCount}位</UserFollowNum>
                 <UserFollowTittle>跟隨者</UserFollowTittle>
               </UserFollowbox>
             </StyledLink>

@@ -53,8 +53,6 @@ export const register = async ({
       checkPassword,
     });
 
-    console.log(res);
-
     if (!res || !res.data) {
       throw Error("nothing returned");
     }

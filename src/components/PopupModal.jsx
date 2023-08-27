@@ -56,8 +56,6 @@ const PopupModal = ({
   children,
   headerTitle,
   headerButton,
-  avatar,
-  banner,
 }) => {
   return (
     <>
