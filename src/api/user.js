@@ -47,3 +47,12 @@ export const editUser = async (payload) => {
     console.error("[editUser in user.js failed]: ", error);
   }
 };
+
+export const getUserTweets = async () => {
+  try {
+    const res = await axiosInstance.get(`${apiURL}/users/${userId}/tweets`);
+    return res.data;
+  } catch (error) {
+    console.error("[Get User failed]: ", error);
+  }
+};

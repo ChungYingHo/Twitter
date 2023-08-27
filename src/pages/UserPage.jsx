@@ -7,7 +7,7 @@ import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
 import ReplyCard from "../components/reply/ReplyCard";
-import { getUser, editUser } from "../api/user";
+import { getUser, editUser, getUserTweets } from "../api/user";
 
 // dummyData
 import posts from "../dummyData/posts";
@@ -77,6 +77,7 @@ const ReplyCardWrapper = styled.div`
 const UserPage = () => {
   const [activePage, setActivePage] = useState("post");
   const [userDatas, setUserData] = useState([]);
+  const [userTweets, setUserTweets] = useState([]);
 
   // 拿取特定使用者資料
   useEffect(() => {
@@ -91,7 +92,7 @@ const UserPage = () => {
     getUserData();
   }, []);
 
-  console.log("getUserData", userDatas);
+  // console.log("getUserData", userDatas);
 
   const handleSave = async ({ userName, introduction, avatar, banner }) => {
     console.log({
@@ -109,6 +110,21 @@ const UserPage = () => {
     });
     setUserData(editUserData);
   };
+
+  // 獲取user推文
+  useEffect(() => {
+    const getUserTweet = async () => {
+      try {
+        const userTweet = await getUserTweets();
+        setUserTweets(userTweet);
+      } catch (error) {
+        console.error("[GetUserData Failed]", error);
+      }
+    };
+    getUserTweet();
+  }, []);
+
+  console.log("getUserTweet", userTweets);
 
   return (
     <>
@@ -135,14 +151,14 @@ const UserPage = () => {
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
         <SwitchZoneContainer>
           {activePage === "post" &&
-            posts.map((data) => {
+            userTweets.map((data) => {
               return (
                 <PostCardWrapper key={data.id}>
                   <PostCard
-                    name={data.user.name}
-                    account={data.user.name}
-                    avatar={data.user.avatar}
-                    content={data.description}
+                    name={data.User.name}
+                    account={data.User.name}
+                    avatar={data.User.avatar}
+                    content={data.User.in}
                     timestamp={data.createdAt}
                     reply={data.repliesCount}
                     like={data.likesCount}
