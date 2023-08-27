@@ -40,6 +40,7 @@ const LoginPage = () => {
       localStorage.setItem("userAvatar", userData.avatar);
       localStorage.setItem("userBanner", userData.banner);
       localStorage.setItem("userIntro", userData.introduction);
+      localStorage.setItem("userID", userData.id);
       navigate("/main");
     } else {
       setError(errorMessage);

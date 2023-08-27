@@ -7,13 +7,22 @@ import {
   SettingButton,
   SettingHr,
 } from "../components/common/setting.styled";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
-import PopularBar from "../components/PopularBar";
-// import { Link } from "react-router-dom";
+// api
+import { getUser } from "../api/setting";
+
+const Container = styled.div`
+    outline: green solid 2px;
+    padding: 0;
+    width: 56.2%;
+    border: ${style.styledBorder};
+    position: relative;
+  `;
 
 const SettingPage = () => {
+  const [user, setUser] = useState([])
   const [account, setAccount] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -32,13 +41,18 @@ const SettingPage = () => {
     }
   };
 
-  const Container = styled.div`
-    outline: green solid 2px;
-    padding: 0;
-    width: 56.2%;
-    border: ${style.styledBorder};
-    position: relative;
-  `;
+  useEffect(() => {
+        const fetchingUser = async ()=>{
+            try{
+                const userData = await getUser()
+                setUser(userData)
+                console.log('User data:', userData)
+            } catch (error){
+                console.error('Get User Failed:', error)
+            }
+        }
+        fetchingUser()
+    }, [])
 
   return (
     <>
