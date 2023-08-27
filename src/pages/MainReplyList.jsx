@@ -169,8 +169,7 @@ export default function MainReplyList(){
             try{
                 const repliesData = await getReplies({ tweet_id: parseInt(tweet_id) });
                 const sortedReplies = repliesData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                setReplies(sortedReplies);
-                console.log(sortedReplies)
+                setReplies(sortedReplies)
             } catch (error){
                 console.error('Fetching Replies Failed:', error)
             }
@@ -191,7 +190,6 @@ export default function MainReplyList(){
         try{
             await postReply({tweet_id, comment: replyContent})
             console.log('Reply successful!')
-            console.log('replyContent', replyContent)
             // 發出去就清空 textarea
             setReplyContent('')
             const updatedReplies = await getReplies({ tweet_id: parseInt(tweet_id) })
@@ -200,7 +198,6 @@ export default function MainReplyList(){
             closeNewPost()
         } catch (error){
             console.error('Replying Tweet Failed:', error)
-            console.log('replyContent', replyContent)
         }
     }
     // 喜愛這篇貼文

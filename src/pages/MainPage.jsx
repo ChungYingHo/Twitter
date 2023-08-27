@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import PopularBar from "../components/PopularBar";
 import PostCard from "../components/main/PostCard";
 import PopupModal from "../components/PopupModal";
 import NewPost from "../components/main/NewPost"
@@ -89,8 +88,7 @@ const MainPage = () => {
       try {
         const tweetData = await getTweets();
         const sortedTweets = tweetData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        setPosts(sortedTweets);
-        console.log(sortedTweets)
+        setPosts(sortedTweets)
       } catch (error) {
         console.error("Fetching Tweets Failed:", error);
       }

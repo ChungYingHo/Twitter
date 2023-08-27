@@ -39,14 +39,12 @@ export default function PopularBar(){
             try{
                 const usersData = await getPopUsers()
                 setUsersData(usersData)
-                console.log('Users:', usersData)
             } catch(error){
                 console.error('Get Users Failed:', error)
-                console.log(usersData)
             }
         }
         fetchUsers()
-    }, [])
+    }, [usersData])
 
     // 點擊切換 isFollowed 狀態
     const handleFollow = async(id) => {

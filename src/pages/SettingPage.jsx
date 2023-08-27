@@ -34,7 +34,6 @@ const SettingPage = () => {
       try {
         const userData = await getUser();
         setUser(userData);
-        console.log("User data:", userData);
         setAccount(userData.account);
         setName(userData.name);
         setEmail(userData.email);
@@ -53,6 +52,7 @@ const SettingPage = () => {
       password.length === 0 ||
       checkPassword.length === 0
     ) {
+      console.log(user.name)
       return;
     }
 
@@ -82,7 +82,7 @@ const SettingPage = () => {
             label={"帳號"}
             maxlength="30"
             name={account}
-            defaultValue={user.account}
+            value={user.account}
             placeholder={"請輸入帳號"}
             onChange={(accountInputValue) => setAccount(accountInputValue)}
           />
@@ -93,7 +93,7 @@ const SettingPage = () => {
             label={"名稱"}
             maxlength="50"
             name={name}
-            defaultValue={user.name}
+            value={user.name}
             placeholder={"請輸入使用者名稱"}
             onChange={(nameInputValue) => setName(nameInputValue)}
           />
@@ -104,7 +104,7 @@ const SettingPage = () => {
             type="email"
             label={"Email"}
             name={email}
-            defaultValue={user.email}
+            value={user.email}
             placeholder={"請輸入Email"}
             onChange={(emailInputValue) => setEmail(emailInputValue)}
           />
