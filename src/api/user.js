@@ -34,16 +34,16 @@ export const getUser = async () => {
 
 // 編輯user資料
 export const editUser = async (payload) => {
-  const { name, introduction, avator, banner } = payload;
+  const { username, introduction, avatar, banner } = payload;
   try {
     const res = await axiosInstance.put(`${apiURL}/users/${userId}`, {
-      name,
+      username,
       introduction,
-      avator,
+      avatar,
       banner,
     });
     return res.data;
   } catch (error) {
-    console.error("[Patch User failed]: ", error);
+    console.error("[editUser in user.js failed]: ", error);
   }
 };

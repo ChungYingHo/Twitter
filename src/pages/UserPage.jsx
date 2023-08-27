@@ -7,7 +7,7 @@ import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
 import ReplyCard from "../components/reply/ReplyCard";
-import { getUser } from "../api/user";
+import { getUser, editUser } from "../api/user";
 
 // dummyData
 import posts from "../dummyData/posts";
@@ -82,8 +82,8 @@ const UserPage = () => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const getUserData = await getUser();
-        setUserData(getUserData);
+        const userData = await getUser();
+        setUserData(userData);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
@@ -92,6 +92,23 @@ const UserPage = () => {
   }, []);
 
   console.log("getUserData", userDatas);
+
+  const handleSave = async ({ userName, introduction, avatar, banner }) => {
+    console.log({
+      userName,
+      introduction,
+      avatar,
+      banner,
+    });
+
+    const editUserData = await editUser({
+      userName,
+      introduction,
+      avatar,
+      banner,
+    });
+    setUserData(editUserData);
+  };
 
   return (
     <>
@@ -113,6 +130,7 @@ const UserPage = () => {
           followingsCount={userDatas.followingsCount}
           avatar={userDatas.avatar}
           banner={userDatas.banner}
+          handleSave={handleSave}
         />
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
         <SwitchZoneContainer>
