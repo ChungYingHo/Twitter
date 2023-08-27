@@ -41,3 +41,14 @@ export const getUserTweets = async () => {
     console.error("[Get User failed]: ", error);
   }
 };
+
+export const getUserReplies = async () => {
+  try {
+    const res = await axiosInstance.get(
+      `${apiURL}/users/${userId}/replied_tweets`
+    );
+    return res.data;
+  } catch (error) {
+    console.error("[Get User failed]: ", error);
+  }
+};

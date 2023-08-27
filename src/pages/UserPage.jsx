@@ -10,7 +10,7 @@ import ReplyCard from "../components/reply/ReplyCard";
 import { UserContext } from "../context/UserContext";
 // api
 import { checkPermission } from "../api/Permission";
-import { getUser, getUserTweets } from "../api/user";
+import { getUser, getUserTweets, getUserReplies } from "../api/user";
 
 // dummyData
 import posts from "../dummyData/posts";
@@ -79,7 +79,8 @@ const ReplyCardWrapper = styled.div`
 `;
 const UserPage = () => {
   const [activePage, setActivePage] = useState("post");
-  const [userTweets, setUserTweets] = useState({});
+  const [userTweets, setUserTweets] = useState([]);
+  const [userReplies, setUserReplies] = useState([]);
   const { userData, setUserData } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -113,7 +114,7 @@ const UserPage = () => {
     getUserData();
   }, [setUserData]);
 
-  console.log("getUserData", userData);
+  // console.log("getUserData", userData);
 
   // 獲取user推文
   useEffect(() => {
@@ -126,9 +127,23 @@ const UserPage = () => {
       }
     };
     getUserTweet();
-  }, []);
+  }, [setUserTweets]);
 
-  console.log("getUserTweet", userTweets);
+  // console.log("getUserTweet", userTweets);
+
+  useEffect(() => {
+    const getUserReply = async () => {
+      try {
+        const reply = await getUserReplies();
+        setUserReplies(reply);
+      } catch (error) {
+        console.error("[GetUserData Failed]", error);
+      }
+    };
+    getUserReply();
+  }, [setUserReplies]);
+
+  console.log("User Replies", userReplies);
 
   return userData ? (
     <>
@@ -152,32 +167,33 @@ const UserPage = () => {
           banner={userData.banner}
         />
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
+
         <SwitchZoneContainer>
           {activePage === "post" &&
-            userTweets.map((data) => {
+            userTweets.map((tweet) => {
               return (
-                <PostCardWrapper key={data.id}>
+                <PostCardWrapper key={tweet.id}>
                   <PostCard
-                    name={data.User.name}
-                    account={data.User.name}
-                    avatar={data.User.avatar}
-                    content={data.User.in}
-                    timestamp={data.createdAt}
-                    reply={data.repliesCount}
-                    like={data.likesCount}
+                    name={tweet.User.name}
+                    account={tweet.User.name}
+                    avatar={tweet.User.avatar}
+                    content={tweet.description}
+                    timestamp={tweet.createdAt}
+                    reply={tweet.repliesCount}
+                    like={tweet.likesCount}
                   />
                 </PostCardWrapper>
               );
             })}
 
           {activePage === "reply" &&
-            replies.map((reply) => {
+            userReplies.map((reply) => {
               return (
-                <ReplyCardWrapper key={reply.id}>
+                <ReplyCardWrapper key={reply.TweetId}>
                   <ReplyCard
-                    name={reply.User.name}
-                    account={reply.User.account}
-                    avatar={reply.User.avatar}
+                    name={reply.Tweet.User.name}
+                    account={reply.Tweet.User.account}
+                    avatar={reply.Tweet.User.avatar}
                     content={reply.comment}
                     timestamp={reply.createdAt}
                   />
