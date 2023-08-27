@@ -1,9 +1,11 @@
 import styled from 'styled-components'
 import { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 import AdminPostCard from '../components/admin/AdminPostCard'
 import * as style from '../components/common/common.styled'
 // api
 import { adminGetTweets, adminDeleteTweet } from '../api/admin'
+import { checkAdminPermission } from '../api/Permission'
 
 const Container = styled.div`
   outline: blue solid 2px;
@@ -35,14 +37,28 @@ const CardContainer = styled.div`
 
 export default function AdminTweetPage(){
     const [posts, setPosts] = useState([])
+    const navigate = useNavigate()
+    // 驗證 token
+    useEffect(() => {
+      const checkTokenIsValid = async () => {
+        const authToken = localStorage.getItem('AdminToken');
+        if (!authToken) {
+          navigate('/admin_login');
+        }
+        const result = await checkAdminPermission(authToken);
+        if (!result) {
+          navigate('/admin_login');
+        }
+      }
+      checkTokenIsValid();
+    }, [navigate])
+    // 取得所有貼文
     useEffect(() => {
     const fetchTweets = async () => {
         try {
-          const tweetData = await adminGetTweets();
-          console.log(tweetData)
+          const tweetData = await adminGetTweets()
           const sortedTweets = tweetData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          setPosts(sortedTweets);
-          console.log(sortedTweets)
+          setPosts(sortedTweets)
         } catch (error) {
           console.error("Admin fetching Tweets Failed:", error);
         }
