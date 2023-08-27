@@ -7,6 +7,7 @@ import FollowrSubTool from "./FollowSubTool";
 import FollowCard from "./FollowCard";
 // api
 import { checkPermission } from "../../api/Permission";
+import { getUserFollowers } from "../../api/user";
 
 // dummyData
 import users from "../../dummyData/popularUsers";
@@ -58,22 +59,24 @@ const StyledLink = styled(Link)`
 
 const UserFollowers = () => {
   const [usersData, setUsersData] = useState(users);
-  const navigate = useNavigate()
-    // 驗證 token
-    useEffect(() => {
-        const checkTokenIsValid = async () => {
-        const authToken = localStorage.getItem('UserToken');
-        if (!authToken) {
-            navigate('/login');
-        }
-        const result = await checkPermission(authToken);
-        if (!result) {
-            navigate('/login');
-        }
-        };
+  const [userFollowers, setUserFollowers] = useState([]);
 
-        checkTokenIsValid();
-    }, [navigate])
+  const navigate = useNavigate();
+  // 驗證 token
+  useEffect(() => {
+    const checkTokenIsValid = async () => {
+      const authToken = localStorage.getItem("UserToken");
+      if (!authToken) {
+        navigate("/login");
+      }
+      const result = await checkPermission(authToken);
+      if (!result) {
+        navigate("/login");
+      }
+    };
+
+    checkTokenIsValid();
+  }, [navigate]);
 
   const handleFollow = (userId) => {
     setUsersData((prevUsersData) =>
@@ -88,6 +91,19 @@ const UserFollowers = () => {
     );
   };
 
+  // 獲取user追隨中
+  useEffect(() => {
+    const getUserFollower = async () => {
+      try {
+        const follower = await getUserFollowers();
+        setUserFollowers(follower);
+      } catch (error) {
+        console.error("[GetUserData Failed]", error);
+      }
+    };
+    getUserFollower();
+  }, [setUserFollowers]);
+
   return (
     <>
       <Container>
@@ -101,16 +117,16 @@ const UserFollowers = () => {
           </Header>
         </StyledLink>
         <FollowrSubTool activePage="followers" />
-        {usersData.map((data) => {
+        {userFollowers.map((data) => {
           return (
             <>
               <FollowCard
-                key={data.user.id}
-                id={data.user.id}
-                name={data.user.name}
-                avatar={data.user.avatar}
-                introduction={data.user.introduction}
-                isFollowed={data.user.isFollowed}
+                key={data.followerId}
+                id={data.Follower.id}
+                name={data.Follower.name}
+                avatar={data.Follower.avatar}
+                introduction={data.Follower.introduction}
+                isFollowed={data.Follower.isFollowed}
                 onClick={() => handleFollow(data.user.id)}
               />
             </>

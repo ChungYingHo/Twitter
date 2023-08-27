@@ -61,3 +61,21 @@ export const getUserLikes = async () => {
     console.error("[Get UserLikes failed]: ", error);
   }
 };
+
+export const getUserFollowings = async () => {
+  try {
+    const res = await axiosInstance.get(`${apiURL}/users/${userId}/followings`);
+    return res.data;
+  } catch (error) {
+    console.error("[Get Userfollowings failed]: ", error);
+  }
+};
+
+export const getUserFollowers = async () => {
+  try {
+    const res = await axiosInstance.get(`${apiURL}/users/${userId}/followers`);
+    return res.data;
+  } catch (error) {
+    console.error("[Get UserFollowerss failed]: ", error);
+  }
+};
