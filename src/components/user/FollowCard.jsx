@@ -2,7 +2,6 @@ import styled from "styled-components";
 import * as style from "../common/common.styled";
 
 const Container = styled.div`
-  border: 1px solid blue;
   min-height: 143px;
   height: fit-content;
   max-width: 100%;
@@ -29,7 +28,6 @@ const MainWrapper = styled.div`
 `;
 
 const TopWrapper = styled.div`
-  border: 1px solid green;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -39,7 +37,6 @@ const Name = styled.p`
   font-size: 16px;
   font-weight: 700;
   margin: 0;
-  border: 1px solid red;
   width: 430px;
   overflow-wrap: break-word;
 `;
