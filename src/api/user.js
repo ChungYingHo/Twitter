@@ -22,7 +22,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// 獲取user資料
+// get user data
 export const getUser = async () => {
   try {
     const res = await axiosInstance.get(`${apiURL}/users/${userId}`);
@@ -33,21 +33,8 @@ export const getUser = async () => {
 };
 
 // 編輯user資料
-export const editUser = async (payload) => {
-  const { username, introduction, avatar, banner } = payload;
-  try {
-    const res = await axiosInstance.put(`${apiURL}/users/${userId}`, {
-      username,
-      introduction,
-      avatar,
-      banner,
-    });
-    return res.data;
-  } catch (error) {
-    console.error("[editUser in user.js failed]: ", error);
-  }
-};
 
+//  獲取user推文
 export const getUserTweets = async () => {
   try {
     const res = await axiosInstance.get(`${apiURL}/users/${userId}/tweets`);

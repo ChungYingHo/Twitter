@@ -128,7 +128,7 @@ const UserInfo = () => {
     setIsNewPostOpen(false);
   };
 
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
 
   console.log("data in userInfo", userData);
 

@@ -77,7 +77,6 @@ const ReplyCardWrapper = styled.div`
 `;
 const UserPage = () => {
   const [activePage, setActivePage] = useState("post");
-  const [userDatas, setUserDatas] = useState([]);
   const [userTweets, setUserTweets] = useState([]);
   const { userData, setUserData } = useContext(UserContext);
 
@@ -99,7 +98,7 @@ const UserPage = () => {
     }
   }, [userData, setUserData]);
 
-  // console.log("getUserData", userDatas);
+  console.log("getUserData", userData);
 
   // 獲取user推文
   useEffect(() => {
