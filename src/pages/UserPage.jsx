@@ -1,16 +1,21 @@
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
 import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
 import ReplyCard from "../components/reply/ReplyCard";
+import { UserContext } from "../context/UserContext";
 // api
 import { checkPermission } from "../api/Permission";
-import { getUser, getUserTweets } from "../api/user";
-
+import {
+  getUser,
+  getUserTweets,
+  getUserReplies,
+  getUserLikes,
+} from "../api/user";
 
 // dummyData
 import posts from "../dummyData/posts";
@@ -79,31 +84,34 @@ const ReplyCardWrapper = styled.div`
 `;
 const UserPage = () => {
   const [activePage, setActivePage] = useState("post");
-  const [userDatas, setUserData] = useState([]);
-  const navigate = useNavigate()
+  const [userTweets, setUserTweets] = useState([]);
+  const [userReplies, setUserReplies] = useState([]);
+  const [userLikes, setUserLikes] = useState([]);
+  const { userData, setUserData } = useContext(UserContext);
+  const navigate = useNavigate();
 
   // 驗證 token
-    useEffect(() => {
-        const checkTokenIsValid = async () => {
-        const authToken = localStorage.getItem('UserToken');
-        if (!authToken) {
-            navigate('/login');
-        }
-        const result = await checkPermission(authToken);
-        if (!result) {
-            navigate('/login');
-        }
-        };
+  useEffect(() => {
+    const checkTokenIsValid = async () => {
+      const authToken = localStorage.getItem("UserToken");
+      if (!authToken) {
+        navigate("/login");
+      }
+      const result = await checkPermission(authToken);
+      if (!result) {
+        navigate("/login");
+      }
+    };
 
-        checkTokenIsValid();
-    }, [navigate])
+    checkTokenIsValid();
+  }, [navigate]);
 
   // 拿取特定使用者資料
   useEffect(() => {
     const getUserData = async () => {
       try {
         const data = await getUser();
-        console.log(data);
+        // console.log(data);
         setUserData(data);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
@@ -112,7 +120,7 @@ const UserPage = () => {
     getUserData();
   }, [setUserData]);
 
-  console.log("getUserData", userData);
+  // console.log("getUserData", userData);
 
   // 獲取user推文
   useEffect(() => {
@@ -125,9 +133,39 @@ const UserPage = () => {
       }
     };
     getUserTweet();
-  }, []);
+  }, [setUserTweets]);
 
-  console.log("getUserTweet", userTweets);
+  // console.log("getUserTweet", userTweets);
+
+  // 獲取user回覆
+  useEffect(() => {
+    const getUserReply = async () => {
+      try {
+        const reply = await getUserReplies();
+        setUserReplies(reply);
+      } catch (error) {
+        console.error("[GetUserData Failed]", error);
+      }
+    };
+    getUserReply();
+  }, [setUserReplies]);
+
+  // console.log("User Replies", userReplies);
+
+  // 獲取user喜歡貼文
+  useEffect(() => {
+    const getUserLike = async () => {
+      try {
+        const like = await getUserLikes();
+        setUserLikes(like);
+      } catch (error) {
+        console.error("[GetUserData Failed]", error);
+      }
+    };
+    getUserLike();
+  }, [setUserLikes]);
+
+  console.log("User Like", userLikes);
 
   return userData ? (
     <>
@@ -151,32 +189,33 @@ const UserPage = () => {
           banner={userData.banner}
         />
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
+
         <SwitchZoneContainer>
           {activePage === "post" &&
-            userTweets.map((data) => {
+            userTweets.map((tweet) => {
               return (
-                <PostCardWrapper key={data.id}>
+                <PostCardWrapper key={tweet.id}>
                   <PostCard
-                    name={data.User.name}
-                    account={data.User.name}
-                    avatar={data.User.avatar}
-                    content={data.User.in}
-                    timestamp={data.createdAt}
-                    reply={data.repliesCount}
-                    like={data.likesCount}
+                    name={tweet.User.name}
+                    account={tweet.User.name}
+                    avatar={tweet.User.avatar}
+                    content={tweet.description}
+                    timestamp={tweet.createdAt}
+                    reply={tweet.repliesCount}
+                    like={tweet.likesCount}
                   />
                 </PostCardWrapper>
               );
             })}
 
           {activePage === "reply" &&
-            replies.map((reply) => {
+            userReplies.map((reply) => {
               return (
-                <ReplyCardWrapper key={reply.id}>
+                <ReplyCardWrapper key={reply.TweetId}>
                   <ReplyCard
-                    name={reply.User.name}
-                    account={reply.User.account}
-                    avatar={reply.User.avatar}
+                    name={reply.Tweet.User.name}
+                    account={reply.Tweet.User.account}
+                    avatar={reply.Tweet.User.avatar}
                     content={reply.comment}
                     timestamp={reply.createdAt}
                   />
@@ -185,17 +224,17 @@ const UserPage = () => {
             })}
 
           {activePage === "like" &&
-            posts.map((data) => {
+            userLikes.map((like) => {
               return (
-                <PostCardWrapper key={data.id}>
+                <PostCardWrapper key={like.TweetId}>
                   <PostCard
-                    name={data.user.name}
-                    account={data.user.name}
-                    avatar={data.user.avatar}
-                    content={data.description}
-                    timestamp={data.createdAt}
-                    reply={data.repliesCount}
-                    like={data.likesCount}
+                    name={like.Tweet.User.name}
+                    account={like.Tweet.User.name}
+                    avatar={like.Tweet.User.avatar}
+                    content={like.Tweet.description}
+                    timestamp={like.Tweet.createdAt}
+                    reply={like.Tweet.repliesCount}
+                    like={like.Tweet.likesCount}
                   />
                 </PostCardWrapper>
               );

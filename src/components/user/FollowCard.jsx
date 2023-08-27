@@ -37,6 +37,8 @@ const Name = styled.p`
   font-size: 16px;
   font-weight: 700;
   margin: 0;
+  width: 430px;
+  overflow-wrap: break-word;
 `;
 
 const Btn = styled.button`
@@ -72,6 +74,7 @@ const UserIntro = styled.p`
   line-height: 26px;
   font-weight: 400;
   color: #171725;
+  word-wrap: break-word;
 `;
 
 export default function FollowCard({

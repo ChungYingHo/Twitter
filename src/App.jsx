@@ -16,20 +16,20 @@ import {
 import { AdminLayout, MainLayout } from "./layout/layout";
 import { UserContextProvider } from "./context/UserContext";
 
-const basename = process.env.PUBLIC_URL
+const basename = process.env.PUBLIC_URL;
 
 function App() {
   return (
-
     <div className="app row">
-      <BrowserRouter basename={basename}>
-        <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="*" element={<LoginPage />}></Route>
-          <Route path="register" element={<RegisterPage />}></Route>
-          <Route path="login" element={<LoginPage />}></Route>
-          <Route path="admin_login" element={<AdminLoginPage />}></Route>
-          <Route element={<MainLayout />}>
+      <UserContextProvider>
+        <BrowserRouter basename={basename}>
+          <Routes>
+            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="*" element={<LoginPage />}></Route>
+            <Route path="register" element={<RegisterPage />}></Route>
+            <Route path="login" element={<LoginPage />}></Route>
+            <Route path="admin_login" element={<AdminLoginPage />}></Route>
+            <Route element={<MainLayout />}>
               <Route path="/main" element={<MainPage />}></Route>
               <Route path="/user" element={<UserPage />}></Route>
               <Route path="/user/followers" element={<UserFollowers />}></Route>
@@ -37,15 +37,15 @@ function App() {
 
               <Route path="setting" element={<SettingPage />}></Route>
               <Route path="main/:tweet_id" element={<MainReplyList />}></Route>
-          </Route>
-          <Route element={<AdminLayout />}>
+            </Route>
+            <Route element={<AdminLayout />}>
               <Route path="admin_tweets" element={<AdminTweetPage />}></Route>
               <Route path="admin_users" element={<AdminUserPage />}></Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </UserContextProvider>
     </div>
-
   );
 }
 

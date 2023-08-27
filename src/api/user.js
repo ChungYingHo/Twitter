@@ -38,6 +38,44 @@ export const getUserTweets = async () => {
     const res = await axiosInstance.get(`${apiURL}/users/${userId}/tweets`);
     return res.data;
   } catch (error) {
-    console.error("[Get User failed]: ", error);
+    console.error("[Get UserTweets failed]: ", error);
+  }
+};
+
+export const getUserReplies = async () => {
+  try {
+    const res = await axiosInstance.get(
+      `${apiURL}/users/${userId}/replied_tweets`
+    );
+    return res.data;
+  } catch (error) {
+    console.error("[Get UserReplies failed]: ", error);
+  }
+};
+
+export const getUserLikes = async () => {
+  try {
+    const res = await axiosInstance.get(`${apiURL}/users/${userId}/likes`);
+    return res.data;
+  } catch (error) {
+    console.error("[Get UserLikes failed]: ", error);
+  }
+};
+
+export const getUserFollowings = async () => {
+  try {
+    const res = await axiosInstance.get(`${apiURL}/users/${userId}/followings`);
+    return res.data;
+  } catch (error) {
+    console.error("[Get Userfollowings failed]: ", error);
+  }
+};
+
+export const getUserFollowers = async () => {
+  try {
+    const res = await axiosInstance.get(`${apiURL}/users/${userId}/followers`);
+    return res.data;
+  } catch (error) {
+    console.error("[Get UserFollowerss failed]: ", error);
   }
 };
