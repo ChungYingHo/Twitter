@@ -95,10 +95,7 @@ const UserPage = () => {
     if (!userData) {
       getUserData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // console.log("getUserData", userData);
+  }, [userData, setUserData]);
 
   return userData ? (
     <>

@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import AuthInput from "../AuthInput";
 import { ReactComponent as PhotoIcon } from "../../assets/photo.svg";
 import { ReactComponent as CloseIcon } from "../../assets/close-white.svg";
+import { UserContext } from "../../context/UserContext";
 
 const PopupContainer = styled.div`
   width: 100%;
@@ -107,10 +108,12 @@ const UserEdit = ({ avatar, banner }) => {
   const [name, setName] = useState("");
   const [introduction, setIntro] = useState("");
 
+  const { userData, setUserData } = useContext(UserContext);
+
   return (
     <PopupContainer>
       <PopupBannerWrapper>
-        <PopupBanner src={banner} />
+        <PopupBanner src={userData.banner} />
         <BannerIconWrapper>
           <IconLayoutWrapper>
             <PhotoIcon />
@@ -120,7 +123,7 @@ const UserEdit = ({ avatar, banner }) => {
       </PopupBannerWrapper>
       <MainWrapper>
         <PicWrapper>
-          <PopupUserPic src={avatar} />
+          <PopupUserPic src={userData.avatar} />
         </PicWrapper>
         <PhotoIconWrapper>
           <PhotoIcon />
@@ -129,8 +132,8 @@ const UserEdit = ({ avatar, banner }) => {
         <NameInputContainer>
           <AuthInput
             label={"名稱"}
-            name={name}
-            value={name}
+            name={userData.name}
+            value={userData.name}
             placeholder={"請輸入帳號"}
             onChange={(nameInput) => setName(nameInput)}
           />
@@ -139,8 +142,8 @@ const UserEdit = ({ avatar, banner }) => {
         <IntroInputContainer>
           <AuthInput
             label={"自我介紹"}
-            name={introduction}
-            value={introduction}
+            name={userData.introduction}
+            value={userData.introduction}
             placeholder={"Egg Head"}
             onChange={(introInput) => setIntro(introInput)}
             isLarge={true}
