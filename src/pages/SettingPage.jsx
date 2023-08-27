@@ -8,10 +8,12 @@ import {
   SettingHr,
 } from "../components/common/setting.styled";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
 // api
 import { getUser, editUser } from "../api/setting";
+import { checkPermission } from "../api/Permission";
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -28,6 +30,23 @@ const SettingPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
+  const navigate = useNavigate()
+
+  // 驗證 token
+    useEffect(() => {
+        const checkTokenIsValid = async () => {
+        const authToken = localStorage.getItem('UserToken');
+        if (!authToken) {
+            navigate('/login');
+        }
+        const result = await checkPermission(authToken);
+        if (!result) {
+            navigate('/login');
+        }
+        };
+
+        checkTokenIsValid();
+    }, [navigate])
 
   useEffect(() => {
     const fetchingUser = async () => {

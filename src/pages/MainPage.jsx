@@ -7,6 +7,7 @@ import NewPost from "../components/main/NewPost"
 import * as style from "../components/common/common.styled";
 // 引用 api
 import { getTweets, postTweets } from "../api/main";
+import { checkPermission } from "../api/Permission";
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -74,6 +75,21 @@ const MainPage = () => {
   const [posts, setPosts] = useState([])
   const [postContent, setPostContent] = useState('')
   const navigate = useNavigate()
+  // 驗證 token
+  useEffect(() => {
+    const checkTokenIsValid = async () => {
+      const authToken = localStorage.getItem('UserToken');
+      if (!authToken) {
+        navigate('/login');
+      }
+      const result = await checkPermission(authToken);
+      if (!result) {
+        navigate('/login');
+      }
+    };
+
+    checkTokenIsValid();
+  }, [navigate])
 
   // 控管彈出視窗
   const openNewPost = () => {

@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import * as style from "../common/common.styled";
-import PopularBar from "../PopularBar";
 import { ReactComponent as LeftArrow } from "../../assets/left-arrow.svg";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import FollowrSubTool from "./FollowSubTool";
 import FollowCard from "./FollowCard";
+// api
+import { checkPermission } from "../../api/Permission";
 
 // dummyData
 import users from "../../dummyData/popularUsers";
@@ -57,6 +58,22 @@ const StyledLink = styled(Link)`
 
 const UserFollowing = () => {
   const [usersData, setUsersData] = useState(users);
+  const navigate = useNavigate()
+    // 驗證 token
+    useEffect(() => {
+        const checkTokenIsValid = async () => {
+        const authToken = localStorage.getItem('UserToken');
+        if (!authToken) {
+            navigate('/login');
+        }
+        const result = await checkPermission(authToken);
+        if (!result) {
+            navigate('/login');
+        }
+        };
+
+        checkTokenIsValid();
+    }, [navigate])
 
   const handleFollow = (userId) => {
     setUsersData((prevUsersData) =>

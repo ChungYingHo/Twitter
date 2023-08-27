@@ -11,8 +11,10 @@ import {
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+// api
+import { checkPermission } from "../api/Permission";
 import { login } from "../api/auth";
 import Swal from "sweetalert2";
 import clsx from "clsx";
@@ -46,6 +48,21 @@ const LoginPage = () => {
       setError(errorMessage);
     }
   };
+
+  useEffect(() => {
+    const checkTokenIsValid = async () => {
+      const authToken = localStorage.getItem('UserToken');
+      if (!authToken) {
+        return;
+      }
+      const result = await checkPermission(authToken);
+      if (result) {
+        navigate('/main');
+      }
+    };
+
+    checkTokenIsValid();
+  }, [navigate])
 
   return (
     <AuthContainer>

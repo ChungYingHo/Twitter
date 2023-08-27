@@ -17,6 +17,7 @@ import { getSingleTweet,
          likeTweet,
         dislikeTweet
     } from "../api/main";
+import { checkPermission } from "../api/Permission";
 
 const Container = styled.div`
   width: 56.2%;
@@ -147,6 +148,21 @@ const CardContainer = styled.div`
 export default function MainReplyList(){
     const { tweet_id } = useParams()
     const navigate = useNavigate()
+    // 驗證 token
+    useEffect(() => {
+        const checkTokenIsValid = async () => {
+        const authToken = localStorage.getItem('UserToken');
+        if (!authToken) {
+            navigate('/login');
+        }
+        const result = await checkPermission(authToken);
+        if (!result) {
+            navigate('/login');
+        }
+        };
+
+        checkTokenIsValid();
+    }, [navigate])
     // 抓特定貼文
     const [tweet, setTweet] = useState(null)
     useEffect(() => {
