@@ -68,6 +68,7 @@ const UserAccount = styled.p`
 `;
 
 const UserIntroduction = styled.p`
+  word-wrap: break-word;
   font-size: 14px;
   font-weight: 400;
   line-height: 22px;
