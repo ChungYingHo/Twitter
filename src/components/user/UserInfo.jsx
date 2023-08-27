@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import defaultUserBanner from "../../assets/defaultUserBanner.png";
-import dummyUserPic from "../../assets/dummyUserPic.jpg";
 import UserEdit from "./UserEdit";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -118,7 +116,15 @@ const StyledLink = styled(Link)`
   padding: 0;
 `;
 
-const UserInfo = () => {
+const UserInfo = ({
+  name,
+  account,
+  introduction,
+  followingsCount,
+  followersCount,
+  avatar,
+  banner,
+}) => {
   const [isNewPostOpen, setIsNewPostOpen] = useState(false);
   const openNewPost = () => {
     setIsNewPostOpen(true);
@@ -129,11 +135,11 @@ const UserInfo = () => {
 
   return (
     <UserMainContainer>
-      <UserBanner src={defaultUserBanner} />
+      <UserBanner src={banner} />
 
       <UserInfoWrapper>
         <UserPicBtnWrapper>
-          <UserPic src={dummyUserPic} />
+          <UserPic src={avatar} />
           <UserEditBtn onClick={openNewPost}>編輯個人資料</UserEditBtn>
         </UserPicBtnWrapper>
 
@@ -142,30 +148,38 @@ const UserInfo = () => {
           closeModal={closeNewPost}
           headerTitle={<HeaderTittle>編輯個人資料</HeaderTittle>}
           headerButton={<HeaderBtn>儲存</HeaderBtn>}
+          name={name}
+          account={account}
+          introduction={introduction}
+          avatar={avatar}
+          banner={banner}
         >
-          <UserEdit />
+          <UserEdit
+            userName={name}
+            account={account}
+            intro={introduction}
+            avatar={avatar}
+            banner={banner}
+          />
         </PopupModal>
 
         <UserAccountNameWrapper>
-          <UserName>Egg Head</UserName>
-          <UserAccount>@egghead123</UserAccount>
+          <UserName>{name}</UserName>
+          <UserAccount>@{account}</UserAccount>
 
-          <UserIntroduction>
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-            sint.
-          </UserIntroduction>
+          <UserIntroduction>{introduction}</UserIntroduction>
 
           <UserFollowWrapper>
             <StyledLink to="/user/following">
               <UserFollowbox>
-                <UserFollowNum>34個</UserFollowNum>
+                <UserFollowNum>{followingsCount}個</UserFollowNum>
                 <UserFollowTittle>跟隨中</UserFollowTittle>
               </UserFollowbox>
             </StyledLink>
 
             <StyledLink to="/user/followers">
               <UserFollowbox>
-                <UserFollowNum>59位</UserFollowNum>
+                <UserFollowNum>{followersCount}位</UserFollowNum>
                 <UserFollowTittle>跟隨者</UserFollowTittle>
               </UserFollowbox>
             </StyledLink>

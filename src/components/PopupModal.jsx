@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import * as style from './common/common.styled'
+import * as style from "./common/common.styled";
 import { ReactComponent as Close } from "../assets/close.svg";
 
 const Overlay = styled.div`
@@ -56,6 +56,8 @@ const PopupModal = ({
   children,
   headerTitle,
   headerButton,
+  avatar,
+  banner,
 }) => {
   return (
     <>

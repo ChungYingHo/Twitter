@@ -1,12 +1,11 @@
 import styled from "styled-components";
 import { useState } from "react";
-import dummyUserPic from "../../assets/dummyUserPic.jpg";
-import defaultUserBanner from "../../assets/defaultUserBanner.png";
 import AuthInput from "../AuthInput";
 import { ReactComponent as PhotoIcon } from "../../assets/photo.svg";
 import { ReactComponent as CloseIcon } from "../../assets/close-white.svg";
 
 const PopupContainer = styled.div`
+  width: 100%;
   height: 553px;
   border-radius: 10px;
   position: relative;
@@ -30,7 +29,7 @@ const PopupBannerWrapper = styled.div`
 `;
 
 const PopupBanner = styled.img`
-  width: 640px;
+  width: 100%;
   height: 200px;
 `;
 
@@ -104,14 +103,14 @@ const IntroInputContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const UserEdit = () => {
+const UserEdit = ({ avatar, banner }) => {
   const [name, setName] = useState("");
   const [introduction, setIntro] = useState("");
 
   return (
     <PopupContainer>
       <PopupBannerWrapper>
-        <PopupBanner src={defaultUserBanner} />
+        <PopupBanner src={banner} />
         <BannerIconWrapper>
           <IconLayoutWrapper>
             <PhotoIcon />
@@ -121,7 +120,7 @@ const UserEdit = () => {
       </PopupBannerWrapper>
       <MainWrapper>
         <PicWrapper>
-          <PopupUserPic src={dummyUserPic} />
+          <PopupUserPic src={avatar} />
         </PicWrapper>
         <PhotoIconWrapper>
           <PhotoIcon />
