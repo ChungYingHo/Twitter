@@ -33,10 +33,10 @@ export const getUser = async () => {
 };
 
 // 編輯user資料
-export const patchUser = async (payload) => {
+export const editUser = async (payload) => {
   const { name, introduction, avator, banner } = payload;
   try {
-    const res = await axiosInstance.patch(`${apiURL}/users/${userId}`, {
+    const res = await axiosInstance.put(`${apiURL}/users/${userId}`, {
       name,
       introduction,
       avator,
