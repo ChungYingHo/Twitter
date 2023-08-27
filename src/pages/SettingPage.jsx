@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
 // api
-import { getUser } from "../api/setting";
+import { getUser, editUser } from "../api/setting";
 
 const Container = styled.div`
     outline: green solid 2px;
@@ -22,14 +22,30 @@ const Container = styled.div`
   `;
 
 const SettingPage = () => {
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState({})
   const [account, setAccount] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
 
-  const handleClick = () => {
+  useEffect(() => {
+        const fetchingUser = async ()=>{
+            try{
+                const userData = await getUser()
+                setUser(userData)
+                console.log('User data:', userData)
+                setAccount(userData.account)
+                setName(userData.name)
+                setEmail(userData.email)
+            } catch (error){
+                console.error('Get User Failed:', error)
+            }
+        }
+        fetchingUser()
+    }, [])
+
+  const handleClick = async() => {
     if (
       account.length === 0 ||
       name.length === 0 ||
@@ -39,20 +55,18 @@ const SettingPage = () => {
     ) {
       return;
     }
-  };
 
-  useEffect(() => {
-        const fetchingUser = async ()=>{
-            try{
-                const userData = await getUser()
-                setUser(userData)
-                console.log('User data:', userData)
-            } catch (error){
-                console.error('Get User Failed:', error)
-            }
-        }
-        fetchingUser()
-    }, [])
+    try {
+      if (password !== checkPassword) {
+        console.error('Passwords do not match');
+        return;
+      }
+      await editUser({ name, account, email, password, checkPassword });
+      console.log('Editing User Successful!');
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -68,7 +82,7 @@ const SettingPage = () => {
             label={"帳號"}
             maxlength="30"
             name={account}
-            value={account}
+            value={user.account}
             placeholder={"請輸入帳號"}
             onChange={(accountInputValue) => setAccount(accountInputValue)}
           />
@@ -79,7 +93,7 @@ const SettingPage = () => {
             label={"名稱"}
             maxlength="50"
             name={name}
-            value={name}
+            value={user.name}
             placeholder={"請輸入使用者名稱"}
             onChange={(nameInputValue) => setName(nameInputValue)}
           />
@@ -90,7 +104,7 @@ const SettingPage = () => {
             type="email"
             label={"Email"}
             name={email}
-            value={email}
+            value={user.email}
             placeholder={"請輸入Email"}
             onChange={(emailInputValue) => setEmail(emailInputValue)}
           />
@@ -102,7 +116,7 @@ const SettingPage = () => {
             minlength="5"
             maxlength="20"
             name={password}
-            value={password}
+            value={user.password}
             placeholder={"請輸入密碼"}
             onChange={(passwordInputValue) => setPassword(passwordInputValue)}
             required

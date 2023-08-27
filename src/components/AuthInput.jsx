@@ -46,7 +46,7 @@ const AuthInput = ({ label, type, placeholder, value, onChange, isLarge }) => {
         <StyledInput
           type={type || "text"}
           placeholder={placeholder || ""}
-          value={value || ""}
+          defaultValue={value || ""}
           onChange={(event) => onChange?.(event.target.value)}
         />
       )}
