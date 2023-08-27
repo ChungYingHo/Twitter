@@ -11,7 +11,6 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("UserToken");
-    // console.log(token);
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
@@ -22,8 +21,10 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+// get user data
 export const getUser = async () => {
   try {
+    console.log({ userId });
     const res = await axiosInstance.get(`${apiURL}/users/${userId}`);
     return res.data;
   } catch (error) {
@@ -31,12 +32,12 @@ export const getUser = async () => {
   }
 };
 
-export const patchUser = async (payload) => {
-  const { name, introduction, avator, banner } = payload;
+//  獲取user推文
+export const getUserTweets = async () => {
   try {
-    const res = await axiosInstance.patch(`${apiURL}/users/${userId}`);
+    const res = await axiosInstance.get(`${apiURL}/users/${userId}/tweets`);
     return res.data;
   } catch (error) {
-    console.error("[Patch User failed]: ", error);
+    console.error("[Get User failed]: ", error);
   }
 };

@@ -7,7 +7,7 @@ import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
 import ReplyCard from "../components/reply/ReplyCard";
-import { getUser } from "../api/user";
+import { getUser, getUserTweets } from "../api/user";
 import { UserContext } from "../context/UserContext";
 
 // dummyData
@@ -77,6 +77,7 @@ const ReplyCardWrapper = styled.div`
 `;
 const UserPage = () => {
   const [activePage, setActivePage] = useState("post");
+  const [userTweets, setUserTweets] = useState([]);
   const { userData, setUserData } = useContext(UserContext);
 
   console.log(userData);
@@ -86,16 +87,31 @@ const UserPage = () => {
     const getUserData = async () => {
       try {
         const data = await getUser();
+        console.log(data);
         setUserData(data);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
     };
+    getUserData();
+  }, [setUserData]);
 
-    if (!userData) {
-      getUserData();
-    }
-  }, [userData, setUserData]);
+  console.log("getUserData", userData);
+
+  // 獲取user推文
+  useEffect(() => {
+    const getUserTweet = async () => {
+      try {
+        const userTweet = await getUserTweets();
+        setUserTweets(userTweet);
+      } catch (error) {
+        console.error("[GetUserData Failed]", error);
+      }
+    };
+    getUserTweet();
+  }, []);
+
+  console.log("getUserTweet", userTweets);
 
   return userData ? (
     <>
@@ -121,14 +137,14 @@ const UserPage = () => {
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
         <SwitchZoneContainer>
           {activePage === "post" &&
-            posts.map((data) => {
+            userTweets.map((data) => {
               return (
                 <PostCardWrapper key={data.id}>
                   <PostCard
-                    name={data.user.name}
-                    account={data.user.name}
-                    avatar={data.user.avatar}
-                    content={data.description}
+                    name={data.User.name}
+                    account={data.User.name}
+                    avatar={data.User.avatar}
+                    content={data.User.in}
                     timestamp={data.createdAt}
                     reply={data.repliesCount}
                     like={data.likesCount}
