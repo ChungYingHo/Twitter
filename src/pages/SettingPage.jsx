@@ -82,7 +82,7 @@ const SettingPage = () => {
             label={"帳號"}
             maxlength="30"
             name={account}
-            value={user.account}
+            defaultValue={user.account}
             placeholder={"請輸入帳號"}
             onChange={(accountInputValue) => setAccount(accountInputValue)}
           />
@@ -93,7 +93,7 @@ const SettingPage = () => {
             label={"名稱"}
             maxlength="50"
             name={name}
-            value={user.name}
+            defaultValue={user.name}
             placeholder={"請輸入使用者名稱"}
             onChange={(nameInputValue) => setName(nameInputValue)}
           />
@@ -104,7 +104,7 @@ const SettingPage = () => {
             type="email"
             label={"Email"}
             name={email}
-            value={user.email}
+            defaultValue={user.email}
             placeholder={"請輸入Email"}
             onChange={(emailInputValue) => setEmail(emailInputValue)}
           />
@@ -117,7 +117,7 @@ const SettingPage = () => {
             maxlength="20"
             name={password}
             value={user.password}
-            placeholder={"請輸入密碼"}
+            placeholder={"請設定密碼"}
             onChange={(passwordInputValue) => setPassword(passwordInputValue)}
             required
           />
