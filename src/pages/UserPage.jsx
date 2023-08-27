@@ -10,7 +10,12 @@ import ReplyCard from "../components/reply/ReplyCard";
 import { UserContext } from "../context/UserContext";
 // api
 import { checkPermission } from "../api/Permission";
-import { getUser, getUserTweets, getUserReplies } from "../api/user";
+import {
+  getUser,
+  getUserTweets,
+  getUserReplies,
+  getUserLikes,
+} from "../api/user";
 
 // dummyData
 import posts from "../dummyData/posts";
@@ -81,6 +86,7 @@ const UserPage = () => {
   const [activePage, setActivePage] = useState("post");
   const [userTweets, setUserTweets] = useState([]);
   const [userReplies, setUserReplies] = useState([]);
+  const [userLikes, setUserLikes] = useState([]);
   const { userData, setUserData } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -131,6 +137,7 @@ const UserPage = () => {
 
   // console.log("getUserTweet", userTweets);
 
+  // 獲取user回覆
   useEffect(() => {
     const getUserReply = async () => {
       try {
@@ -143,7 +150,22 @@ const UserPage = () => {
     getUserReply();
   }, [setUserReplies]);
 
-  console.log("User Replies", userReplies);
+  // console.log("User Replies", userReplies);
+
+  // 獲取user喜歡貼文
+  useEffect(() => {
+    const getUserLike = async () => {
+      try {
+        const like = await getUserLikes();
+        setUserLikes(like);
+      } catch (error) {
+        console.error("[GetUserData Failed]", error);
+      }
+    };
+    getUserLike();
+  }, [setUserLikes]);
+
+  console.log("User Like", userLikes);
 
   return userData ? (
     <>
@@ -202,17 +224,17 @@ const UserPage = () => {
             })}
 
           {activePage === "like" &&
-            posts.map((data) => {
+            userLikes.map((like) => {
               return (
-                <PostCardWrapper key={data.id}>
+                <PostCardWrapper key={like.TweetId}>
                   <PostCard
-                    name={data.user.name}
-                    account={data.user.name}
-                    avatar={data.user.avatar}
-                    content={data.description}
-                    timestamp={data.createdAt}
-                    reply={data.repliesCount}
-                    like={data.likesCount}
+                    name={like.Tweet.User.name}
+                    account={like.Tweet.User.name}
+                    avatar={like.Tweet.User.avatar}
+                    content={like.Tweet.description}
+                    timestamp={like.Tweet.createdAt}
+                    reply={like.Tweet.repliesCount}
+                    like={like.Tweet.likesCount}
                   />
                 </PostCardWrapper>
               );

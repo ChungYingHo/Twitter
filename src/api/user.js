@@ -38,7 +38,7 @@ export const getUserTweets = async () => {
     const res = await axiosInstance.get(`${apiURL}/users/${userId}/tweets`);
     return res.data;
   } catch (error) {
-    console.error("[Get User failed]: ", error);
+    console.error("[Get UserTweets failed]: ", error);
   }
 };
 
@@ -49,6 +49,15 @@ export const getUserReplies = async () => {
     );
     return res.data;
   } catch (error) {
-    console.error("[Get User failed]: ", error);
+    console.error("[Get UserReplies failed]: ", error);
+  }
+};
+
+export const getUserLikes = async () => {
+  try {
+    const res = await axiosInstance.get(`${apiURL}/users/${userId}/likes`);
+    return res.data;
+  } catch (error) {
+    console.error("[Get UserLikes failed]: ", error);
   }
 };
