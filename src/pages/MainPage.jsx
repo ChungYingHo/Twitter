@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import PostCard from "../components/main/PostCard";
 import PopupModal from "../components/PopupModal";
-import NewPost from "../components/main/NewPost"
+import NewPost from "../components/main/NewPost";
 import * as style from "../components/common/common.styled";
+import { UserContext } from "../context/UserContext";
 // 引用 api
 import { getTweets, postTweets } from "../api/main";
 
@@ -71,9 +72,10 @@ const Btn = styled(style.StyledBtn)`
 
 const MainPage = () => {
   const [isNewPostOpen, setIsNewPostOpen] = useState(false);
-  const [posts, setPosts] = useState([])
-  const [postContent, setPostContent] = useState('')
-  const navigate = useNavigate()
+  const [posts, setPosts] = useState([]);
+  const [postContent, setPostContent] = useState("");
+  const navigate = useNavigate();
+  const { userData, setUserData } = useContext(UserContext);
 
   // 控管彈出視窗
   const openNewPost = () => {
@@ -87,21 +89,23 @@ const MainPage = () => {
     const fetchTweets = async () => {
       try {
         const tweetData = await getTweets();
-        const sortedTweets = tweetData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        setPosts(sortedTweets)
+        const sortedTweets = tweetData.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setPosts(sortedTweets);
       } catch (error) {
         console.error("Fetching Tweets Failed:", error);
       }
     };
     fetchTweets();
-  }, [])
+  }, []);
   // 發送貼文
   const handlePostSubmit = async () => {
     try {
       const response = await postTweets({ description: postContent });
-      console.log('Post successful:', response);
+      console.log("Post successful:", response);
       // 清空 textarea 內容
-      setPostContent('');
+      setPostContent("");
       // 刷新主畫面上的貼文列表
       const updatedTweets = await getTweets();
       const sortedTweets = updatedTweets.sort(
@@ -111,9 +115,9 @@ const MainPage = () => {
       // 關閉發文彈出視窗
       closeNewPost();
     } catch (error) {
-      console.error('Posting Tweet Failed:', error);
+      console.error("Posting Tweet Failed:", error);
     }
-  }
+  };
 
   return (
     <>
@@ -124,13 +128,13 @@ const MainPage = () => {
 
         <PostContainer onClick={openNewPost}>
           <PostTitle>
-            <img src="https://i.imgur.com/jUZg5Mm.png" alt="avatar" />
+            <img src={userData.avatar} alt="avatar" />
             <h5>有什麼新鮮事？</h5>
           </PostTitle>
           <Btn>推文</Btn>
         </PostContainer>
 
-        <PopupModal isOpen={isNewPostOpen} closeModal={closeNewPost} >
+        <PopupModal isOpen={isNewPostOpen} closeModal={closeNewPost}>
           <NewPost
             postContent={postContent}
             setPostContent={setPostContent}
@@ -141,17 +145,21 @@ const MainPage = () => {
         <CardContainer>
           {posts.map((data) => {
             return (
-              <div key={data.id} onClick={() => navigate(`/main/${data.id}`)} className="post-link">
-                  <PostCard
-                      key={data.id}
-                      name={data.User.name}
-                      account={data.User.account}
-                      avatar={data.User.avatar}
-                      content={data.description}
-                      timestamp={data.createdAt}
-                      reply={data.repliesCount}
-                      like={data.likesCount}
-                  />
+              <div
+                key={data.id}
+                onClick={() => navigate(`/main/${data.id}`)}
+                className="post-link"
+              >
+                <PostCard
+                  key={data.id}
+                  name={data.User.name}
+                  account={data.User.account}
+                  avatar={data.User.avatar}
+                  content={data.description}
+                  timestamp={data.createdAt}
+                  reply={data.repliesCount}
+                  like={data.likesCount}
+                />
               </div>
             );
           })}
