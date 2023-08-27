@@ -8,11 +8,12 @@ import {
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 // api
 import { adminLogin } from "../api/admin";
+import { checkAdminPermission } from "../api/Permission";
 
 const AdminLoginPage = () => {
   const [account, setAccount] = useState("");
@@ -20,6 +21,21 @@ const AdminLoginPage = () => {
   const [error, setError] = useState(null)
 
   const navigate = useNavigate()
+  // 驗證 token
+  useEffect(() => {
+    const checkTokenIsValid = async () => {
+      const authToken = localStorage.getItem('AdminToken');
+      if (!authToken) {
+        return;
+      }
+      const result = await checkAdminPermission(authToken);
+      if (result) {
+        navigate('/admin_tweets');
+      }
+    };
+
+    checkTokenIsValid();
+  }, [navigate])
 
   const handleClick = async () => {
     if (account.length === 0 || password.length === 0) {

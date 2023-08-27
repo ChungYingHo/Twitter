@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 import { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 import AdminUserCard from '../components/admin/AdminUserCard'
 import * as style from '../components/common/common.styled'
 // api
 import { adminGetUsers } from '../api/admin'
+import { checkAdminPermission } from '../api/Permission'
 
 const Container = styled.div`
-  outline: blue solid 2px;
   width: 83%;
   padding: 0;
   border-left: ${style.styledBorder};
@@ -36,12 +37,28 @@ const CardContainer = styled.div`
 
 export default function AdminUserPage(){
     const [users, setUsers] = useState([])
+    const navigate = useNavigate()
+    // 驗證 token
+    useEffect(() => {
+      const checkTokenIsValid = async () => {
+        const authToken = localStorage.getItem('AdminToken');
+        if (!authToken) {
+          navigate('/admin_login');
+        }
+        const result = await checkAdminPermission(authToken);
+        if (!result) {
+          navigate('/admin_login');
+        }
+      };
+
+      checkTokenIsValid();
+    }, [navigate])
+    // 取得所有用戶
     useEffect(() => {
     const fetchUsers = async () => {
         try {
             const tweetData = await adminGetUsers();
-            setUsers(tweetData);
-            console.log(tweetData)
+            setUsers(tweetData)
         } catch (error) {
             console.error("Fetching Tweets Failed:", error);
         }

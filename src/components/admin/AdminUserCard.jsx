@@ -34,6 +34,14 @@ const Info = styled.div`
         border-radius: 50%;
         border: ${style.colors.white} solid 4px;
     }
+    p{
+        width: 180px;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+    }
     .name{
         ${style.styledName}
     }

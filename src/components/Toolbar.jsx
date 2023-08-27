@@ -9,7 +9,6 @@ import { ReactComponent as Logout } from "../assets/logout.svg";
 import * as style from "../components/common/common.styled";
 
 const Container = styled.div`
-  outline: yellow solid 2px;
   position: relative;
   height: 100vh;
   width: 15.6%;

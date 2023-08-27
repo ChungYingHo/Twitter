@@ -3,7 +3,6 @@ import TimeDiff from '../main/TimeDiff'
 import * as style from '../common/common.styled'
 
 const Container = styled.div`
-    outline: red solid 2px;
     min-height: 133px;
     height: fit-content;
     width: 100%;
@@ -17,7 +16,6 @@ const Container = styled.div`
 `
 
 const Post = styled.div`
-    outline: green solid 2px;
     height: 100%;
     width: calc(100% - 74px);
     margin-left: 8px;
@@ -29,8 +27,15 @@ const Post = styled.div`
     p{
         margin: 0;
     }
+    .reply-user{
+        display: flex;
+        align-items: center;
+        p{
+            color: ${style.colors.orange};
+            margin-left: 4px;
+        }
+    }
     .content{
-        outline: blue solid 3px;
         height: 78px;
         ${style.styledContentFont}
         overflow-wrap: break-word;
@@ -59,7 +64,7 @@ export default function ReplyCard({name, account, avatar, content, timestamp, re
                     <p className='name'>{name}</p>
                     <p className='account'>@{account}・<TimeDiff timestamp={timestamp}/></p>
                 </Info>
-                <p className='reply-user'>回覆 @{replyAccount}</p>
+                <div className='reply-user'>回覆 <p>@{replyAccount}</p></div>
                 <p className='content'>{content}</p>
             </Post>
         </Container>

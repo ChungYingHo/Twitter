@@ -5,14 +5,13 @@ import PopularCard from "./PopularCard";
 import { getPopUsers, followUser, disFollowUser } from "../api/popular";
 
 const Container = styled.div`
-  outline: purple solid 2px;
-  margin-top: 16px;
-  padding: 0;
-  height: fit-content;
-  width: 23.9%;
-  background-color: #fafafb;
-  border-radius: 16px;
-`;
+    margin-top: 16px;
+    padding: 0;
+    height: fit-content;
+    width: 23.9%;
+    background-color: #fafafb;
+    border-radius: 16px;
+`
 
 const Title = styled.div`
   height: 74px;
@@ -31,20 +30,22 @@ const CardContainer = styled.div`
   width: 100%;
 `;
 
-export default function PopularBar() {
-  const [usersData, setUsersData] = useState([]);
-  // 獲取推薦使用者
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const usersData = await getPopUsers();
-        setUsersData(usersData);
-      } catch (error) {
-        console.error("Get Users Failed:", error);
-      }
-    };
-    fetchUsers();
-  }, []);
+
+export default function PopularBar(){
+    const [usersData, setUsersData] = useState([])
+    // 獲取推薦使用者
+    useEffect(()=>{
+        const fetchUsers = async()=>{
+            try{
+                const usersData = await getPopUsers()
+                setUsersData(usersData)
+            } catch(error){
+                console.error('Get Users Failed:', error)
+            }
+        }
+        fetchUsers()
+    }, [])
+
 
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {

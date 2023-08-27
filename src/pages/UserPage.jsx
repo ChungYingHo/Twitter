@@ -1,14 +1,16 @@
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
-import { Link } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
 import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
 import ReplyCard from "../components/reply/ReplyCard";
+// api
+import { checkPermission } from "../api/Permission";
 import { getUser, getUserTweets } from "../api/user";
-import { UserContext } from "../context/UserContext";
+
 
 // dummyData
 import posts from "../dummyData/posts";
@@ -77,10 +79,24 @@ const ReplyCardWrapper = styled.div`
 `;
 const UserPage = () => {
   const [activePage, setActivePage] = useState("post");
-  const [userTweets, setUserTweets] = useState([]);
-  const { userData, setUserData } = useContext(UserContext);
+  const [userDatas, setUserData] = useState([]);
+  const navigate = useNavigate()
 
-  console.log(userData);
+  // 驗證 token
+    useEffect(() => {
+        const checkTokenIsValid = async () => {
+        const authToken = localStorage.getItem('UserToken');
+        if (!authToken) {
+            navigate('/login');
+        }
+        const result = await checkPermission(authToken);
+        if (!result) {
+            navigate('/login');
+        }
+        };
+
+        checkTokenIsValid();
+    }, [navigate])
 
   // 拿取特定使用者資料
   useEffect(() => {

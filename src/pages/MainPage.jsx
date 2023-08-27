@@ -8,9 +8,9 @@ import * as style from "../components/common/common.styled";
 import { UserContext } from "../context/UserContext";
 // 引用 api
 import { getTweets, postTweets } from "../api/main";
+import { checkPermission } from "../api/Permission";
 
 const Container = styled.div`
-  outline: green solid 2px;
   padding: 0;
   width: 56.2%;
   border: ${style.styledBorder};
@@ -54,7 +54,6 @@ const PostTitle = styled.div`
 `;
 
 const CardContainer = styled.div`
-  outline: red solid 2px;
   width: 100%;
   margin-top: 16px;
   display: flex;
@@ -72,10 +71,26 @@ const Btn = styled(style.StyledBtn)`
 
 const MainPage = () => {
   const [isNewPostOpen, setIsNewPostOpen] = useState(false);
-  const [posts, setPosts] = useState([]);
-  const [postContent, setPostContent] = useState("");
-  const navigate = useNavigate();
-  const { userData, setUserData } = useContext(UserContext);
+
+  const [posts, setPosts] = useState([])
+  const [postContent, setPostContent] = useState('')
+  const navigate = useNavigate()
+  // 驗證 token
+  useEffect(() => {
+    const checkTokenIsValid = async () => {
+      const authToken = localStorage.getItem('UserToken');
+      if (!authToken) {
+        navigate('/login');
+      }
+      const result = await checkPermission(authToken);
+      if (!result) {
+        navigate('/login');
+      }
+    };
+
+    checkTokenIsValid();
+  }, [navigate])
+
 
   // 控管彈出視窗
   const openNewPost = () => {
@@ -102,20 +117,20 @@ const MainPage = () => {
   // 發送貼文
   const handlePostSubmit = async () => {
     try {
-      const response = await postTweets({ description: postContent });
-      console.log("Post successful:", response);
+      const response = await postTweets({ description: postContent })
+      console.log('Post successful:', response)
       // 清空 textarea 內容
-      setPostContent("");
+      setPostContent('')
       // 刷新主畫面上的貼文列表
-      const updatedTweets = await getTweets();
+      const updatedTweets = await getTweets()
       const sortedTweets = updatedTweets.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
-      setPosts(sortedTweets);
+      )
+      setPosts(sortedTweets)
       // 關閉發文彈出視窗
-      closeNewPost();
+      closeNewPost()
     } catch (error) {
-      console.error("Posting Tweet Failed:", error);
+      console.error('Posting Tweet Failed:', error)
     }
   };
 

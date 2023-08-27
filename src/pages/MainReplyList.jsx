@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import PopularBar from "../components/PopularBar";
 import ReplyCard from "../components/reply/ReplyCard";
 import PopupModal from "../components/PopupModal";
 import NewReply from "../components/reply/NewReply";
@@ -18,6 +17,7 @@ import { getSingleTweet,
          likeTweet,
         dislikeTweet
     } from "../api/main";
+import { checkPermission } from "../api/Permission";
 
 const Container = styled.div`
   width: 56.2%;
@@ -27,7 +27,6 @@ const Container = styled.div`
 `
 
 const Header = styled.div`
-  outline: red solid 2px;
   width: 100%;
   height: 51px;
   margin-top: 24px;
@@ -47,7 +46,6 @@ const StyledArrow = styled(LeftArrow)`
 `
 
 const PostContainer = styled.div`
-  outline: red solid 2px;
   height: fit-content;
 
   margin-top: 16px;
@@ -64,7 +62,6 @@ const PersonInfo = styled.div`
 `
 
 const Title = styled.div`
-    outline: black solid 2px;
     display: flex;
     margin-bottom: 8px;
     img{
@@ -72,13 +69,11 @@ const Title = styled.div`
         margin-right: 8px;
     }
     div{
-        outline: blue solid 2px;
         width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         p{
-            outline: red solid 2px;
             width: 100%;
             overflow: hidden;
             white-space: nowrap;
@@ -148,19 +143,33 @@ const CardContainer = styled.div`
 export default function MainReplyList(){
     const { tweet_id } = useParams()
     const navigate = useNavigate()
+    // 驗證 token
+    useEffect(() => {
+        const checkTokenIsValid = async () => {
+        const authToken = localStorage.getItem('UserToken');
+        if (!authToken) {
+            navigate('/login');
+        }
+        const result = await checkPermission(authToken);
+        if (!result) {
+            navigate('/login');
+        }
+        };
+
+        checkTokenIsValid();
+    }, [navigate])
     // 抓特定貼文
     const [tweet, setTweet] = useState(null)
     useEffect(() => {
         const fetchSingleTweet = async () => {
             try {
-                const tweetData = await getSingleTweet({ tweet_id: parseInt(tweet_id) });
-                setTweet(tweetData);
-                console.log(tweetData)
+                const tweetData = await getSingleTweet({ tweet_id: parseInt(tweet_id) })
+                setTweet(tweetData)
             } catch (error) {
-                console.error('Fetching Single Tweet Failed:', error);
+                console.error('Fetching Single Tweet Failed:', error)
             }
-            };
-            fetchSingleTweet();
+            }
+            fetchSingleTweet()
     }, [tweet_id])
     // 抓這篇貼文的全部回覆
     const [replies, setReplies] = useState([])
@@ -297,7 +306,6 @@ export default function MainReplyList(){
         )}
 
       </Container>
-      <PopularBar />
     </>
     )
 }
