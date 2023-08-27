@@ -30,3 +30,19 @@ export const getUser = async () => {
     console.error('[Get User failed]: ', error);
   }
 }
+
+// 更改使用者資訊
+export const editUser = async ({name, account, email, password, checkPassword}) => {
+  try {
+    const res = await axiosInstance.put(`${apiURL}/users/${userId}`, {
+        name,
+        account,
+        email,
+        password,
+        checkPassword
+    });
+    return res.data
+  } catch (error) {
+    console.error('[Edit User failed]: ', error);
+  }
+}
