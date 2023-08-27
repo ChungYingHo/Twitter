@@ -11,7 +11,6 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("UserToken");
-    // console.log(token);
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
@@ -25,14 +24,13 @@ axiosInstance.interceptors.request.use(
 // get user data
 export const getUser = async () => {
   try {
+    console.log({ userId });
     const res = await axiosInstance.get(`${apiURL}/users/${userId}`);
     return res.data;
   } catch (error) {
     console.error("[Get User failed]: ", error);
   }
 };
-
-// 編輯user資料
 
 //  獲取user推文
 export const getUserTweets = async () => {

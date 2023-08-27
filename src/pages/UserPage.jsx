@@ -87,16 +87,14 @@ const UserPage = () => {
     const getUserData = async () => {
       try {
         const data = await getUser();
+        console.log(data);
         setUserData(data);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
     };
-
-    if (!userData) {
-      getUserData();
-    }
-  }, [userData, setUserData]);
+    getUserData();
+  }, [setUserData]);
 
   console.log("getUserData", userData);
 
