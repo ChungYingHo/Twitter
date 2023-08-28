@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import AuthInput from "../AuthInput";
 import { ReactComponent as PhotoIcon } from "../../assets/photo.svg";
 import { ReactComponent as CloseIcon } from "../../assets/close-white.svg";
@@ -104,11 +104,8 @@ const IntroInputContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const UserEdit = ({ avatar, banner }) => {
-  const [name, setName] = useState("");
-  const [introduction, setIntro] = useState("");
-
-  const { userData, setUserData } = useContext(UserContext);
+const UserEdit = ({ setName, setIntro }) => {
+  const { userData } = useContext(UserContext);
 
   return (
     <PopupContainer>

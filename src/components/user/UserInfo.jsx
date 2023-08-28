@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import PopupModal from "../PopupModal";
 import { UserContext } from "../../context/UserContext";
+import { editUser } from "../../api/user";
 
 const UserMainContainer = styled.div`
   width: 100%;
@@ -128,9 +129,10 @@ const UserInfo = () => {
     setIsNewPostOpen(false);
   };
 
-  const { userData } = useContext(UserContext);
+  const [name, setName] = useState("");
+  const [introduction, setIntro] = useState("");
 
-  console.log("data in userInfo", userData);
+  const { userData } = useContext(UserContext);
 
   return (
     <UserMainContainer>
@@ -148,7 +150,7 @@ const UserInfo = () => {
           headerTitle={<HeaderTittle>編輯個人資料</HeaderTittle>}
           headerButton={<HeaderBtn>儲存</HeaderBtn>}
         >
-          <UserEdit />
+          <UserEdit onChange={(setName, setIntro)} />
         </PopupModal>
 
         <UserAccountNameWrapper>
