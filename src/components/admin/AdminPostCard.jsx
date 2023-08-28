@@ -62,7 +62,7 @@ export default function AdminPostCard({name, account, avatar, content, timestamp
             <Post>
                 <Info>
                     <p className='name'>{name}</p>
-                    <p className='account'>{account}・<TimeDiff timestamp={timestamp}/></p>
+                    <p className='account'>@{account}・<TimeDiff timestamp={timestamp}/></p>
                     <Close className='close' onClick={onClick}/>
                 </Info>
                 <p className='content'>{content}</p>

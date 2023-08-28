@@ -8,6 +8,7 @@ import FollowCard from "./FollowCard";
 // api
 import { checkPermission } from "../../api/Permission";
 import { getUserFollowers } from "../../api/user";
+import { followUser, disFollowUser } from "../../api/popular";
 
 // dummyData
 import users from "../../dummyData/popularUsers";
@@ -58,7 +59,6 @@ const StyledLink = styled(Link)`
 `;
 
 const UserFollowers = () => {
-  const [usersData, setUsersData] = useState(users);
   const [userFollowers, setUserFollowers] = useState([]);
 
   const navigate = useNavigate();
@@ -78,19 +78,6 @@ const UserFollowers = () => {
     checkTokenIsValid();
   }, [navigate]);
 
-  const handleFollow = (userId) => {
-    setUsersData((prevUsersData) =>
-      prevUsersData.map((user) =>
-        user.user.id === userId
-          ? {
-              ...user,
-              user: { ...user.user, isFollowed: !user.user.isFollowed },
-            }
-          : user
-      )
-    );
-  };
-
   // 獲取user追隨中
   useEffect(() => {
     const getUserFollower = async () => {
@@ -103,6 +90,27 @@ const UserFollowers = () => {
     };
     getUserFollower();
   }, [setUserFollowers]);
+
+  // 點擊切換 isFollowed 狀態
+  const handleFollow = async (id) => {
+    try {
+      if (userFollowers.find((user) => user.Follower.id === id).Follower.isFollowed) {
+        await disFollowUser({ followingId: id });
+      } else {
+        await followUser({ id });
+      }
+
+      setUserFollowers((prevUsersData) =>
+        prevUsersData.map((user) =>
+          user.Follower.id === id
+            ? { ...user, Follower: { ...user.Follower, isFollowed: !user.Follower.isFollowed } }
+            : user
+        )
+      );
+    } catch (error) {
+      console.error("Error occur:", error);
+    }
+  }
 
   return (
     <>
@@ -119,7 +127,6 @@ const UserFollowers = () => {
         <FollowrSubTool activePage="followers" />
         {userFollowers.map((data) => {
           return (
-            <>
               <FollowCard
                 key={data.followerId}
                 id={data.Follower.id}
@@ -127,9 +134,8 @@ const UserFollowers = () => {
                 avatar={data.Follower.avatar}
                 introduction={data.Follower.introduction}
                 isFollowed={data.Follower.isFollowed}
-                onClick={() => handleFollow(data.user.id)}
+                onClick={() => handleFollow(data.Follower.id)}
               />
-            </>
           );
         })}
       </Container>
