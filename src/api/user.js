@@ -2,8 +2,6 @@ import axios from "axios";
 
 const apiURL = "https://sheltered-river-86590-4f6cb06448e2.herokuapp.com/api";
 
-const userId = localStorage.getItem("userID");
-
 const axiosInstance = axios.create({
   baseURL: apiURL,
 });
@@ -24,7 +22,10 @@ axiosInstance.interceptors.request.use(
 // get user data
 export const getUser = async () => {
   try {
-    console.log({ userId });
+    const userId = localStorage.getItem("userID");
+    if (!userId) {
+      throw Error("no user ID");
+    }
     const res = await axiosInstance.get(`${apiURL}/users/${userId}`);
     return res.data;
   } catch (error) {
@@ -35,6 +36,8 @@ export const getUser = async () => {
 //  獲取user推文
 export const getUserTweets = async () => {
   try {
+    const userId = localStorage.getItem("userID");
+
     const res = await axiosInstance.get(`${apiURL}/users/${userId}/tweets`);
     return res.data;
   } catch (error) {
@@ -44,6 +47,8 @@ export const getUserTweets = async () => {
 
 export const getUserReplies = async () => {
   try {
+    const userId = localStorage.getItem("userID");
+
     const res = await axiosInstance.get(
       `${apiURL}/users/${userId}/replied_tweets`
     );
@@ -55,6 +60,8 @@ export const getUserReplies = async () => {
 
 export const getUserLikes = async () => {
   try {
+    const userId = localStorage.getItem("userID");
+
     const res = await axiosInstance.get(`${apiURL}/users/${userId}/likes`);
     return res.data;
   } catch (error) {
@@ -64,6 +71,8 @@ export const getUserLikes = async () => {
 
 export const getUserFollowings = async () => {
   try {
+    const userId = localStorage.getItem("userID");
+
     const res = await axiosInstance.get(`${apiURL}/users/${userId}/followings`);
     return res.data;
   } catch (error) {
@@ -73,6 +82,8 @@ export const getUserFollowings = async () => {
 
 export const getUserFollowers = async () => {
   try {
+    const userId = localStorage.getItem("userID");
+
     const res = await axiosInstance.get(`${apiURL}/users/${userId}/followers`);
     return res.data;
   } catch (error) {
