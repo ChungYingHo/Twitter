@@ -10,7 +10,12 @@ import ReplyCard from "../components/reply/ReplyCard";
 import { UserContext } from "../context/UserContext";
 // api
 import { checkPermission } from "../api/Permission";
-import { getUserTweets, getUserReplies, getUserLikes } from "../api/user";
+import {
+  getUserTweets,
+  getUserReplies,
+  getUserLikes,
+  getUser,
+} from "../api/user";
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -78,7 +83,7 @@ const UserPage = () => {
   const [userTweets, setUserTweets] = useState([]);
   const [userReplies, setUserReplies] = useState([]);
   const [userLikes, setUserLikes] = useState([]);
-  const { userData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
   const navigate = useNavigate();
 
   // 驗證 token
@@ -97,6 +102,19 @@ const UserPage = () => {
     checkTokenIsValid();
   }, [navigate]);
 
+  // 獲取user資料 (reload後UserContext值會不見，需要重取)
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const datas = await getUser();
+        setUserData(datas);
+      } catch (error) {
+        console.error("[getUserData Failed]", error);
+      }
+    };
+    getUserData();
+  }, [setUserData]);
+
   // 獲取user推文
   useEffect(() => {
     const getUserTweet = async () => {
@@ -109,8 +127,6 @@ const UserPage = () => {
     };
     getUserTweet();
   }, [setUserTweets]);
-
-  // console.log("getUserTweet", userTweets);
 
   // 獲取user回覆
   useEffect(() => {
@@ -125,8 +141,6 @@ const UserPage = () => {
     getUserReply();
   }, [setUserReplies]);
 
-  console.log("User Replies", userReplies);
-
   // 獲取user喜歡貼文
   useEffect(() => {
     const getUserLike = async () => {
@@ -139,8 +153,6 @@ const UserPage = () => {
     };
     getUserLike();
   }, [setUserLikes]);
-
-  // console.log("User Like", userLikes);
 
   return userData ? (
     <>

@@ -9,6 +9,7 @@ import { UserContext } from "../context/UserContext";
 // 引用 api
 import { getTweets, postTweets } from "../api/main";
 import { checkPermission } from "../api/Permission";
+import { getUser } from "../api/user";
 
 const Container = styled.div`
   padding: 0;
@@ -74,8 +75,11 @@ const MainPage = () => {
 
   const [posts, setPosts] = useState([]);
   const [postContent, setPostContent] = useState("");
-  const { userData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
   const navigate = useNavigate();
+
+  console.log("", userData);
+
   // 驗證 token
   useEffect(() => {
     const checkTokenIsValid = async () => {
@@ -91,6 +95,19 @@ const MainPage = () => {
 
     checkTokenIsValid();
   }, [navigate]);
+
+  // 獲取user資料 (reload後UserContext值會不見，需要重取)
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const datas = await getUser();
+        setUserData(datas);
+      } catch (error) {
+        console.error("[getUserData Failed]", error);
+      }
+    };
+    getUserData();
+  }, [setUserData]);
 
   // 控管彈出視窗
   const openNewPost = () => {
