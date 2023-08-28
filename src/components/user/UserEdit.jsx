@@ -104,9 +104,16 @@ const IntroInputContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const UserEdit = ({ setName, setIntro }) => {
+const UserEdit = ({ onNamenChange, onIntroChange }) => {
   const { userData } = useContext(UserContext);
 
+  const handleChangeName = (newName) => {
+    onNamenChange(newName);
+  };
+
+  const handleChangeIntro = (newIntro) => {
+    onIntroChange(newIntro);
+  };
   return (
     <PopupContainer>
       <PopupBannerWrapper>
@@ -132,7 +139,7 @@ const UserEdit = ({ setName, setIntro }) => {
             name={userData.name}
             value={userData.name}
             placeholder={"請輸入帳號"}
-            onChange={(nameInput) => setName(nameInput)}
+            onChange={handleChangeName}
           />
         </NameInputContainer>
 
@@ -140,9 +147,8 @@ const UserEdit = ({ setName, setIntro }) => {
           <AuthInput
             label={"自我介紹"}
             name={userData.introduction}
-            value={userData.introduction}
             placeholder={"Egg Head"}
-            onChange={(introInput) => setIntro(introInput)}
+            onChange={handleChangeIntro}
             isLarge={true}
           />
         </IntroInputContainer>

@@ -122,6 +122,10 @@ const StyledLink = styled(Link)`
 
 const UserInfo = () => {
   const [isNewPostOpen, setIsNewPostOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [introduction, setIntro] = useState("");
+  const { userData } = useContext(UserContext);
+
   const openNewPost = () => {
     setIsNewPostOpen(true);
   };
@@ -129,10 +133,25 @@ const UserInfo = () => {
     setIsNewPostOpen(false);
   };
 
-  const [name, setName] = useState("");
-  const [introduction, setIntro] = useState("");
+  const handleChangeName = (newName) => {
+    setName(newName);
+  };
 
-  const { userData } = useContext(UserContext);
+  const handleChangeIntro = (newIntro) => {
+    setIntro(newIntro);
+  };
+
+  const handleClick = async () => {
+    try {
+      const updateUserData = { name: name, introduction: introduction };
+      const res = await editUser(updateUserData);
+      if (res.status === "success") {
+        console.log("EditUser updated successfully in UserInfo!");
+      }
+    } catch (error) {
+      console.error("[editUser failed in UserPage]", error);
+    }
+  };
 
   return (
     <UserMainContainer>
@@ -148,9 +167,12 @@ const UserInfo = () => {
           isOpen={isNewPostOpen}
           closeModal={closeNewPost}
           headerTitle={<HeaderTittle>編輯個人資料</HeaderTittle>}
-          headerButton={<HeaderBtn>儲存</HeaderBtn>}
+          headerButton={<HeaderBtn onClick={handleClick}>儲存</HeaderBtn>}
         >
-          <UserEdit onChange={(setName, setIntro)} />
+          <UserEdit
+            onNamenChange={handleChangeName}
+            onIntroChange={handleChangeIntro}
+          />
         </PopupModal>
 
         <UserAccountNameWrapper>
