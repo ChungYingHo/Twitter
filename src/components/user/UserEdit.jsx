@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
 import AuthInput from "../AuthInput";
 import { ReactComponent as PhotoIcon } from "../../assets/photo.svg";
 import { ReactComponent as CloseIcon } from "../../assets/close-white.svg";
@@ -92,7 +92,7 @@ const PhotoIconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 99;
+  z-index: 5;
 `;
 
 const NameInputContainer = styled.div`
@@ -104,11 +104,34 @@ const IntroInputContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const UserEdit = ({ avatar, banner }) => {
-  const [name, setName] = useState("");
-  const [introduction, setIntro] = useState("");
+const ToggleInput = styled.input`
+  border: 1px solid red;
+`;
 
-  const { userData, setUserData } = useContext(UserContext);
+const UserEdit = ({
+  onNamenChange,
+  onIntroChange,
+  onBannerChange,
+  bannerValue,
+}) => {
+  const { userData } = useContext(UserContext);
+  const [showInput, setShowInput] = useState(false);
+
+  const handleToggleInput = () => {
+    setShowInput(!showInput);
+  };
+
+  const handleChangeName = (newName) => {
+    onNamenChange(newName);
+  };
+
+  const handleChangeIntro = (newIntro) => {
+    onIntroChange(newIntro);
+  };
+
+  const handleChangeBanner = (newBanner) => {
+    onBannerChange(newBanner);
+  };
 
   return (
     <PopupContainer>
@@ -116,7 +139,15 @@ const UserEdit = ({ avatar, banner }) => {
         <PopupBanner src={userData.banner} />
         <BannerIconWrapper>
           <IconLayoutWrapper>
-            <PhotoIcon />
+            <PhotoIcon onClick={handleToggleInput} />
+            {showInput && (
+              <ToggleInput
+                type="text"
+                placeholder="請輸入照片連結"
+                value={bannerValue}
+                onChange={handleChangeBanner}
+              />
+            )}
             <CloseIcon />
           </IconLayoutWrapper>
         </BannerIconWrapper>
@@ -135,7 +166,7 @@ const UserEdit = ({ avatar, banner }) => {
             name={userData.name}
             value={userData.name}
             placeholder={"請輸入帳號"}
-            onChange={(nameInput) => setName(nameInput)}
+            onChange={handleChangeName}
           />
         </NameInputContainer>
 
@@ -143,9 +174,8 @@ const UserEdit = ({ avatar, banner }) => {
           <AuthInput
             label={"自我介紹"}
             name={userData.introduction}
-            value={userData.introduction}
             placeholder={"Egg Head"}
-            onChange={(introInput) => setIntro(introInput)}
+            onChange={handleChangeIntro}
             isLarge={true}
           />
         </IntroInputContainer>

@@ -162,7 +162,7 @@ const UserPage = () => {
             <LeftArrow />
             <UserNameWrapper>
               <UserName>{userData.name}</UserName>
-              <UserPostCount>25 推文</UserPostCount>
+              <UserPostCount>{userData.tweetsCount} 推文</UserPostCount>
             </UserNameWrapper>
           </UserTittleWrapper>
         </StyledLink>

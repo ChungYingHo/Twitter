@@ -33,6 +33,20 @@ export const getUser = async () => {
   }
 };
 
+// 更改user data
+export const editUser = async ({ name, introduction }) => {
+  const userId = localStorage.getItem("userID");
+  try {
+    const res = await axiosInstance.put(`${apiURL}/users/${userId}`, {
+      name,
+      introduction,
+    });
+    return res.data;
+  } catch (error) {
+    console.error("[Edit User in UserPage failed]: ", error);
+  }
+};
+
 //  獲取user推文
 export const getUserTweets = async () => {
   try {

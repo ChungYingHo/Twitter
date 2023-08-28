@@ -38,7 +38,7 @@ const AuthInput = ({ label, type, placeholder, value, onChange, isLarge }) => {
       {isLarge ? (
         <StyledTextarea
           placeholder={placeholder || ""}
-          value={value || ""}
+          defaultValue={value || ""}
           onChange={(event) => onChange?.(event.target.value)}
           rows="4"
         />

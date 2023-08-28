@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import PopupModal from "../PopupModal";
 import { UserContext } from "../../context/UserContext";
+import { editUser } from "../../api/user";
 
 const UserMainContainer = styled.div`
   width: 100%;
@@ -120,17 +121,48 @@ const StyledLink = styled(Link)`
 `;
 
 const UserInfo = () => {
-  const [isNewPostOpen, setIsNewPostOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [introduction, setIntro] = useState("");
+  const [banner, setBanner] = useState("");
+  const { userData, setUserData } = useContext(UserContext);
+
   const openNewPost = () => {
-    setIsNewPostOpen(true);
+    setIsModalOpen(true);
   };
   const closeNewPost = () => {
-    setIsNewPostOpen(false);
+    setIsModalOpen(false);
   };
 
-  const { userData } = useContext(UserContext);
+  const handleChangeName = (newName) => {
+    setName(newName);
+  };
 
-  console.log("data in userInfo", userData);
+  const handleChangeIntro = (newIntro) => {
+    setIntro(newIntro);
+  };
+
+  const handleChangeBanner = (event) => {
+    setBanner(event.target.value);
+  };
+
+  const handleClick = async () => {
+    try {
+      const updateUserData = {
+        name: name,
+        introduction: introduction,
+        banner: banner,
+      };
+      const resData = await editUser(updateUserData);
+      if (resData.status === "success") {
+        console.log("EditUser updated successfully in UserInfo!");
+      }
+      setUserData(resData.data.user);
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("[editUser failed in UserPage]", error);
+    }
+  };
 
   return (
     <UserMainContainer>
@@ -143,12 +175,17 @@ const UserInfo = () => {
         </UserPicBtnWrapper>
 
         <PopupModal
-          isOpen={isNewPostOpen}
+          isOpen={isModalOpen}
           closeModal={closeNewPost}
           headerTitle={<HeaderTittle>編輯個人資料</HeaderTittle>}
-          headerButton={<HeaderBtn>儲存</HeaderBtn>}
+          headerButton={<HeaderBtn onClick={handleClick}>儲存</HeaderBtn>}
         >
-          <UserEdit />
+          <UserEdit
+            bannerValue={banner}
+            onNamenChange={handleChangeName}
+            onIntroChange={handleChangeIntro}
+            onBannerChange={handleChangeBanner}
+          />
         </PopupModal>
 
         <UserAccountNameWrapper>
