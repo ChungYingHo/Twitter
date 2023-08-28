@@ -39,6 +39,9 @@ const Header = styled.div`
     margin-left: 24px;
     margin-bottom: 0;
   }
+  .icon{
+    margin-left: 24px;
+  }
 `
 
 const StyledArrow = styled(LeftArrow)`
@@ -242,7 +245,7 @@ export default function MainReplyList(){
     <>
       <Container>
         <Header>
-          <StyledArrow onClick={() => navigate(`/main`)}/>
+          <StyledArrow onClick={() => navigate(`/main`)} className="icon"/>
           <h4>推文</h4>
         </Header>
         {tweet && replies && (

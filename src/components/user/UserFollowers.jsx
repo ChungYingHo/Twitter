@@ -87,7 +87,7 @@ const UserFollowers = () => {
       }
     };
     getUserFollower();
-  }, [setUserFollowers]);
+  }, [userFollowers]);
 
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {

@@ -78,6 +78,13 @@ const SettingPage = () => {
     try {
       if (password !== checkPassword) {
         console.error("Passwords do not match");
+        Swal.fire({
+          position: 'top',
+          title: '密碼確認錯誤！',
+          timer: 1000,
+          icon: 'error',
+          showConfirmButton: false,
+        });
         return;
       }
       await editUser({ name, account, email, password, checkPassword });
@@ -92,12 +99,12 @@ const SettingPage = () => {
     } catch (error) {
       console.error(error);
       Swal.fire({
-      position: 'top',
-      title: '編輯失敗！請再試一次！',
-      timer: 1000,
-      icon: 'error',
-      showConfirmButton: false,
-    });
+        position: 'top',
+        title: '編輯失敗！請再試一次！',
+        timer: 1000,
+        icon: 'error',
+        showConfirmButton: false,
+      });
     }
   };
 
