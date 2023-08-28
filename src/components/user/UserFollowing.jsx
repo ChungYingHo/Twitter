@@ -10,8 +10,6 @@ import { checkPermission } from "../../api/Permission";
 import { getUserFollowings } from "../../api/user";
 import { followUser, disFollowUser } from "../../api/popular";
 
-// dummyData
-import users from "../../dummyData/popularUsers";
 
 const Container = styled.div`
   outline: green solid 2px;

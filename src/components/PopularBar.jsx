@@ -44,7 +44,7 @@ export default function PopularBar(){
             }
         }
         fetchUsers()
-    }, [])
+    }, [usersData])
 
 
   // 點擊切換 isFollowed 狀態
