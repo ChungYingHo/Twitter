@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import PostCard from "../components/main/PostCard";
 import PopupModal from "../components/PopupModal";
 import NewPost from "../components/main/NewPost";
 import * as style from "../components/common/common.styled";
+import { UserContext } from "../context/UserContext";
 // 引用 api
 import { getTweets, postTweets } from "../api/main";
 import { checkPermission } from "../api/Permission";
@@ -73,6 +74,7 @@ const MainPage = () => {
 
   const [posts, setPosts] = useState([]);
   const [postContent, setPostContent] = useState("");
+  const { userData } = useContext(UserContext);
   const navigate = useNavigate();
   // 驗證 token
   useEffect(() => {
@@ -141,7 +143,7 @@ const MainPage = () => {
 
         <PostContainer onClick={openNewPost}>
           <PostTitle>
-            <img src="" alt="avatar" />
+            <img src={userData.avatar} alt="avatar" />
             <h5>有什麼新鮮事？</h5>
           </PostTitle>
           <Btn>推文</Btn>

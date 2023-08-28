@@ -49,7 +49,6 @@ const LoginPage = () => {
       localStorage.setItem("userID", userDataFromLogin.id);
 
       const userData = await getUser();
-      console.log(userData);
       setUserData(userData);
       navigate("/main");
     } else {
