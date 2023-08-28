@@ -34,9 +34,9 @@ const StyledButton = styled.button`
   font-weight: bold;
   padding: 6px 0;
   margin: 1rem 0;
-
-  &.hover {
-    cursor: pointer;
+  cursor: pointer;
+  &:active{
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) inset
   }
 `;
 

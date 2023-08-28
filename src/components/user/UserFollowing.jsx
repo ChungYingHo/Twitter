@@ -8,9 +8,8 @@ import FollowCard from "./FollowCard";
 // api
 import { checkPermission } from "../../api/Permission";
 import { getUserFollowings } from "../../api/user";
+import { followUser, disFollowUser } from "../../api/popular";
 
-// dummyData
-import users from "../../dummyData/popularUsers";
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -58,7 +57,6 @@ const StyledLink = styled(Link)`
 `;
 
 const UserFollowing = () => {
-  const [usersData, setUsersData] = useState(users);
   const [userFollowings, setUserFollowings] = useState([]);
   const navigate = useNavigate();
   // 驗證 token
@@ -77,33 +75,41 @@ const UserFollowing = () => {
     checkTokenIsValid();
   }, [navigate]);
 
-  const handleFollow = (userId) => {
-    setUsersData((prevUsersData) =>
-      prevUsersData.map((user) =>
-        user.user.id === userId
-          ? {
-              ...user,
-              user: { ...user.user, isFollowed: !user.user.isFollowed },
-            }
-          : user
-      )
-    );
-  };
-
   // 獲取use跟隨者
   useEffect(() => {
     const getUserFollowing = async () => {
       try {
         const following = await getUserFollowings();
         setUserFollowings(following);
+        console.log("Get UserFollowing", following);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
     };
     getUserFollowing();
-  }, [setUserFollowings]);
+  }, [userFollowings]);
 
-  console.log("Get UserFollowing", userFollowings);
+  // 點擊切換 isFollowed 狀態
+  const handleFollow = async (id) => {
+    try {
+      if (userFollowings.find((user) => user.Following.id === id).Following.isFollowed) {
+        await disFollowUser({ followingId: id });
+      } else {
+        await followUser({ id });
+      }
+
+      setUserFollowings((prevUsersData) =>
+        prevUsersData.map((user) =>
+          user.Following.id === id
+            ? { ...user, Following: { ...user.Following, isFollowed: !user.Following.isFollowed } }
+            : user
+        )
+      );
+    } catch (error) {
+      console.error("Error occur:", error);
+    }
+  }
+  
 
   return (
     <>
@@ -127,7 +133,7 @@ const UserFollowing = () => {
               avatar={data.Following.avatar}
               introduction={data.Following.introduction}
               isFollowed={data.Following.isFollowed}
-              onClick={() => handleFollow(data.user.id)}
+              onClick={() => handleFollow(data.Following.id)}
             />
           );
         })}
