@@ -11,17 +11,20 @@ import {
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // api
 import { checkPermission } from "../api/Permission";
 import { login } from "../api/auth";
+import { getUser } from "../api/user";
 import Swal from "sweetalert2";
 import clsx from "clsx";
+import { UserContext } from "../context/UserContext";
 
 const LoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
+  const { setUserData } = useContext(UserContext);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
@@ -32,33 +35,45 @@ const LoginPage = () => {
       return;
     }
 
-    const { success, userToken, errorMessage, userData } = await login({
+    const {
+      success,
+      userToken,
+      errorMessage,
+      userData: userDataFromLogin,
+    } = await login({
       account,
       password,
     });
     if (success) {
       localStorage.setItem("UserToken", userToken);
-      localStorage.setItem("userID", userData.id);
+      localStorage.setItem("userID", userDataFromLogin.id);
+
+      const userData = await getUser();
+      setUserData(userData);
+      console.log("userdata login", userData);
       navigate("/main");
     } else {
       setError(errorMessage);
     }
   };
+
+  // console.log("get userData in login", userData);
+
   // 驗證 token
   useEffect(() => {
     const checkTokenIsValid = async () => {
-      const authToken = localStorage.getItem('UserToken');
+      const authToken = localStorage.getItem("UserToken");
       if (!authToken) {
         return;
       }
       const result = await checkPermission(authToken);
       if (result) {
-        navigate('/main');
+        navigate("/main");
       }
     };
 
     checkTokenIsValid();
-  }, [navigate])
+  }, [navigate]);
 
   return (
     <AuthContainer>

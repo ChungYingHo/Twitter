@@ -11,15 +11,11 @@ import { UserContext } from "../context/UserContext";
 // api
 import { checkPermission } from "../api/Permission";
 import {
-  getUser,
   getUserTweets,
   getUserReplies,
   getUserLikes,
+  getUser,
 } from "../api/user";
-
-// dummyData
-import posts from "../dummyData/posts";
-import replies from "../dummyData/replies";
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -106,21 +102,18 @@ const UserPage = () => {
     checkTokenIsValid();
   }, [navigate]);
 
-  // 拿取特定使用者資料
+  // 獲取user資料 (reload後UserContext值會不見，需要重取)
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const data = await getUser();
-        // console.log(data);
-        setUserData(data);
+        const datas = await getUser();
+        setUserData(datas);
       } catch (error) {
-        console.error("[GetUserData Failed]", error);
+        console.error("[getUserData Failed]", error);
       }
     };
     getUserData();
   }, [setUserData]);
-
-  // console.log("getUserData", userData);
 
   // 獲取user推文
   useEffect(() => {
@@ -135,8 +128,6 @@ const UserPage = () => {
     getUserTweet();
   }, [setUserTweets]);
 
-  // console.log("getUserTweet", userTweets);
-
   // 獲取user回覆
   useEffect(() => {
     const getUserReply = async () => {
@@ -150,8 +141,6 @@ const UserPage = () => {
     getUserReply();
   }, [setUserReplies]);
 
-  // console.log("User Replies", userReplies);
-
   // 獲取user喜歡貼文
   useEffect(() => {
     const getUserLike = async () => {
@@ -164,8 +153,6 @@ const UserPage = () => {
     };
     getUserLike();
   }, [setUserLikes]);
-
-  console.log("User Like", userLikes);
 
   return userData ? (
     <>
@@ -189,57 +176,59 @@ const UserPage = () => {
           banner={userData.banner}
         />
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
+        {userTweets && userLikes && userReplies && (
+          <SwitchZoneContainer>
+            {activePage === "post" &&
+              userTweets.map((tweet) => {
+                return (
+                  <PostCardWrapper key={tweet.id}>
+                    <PostCard
+                      name={tweet.User.name}
+                      account={tweet.User.name}
+                      avatar={tweet.User.avatar}
+                      content={tweet.description}
+                      timestamp={tweet.createdAt}
+                      reply={tweet.repliesCount}
+                      like={tweet.likesCount}
+                    />
+                  </PostCardWrapper>
+                );
+              })}
 
-        <SwitchZoneContainer>
-          {activePage === "post" &&
-            userTweets.map((tweet) => {
-              return (
-                <PostCardWrapper key={tweet.id}>
-                  <PostCard
-                    name={tweet.User.name}
-                    account={tweet.User.name}
-                    avatar={tweet.User.avatar}
-                    content={tweet.description}
-                    timestamp={tweet.createdAt}
-                    reply={tweet.repliesCount}
-                    like={tweet.likesCount}
-                  />
-                </PostCardWrapper>
-              );
-            })}
+            {activePage === "reply" &&
+              userReplies.map((reply) => {
+                return (
+                  <ReplyCardWrapper key={reply.TweetId}>
+                    <ReplyCard
+                      name={userData.name}
+                      account={userData.account}
+                      avatar={userData.avatar}
+                      content={reply.comment}
+                      timestamp={reply.createdAt}
+                      replyAccount={reply.Tweet.User.account}
+                    />
+                  </ReplyCardWrapper>
+                );
+              })}
 
-          {activePage === "reply" &&
-            userReplies.map((reply) => {
-              return (
-                <ReplyCardWrapper key={reply.TweetId}>
-                  <ReplyCard
-                    name={reply.Tweet.User.name}
-                    account={reply.Tweet.User.account}
-                    avatar={reply.Tweet.User.avatar}
-                    content={reply.comment}
-                    timestamp={reply.createdAt}
-                  />
-                </ReplyCardWrapper>
-              );
-            })}
-
-          {activePage === "like" &&
-            userLikes.map((like) => {
-              return (
-                <PostCardWrapper key={like.TweetId}>
-                  <PostCard
-                    name={like.Tweet.User.name}
-                    account={like.Tweet.User.name}
-                    avatar={like.Tweet.User.avatar}
-                    content={like.Tweet.description}
-                    timestamp={like.Tweet.createdAt}
-                    reply={like.Tweet.repliesCount}
-                    like={like.Tweet.likesCount}
-                  />
-                </PostCardWrapper>
-              );
-            })}
-        </SwitchZoneContainer>
+            {activePage === "like" &&
+              userLikes.map((like) => {
+                return (
+                  <PostCardWrapper key={like.TweetId}>
+                    <PostCard
+                      name={like.Tweet.User.name}
+                      account={like.Tweet.User.name}
+                      avatar={like.Tweet.User.avatar}
+                      content={like.Tweet.description}
+                      timestamp={like.Tweet.createdAt}
+                      reply={like.Tweet.repliesCount}
+                      like={like.Tweet.likesCount}
+                    />
+                  </PostCardWrapper>
+                );
+              })}
+          </SwitchZoneContainer>
+        )}
       </Container>
     </>
   ) : null;
