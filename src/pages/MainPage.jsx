@@ -76,6 +76,9 @@ const MainPage = () => {
   const [postContent, setPostContent] = useState("");
   const { userData } = useContext(UserContext);
   const navigate = useNavigate();
+
+  console.log("", userData);
+
   // 驗證 token
   useEffect(() => {
     const checkTokenIsValid = async () => {

@@ -50,6 +50,7 @@ const LoginPage = () => {
 
       const userData = await getUser();
       setUserData(userData);
+      console.log("userdata login", userData);
       navigate("/main");
     } else {
       setError(errorMessage);
