@@ -108,14 +108,14 @@ export default function Toolbar() {
     localStorage.removeItem("userID");
 
     navigate("/login");
-  };
+  }
 
   return (
     <Container>
       <Logo />
       <ToolContainer>
         <Nav
-          $isActive={activePage === "home"}
+          $isActive={location.pathname.startsWith("/main")}
           onClick={() => setActivePage("home")}
           to="/main"
         >
@@ -125,7 +125,7 @@ export default function Toolbar() {
           </div>
         </Nav>
         <Nav
-          $isActive={activePage === "user"}
+          $isActive={location.pathname.startsWith("/user")}
           onClick={() => setActivePage("user")}
           to="/user"
         >
@@ -135,7 +135,7 @@ export default function Toolbar() {
           </div>
         </Nav>
         <Nav
-          $isActive={activePage === "setting"}
+          $isActive={location.pathname.startsWith("/setting")}
           onClick={() => setActivePage("setting")}
           to="/setting"
         >
@@ -144,7 +144,7 @@ export default function Toolbar() {
             設定
           </div>
         </Nav>
-        <Btn>推文</Btn>
+        <Btn onClick={() => navigate(`/main`)}>推文</Btn>
       </ToolContainer>
       <FooterContainer onClick={handleClick}>
         <div>

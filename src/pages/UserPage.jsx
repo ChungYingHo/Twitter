@@ -147,6 +147,7 @@ const UserPage = () => {
       try {
         const like = await getUserLikes();
         setUserLikes(like);
+        console.log(userLikes)
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
