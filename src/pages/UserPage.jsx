@@ -10,12 +10,7 @@ import ReplyCard from "../components/reply/ReplyCard";
 import { UserContext } from "../context/UserContext";
 // api
 import { checkPermission } from "../api/Permission";
-import {
-  getUser,
-  getUserTweets,
-  getUserReplies,
-  getUserLikes,
-} from "../api/user";
+import { getUserTweets, getUserReplies, getUserLikes } from "../api/user";
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -83,7 +78,7 @@ const UserPage = () => {
   const [userTweets, setUserTweets] = useState([]);
   const [userReplies, setUserReplies] = useState([]);
   const [userLikes, setUserLikes] = useState([]);
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
   const navigate = useNavigate();
 
   // 驗證 token
@@ -101,22 +96,6 @@ const UserPage = () => {
 
     checkTokenIsValid();
   }, [navigate]);
-
-  // 拿取特定使用者資料
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const data = await getUser();
-        // console.log(data);
-        setUserData(data);
-      } catch (error) {
-        console.error("[GetUserData Failed]", error);
-      }
-    };
-    getUserData();
-  }, [setUserData]);
-
-  // console.log("getUserData", userData);
 
   // 獲取user推文
   useEffect(() => {
