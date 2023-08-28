@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import { useState } from "react";
 import * as style from '../common/common.styled'
 import TimeDiff from "../main/TimeDiff";
+import clsx from "clsx";
 
 const Container = styled.div`
     margin-top: 16px;
@@ -89,15 +91,48 @@ const SubContainer = styled.div`
     }
 `
 
-const Btn = styled(style.StyledBtn)`
-  width: 64px;
-  height: 40px;
+const Footer = styled.div`
+  outline: red solid 2px;
   position: absolute;
   bottom: 16px;
   right: 16px;
+  display: flex;
+  align-items: center;
+  .warning{
+    margin: 0 16px 0 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: ${style.colors.darkGray};
+    &.overwrite{
+      color: ${style.colors.orange};
+    }
+  }
+`
+
+const Btn = styled(style.StyledBtn)`
+  width: 64px;
+  height: 40px;
 `;
 
 export default function NewReply({name, account, timestamp, avatar, content, replyContent, setReplyContent, handleReplySubmit}) {
+  const [isContentEmpty, setIsContentEmpty] = useState(false)
+  const contentLength = replyContent.trim().length
+
+  const handleClick = () => {
+    if (contentLength === 0) {
+      setIsContentEmpty(true)
+      return;
+    } else {
+      setIsContentEmpty(false)
+      handleReplySubmit()
+    }
+  }
+
+  const handleTextareaChange = (e) => {
+    setReplyContent(e.target.value)
+    setIsContentEmpty(false)
+  }
+  
   return (
     <Container>
       <PostContainer>
@@ -118,11 +153,18 @@ export default function NewReply({name, account, timestamp, avatar, content, rep
             minLength="1"
             maxLength="140"
             value={replyContent}
-            onChange={(e) => setReplyContent(e.target.value)}
+            onChange={handleTextareaChange}
             placeholder="推你的回覆"
             ></textarea>
         </div>
-        <Btn onClick={handleReplySubmit}>回覆</Btn>
+        <Footer>
+            <p 
+            className={clsx("warning", { 
+                overwrite: replyContent.trim().length === 140 || isContentEmpty})}>
+            {isContentEmpty ? "內容不可空白" : contentLength < 140 ? `${contentLength} / 140 字` : '字數不可超過 140 字'}
+            </p>
+            <Btn onClick={handleClick}>回覆</Btn>
+        </Footer>
       </SubContainer>
     </Container>
   );
