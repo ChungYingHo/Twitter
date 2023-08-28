@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthInput from "../AuthInput";
 import { ReactComponent as PhotoIcon } from "../../assets/photo.svg";
 import { ReactComponent as CloseIcon } from "../../assets/close-white.svg";
@@ -92,7 +92,7 @@ const PhotoIconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 99;
+  z-index: 5;
 `;
 
 const NameInputContainer = styled.div`
@@ -104,8 +104,22 @@ const IntroInputContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const UserEdit = ({ onNamenChange, onIntroChange }) => {
+const ToggleInput = styled.input`
+  border: 1px solid red;
+`;
+
+const UserEdit = ({
+  onNamenChange,
+  onIntroChange,
+  onBannerChange,
+  bannerValue,
+}) => {
   const { userData } = useContext(UserContext);
+  const [showInput, setShowInput] = useState(false);
+
+  const handleToggleInput = () => {
+    setShowInput(!showInput);
+  };
 
   const handleChangeName = (newName) => {
     onNamenChange(newName);
@@ -114,13 +128,26 @@ const UserEdit = ({ onNamenChange, onIntroChange }) => {
   const handleChangeIntro = (newIntro) => {
     onIntroChange(newIntro);
   };
+
+  const handleChangeBanner = (newBanner) => {
+    onBannerChange(newBanner);
+  };
+
   return (
     <PopupContainer>
       <PopupBannerWrapper>
         <PopupBanner src={userData.banner} />
         <BannerIconWrapper>
           <IconLayoutWrapper>
-            <PhotoIcon />
+            <PhotoIcon onClick={handleToggleInput} />
+            {showInput && (
+              <ToggleInput
+                type="text"
+                placeholder="請輸入照片連結"
+                value={bannerValue}
+                onChange={handleChangeBanner}
+              />
+            )}
             <CloseIcon />
           </IconLayoutWrapper>
         </BannerIconWrapper>
