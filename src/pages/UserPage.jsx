@@ -17,10 +17,6 @@ import {
   getUserLikes,
 } from "../api/user";
 
-// dummyData
-import posts from "../dummyData/posts";
-import replies from "../dummyData/replies";
-
 const Container = styled.div`
   outline: green solid 2px;
   padding: 0;
@@ -150,7 +146,7 @@ const UserPage = () => {
     getUserReply();
   }, [setUserReplies]);
 
-  // console.log("User Replies", userReplies);
+  console.log("User Replies", userReplies);
 
   // 獲取user喜歡貼文
   useEffect(() => {
@@ -165,7 +161,7 @@ const UserPage = () => {
     getUserLike();
   }, [setUserLikes]);
 
-  console.log("User Like", userLikes);
+  // console.log("User Like", userLikes);
 
   return userData ? (
     <>
@@ -213,11 +209,12 @@ const UserPage = () => {
               return (
                 <ReplyCardWrapper key={reply.TweetId}>
                   <ReplyCard
-                    name={reply.Tweet.User.name}
-                    account={reply.Tweet.User.account}
-                    avatar={reply.Tweet.User.avatar}
+                    name={userData.name}
+                    account={userData.account}
+                    avatar={userData.avatar}
                     content={reply.comment}
                     timestamp={reply.createdAt}
+                    replyAccount={reply.Tweet.User.account}
                   />
                 </ReplyCardWrapper>
               );
