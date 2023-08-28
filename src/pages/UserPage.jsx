@@ -185,58 +185,59 @@ const UserPage = () => {
           banner={userData.banner}
         />
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
+        {userTweets && userLikes && userReplies && (
+          <SwitchZoneContainer>
+            {activePage === "post" &&
+              userTweets.map((tweet) => {
+                return (
+                  <PostCardWrapper key={tweet.id}>
+                    <PostCard
+                      name={tweet.User.name}
+                      account={tweet.User.name}
+                      avatar={tweet.User.avatar}
+                      content={tweet.description}
+                      timestamp={tweet.createdAt}
+                      reply={tweet.repliesCount}
+                      like={tweet.likesCount}
+                    />
+                  </PostCardWrapper>
+                );
+              })}
 
-        <SwitchZoneContainer>
-          {activePage === "post" &&
-            userTweets.map((tweet) => {
-              return (
-                <PostCardWrapper key={tweet.id}>
-                  <PostCard
-                    name={tweet.User.name}
-                    account={tweet.User.name}
-                    avatar={tweet.User.avatar}
-                    content={tweet.description}
-                    timestamp={tweet.createdAt}
-                    reply={tweet.repliesCount}
-                    like={tweet.likesCount}
-                  />
-                </PostCardWrapper>
-              );
-            })}
+            {activePage === "reply" &&
+              userReplies.map((reply) => {
+                return (
+                  <ReplyCardWrapper key={reply.TweetId}>
+                    <ReplyCard
+                      name={userData.name}
+                      account={userData.account}
+                      avatar={userData.avatar}
+                      content={reply.comment}
+                      timestamp={reply.createdAt}
+                      replyAccount={reply.Tweet.User.account}
+                    />
+                  </ReplyCardWrapper>
+                );
+              })}
 
-          {activePage === "reply" &&
-            userReplies.map((reply) => {
-              return (
-                <ReplyCardWrapper key={reply.TweetId}>
-                  <ReplyCard
-                    name={userData.name}
-                    account={userData.account}
-                    avatar={userData.avatar}
-                    content={reply.comment}
-                    timestamp={reply.createdAt}
-                    replyAccount={reply.Tweet.User.account}
-                  />
-                </ReplyCardWrapper>
-              );
-            })}
-
-          {activePage === "like" &&
-            userLikes.map((like) => {
-              return (
-                <PostCardWrapper key={like.TweetId}>
-                  <PostCard
-                    name={like.Tweet.User.name}
-                    account={like.Tweet.User.name}
-                    avatar={like.Tweet.User.avatar}
-                    content={like.Tweet.description}
-                    timestamp={like.Tweet.createdAt}
-                    reply={like.Tweet.repliesCount}
-                    like={like.Tweet.likesCount}
-                  />
-                </PostCardWrapper>
-              );
-            })}
-        </SwitchZoneContainer>
+            {activePage === "like" &&
+              userLikes.map((like) => {
+                return (
+                  <PostCardWrapper key={like.TweetId}>
+                    <PostCard
+                      name={like.Tweet.User.name}
+                      account={like.Tweet.User.name}
+                      avatar={like.Tweet.User.avatar}
+                      content={like.Tweet.description}
+                      timestamp={like.Tweet.createdAt}
+                      reply={like.Tweet.repliesCount}
+                      like={like.Tweet.likesCount}
+                    />
+                  </PostCardWrapper>
+                );
+              })}
+          </SwitchZoneContainer>
+        )}
       </Container>
     </>
   ) : null;
