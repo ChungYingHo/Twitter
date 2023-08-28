@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
+import Swal from "sweetalert2";
 // api
 import { getUser, editUser } from "../api/setting";
 import { checkPermission } from "../api/Permission";
@@ -81,8 +82,22 @@ const SettingPage = () => {
       }
       await editUser({ name, account, email, password, checkPassword });
       console.log("Editing User Successful!");
+      Swal.fire({
+        position: 'top',
+        title: '編輯成功！',
+        timer: 1000,
+        icon: 'success',
+        showConfirmButton: false,
+      })
     } catch (error) {
       console.error(error);
+      Swal.fire({
+      position: 'top',
+      title: '編輯失敗！請再試一次！',
+      timer: 1000,
+      icon: 'error',
+      showConfirmButton: false,
+    });
     }
   };
 

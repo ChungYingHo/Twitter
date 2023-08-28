@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import * as style from "../common/common.styled";
 import { UserContext } from "../../context/UserContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import clsx from "clsx";
+
 const Container = styled.div`
   height: fit-content;
   min-height: 280px;
@@ -25,12 +27,27 @@ const Container = styled.div`
   }
 `;
 
-const Btn = styled(style.StyledBtn)`
-  width: 64px;
-  height: 40px;
+const Footer = styled.div`
+  outline: red solid 2px;
   position: absolute;
   bottom: 16px;
   right: 16px;
+  display: flex;
+  align-items: center;
+  .warning{
+    margin: 0 16px 0 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: ${style.colors.darkGray};
+    &.overwrite{
+      color: ${style.colors.orange};
+    }
+  }
+`
+
+const Btn = styled(style.StyledBtn)`
+  width: 64px;
+  height: 40px;
 `;
 
 export default function NewPost({
@@ -38,7 +55,24 @@ export default function NewPost({
   setPostContent,
   handlePostSubmit,
 }) {
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext)
+  const [isContentEmpty, setIsContentEmpty] = useState(false)
+  const contentLength = postContent.trim().length
+
+  const handleClick = () => {
+    if (contentLength === 0) {
+      setIsContentEmpty(true)
+      return;
+    } else {
+      setIsContentEmpty(false)
+      handlePostSubmit()
+    }
+  }
+
+  const handleTextareaChange = (e) => {
+    setPostContent(e.target.value)
+    setIsContentEmpty(false)
+  }
 
   return (
     <Container>
@@ -48,12 +82,18 @@ export default function NewPost({
           minLength="1"
           maxLength="140"
           value={postContent}
-          onChange={(e) => setPostContent(e.target.value)}
+          onChange={handleTextareaChange}
           placeholder="有什麼新鮮事？"
         ></textarea>
       </div>
-
-      <Btn onClick={handlePostSubmit}>推文</Btn>
+      <Footer>
+        <p 
+          className={clsx("warning", { 
+            overwrite: postContent.trim().length === 140 || isContentEmpty})}>
+          {isContentEmpty ? "內容不可空白" : contentLength < 140 ? `${contentLength} / 140 字` : '字數不可超過 140 字'}
+        </p>
+        <Btn onClick={handleClick}>推文</Btn>
+      </Footer>
     </Container>
   );
 }
