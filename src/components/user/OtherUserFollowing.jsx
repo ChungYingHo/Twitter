@@ -90,8 +90,6 @@ const OtherUserFollowing = () => {
     otherUserData();
   }, [id]);
 
-  console.log("other user data in following", othersData);
-
   // 獲取use跟隨者
   useEffect(() => {
     const getUserFollowing = async () => {
@@ -99,13 +97,11 @@ const OtherUserFollowing = () => {
         const following = await getUserFollowings({ id: parseInt(id) });
         setUserFollowings(following);
       } catch (error) {
-        console.error("[GetOtherUser Followings Failed]", error);
+        console.error("[GetOtherUser Data Failed]", error);
       }
     };
     getUserFollowing();
   }, [userFollowings, id]);
-
-  console.log("other user following", userFollowings);
 
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {

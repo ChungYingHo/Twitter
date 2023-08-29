@@ -89,8 +89,6 @@ const OtherUserFollowers = () => {
     otherUserData();
   }, [id]);
 
-  console.log("other user data in following", othersData);
-
   // 獲取user追隨中
   useEffect(() => {
     const getUserFollower = async () => {
@@ -103,8 +101,6 @@ const OtherUserFollowers = () => {
     };
     getUserFollower();
   }, [userFollowers, id]);
-
-  console.log("[other user follower respond]", userFollowers);
 
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {
@@ -135,8 +131,6 @@ const OtherUserFollowers = () => {
       console.error("Error occur:", error);
     }
   };
-
-  console.log("follower data", userFollowers);
 
   return (
     <>
