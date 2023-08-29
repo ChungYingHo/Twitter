@@ -94,6 +94,7 @@ const AdminLoginPage = () => {
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
+          type={'password'}
           value={password}
           placeholder={"請輸入密碼"}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}

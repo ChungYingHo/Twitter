@@ -118,6 +118,7 @@ const LoginPage = () => {
       >
         <AuthInput
           label={"密碼"}
+          type={'password'}
           maxLength={20}
           minLength={5}
           value={password}

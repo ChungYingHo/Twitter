@@ -66,7 +66,7 @@ export const register = async ({
 
     return { success: true };
   } catch (error) {
-    console.error("[Login Failed]:", error);
+    console.error("[Sign up Failed]:", error);
     throw error
   }
 };

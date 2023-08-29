@@ -121,7 +121,7 @@ const SettingPage = () => {
         <SettingInputContainer>
           <AuthInput
             label={"帳號"}
-            maxLength={10}
+            maxLength={30}
             minLength={1}
             name={account}
             value={user.account}
@@ -148,7 +148,7 @@ const SettingPage = () => {
 
         <SettingInputContainer>
           <AuthInput
-            type="email"
+            type={'email'}
             label={"Email"}
             maxLength={30}
             minLength={1}
@@ -164,6 +164,7 @@ const SettingPage = () => {
         <SettingInputContainer>
           <AuthInput
             label={"密碼"}
+            type={'password'}
             maxLength={20}
             minLength={5}
             name={password}
@@ -179,6 +180,7 @@ const SettingPage = () => {
         <SettingInputContainer>
           <AuthInput
             label={"密碼再確認"}
+            type={'password'}
             maxLength={20}
             minLength={5}
             name={checkPassword}
