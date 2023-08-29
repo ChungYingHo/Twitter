@@ -5,7 +5,7 @@ import TimeDiff from "../main/TimeDiff";
 import clsx from "clsx";
 import { usePopup } from "../../context/Popup";
 // api
-import { postReply, getReplies, getTweets, getSingleTweet } from "../../api/main";
+import { postReply, getReplies, getTweets } from "../../api/main";
 
 const Container = styled.div`
     margin-top: 16px;
@@ -137,7 +137,7 @@ export default function NewReply({name, id, account, timestamp, avatar, content}
             const sortedUpdatedReplies = updatedReplies.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             setReplies(sortedUpdatedReplies)
             closeNewReply()
-            // !下面這個是為了更新主頁，會出 error 先註解
+            // 下面這個是為了更新主頁
             const updatedTweets = await getTweets();
             const sortedTweets = updatedTweets.sort(
               (a, b) => new Date(b.createdAt) - new Date(a.createdAt)

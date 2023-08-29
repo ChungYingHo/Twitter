@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import TimeDiff from '../main/TimeDiff'
 import * as style from '../common/common.styled'
+import { useNavigate } from 'react-router-dom'
 
 const Container = styled.div`
     min-height: 133px;
@@ -54,11 +55,11 @@ const Info = styled.div`
     }
 `
 
-export default function ReplyCard({name, account, avatar, content, timestamp, replyAccount}){
-
+export default function ReplyCard({name, account, avatar, content, timestamp, replyAccount, userId}){
+    const navigate = useNavigate()
     return(
         <Container>
-            <img src={avatar} alt='avatar'/>
+            <img src={avatar} alt='avatar' onClick={()=>navigate(`/user/${userId}`)}/>
             <Post>
                 <Info>
                     <p className='name'>{name}</p>

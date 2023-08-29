@@ -69,12 +69,12 @@ const Interact = styled.div`
     }
 `
 
-export default function PostCard({id, name, account, avatar, content, timestamp, reply, like, onPostCardClick}){
+export default function PostCard({id, name, account, avatar, content, timestamp, reply, like, onPostCardClick, userId}){
     const navigate = useNavigate();
     return(
         <Container>
 
-            <img src={avatar} alt='avatar'/>
+            <img src={avatar} alt='avatar' onClick={()=>navigate(`/user/${userId}`)}/>
             <Post>
                 <Info>
                     <p className='name'>{name}</p>
