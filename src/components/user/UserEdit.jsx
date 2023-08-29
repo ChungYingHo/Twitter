@@ -14,6 +14,8 @@ const PopupContainer = styled.div`
 `;
 
 const PopupBannerWrapper = styled.div`
+  width: 100%;
+  object-fit: cover;
   position: relative;
   display: inline-block;
 
