@@ -26,10 +26,15 @@ const UserPicBtnWrapper = styled.div`
   padding: 0 16px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const BtnWrapper = styled.div`
   width: 208px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  top: 36px;
 `;
 
 const IconBorder = styled.div`
@@ -37,6 +42,9 @@ const IconBorder = styled.div`
   height: 40px;
   border: 1px solid #ff6600;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const FollowBtn = styled.button`
@@ -152,7 +160,6 @@ const UserInfo = ({
             <IconBorder>
               <BellIcon />
             </IconBorder>
-            <MailIcon />
             <FollowBtn $isFollowed={isFollowed} onClick={onClick}>
               {isFollowed ? "正在跟隨" : "跟隨"}
             </FollowBtn>
