@@ -10,7 +10,14 @@ import ReplyCard from "../components/reply/ReplyCard";
 import { UserContext } from "../context/UserContext";
 // api
 import { checkPermission } from "../api/Permission";
-import { getOtherUser } from "../api/OtherUser";
+import {
+  getOtherUser,
+  getUserTweets,
+  getUserReplies,
+  getUserLikes,
+  getUserFollowings,
+  getUserFollowers,
+} from "../api/OtherUser";
 
 // dummyData
 import posts from "../dummyData/posts";
@@ -79,8 +86,8 @@ const ReplyCardWrapper = styled.div`
 const UserPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const [activePage, setActivePage] = useState("post");
+  const [othersData, setOthersData] = useState();
   const [userTweets, setUserTweets] = useState([]);
   const [userReplies, setUserReplies] = useState([]);
   const [userLikes, setUserLikes] = useState([]);
@@ -101,8 +108,7 @@ const UserPage = () => {
     checkTokenIsValid();
   }, [navigate]);
 
-  // 獲取特定使用者資料
-  const [othersData, setOthersData] = useState();
+  // 獲取user data
   useEffect(() => {
     const otherUserData = async () => {
       try {
@@ -115,7 +121,44 @@ const UserPage = () => {
     otherUserData();
   }, [id]);
 
-  console.log("get user data by id", othersData);
+  // 獲取user推文
+  useEffect(() => {
+    const otherUserTweet = async () => {
+      try {
+        const data = await getUserTweets({ id: parseInt(id) });
+        setUserTweets(data);
+      } catch (error) {
+        console.error();
+      }
+    };
+    otherUserTweet();
+  });
+
+  // 獲取user回覆
+  useEffect(() => {
+    const otherUserReply = async () => {
+      try {
+        const data = await getUserReplies({ id: parseInt(id) });
+        setUserReplies(data);
+      } catch (error) {
+        console.error();
+      }
+    };
+    otherUserReply();
+  });
+
+  // 獲取user喜歡貼文
+  useEffect(() => {
+    const otherUserLike = async () => {
+      try {
+        const data = await getUserLikes({ id: parseInt(id) });
+        setUserLikes(data);
+      } catch (error) {
+        console.error();
+      }
+    };
+    otherUserLike();
+  });
 
   return othersData ? (
     <>
@@ -144,13 +187,13 @@ const UserPage = () => {
         {userTweets && userLikes && userReplies && (
           <SwitchZoneContainer>
             {activePage === "post" &&
-              posts.map((tweet) => {
+              userTweets.map((tweet) => {
                 return (
                   <PostCardWrapper key={tweet.id}>
                     <PostCard
-                      name={tweet.name}
-                      account={tweet.name}
-                      avatar={tweet.avatar}
+                      name={tweet.User.name}
+                      account={tweet.User.name}
+                      avatar={tweet.User.avatar}
                       content={tweet.description}
                       timestamp={tweet.createdAt}
                       reply={tweet.repliesCount}
@@ -161,33 +204,33 @@ const UserPage = () => {
               })}
 
             {activePage === "reply" &&
-              posts.map((reply) => {
+              userReplies.map((reply) => {
                 return (
                   <ReplyCardWrapper key={reply.TweetId}>
                     <ReplyCard
-                      name={reply.name}
-                      account={reply.account}
-                      avatar={reply.avatar}
+                      name={othersData.name}
+                      account={othersData.account}
+                      avatar={othersData.avatar}
                       content={reply.comment}
                       timestamp={reply.createdAt}
-                      replyAccount={reply.account}
+                      replyAccount={reply.Tweet.User.account}
                     />
                   </ReplyCardWrapper>
                 );
               })}
 
             {activePage === "like" &&
-              posts.map((like) => {
+              userLikes.map((like) => {
                 return (
                   <PostCardWrapper key={like.TweetId}>
                     <PostCard
-                      name={like.name}
-                      account={like.name}
-                      avatar={like.avatar}
-                      content={like.description}
-                      timestamp={like.createdAt}
-                      reply={like.repliesCount}
-                      like={like.likesCount}
+                      name={like.Tweet.User.name}
+                      account={like.Tweet.User.name}
+                      avatar={like.Tweet.User.avatar}
+                      content={like.Tweet.description}
+                      timestamp={like.Tweet.createdAt}
+                      reply={like.Tweet.repliesCount}
+                      like={like.Tweet.likesCount}
                     />
                   </PostCardWrapper>
                 );
