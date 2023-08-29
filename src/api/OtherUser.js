@@ -18,3 +18,13 @@ axiosInstance.interceptors.request.use(
     console.error(error);
   }
 );
+
+// 拿特定user資料
+export const getUser = async ({ id }) => {
+  try {
+    const res = await axiosInstance.get(`${apiURL}/users/${id}`);
+    return res.data;
+  } catch (error) {
+    console.error("[Get Other User by Id failed]: ", error);
+  }
+};
