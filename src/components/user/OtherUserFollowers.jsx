@@ -7,7 +7,7 @@ import FollowrSubTool from "./FollowSubTool";
 import FollowCard from "./FollowCard";
 // api
 import { checkPermission } from "../../api/Permission";
-import { getUserFollowers } from "../../api/OtherUser";
+import { getUserFollowers, getOtherUser } from "../../api/OtherUser";
 import { followUser, disFollowUser } from "../../api/popular";
 
 const Container = styled.div`
@@ -58,6 +58,7 @@ const StyledLink = styled(Link)`
 const OtherUserFollowers = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [othersData, setOthersData] = useState();
   const [userFollowers, setUserFollowers] = useState([]);
   // 驗證 token
   useEffect(() => {
@@ -74,6 +75,21 @@ const OtherUserFollowers = () => {
 
     checkTokenIsValid();
   }, [navigate]);
+
+  // 獲取user data
+  useEffect(() => {
+    const otherUserData = async () => {
+      try {
+        const data = await getOtherUser({ id: parseInt(id) });
+        setOthersData(data);
+      } catch (error) {
+        console.log("Get OtherUserData failed in OtherUserFollowing", error);
+      }
+    };
+    otherUserData();
+  }, [id]);
+
+  console.log("other user data in following", othersData);
 
   // 獲取user追隨中
   useEffect(() => {
@@ -123,12 +139,12 @@ const OtherUserFollowers = () => {
   return (
     <>
       <Container>
-        <StyledLink to="/user">
+        <StyledLink to={`/user/${id}`}>
           <Header>
             <LeftArrow />
             <HeaderTittleWrapper>
-              <h5>Egg Head</h5>
-              <p>25推文</p>
+              <h5>{othersData?.name}</h5>
+              <p>{othersData?.tweetsCount} 推文</p>
             </HeaderTittleWrapper>
           </Header>
         </StyledLink>
