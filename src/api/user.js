@@ -34,12 +34,25 @@ export const getUser = async () => {
 };
 
 // 更改user data
-export const editUser = async ({ name, introduction }) => {
+export const editUser = async ({ name, introduction, banner }) => {
   const userId = localStorage.getItem("userID");
+
+  let formData = new FormData();
+  if (name) {
+    formData.append("name", name);
+  }
+  if (introduction) {
+    formData.append("introduction", introduction);
+  }
+  if (banner) {
+    formData.append("banner", banner);
+  }
+
   try {
-    const res = await axiosInstance.put(`${apiURL}/users/${userId}`, {
-      name,
-      introduction,
+    const res = await axiosInstance.put(`${apiURL}/users/${userId}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
     return res.data;
   } catch (error) {

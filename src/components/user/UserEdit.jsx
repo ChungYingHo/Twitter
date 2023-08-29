@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext, useState } from "react";
+import { useContext, useRef } from "react";
 import AuthInput from "../AuthInput";
 import { ReactComponent as PhotoIcon } from "../../assets/photo.svg";
 import { ReactComponent as CloseIcon } from "../../assets/close-white.svg";
@@ -17,7 +17,11 @@ const PopupBannerWrapper = styled.div`
   position: relative;
   display: inline-block;
 
-  &::after {
+  ${({ isPreview }) => {
+    return (
+      isPreview &&
+      `
+    &::after {
     content: "";
     position: absolute;
     top: 0;
@@ -27,6 +31,9 @@ const PopupBannerWrapper = styled.div`
     background-color: #17172580;
     opacity: 75%;
   }
+  `
+    );
+  }}
 `;
 
 const PopupBanner = styled.img`
@@ -104,22 +111,16 @@ const IntroInputContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const ToggleInput = styled.input`
-  border: 1px solid red;
-`;
-
 const UserEdit = ({
   onNamenChange,
   onIntroChange,
   onBannerChange,
-  bannerValue,
+  uploadBanner,
+  setUploadBanner,
 }) => {
-  const { userData } = useContext(UserContext);
-  const [showInput, setShowInput] = useState(false);
+  const inputRef = useRef(null);
 
-  const handleToggleInput = () => {
-    setShowInput(!showInput);
-  };
+  const { userData } = useContext(UserContext);
 
   const handleChangeName = (newName) => {
     onNamenChange(newName);
@@ -129,26 +130,35 @@ const UserEdit = ({
     onIntroChange(newIntro);
   };
 
-  const handleChangeBanner = (newBanner) => {
-    onBannerChange(newBanner);
+  const handleOpenFileInput = () => {
+    inputRef.current.click();
   };
+
+  const resetFileInput = () => {
+    setUploadBanner(null);
+  };
+
+  console.log({ uploadBanner });
 
   return (
     <PopupContainer>
-      <PopupBannerWrapper>
-        <PopupBanner src={userData.banner} />
+      <PopupBannerWrapper isPreview={!uploadBanner}>
+        <PopupBanner
+          src={
+            uploadBanner ? URL.createObjectURL(uploadBanner) : userData.banner
+          }
+        />
         <BannerIconWrapper>
           <IconLayoutWrapper>
-            <PhotoIcon onClick={handleToggleInput} />
-            {showInput && (
-              <ToggleInput
-                type="text"
-                placeholder="請輸入照片連結"
-                value={bannerValue}
-                onChange={handleChangeBanner}
-              />
-            )}
-            <CloseIcon />
+            {!uploadBanner && <PhotoIcon onClick={handleOpenFileInput} />}
+            {uploadBanner && <CloseIcon onClick={resetFileInput} />}
+            <input
+              type="file"
+              ref={inputRef}
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={onBannerChange}
+            />
           </IconLayoutWrapper>
         </BannerIconWrapper>
       </PopupBannerWrapper>
@@ -177,7 +187,7 @@ const UserEdit = ({
             placeholder={"Egg Head"}
             onChange={handleChangeIntro}
             isLarge={true}
-            maxLength={'10'}
+            maxLength={"10"}
           />
         </IntroInputContainer>
       </MainWrapper>

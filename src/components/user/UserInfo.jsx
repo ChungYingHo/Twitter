@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import UserEdit from "./UserEdit";
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import PopupModal from "../PopupModal";
 import { UserContext } from "../../context/UserContext";
@@ -122,9 +122,9 @@ const StyledLink = styled(Link)`
 
 const UserInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [introduction, setIntro] = useState("");
-  const [banner, setBanner] = useState("");
+  const [name, setName] = useState();
+  const [introduction, setIntro] = useState();
+  const [uploadBanner, setUploadBanner] = useState(null);
   const { userData, setUserData } = useContext(UserContext);
 
   const openNewPost = () => {
@@ -142,25 +142,37 @@ const UserInfo = () => {
     setIntro(newIntro);
   };
 
-  const handleChangeBanner = (event) => {
-    setBanner(event.target.value);
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setUploadBanner(file);
+    }
   };
 
   const handleClick = async () => {
     try {
+      // const formData = new FormData();
+      // formData.append("name", name);
+      // formData.append("introduction", introduction);
+      // formData.append("uploadBanner", uploadBanner);
+
       const updateUserData = {
         name: name,
         introduction: introduction,
-        banner: banner,
+        banner: uploadBanner,
       };
+
       const resData = await editUser(updateUserData);
+
       if (resData.status === "success") {
+        setUploadBanner(null);
+        setUserData(resData.data.user);
         console.log("EditUser updated successfully in UserInfo!");
       }
-      setUserData(resData.data.user);
-      setIsModalOpen(false);
     } catch (error) {
       console.error("[editUser failed in UserPage]", error);
+    } finally {
+      setIsModalOpen(false);
     }
   };
 
@@ -181,10 +193,11 @@ const UserInfo = () => {
           headerButton={<HeaderBtn onClick={handleClick}>儲存</HeaderBtn>}
         >
           <UserEdit
-            bannerValue={banner}
             onNamenChange={handleChangeName}
             onIntroChange={handleChangeIntro}
-            onBannerChange={handleChangeBanner}
+            onBannerChange={handleFileChange}
+            uploadBanner={uploadBanner}
+            setUploadBanner={setUploadBanner}
           />
         </PopupModal>
 
