@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import UserEdit from "./UserEdit";
-import { useState, useContext, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useState, useContext, useRef, useEffect } from "react";
+import { Link, redirect } from "react-router-dom";
 import PopupModal from "../PopupModal";
 import { UserContext } from "../../context/UserContext";
 import { editUser } from "../../api/user";
@@ -169,6 +169,7 @@ const UserInfo = () => {
       const resData = await editUser(updateUserData);
 
       if (resData.status === "success") {
+        console.log("resData", resData);
         setUploadBanner(null);
         setUserData(resData.data.user);
         console.log("EditUser updated successfully in UserInfo!");

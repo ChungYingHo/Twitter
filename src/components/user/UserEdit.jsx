@@ -190,9 +190,9 @@ const UserEdit = ({
             label={"名稱"}
             name={userData.name}
             value={userData.name}
-            placeholder={"請輸入帳號"}
+            placeholder={userData.name}
             onChange={handleChangeName}
-            maxLength={"50"}
+            maxLength={20}
           />
         </NameInputContainer>
 
@@ -200,10 +200,10 @@ const UserEdit = ({
           <AuthInput
             label={"自我介紹"}
             name={userData.introduction}
-            placeholder={"Egg Head"}
+            placeholder={userData.name}
             onChange={handleChangeIntro}
             isLarge={true}
-            maxLength={"160"}
+            maxLength={160}
           />
         </IntroInputContainer>
       </MainWrapper>
