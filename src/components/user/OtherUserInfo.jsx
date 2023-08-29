@@ -37,7 +37,7 @@ const BtnWrapper = styled.div`
   top: 36px;
 `;
 
-const IconBorder = styled.div`
+const IconBorder = styled.button`
   width: 40px;
   height: 40px;
   border: 1px solid #ff6600;
@@ -45,6 +45,7 @@ const IconBorder = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: transparent;
 `;
 
 const FollowBtn = styled.button`
