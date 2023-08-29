@@ -11,7 +11,7 @@ const StyledContainer = styled.div`
   min-height: 54px;
   border-radius: 2px;
   border-bottom: ${({ $error }) => ($error ? "#fc5a5a" : "#696974")} solid 2px;
-  &:hover{
+  &:hover {
     border-bottom: #50b5ff solid 2px;
   }
 `;
@@ -49,16 +49,27 @@ const ErrorMessage = styled.p`
   font-weight: 500;
   color: #fc5a5a;
   margin: 0 0 0 16px;
-`
+`;
 
-const AuthInput = ({ label, type, placeholder, value, onChange, isLarge, maxLength, minLength, error, onClick }) => {
-  const hasError = error && error !== ""
+const AuthInput = ({
+  label,
+  type,
+  placeholder,
+  value,
+  onChange,
+  isLarge,
+  maxLength,
+  minLength,
+  error,
+  onClick,
+}) => {
+  const hasError = error && error !== "";
 
-  const [isClicked, setIsClicked] = useState(false)
+  const [isClicked, setIsClicked] = useState(false);
   const handleClick = () => {
     setIsClicked(true);
-    onClick()
-  }
+    onClick();
+  };
   return (
     <>
       <StyledContainer $error={hasError}>
@@ -86,7 +97,6 @@ const AuthInput = ({ label, type, placeholder, value, onChange, isLarge, maxLeng
       </StyledContainer>
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </>
-    
   );
 };
 
