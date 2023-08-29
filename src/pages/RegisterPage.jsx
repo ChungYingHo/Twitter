@@ -3,19 +3,16 @@ import {
   AuthInputContainer,
   AuthButton,
   AuthLinkText,
-  AuthTittle,
-  InputLength,
-  WarnMsg,
+  AuthTittle
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Toast } from "../components/common/common.styled";
 // api
 import { checkPermission } from "../api/Permission";
 import { register } from "../api/auth";
-import Swal from "sweetalert2";
-import clsx from "clsx";
 
 const RegisterPage = () => {
   const [account, setAccount] = useState("");
@@ -23,7 +20,6 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
-  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -45,7 +41,10 @@ const RegisterPage = () => {
       password.length === 0 ||
       checkPassword.length === 0
     ) {
-      Swal.fire("註冊欄未填寫完整");
+      Toast.fire({
+        title: '請填寫完整資訊',
+        icon: 'error'
+      })
       return;
     }
     try{
@@ -57,7 +56,10 @@ const RegisterPage = () => {
           checkPassword,
         });
         if (success) {
-          Swal.fire("註冊成功，請重新登入");
+          Toast.fire({
+            title: '註冊成功，請重新登入',
+            icon: 'success'
+          })
           navigate("/login");
       }
     } catch (error){

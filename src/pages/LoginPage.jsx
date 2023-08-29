@@ -17,15 +17,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { checkPermission } from "../api/Permission";
 import { login } from "../api/auth";
 import { getUser } from "../api/user";
-import Swal from "sweetalert2";
 import clsx from "clsx";
 import { UserContext } from "../context/UserContext";
+import { Toast } from "../components/common/common.styled";
+
+
 
 const LoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
   const { setUserData } = useContext(UserContext);
-  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -39,14 +40,16 @@ const LoginPage = () => {
   // login action
   const handleClick = async () => {
     if (account.trim().length === 0 || password.trim().length === 0) {
-      Swal.fire("請輸入完整帳號密碼");
+      Toast.fire({
+        title: '請輸入完整帳號密碼',
+        icon: 'error'
+      })
       return;
     }
     try{
       const {
         success,
         userToken,
-        errorMessage,
         userData: userDataFromLogin,
       } = await login({
         account,
@@ -59,6 +62,10 @@ const LoginPage = () => {
             const userData = await getUser();
             setUserData(userData);
             console.log("Login Successful!");
+            Toast.fire({
+              title: '登入成功',
+              icon: 'success'
+            })
             navigate("/main");
       }
     } catch (error){

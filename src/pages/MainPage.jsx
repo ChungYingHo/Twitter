@@ -138,6 +138,10 @@ const MainPage = () => {
       setPosts(sortedTweets);
       // 關閉發文彈出視窗
       closeNewPost();
+      style.Toast.fire({
+        title: '發佈成功！',
+        icon: 'success'
+      })
     } catch (error) {
       console.error("Posting Tweet Failed:", error);
     }

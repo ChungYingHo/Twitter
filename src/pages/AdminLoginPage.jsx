@@ -10,7 +10,7 @@ import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { Toast } from "../components/common/common.styled";
 // api
 import { adminLogin } from "../api/admin";
 import { checkAdminPermission } from "../api/Permission";
@@ -46,7 +46,10 @@ const AdminLoginPage = () => {
   
   const handleClick = async () => {
     if (account.length === 0 || password.length === 0) {
-      Swal.fire("請輸入完整帳號密碼");
+      Toast.fire({
+        title: '請輸入完整帳號密碼',
+        icon: 'error'
+      })
       return;
     }
     try{
@@ -56,6 +59,10 @@ const AdminLoginPage = () => {
       });
       if (success) {
         localStorage.setItem("AdminToken", adminToken);
+        Toast.fire({
+          title: '登入成功',
+          icon: 'success'
+        })
         navigate("/admin_tweets");
       }
     } catch (error){
