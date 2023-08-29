@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
-import { editUser } from "../../api/user";
 
 const UserMainContainer = styled.div`
   width: 100%;
@@ -94,23 +93,6 @@ const UserFollowNum = styled.p`
   font-size: 14px;
 `;
 
-const HeaderTittle = styled.h5`
-  font-size: 16px;
-  color: #1c1c1c;
-  font-weight: 700;
-  margin: 0;
-`;
-
-const HeaderBtn = styled.button`
-  width: 64px;
-  height: 40px;
-  color: white;
-  padding: 8px 16px;
-  border: 0;
-  border-radius: 50px;
-  background-color: #ff6600;
-`;
-
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: #171725;
@@ -130,36 +112,6 @@ const UserInfo = () => {
   };
   const closeNewPost = () => {
     setIsModalOpen(false);
-  };
-
-  const handleChangeName = (newName) => {
-    setName(newName);
-  };
-
-  const handleChangeIntro = (newIntro) => {
-    setIntro(newIntro);
-  };
-
-  const handleChangeBanner = (event) => {
-    setBanner(event.target.value);
-  };
-
-  const handleClick = async () => {
-    try {
-      const updateUserData = {
-        name: name,
-        introduction: introduction,
-        banner: banner,
-      };
-      const resData = await editUser(updateUserData);
-      if (resData.status === "success") {
-        console.log("EditUser updated successfully in UserInfo!");
-      }
-      setUserData(resData.data.user);
-      setIsModalOpen(false);
-    } catch (error) {
-      console.error("[editUser failed in UserPage]", error);
-    }
   };
 
   return (
