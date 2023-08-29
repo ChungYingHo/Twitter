@@ -136,6 +136,8 @@ const OtherUserFollowers = () => {
     }
   };
 
+  console.log("follower data", userFollowers);
+
   return (
     <>
       <Container>
