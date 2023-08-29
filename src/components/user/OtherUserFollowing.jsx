@@ -7,9 +7,8 @@ import FollowrSubTool from "./FollowSubTool";
 import FollowCard from "./FollowCard";
 // api
 import { checkPermission } from "../../api/Permission";
-import { getUserFollowings } from "../../api/user";
+import { getUserFollowings } from "../../api/OtherUser";
 import { followUser, disFollowUser } from "../../api/popular";
-
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -56,7 +55,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const UserFollowing = () => {
+const OtherUserFollowing = () => {
   const [userFollowings, setUserFollowings] = useState([]);
   const navigate = useNavigate();
   // 驗證 token
@@ -92,7 +91,10 @@ const UserFollowing = () => {
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {
     try {
-      if (userFollowings.find((user) => user.Following.id === id).Following.isFollowed) {
+      if (
+        userFollowings.find((user) => user.Following.id === id).Following
+          .isFollowed
+      ) {
         await disFollowUser({ followingId: id });
       } else {
         await followUser({ id });
@@ -101,15 +103,20 @@ const UserFollowing = () => {
       setUserFollowings((prevUsersData) =>
         prevUsersData.map((user) =>
           user.Following.id === id
-            ? { ...user, Following: { ...user.Following, isFollowed: !user.Following.isFollowed } }
+            ? {
+                ...user,
+                Following: {
+                  ...user.Following,
+                  isFollowed: !user.Following.isFollowed,
+                },
+              }
             : user
         )
       );
     } catch (error) {
       console.error("Error occur:", error);
     }
-  }
-  
+  };
 
   return (
     <>
@@ -142,4 +149,4 @@ const UserFollowing = () => {
   );
 };
 
-export default UserFollowing;
+export default OtherUserFollowing;

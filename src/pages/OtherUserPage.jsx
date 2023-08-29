@@ -1,13 +1,12 @@
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
 import OtherUserInfo from "../components/user/OtherUserInfo";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import SubToolBar from "../components/user/SubToolBar";
 import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
 import * as style from "../components/common/common.styled";
 import ReplyCard from "../components/reply/ReplyCard";
-import { UserContext } from "../context/UserContext";
 // api
 import { checkPermission } from "../api/Permission";
 import {
@@ -15,12 +14,7 @@ import {
   getUserTweets,
   getUserReplies,
   getUserLikes,
-  getUserFollowings,
-  getUserFollowers,
 } from "../api/OtherUser";
-
-// dummyData
-import posts from "../dummyData/posts";
 
 const Container = styled.div`
   outline: green solid 2px;
