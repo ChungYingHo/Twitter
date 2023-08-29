@@ -7,6 +7,7 @@ export function usePopup() {
 }
 
 export function PopupProvider({ children }) {
+  const [posts, setPosts] = useState([]);
   const [replies, setReplies] = useState([])
   const [isNewPostOpen, setIsNewPostOpen] = useState(false);
   const [isNewReplyOpen, setIsNewReplyOpen] = useState(false);
@@ -24,7 +25,7 @@ export function PopupProvider({ children }) {
   }
 
   return (
-    <PopupContext.Provider value={{ isNewPostOpen, setIsNewPostOpen, openNewPost, closeNewPost, replies, setReplies, openNewReply, closeNewReply, isNewReplyOpen }}>
+    <PopupContext.Provider value={{ isNewPostOpen, setIsNewPostOpen, openNewPost, closeNewPost, replies, setReplies, openNewReply, closeNewReply, isNewReplyOpen, posts, setPosts }}>
       {children}
     </PopupContext.Provider>
   );

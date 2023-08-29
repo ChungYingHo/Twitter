@@ -73,9 +73,8 @@ const Btn = styled(style.StyledBtn)`
 `;
 
 const MainPage = () => {
-  const { isNewPostOpen, openNewPost, closeNewPost, isNewReplyOpen, closeNewReply, openNewReply } = usePopup()
+  const { isNewPostOpen, openNewPost, closeNewPost, isNewReplyOpen, closeNewReply, openNewReply, posts, setPosts } = usePopup()
   const { userData, setUserData } = useContext(UserContext);
-  const [posts, setPosts] = useState([]);
   const [postContent, setPostContent] = useState("");
   const navigate = useNavigate();
 
@@ -183,6 +182,7 @@ const MainPage = () => {
               timestamp={selectedPost.createdAt}
               avatar={selectedPost.User.avatar}
               content={selectedPost.description}
+              setPosts={setPosts}
             />
           )}
         </PopupModal>

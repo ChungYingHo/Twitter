@@ -5,7 +5,7 @@ import TimeDiff from "../main/TimeDiff";
 import clsx from "clsx";
 import { usePopup } from "../../context/Popup";
 // api
-import { postReply, getReplies } from "../../api/main";
+import { postReply, getReplies, getTweets, getSingleTweet } from "../../api/main";
 
 const Container = styled.div`
     margin-top: 16px;
@@ -117,7 +117,7 @@ const Btn = styled(style.StyledBtn)`
 `;
 
 export default function NewReply({name, id, account, timestamp, avatar, content}) {
-  const { closeNewReply, setReplies } = usePopup()
+  const { closeNewReply, setReplies, setPosts } = usePopup()
   const [replyContent, setReplyContent] = useState('')
   const [isContentEmpty, setIsContentEmpty] = useState(false)
   const contentLength = replyContent.trim().length
@@ -137,6 +137,12 @@ export default function NewReply({name, id, account, timestamp, avatar, content}
             const sortedUpdatedReplies = updatedReplies.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             setReplies(sortedUpdatedReplies)
             closeNewReply()
+            // !下面這個是為了更新主頁，會出 error 先註解
+            const updatedTweets = await getTweets();
+            const sortedTweets = updatedTweets.sort(
+              (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            );
+            setPosts(sortedTweets)
         } catch (error){
             console.error('Replying Tweet Failed:', error)
         }

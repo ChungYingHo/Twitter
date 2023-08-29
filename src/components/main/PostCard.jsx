@@ -1,12 +1,9 @@
 import styled from 'styled-components'
 import { useNavigate } from "react-router-dom";
 import TimeDiff from './TimeDiff'
-import PopupModal from '../PopupModal';
-import NewReply from '../reply/NewReply';
 import {ReactComponent as Like} from '../../assets/like.svg'
 import {ReactComponent as Reply} from '../../assets/reply.svg'
 import * as style from '../common/common.styled'
-import { usePopup } from '../../context/Popup';
 
 const Container = styled.div`
     height: fit-content;
