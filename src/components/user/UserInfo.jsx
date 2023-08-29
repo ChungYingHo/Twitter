@@ -120,12 +120,23 @@ const StyledLink = styled(Link)`
   padding: 0;
 `;
 
+const StyledMsg = styled.p`
+  color: #5f5e5e;
+  font-size: 16px;
+  font-weight: 700;
+  position: relative;
+  right: 16px;
+  top: 8px;
+`;
+
 const UserInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState();
   const [introduction, setIntro] = useState();
   const [uploadBanner, setUploadBanner] = useState(null);
   const [uploadAvatar, setUploadAvatar] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
   const { userData, setUserData } = useContext(UserContext);
 
   const openNewPost = () => {
@@ -165,18 +176,24 @@ const UserInfo = () => {
         banner: uploadBanner,
         avatar: uploadAvatar,
       };
-
+      setIsLoading(true);
       const resData = await editUser(updateUserData);
 
       if (resData.status === "success") {
         console.log("resData", resData);
         setUploadBanner(null);
         setUserData(resData.data.user);
+        setErrorMessage(null);
         console.log("EditUser updated successfully in UserInfo!");
+      } else if (resData.status === "error") {
+        setErrorMessage(resData.message);
       }
     } catch (error) {
+      setErrorMessage(" Something went wrong ...");
       console.error("[editUser failed in UserPage]", error);
     } finally {
+      setIsLoading(false);
+      setErrorMessage(null);
       setIsModalOpen(false);
     }
   };
@@ -195,13 +212,22 @@ const UserInfo = () => {
           isOpen={isModalOpen}
           closeModal={closeNewPost}
           headerTitle={<HeaderTittle>編輯個人資料</HeaderTittle>}
-          headerButton={<HeaderBtn onClick={handleClick}>儲存</HeaderBtn>}
+          headerButton={
+            errorMessage ? (
+              <div style={{ border: " 2px solid red " }}>{errorMessage}</div>
+            ) : isLoading ? (
+              <StyledMsg>儲存中...</StyledMsg>
+            ) : (
+              <HeaderBtn onClick={handleClick}>儲存</HeaderBtn>
+            )
+          }
         >
           <UserEdit
-            onNamenChange={handleChangeName}
+            onNameChange={handleChangeName}
             onIntroChange={handleChangeIntro}
             onBannerChange={handleBannerChange}
             uploadBanner={uploadBanner}
+            uploadAvatar={uploadAvatar}
             setUploadBanner={setUploadBanner}
             onAvatarChange={handleAvatarChange}
           />

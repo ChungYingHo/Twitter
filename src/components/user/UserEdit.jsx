@@ -113,7 +113,7 @@ const IntroInputContainer = styled.div`
 `;
 
 const UserEdit = ({
-  onNamenChange,
+  onNameChange,
   onIntroChange,
   onBannerChange,
   uploadBanner,
@@ -126,7 +126,7 @@ const UserEdit = ({
   const { userData } = useContext(UserContext);
 
   const handleChangeName = (newName) => {
-    onNamenChange(newName);
+    onNameChange(newName);
   };
 
   const handleChangeIntro = (newIntro) => {
@@ -140,9 +140,6 @@ const UserEdit = ({
   const resetFileInput = () => {
     setUploadBanner(null);
   };
-
-  console.log({ uploadAvatar });
-  console.log("handleOpenFileInput called");
 
   return (
     <PopupContainer>
