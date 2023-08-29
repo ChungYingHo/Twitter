@@ -32,6 +32,16 @@ const SettingPage = () => {
   const [checkPassword, setCheckPassword] = useState("");
   const navigate = useNavigate()
 
+  // 錯誤提示控管
+  const [accountError, setAccountError] = useState("")
+  const [nameError, setNameError] = useState("")
+  const [emailError, setEmailError] = useState("")
+  const [passwordError, setPasswordError] = useState("")
+  const [checkPasswordError, setCheckPasswordError] = useState("")
+  const handleInputClick = (errorState) => {
+    errorState('');
+  }
+
   // 驗證 token
     useEffect(() => {
         const checkTokenIsValid = async () => {
@@ -47,66 +57,57 @@ const SettingPage = () => {
 
         checkTokenIsValid();
     }, [navigate])
+    // 抓取用戶資料
+    useEffect(() => {
+      const fetchingUser = async () => {
+        try {
+          const userData = await getUser();
+          setUser(userData);
+          setAccount(userData.account);
+          setName(userData.name);
+          setEmail(userData.email);
+        } catch (error) {
+          console.error("Get User Failed:", error);
+        }
+      };
+      fetchingUser();
+    }, []);
 
-  useEffect(() => {
-    const fetchingUser = async () => {
-      try {
-        const userData = await getUser();
-        setUser(userData);
-        setAccount(userData.account);
-        setName(userData.name);
-        setEmail(userData.email);
-      } catch (error) {
-        console.error("Get User Failed:", error);
-      }
-    };
-    fetchingUser();
-  }, []);
-
-  const handleClick = async () => {
-    if (
-      account.length === 0 ||
-      name.length === 0 ||
-      email.length === 0 ||
-      password.length === 0 ||
-      checkPassword.length === 0
-    ) {
-      console.log(user.name)
-      return;
-    }
-
-    try {
-      if (password !== checkPassword) {
-        console.error("Passwords do not match");
-        Swal.fire({
-          position: 'top',
-          title: '密碼確認錯誤！',
-          timer: 1000,
-          icon: 'error',
-          showConfirmButton: false,
-        });
+    const handleClick = async () => {
+      if (
+        account.trim().length === 0 ||
+        name.trim().length === 0 ||
+        email.trim().length === 0 ||
+        password.trim().length === 0 ||
+        checkPassword.trim().length === 0
+      ) {
+        console.log(`warning`)
         return;
       }
-      await editUser({ name, account, email, password, checkPassword });
-      console.log("Editing User Successful!");
-      Swal.fire({
-        position: 'top',
-        title: '編輯成功！',
-        timer: 1000,
-        icon: 'success',
-        showConfirmButton: false,
-      })
-    } catch (error) {
-      console.error(error);
-      Swal.fire({
-        position: 'top',
-        title: '編輯失敗！請再試一次！',
-        timer: 1000,
-        icon: 'error',
-        showConfirmButton: false,
-      });
-    }
-  };
+
+      try {
+        const resData = await editUser({ name, account, email, password, checkPassword });
+        console.log("Editing User Successful!", resData);
+      } catch (error) {
+        if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message;
+          if (errorMessage.includes("account")) {
+            setAccountError(errorMessage);
+          } else if (errorMessage.includes("暱稱")) {
+            setNameError(errorMessage);
+          } else if (errorMessage.includes("email")) {
+            setEmailError(errorMessage);
+          } else if (errorMessage.includes("密碼")) {
+            setPasswordError(errorMessage);
+          } else if (errorMessage.includes("確認密碼")) {
+            setCheckPasswordError(errorMessage);
+          }
+          console.error('[Edit error:', errorMessage);
+        } else {
+          console.error('An error occurred:', error);
+        }
+      }
+    };
 
   return (
     <>
@@ -120,22 +121,28 @@ const SettingPage = () => {
         <SettingInputContainer>
           <AuthInput
             label={"帳號"}
-            maxlength="30"
+            maxLength={10}
+            minLength={1}
             name={account}
             value={user.account}
             placeholder={"請輸入帳號"}
             onChange={(accountInputValue) => setAccount(accountInputValue)}
+            error={accountError}
+            onClick={() => handleInputClick(setAccountError)}
           />
         </SettingInputContainer>
 
         <SettingInputContainer>
           <AuthInput
             label={"名稱"}
-            maxlength="50"
+            maxLength={50}
+            minLength={1}
             name={name}
             value={user.name}
             placeholder={"請輸入使用者名稱"}
             onChange={(nameInputValue) => setName(nameInputValue)}
+            error={nameError}
+            onClick={() => handleInputClick(setNameError)}
           />
         </SettingInputContainer>
 
@@ -143,22 +150,28 @@ const SettingPage = () => {
           <AuthInput
             type="email"
             label={"Email"}
+            maxLength={30}
+            minLength={1}
             name={email}
             value={user.email}
             placeholder={"請輸入Email"}
             onChange={(emailInputValue) => setEmail(emailInputValue)}
+            error={emailError}
+            onClick={() => handleInputClick(setEmailError)}
           />
         </SettingInputContainer>
 
         <SettingInputContainer>
           <AuthInput
             label={"密碼"}
-            minlength="5"
-            maxlength="20"
+            maxLength={20}
+            minLength={5}
             name={password}
             value={user.password}
             placeholder={"請設定密碼"}
             onChange={(passwordInputValue) => setPassword(passwordInputValue)}
+            error={passwordError}
+            onClick={() => handleInputClick(setPasswordError)}
             required
           />
         </SettingInputContainer>
@@ -166,14 +179,16 @@ const SettingPage = () => {
         <SettingInputContainer>
           <AuthInput
             label={"密碼再確認"}
-            minlength="5"
-            maxlength="20"
+            maxLength={20}
+            minLength={5}
             name={checkPassword}
             value={checkPassword}
             placeholder={"請再次輸入密碼"}
             onChange={(checkPasswordInputValue) =>
               setCheckPassword(checkPasswordInputValue)
             }
+            error={passwordError}
+            onClick={() => handleInputClick(setCheckPasswordError)}
             required
           />
         </SettingInputContainer>
