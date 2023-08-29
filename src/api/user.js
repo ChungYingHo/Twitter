@@ -59,6 +59,7 @@ export const getUserTweets = async () => {
   }
 };
 
+// 獲取user回覆
 export const getUserReplies = async () => {
   try {
     const userId = localStorage.getItem("userID");
@@ -72,6 +73,7 @@ export const getUserReplies = async () => {
   }
 };
 
+// 獲取user喜歡貼文
 export const getUserLikes = async () => {
   try {
     const userId = localStorage.getItem("userID");
@@ -83,6 +85,7 @@ export const getUserLikes = async () => {
   }
 };
 
+// 獲取user正在追蹤
 export const getUserFollowings = async () => {
   try {
     const userId = localStorage.getItem("userID");
@@ -94,6 +97,7 @@ export const getUserFollowings = async () => {
   }
 };
 
+// 獲取user的追隨者
 export const getUserFollowers = async () => {
   try {
     const userId = localStorage.getItem("userID");

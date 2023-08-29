@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const SubToolContainer = styled.div`
   display: flex;
@@ -29,13 +29,15 @@ const StyledLink = styled(Link)`
 `;
 
 const FollowrSubTool = ({ activePage }) => {
+  const { id } = useParams();
+
   return (
     <SubToolContainer>
-      <StyledLink to="/user/followers">
+      <StyledLink to={id ? `/user/${id}/followers` : `/user/followers`}>
         <SubToolBtn $isActive={activePage === "followers"}>追隨者</SubToolBtn>
       </StyledLink>
 
-      <StyledLink to="/user/following">
+      <StyledLink to={id ? `/user/${id}/following` : `/user/following`}>
         <SubToolBtn $isActive={activePage === "following"}>正在追隨</SubToolBtn>
       </StyledLink>
     </SubToolContainer>
