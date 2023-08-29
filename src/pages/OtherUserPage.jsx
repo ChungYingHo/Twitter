@@ -1,6 +1,6 @@
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
 import OtherUserInfo from "../components/user/OtherUserInfo";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import SubToolBar from "../components/user/SubToolBar";
 import PostCard from "../components/main/PostCard";
@@ -10,12 +10,9 @@ import ReplyCard from "../components/reply/ReplyCard";
 import { UserContext } from "../context/UserContext";
 // api
 import { checkPermission } from "../api/Permission";
-import {
-  getUserTweets,
-  getUserReplies,
-  getUserLikes,
-  getUser,
-} from "../api/user";
+
+// dummyData
+import posts from "../dummyData/posts";
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -102,59 +99,6 @@ const UserPage = () => {
     checkTokenIsValid();
   }, [navigate]);
 
-  // 獲取user資料 (reload後UserContext值會不見，需要重取)
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const datas = await getUser();
-        setUserData(datas);
-      } catch (error) {
-        console.error("[getUserData Failed]", error);
-      }
-    };
-    getUserData();
-  }, [setUserData]);
-
-  // 獲取user推文
-  useEffect(() => {
-    const getUserTweet = async () => {
-      try {
-        const userTweet = await getUserTweets();
-        setUserTweets(userTweet);
-      } catch (error) {
-        console.error("[GetUserData Failed]", error);
-      }
-    };
-    getUserTweet();
-  }, [setUserTweets]);
-
-  // 獲取user回覆
-  useEffect(() => {
-    const getUserReply = async () => {
-      try {
-        const reply = await getUserReplies();
-        setUserReplies(reply);
-      } catch (error) {
-        console.error("[GetUserData Failed]", error);
-      }
-    };
-    getUserReply();
-  }, [setUserReplies]);
-
-  // 獲取user喜歡貼文
-  useEffect(() => {
-    const getUserLike = async () => {
-      try {
-        const like = await getUserLikes();
-        setUserLikes(like);
-        console.log(userLikes);
-      } catch (error) {
-        console.error("[GetUserData Failed]", error);
-      }
-    };
-    getUserLike();
-  }, [setUserLikes]);
-
   return userData ? (
     <>
       <Container>
@@ -172,13 +116,13 @@ const UserPage = () => {
         {userTweets && userLikes && userReplies && (
           <SwitchZoneContainer>
             {activePage === "post" &&
-              userTweets.map((tweet) => {
+              posts.map((tweet) => {
                 return (
                   <PostCardWrapper key={tweet.id}>
                     <PostCard
-                      name={tweet.User.name}
-                      account={tweet.User.name}
-                      avatar={tweet.User.avatar}
+                      name={tweet.name}
+                      account={tweet.name}
+                      avatar={tweet.avatar}
                       content={tweet.description}
                       timestamp={tweet.createdAt}
                       reply={tweet.repliesCount}
@@ -189,33 +133,33 @@ const UserPage = () => {
               })}
 
             {activePage === "reply" &&
-              userReplies.map((reply) => {
+              posts.map((reply) => {
                 return (
                   <ReplyCardWrapper key={reply.TweetId}>
                     <ReplyCard
-                      name={userData.name}
-                      account={userData.account}
-                      avatar={userData.avatar}
+                      name={reply.name}
+                      account={reply.account}
+                      avatar={reply.avatar}
                       content={reply.comment}
                       timestamp={reply.createdAt}
-                      replyAccount={reply.Tweet.User.account}
+                      replyAccount={reply.account}
                     />
                   </ReplyCardWrapper>
                 );
               })}
 
             {activePage === "like" &&
-              userLikes.map((like) => {
+              posts.map((like) => {
                 return (
                   <PostCardWrapper key={like.TweetId}>
                     <PostCard
-                      name={like.Tweet.User.name}
-                      account={like.Tweet.User.name}
-                      avatar={like.Tweet.User.avatar}
-                      content={like.Tweet.description}
-                      timestamp={like.Tweet.createdAt}
-                      reply={like.Tweet.repliesCount}
-                      like={like.Tweet.likesCount}
+                      name={like.name}
+                      account={like.name}
+                      avatar={like.avatar}
+                      content={like.description}
+                      timestamp={like.createdAt}
+                      reply={like.repliesCount}
+                      like={like.likesCount}
                     />
                   </PostCardWrapper>
                 );
