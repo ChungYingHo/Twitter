@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext, useState } from "react";
+import { useContext, useRef } from "react";
 import AuthInput from "../AuthInput";
 import { ReactComponent as PhotoIcon } from "../../assets/photo.svg";
 import { ReactComponent as CloseIcon } from "../../assets/close-white.svg";
@@ -14,10 +14,16 @@ const PopupContainer = styled.div`
 `;
 
 const PopupBannerWrapper = styled.div`
+  width: 100%;
+  object-fit: fill;
   position: relative;
   display: inline-block;
 
-  &::after {
+  ${({ ispreview }) => {
+    return (
+      ispreview &&
+      `
+    &::after {
     content: "";
     position: absolute;
     top: 0;
@@ -27,6 +33,9 @@ const PopupBannerWrapper = styled.div`
     background-color: #17172580;
     opacity: 75%;
   }
+  `
+    );
+  }}
 `;
 
 const PopupBanner = styled.img`
@@ -39,16 +48,11 @@ const BannerIconWrapper = styled.div`
   height: 200px;
   position: relative;
   top: -200px;
-  z-index: 999;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const IconLayoutWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 80px;
+  justify-content: center;
 `;
 
 const MainWrapper = styled.div`
@@ -92,7 +96,6 @@ const PhotoIconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5;
 `;
 
 const NameInputContainer = styled.div`
@@ -104,60 +107,77 @@ const IntroInputContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const ToggleInput = styled.input`
-  border: 1px solid red;
-`;
-
 const UserEdit = ({
-  onNamenChange,
+  onNameChange,
   onIntroChange,
   onBannerChange,
-  bannerValue,
+  uploadBanner,
+  setUploadBanner,
+  onAvatarChange,
+  uploadAvatar,
 }) => {
-  const { userData } = useContext(UserContext);
-  const [showInput, setShowInput] = useState(false);
+  const bannerInputRef = useRef(null);
+  const avatarInputRef = useRef(null);
 
-  const handleToggleInput = () => {
-    setShowInput(!showInput);
-  };
+  const { userData } = useContext(UserContext);
 
   const handleChangeName = (newName) => {
-    onNamenChange(newName);
+    onNameChange(newName);
   };
 
   const handleChangeIntro = (newIntro) => {
     onIntroChange(newIntro);
   };
 
-  const handleChangeBanner = (newBanner) => {
-    onBannerChange(newBanner);
+  const handleOpenBannerInput = () => {
+    bannerInputRef.current.click();
+  };
+
+  const handleOpenAvatarInput = () => {
+    avatarInputRef.current.click();
+  };
+
+  const resetFileInput = () => {
+    setUploadBanner(null);
   };
 
   return (
     <PopupContainer>
-      <PopupBannerWrapper>
-        <PopupBanner src={userData.banner} />
+      <PopupBannerWrapper ispreview={!uploadBanner}>
+        <PopupBanner
+          src={
+            uploadBanner ? URL.createObjectURL(uploadBanner) : userData.banner
+          }
+        />
         <BannerIconWrapper>
-          <IconLayoutWrapper>
-            <PhotoIcon onClick={handleToggleInput} />
-            {showInput && (
-              <ToggleInput
-                type="text"
-                placeholder="請輸入照片連結"
-                value={bannerValue}
-                onChange={handleChangeBanner}
-              />
-            )}
-            <CloseIcon />
-          </IconLayoutWrapper>
+          {!uploadBanner && <PhotoIcon onClick={handleOpenBannerInput} />}
+          {uploadBanner && <CloseIcon onClick={resetFileInput} />}
+          <input
+            type="file"
+            ref={bannerInputRef}
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={onBannerChange}
+          />
         </BannerIconWrapper>
       </PopupBannerWrapper>
       <MainWrapper>
         <PicWrapper>
-          <PopupUserPic src={userData.avatar} />
+          <PopupUserPic
+            src={
+              uploadAvatar ? URL.createObjectURL(uploadAvatar) : userData.avatar
+            }
+          />
         </PicWrapper>
         <PhotoIconWrapper>
-          <PhotoIcon />
+          <PhotoIcon style={{ zIndex: 999 }} onClick={handleOpenAvatarInput} />
+          <input
+            type="file"
+            ref={avatarInputRef}
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={onAvatarChange}
+          />
         </PhotoIconWrapper>
 
         <NameInputContainer>
@@ -165,8 +185,9 @@ const UserEdit = ({
             label={"名稱"}
             name={userData.name}
             value={userData.name}
-            placeholder={"請輸入帳號"}
+            placeholder={userData.name}
             onChange={handleChangeName}
+            maxLength={20}
           />
         </NameInputContainer>
 
@@ -174,10 +195,10 @@ const UserEdit = ({
           <AuthInput
             label={"自我介紹"}
             name={userData.introduction}
-            placeholder={"Egg Head"}
+            placeholder={userData.name}
             onChange={handleChangeIntro}
             isLarge={true}
-            maxLength={'10'}
+            maxLength={160}
           />
         </IntroInputContainer>
       </MainWrapper>
