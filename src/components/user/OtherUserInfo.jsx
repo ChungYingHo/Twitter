@@ -138,15 +138,6 @@ const UserInfo = ({
   isFollowed,
   onClick,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openNewPost = () => {
-    setIsModalOpen(true);
-  };
-  const closeNewPost = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <UserMainContainer>
       <UserBanner src={userBanner} />
@@ -174,14 +165,14 @@ const UserInfo = ({
           <UserIntroduction>{intro}</UserIntroduction>
 
           <UserFollowWrapper>
-            <StyledLink to="/user/following">
+            <StyledLink to={`/user/${id}/followings`}>
               <UserFollowbox>
                 <UserFollowNum>{followingCount}個</UserFollowNum>
                 <UserFollowTittle>跟隨中</UserFollowTittle>
               </UserFollowbox>
             </StyledLink>
 
-            <StyledLink to="/user/followers">
+            <StyledLink to={`/user/${id}/followers`}>
               <UserFollowbox>
                 <UserFollowNum>{followerCount}位</UserFollowNum>
                 <UserFollowTittle>跟隨者</UserFollowTittle>
