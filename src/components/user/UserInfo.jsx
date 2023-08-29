@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import UserEdit from "./UserEdit";
-import { useState, useContext, useRef, useEffect } from "react";
-import { Link, redirect } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import PopupModal from "../PopupModal";
 import { UserContext } from "../../context/UserContext";
 import { editUser } from "../../api/user";
@@ -16,7 +16,7 @@ const UserMainContainer = styled.div`
 const UserBanner = styled.img`
   width: 100%;
   height: 200px;
-  object-fit: cover;
+  object-fit: fill;
 `;
 
 const UserInfoWrapper = styled.div`

@@ -15,7 +15,7 @@ const PopupContainer = styled.div`
 
 const PopupBannerWrapper = styled.div`
   width: 100%;
-  object-fit: cover;
+  object-fit: fill;
   position: relative;
   display: inline-block;
 
@@ -48,16 +48,11 @@ const BannerIconWrapper = styled.div`
   height: 200px;
   position: relative;
   top: -200px;
-  z-index: 999;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const IconLayoutWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 80px;
+  justify-content: center;
 `;
 
 const MainWrapper = styled.div`
@@ -155,17 +150,15 @@ const UserEdit = ({
           }
         />
         <BannerIconWrapper>
-          <IconLayoutWrapper>
-            {!uploadBanner && <PhotoIcon onClick={handleOpenBannerInput} />}
-            {uploadBanner && <CloseIcon onClick={resetFileInput} />}
-            <input
-              type="file"
-              ref={bannerInputRef}
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={onBannerChange}
-            />
-          </IconLayoutWrapper>
+          {!uploadBanner && <PhotoIcon onClick={handleOpenBannerInput} />}
+          {uploadBanner && <CloseIcon onClick={resetFileInput} />}
+          <input
+            type="file"
+            ref={bannerInputRef}
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={onBannerChange}
+          />
         </BannerIconWrapper>
       </PopupBannerWrapper>
       <MainWrapper>
