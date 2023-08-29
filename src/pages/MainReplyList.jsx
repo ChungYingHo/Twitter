@@ -279,6 +279,7 @@ export default function MainReplyList(){
                                 content={reply.comment}
                                 timestamp={reply.createdAt}
                                 replyAccount={tweet.User.account}
+                                userId={reply.User.id}
                             />
                         )
                     })}
