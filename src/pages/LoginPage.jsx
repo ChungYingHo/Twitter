@@ -57,8 +57,6 @@ const LoginPage = () => {
     }
   };
 
-  // console.log("get userData in login", userData);
-
   // 驗證 token
   useEffect(() => {
     const checkTokenIsValid = async () => {
