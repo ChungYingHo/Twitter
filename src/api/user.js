@@ -34,7 +34,7 @@ export const getUser = async () => {
 };
 
 // 更改user data
-export const editUser = async ({ name, introduction, banner }) => {
+export const editUser = async ({ name, introduction, banner, avatar }) => {
   const userId = localStorage.getItem("userID");
 
   let formData = new FormData();
@@ -46,6 +46,9 @@ export const editUser = async ({ name, introduction, banner }) => {
   }
   if (banner) {
     formData.append("banner", banner);
+  }
+  if (avatar) {
+    formData.append("avatar", avatar);
   }
 
   try {
