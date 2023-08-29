@@ -65,11 +65,11 @@ const AuthInput = ({
 }) => {
   const hasError = error && error !== "";
 
-  // const [isClicked, setIsClicked] = useState(false)
-  // const handleClick = () => {
-  //   setIsClicked(true);
-  //   onClick()
-  // }
+  const [isClicked, setIsClicked] = useState(false);
+  const handleClick = () => {
+    setIsClicked(true);
+    onClick();
+  };
   return (
     <>
       <StyledContainer $error={hasError}>
@@ -91,7 +91,7 @@ const AuthInput = ({
             onChange={(event) => onChange?.(event.target.value)}
             maxLength={maxLength}
             minLength={minLength}
-            // onClick={handleClick}
+            onClick={handleClick}
           />
         )}
       </StyledContainer>
