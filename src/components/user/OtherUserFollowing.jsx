@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import * as style from "../common/common.styled";
 import { ReactComponent as LeftArrow } from "../../assets/left-arrow.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import FollowrSubTool from "./FollowSubTool";
 import FollowCard from "./FollowCard";
 // api
 import { checkPermission } from "../../api/Permission";
-import { getUserFollowings } from "../../api/OtherUser";
+import { getUserFollowings, getOtherUser } from "../../api/OtherUser";
 import { followUser, disFollowUser } from "../../api/popular";
 
 const Container = styled.div`
@@ -56,8 +56,11 @@ const StyledLink = styled(Link)`
 `;
 
 const OtherUserFollowing = () => {
-  const [userFollowings, setUserFollowings] = useState([]);
+  const { id } = useParams();
   const navigate = useNavigate();
+  const [userFollowings, setUserFollowings] = useState([]);
+  const [othersData, setOthersData] = useState();
+
   // 驗證 token
   useEffect(() => {
     const checkTokenIsValid = async () => {
@@ -74,19 +77,35 @@ const OtherUserFollowing = () => {
     checkTokenIsValid();
   }, [navigate]);
 
+  // 獲取user data
+  useEffect(() => {
+    const otherUserData = async () => {
+      try {
+        const data = await getOtherUser({ id: parseInt(id) });
+        setOthersData(data);
+      } catch (error) {
+        console.log("Get OtherUserData failed in OtherUserFollowing", error);
+      }
+    };
+    otherUserData();
+  }, [id]);
+
+  console.log("other user data in following", othersData);
+
   // 獲取use跟隨者
   useEffect(() => {
     const getUserFollowing = async () => {
       try {
-        const following = await getUserFollowings();
+        const following = await getUserFollowings({ id: parseInt(id) });
         setUserFollowings(following);
-        console.log("Get UserFollowing", following);
       } catch (error) {
-        console.error("[GetUserData Failed]", error);
+        console.error("[GetOtherUser Followings Failed]", error);
       }
     };
     getUserFollowing();
-  }, [userFollowings]);
+  }, [userFollowings, id]);
+
+  console.log("other user following", userFollowings);
 
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {
@@ -121,29 +140,31 @@ const OtherUserFollowing = () => {
   return (
     <>
       <Container>
-        <StyledLink to="/user">
+        <StyledLink to={`/user/${id}`}>
           <Header>
             <LeftArrow />
             <HeaderTittleWrapper>
-              <h5>Egg Head</h5>
-              <p>25推文</p>
+              <h5>{othersData?.name}</h5>
+              <p>{othersData?.tweetsCount} 推文</p>
             </HeaderTittleWrapper>
           </Header>
         </StyledLink>
-        <FollowrSubTool activePage="following" />
-        {userFollowings.map((data) => {
-          return (
-            <FollowCard
-              key={data.Following.id}
-              id={data.Following.id}
-              name={data.Following.name}
-              avatar={data.Following.avatar}
-              introduction={data.Following.introduction}
-              isFollowed={data.Following.isFollowed}
-              onClick={() => handleFollow(data.Following.id)}
-            />
-          );
-        })}
+        <FollowrSubTool id={id} activePage="following" />
+        {userFollowings
+          ? userFollowings.map((data) => {
+              return (
+                <FollowCard
+                  key={data.Following.id}
+                  id={data.Following.id}
+                  name={data.Following.name}
+                  avatar={data.Following.avatar}
+                  introduction={data.Following.introduction}
+                  isFollowed={data.Following.isFollowed}
+                  onClick={() => handleFollow(data.Following.id)}
+                />
+              );
+            })
+          : null}
       </Container>
     </>
   );

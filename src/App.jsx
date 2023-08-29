@@ -34,19 +34,20 @@ function App() {
             <Route path="admin_login" element={<AdminLoginPage />}></Route>
             <Route element={<MainLayout />}>
               <Route path="/main" element={<MainPage />}></Route>
+
               <Route path="/user" element={<UserPage />}></Route>
+              <Route path="/user/followers" element={<UserFollowers />}></Route>
+              <Route path="/user/following" element={<UserFollowing />}></Route>
+
               <Route path="/user/:id" element={<OtherUserPage />}></Route>
               <Route
                 path="/user/:id/followers"
                 element={<OtherUserFollowers />}
               ></Route>
               <Route
-                path="/user/:id/followings"
+                path="/user/:id/following"
                 element={<OtherUserFollowing />}
               ></Route>
-
-              <Route path="/user/followers" element={<UserFollowers />}></Route>
-              <Route path="/user/following" element={<UserFollowing />}></Route>
 
               <Route path="setting" element={<SettingPage />}></Route>
               <Route path="main/:tweet_id" element={<MainReplyList />}></Route>

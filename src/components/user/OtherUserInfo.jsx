@@ -165,7 +165,7 @@ const UserInfo = ({
           <UserIntroduction>{intro}</UserIntroduction>
 
           <UserFollowWrapper>
-            <StyledLink to={`/user/${id}/followings`}>
+            <StyledLink to={`/user/${id}/following`}>
               <UserFollowbox>
                 <UserFollowNum>{followingCount}個</UserFollowNum>
                 <UserFollowTittle>跟隨中</UserFollowTittle>
