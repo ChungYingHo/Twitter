@@ -9,6 +9,7 @@ import UserPage from "./UserPage";
 import MainReplyList from "./MainReplyList";
 import UserFollowing from "../components/user/UserFollowing";
 import UserFollowers from "../components/user/UserFollowers";
+import OtherUserPage from "./OtherUserPage";
 
 export {
   LoginPage,
@@ -22,4 +23,5 @@ export {
   MainReplyList,
   UserFollowers,
   UserFollowing,
+  OtherUserPage,
 };

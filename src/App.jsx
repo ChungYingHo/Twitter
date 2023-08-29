@@ -12,6 +12,7 @@ import {
   MainReplyList,
   UserFollowing,
   UserFollowers,
+  OtherUserPage,
 } from "../src/pages/index";
 import { AdminLayout, MainLayout } from "./layout/layout";
 import { UserContextProvider } from "./context/UserContext";
@@ -32,6 +33,8 @@ function App() {
             <Route element={<MainLayout />}>
               <Route path="/main" element={<MainPage />}></Route>
               <Route path="/user" element={<UserPage />}></Route>
+              <Route path="/user/:id" element={<OtherUserPage />}></Route>
+
               <Route path="/user/followers" element={<UserFollowers />}></Route>
               <Route path="/user/following" element={<UserFollowing />}></Route>
 
