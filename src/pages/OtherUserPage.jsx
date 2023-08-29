@@ -1,7 +1,7 @@
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
+import OtherUserInfo from "../components/user/OtherUserInfo";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
 import PostCard from "../components/main/PostCard";
 import styled from "styled-components";
@@ -78,7 +78,7 @@ const PostCardWrapper = styled.div`
 const ReplyCardWrapper = styled.div`
   padding-bottom: 16px;
 `;
-const OtherUserPage = () => {
+const UserPage = () => {
   const [activePage, setActivePage] = useState("post");
   const [userTweets, setUserTweets] = useState([]);
   const [userReplies, setUserReplies] = useState([]);
@@ -167,15 +167,7 @@ const OtherUserPage = () => {
             </UserNameWrapper>
           </UserTittleWrapper>
         </StyledLink>
-        <UserInfo
-          name={userData.name}
-          account={userData.account}
-          introduction={userData.introduction}
-          followersCount={userData.followersCount}
-          followingsCount={userData.followingsCount}
-          avatar={userData.avatar}
-          banner={userData.banner}
-        />
+        <OtherUserInfo />
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
         {userTweets && userLikes && userReplies && (
           <SwitchZoneContainer>
@@ -235,4 +227,4 @@ const OtherUserPage = () => {
   ) : null;
 };
 
-export default OtherUserPage;
+export default UserPage;
