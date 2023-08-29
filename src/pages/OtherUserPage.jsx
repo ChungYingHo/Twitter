@@ -10,6 +10,7 @@ import ReplyCard from "../components/reply/ReplyCard";
 import { UserContext } from "../context/UserContext";
 // api
 import { checkPermission } from "../api/Permission";
+import { getOtherUser } from "../api/OtherUser";
 
 // dummyData
 import posts from "../dummyData/posts";
@@ -76,12 +77,13 @@ const ReplyCardWrapper = styled.div`
   padding-bottom: 16px;
 `;
 const UserPage = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const [activePage, setActivePage] = useState("post");
   const [userTweets, setUserTweets] = useState([]);
   const [userReplies, setUserReplies] = useState([]);
   const [userLikes, setUserLikes] = useState([]);
-  const { userData, setUserData } = useContext(UserContext);
-  const navigate = useNavigate();
 
   // 驗證 token
   useEffect(() => {
@@ -99,19 +101,45 @@ const UserPage = () => {
     checkTokenIsValid();
   }, [navigate]);
 
-  return userData ? (
+  // 獲取特定使用者資料
+  const [othersData, setOthersData] = useState();
+  useEffect(() => {
+    const otherUserData = async () => {
+      try {
+        const data = await getOtherUser({ id: parseInt(id) });
+        setOthersData(data);
+      } catch (error) {
+        console.log("Get OtherUserData failed in OtherUserPage", error);
+      }
+    };
+    otherUserData();
+  }, [id]);
+
+  console.log("get user data by id", othersData);
+
+  return othersData ? (
     <>
       <Container>
         <StyledLink to="/main">
           <UserTittleWrapper>
             <LeftArrow />
             <UserNameWrapper>
-              <UserName>{userData.name}</UserName>
-              <UserPostCount>{userData.tweetsCount} 推文</UserPostCount>
+              <UserName>{othersData.name}</UserName>
+              <UserPostCount>{othersData.tweetsCount} 推文</UserPostCount>
             </UserNameWrapper>
           </UserTittleWrapper>
         </StyledLink>
-        <OtherUserInfo />
+        <OtherUserInfo
+          id={othersData.id}
+          userName={othersData.name}
+          account={othersData.account}
+          intro={othersData.introduction}
+          userBanner={othersData.banner}
+          avatar={othersData.avatar}
+          followerCount={othersData.followersCount}
+          followingCount={othersData.followingsCount}
+          isFollowed={othersData.isFollowed}
+        />
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
         {userTweets && userLikes && userReplies && (
           <SwitchZoneContainer>

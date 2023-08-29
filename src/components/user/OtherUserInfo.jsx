@@ -100,12 +100,18 @@ const StyledLink = styled(Link)`
   padding: 0;
 `;
 
-const UserInfo = () => {
+const UserInfo = ({
+  id,
+  userName,
+  account,
+  intro,
+  userBanner,
+  avatar,
+  followerCount,
+  followingCount,
+  isFollowed,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [introduction, setIntro] = useState("");
-  const [banner, setBanner] = useState("");
-  const { userData, setUserData } = useContext(UserContext);
 
   const openNewPost = () => {
     setIsModalOpen(true);
@@ -116,31 +122,30 @@ const UserInfo = () => {
 
   return (
     <UserMainContainer>
-      <UserBanner src={userData.banner} />
+      <UserBanner src={userBanner} />
 
       <UserInfoWrapper>
         <UserPicBtnWrapper>
-          <UserPic src={userData.avatar} />
-          <UserEditBtn onClick={openNewPost}>編輯個人資料</UserEditBtn>
+          <UserPic src={avatar} />
         </UserPicBtnWrapper>
 
         <UserAccountNameWrapper>
-          <UserName>{userData.name}</UserName>
-          <UserAccount>@{userData.account}</UserAccount>
+          <UserName>{userName}</UserName>
+          <UserAccount>@{account}</UserAccount>
 
-          <UserIntroduction>{userData.introduction}</UserIntroduction>
+          <UserIntroduction>{intro}</UserIntroduction>
 
           <UserFollowWrapper>
             <StyledLink to="/user/following">
               <UserFollowbox>
-                <UserFollowNum>{userData.followingsCount}個</UserFollowNum>
+                <UserFollowNum>{followingCount}個</UserFollowNum>
                 <UserFollowTittle>跟隨中</UserFollowTittle>
               </UserFollowbox>
             </StyledLink>
 
             <StyledLink to="/user/followers">
               <UserFollowbox>
-                <UserFollowNum>{userData.followersCount}位</UserFollowNum>
+                <UserFollowNum>{followerCount}位</UserFollowNum>
                 <UserFollowTittle>跟隨者</UserFollowTittle>
               </UserFollowbox>
             </StyledLink>
