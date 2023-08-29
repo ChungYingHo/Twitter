@@ -125,6 +125,7 @@ const UserInfo = () => {
   const [name, setName] = useState();
   const [introduction, setIntro] = useState();
   const [uploadBanner, setUploadBanner] = useState(null);
+  const [uploadAvatar, setUploadAvatar] = useState(null);
   const { userData, setUserData } = useContext(UserContext);
 
   const openNewPost = () => {
@@ -142,24 +143,27 @@ const UserInfo = () => {
     setIntro(newIntro);
   };
 
-  const handleFileChange = (event) => {
+  const handleBannerChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setUploadBanner(file);
     }
   };
 
+  const handleAvatarChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setUploadAvatar(file);
+    }
+  };
+
   const handleClick = async () => {
     try {
-      // const formData = new FormData();
-      // formData.append("name", name);
-      // formData.append("introduction", introduction);
-      // formData.append("uploadBanner", uploadBanner);
-
       const updateUserData = {
         name: name,
         introduction: introduction,
         banner: uploadBanner,
+        avatar: uploadAvatar,
       };
 
       const resData = await editUser(updateUserData);
@@ -195,9 +199,10 @@ const UserInfo = () => {
           <UserEdit
             onNamenChange={handleChangeName}
             onIntroChange={handleChangeIntro}
-            onBannerChange={handleFileChange}
+            onBannerChange={handleBannerChange}
             uploadBanner={uploadBanner}
             setUploadBanner={setUploadBanner}
+            onAvatarChange={handleAvatarChange}
           />
         </PopupModal>
 

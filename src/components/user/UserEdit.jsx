@@ -19,9 +19,9 @@ const PopupBannerWrapper = styled.div`
   position: relative;
   display: inline-block;
 
-  ${({ isPreview }) => {
+  ${({ ispreview }) => {
     return (
-      isPreview &&
+      ispreview &&
       `
     &::after {
     content: "";
@@ -101,7 +101,6 @@ const PhotoIconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5;
 `;
 
 const NameInputContainer = styled.div`
@@ -119,6 +118,8 @@ const UserEdit = ({
   onBannerChange,
   uploadBanner,
   setUploadBanner,
+  onAvatarChange,
+  uploadAvatar,
 }) => {
   const inputRef = useRef(null);
 
@@ -140,11 +141,12 @@ const UserEdit = ({
     setUploadBanner(null);
   };
 
-  console.log({ uploadBanner });
+  console.log({ uploadAvatar });
+  console.log("handleOpenFileInput called");
 
   return (
     <PopupContainer>
-      <PopupBannerWrapper isPreview={!uploadBanner}>
+      <PopupBannerWrapper ispreview={!uploadBanner}>
         <PopupBanner
           src={
             uploadBanner ? URL.createObjectURL(uploadBanner) : userData.banner
@@ -166,10 +168,21 @@ const UserEdit = ({
       </PopupBannerWrapper>
       <MainWrapper>
         <PicWrapper>
-          <PopupUserPic src={userData.avatar} />
+          <PopupUserPic
+            src={
+              uploadAvatar ? URL.createObjectURL(uploadAvatar) : userData.avatar
+            }
+          />
         </PicWrapper>
         <PhotoIconWrapper>
-          <PhotoIcon />
+          <PhotoIcon style={{ zIndex: 999 }} onClick={handleOpenFileInput} />
+          <input
+            type="file"
+            ref={inputRef}
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={onAvatarChange}
+          />
         </PhotoIconWrapper>
 
         <NameInputContainer>
@@ -179,6 +192,7 @@ const UserEdit = ({
             value={userData.name}
             placeholder={"請輸入帳號"}
             onChange={handleChangeName}
+            maxLength={"50"}
           />
         </NameInputContainer>
 
@@ -189,7 +203,7 @@ const UserEdit = ({
             placeholder={"Egg Head"}
             onChange={handleChangeIntro}
             isLarge={true}
-            maxLength={"10"}
+            maxLength={"160"}
           />
         </IntroInputContainer>
       </MainWrapper>
