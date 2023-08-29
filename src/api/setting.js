@@ -10,7 +10,6 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("UserToken");
-    console.log(token);
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
@@ -51,5 +50,6 @@ export const editUser = async ({
     return res.data;
   } catch (error) {
     console.error("[Edit User failed]: ", error);
+    throw error
   }
 };
