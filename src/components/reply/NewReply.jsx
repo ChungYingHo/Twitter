@@ -3,6 +3,9 @@ import { useState } from "react";
 import * as style from '../common/common.styled'
 import TimeDiff from "../main/TimeDiff";
 import clsx from "clsx";
+import { usePopup } from "../../context/Popup";
+// api
+import { postReply, getReplies } from "../../api/main";
 
 const Container = styled.div`
     margin-top: 16px;
@@ -113,17 +116,30 @@ const Btn = styled(style.StyledBtn)`
   height: 40px;
 `;
 
-export default function NewReply({name, account, timestamp, avatar, content, replyContent, setReplyContent, handleReplySubmit}) {
+export default function NewReply({name, id, account, timestamp, avatar, content}) {
+  const { closeNewReply, setReplies } = usePopup()
+  const [replyContent, setReplyContent] = useState('')
   const [isContentEmpty, setIsContentEmpty] = useState(false)
   const contentLength = replyContent.trim().length
 
-  const handleClick = () => {
+  const handleClick = async() => {
     if (contentLength === 0) {
       setIsContentEmpty(true)
       return;
     } else {
       setIsContentEmpty(false)
-      handleReplySubmit()
+      try{
+            await postReply({tweet_id: id, comment: replyContent})
+            console.log('Reply successful!')
+            // 發出去就清空 textarea
+            setReplyContent('')
+            const updatedReplies = await getReplies({ tweet_id: id })
+            const sortedUpdatedReplies = updatedReplies.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            setReplies(sortedUpdatedReplies)
+            closeNewReply()
+        } catch (error){
+            console.error('Replying Tweet Failed:', error)
+        }
     }
   }
 

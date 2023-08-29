@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import PostCard from "../components/main/PostCard";
 import PopupModal from "../components/PopupModal";
 import NewPost from "../components/main/NewPost";
+import NewReply from "../components/reply/NewReply";
 import * as style from "../components/common/common.styled";
 import { UserContext } from "../context/UserContext";
 import { usePopup } from "../context/Popup";
@@ -72,7 +73,7 @@ const Btn = styled(style.StyledBtn)`
 `;
 
 const MainPage = () => {
-  const { isNewPostOpen, openNewPost, closeNewPost } = usePopup()
+  const { isNewPostOpen, openNewPost, closeNewPost, isNewReplyOpen, closeNewReply, openNewReply } = usePopup()
   const { userData, setUserData } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
   const [postContent, setPostContent] = useState("");
@@ -143,6 +144,13 @@ const MainPage = () => {
     }
   }
 
+  // 首頁回覆
+  const [selectedPost, setSelectedPost] = useState(null)
+  const handlePostCardClick = (post) => {
+    setSelectedPost(post)
+    openNewReply();
+  }
+
   return (
     <>
       <Container>
@@ -166,6 +174,19 @@ const MainPage = () => {
           />
         </PopupModal>
 
+        <PopupModal isOpen={isNewReplyOpen} closeModal={closeNewReply}>
+          {selectedPost && (
+            <NewReply
+              name={selectedPost.User.name}
+              id={selectedPost.id}
+              account={selectedPost.User.account}
+              timestamp={selectedPost.createdAt}
+              avatar={selectedPost.User.avatar}
+              content={selectedPost.description}
+            />
+          )}
+        </PopupModal>
+
         <CardContainer>
           {posts.map((data) => {
             return (
@@ -181,6 +202,7 @@ const MainPage = () => {
                   timestamp={data.createdAt}
                   reply={data.repliesCount}
                   like={data.likesCount}
+                  onPostCardClick={() => handlePostCardClick(data)}
                 />
               </div>
             );
