@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import PostCard from "../components/main/PostCard";
 import PopupModal from "../components/PopupModal";
 import NewPost from "../components/main/NewPost";
+import NewReply from "../components/reply/NewReply";
 import * as style from "../components/common/common.styled";
 import { UserContext } from "../context/UserContext";
+import { usePopup } from "../context/Popup";
 // 引用 api
 import { getTweets, postTweets } from "../api/main";
 import { checkPermission } from "../api/Permission";
@@ -71,14 +73,11 @@ const Btn = styled(style.StyledBtn)`
 `;
 
 const MainPage = () => {
-  const [isNewPostOpen, setIsNewPostOpen] = useState(false);
-
-  const [posts, setPosts] = useState([]);
-  const [postContent, setPostContent] = useState("");
+  const { isNewPostOpen, openNewPost, closeNewPost, isNewReplyOpen, closeNewReply, openNewReply, posts, setPosts } = usePopup()
   const { userData, setUserData } = useContext(UserContext);
+  const [postContent, setPostContent] = useState("");
   const navigate = useNavigate();
 
-  console.log("", userData);
 
   // 驗證 token
   useEffect(() => {
@@ -92,7 +91,6 @@ const MainPage = () => {
         navigate("/login");
       }
     };
-
     checkTokenIsValid();
   }, [navigate]);
 
@@ -109,13 +107,6 @@ const MainPage = () => {
     getUserData();
   }, [setUserData]);
 
-  // 控管彈出視窗
-  const openNewPost = () => {
-    setIsNewPostOpen(true);
-  };
-  const closeNewPost = () => {
-    setIsNewPostOpen(false);
-  };
   // 抓取所有貼文
   useEffect(() => {
     const fetchTweets = async () => {
@@ -131,6 +122,7 @@ const MainPage = () => {
     };
     fetchTweets();
   }, []);
+
   // 發送貼文
   const handlePostSubmit = async () => {
     try {
@@ -149,7 +141,14 @@ const MainPage = () => {
     } catch (error) {
       console.error("Posting Tweet Failed:", error);
     }
-  };
+  }
+
+  // 首頁回覆
+  const [selectedPost, setSelectedPost] = useState(null)
+  const handlePostCardClick = (post) => {
+    setSelectedPost(post)
+    openNewReply();
+  }
 
   return (
     <>
@@ -174,16 +173,28 @@ const MainPage = () => {
           />
         </PopupModal>
 
+        <PopupModal isOpen={isNewReplyOpen} closeModal={closeNewReply}>
+          {selectedPost && (
+            <NewReply
+              name={selectedPost.User.name}
+              id={selectedPost.id}
+              account={selectedPost.User.account}
+              timestamp={selectedPost.createdAt}
+              avatar={selectedPost.User.avatar}
+              content={selectedPost.description}
+              setPosts={setPosts}
+            />
+          )}
+        </PopupModal>
+
         <CardContainer>
           {posts.map((data) => {
             return (
-              <div
-                key={data.id}
-                onClick={() => navigate(`/main/${data.id}`)}
-                className="post-link"
-              >
+              <div key={data.id} className="post-link">
                 <PostCard
                   key={data.id}
+                  id={data.id}
+                  userId={data.User.id}
                   name={data.User.name}
                   account={data.User.account}
                   avatar={data.User.avatar}
@@ -191,6 +202,7 @@ const MainPage = () => {
                   timestamp={data.createdAt}
                   reply={data.repliesCount}
                   like={data.likesCount}
+                  onPostCardClick={() => handlePostCardClick(data)}
                 />
               </div>
             );

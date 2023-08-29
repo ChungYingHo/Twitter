@@ -7,6 +7,7 @@ import { ReactComponent as Info } from "../assets/personInfo.svg";
 import { ReactComponent as Setting } from "../assets/setting.svg";
 import { ReactComponent as Logout } from "../assets/logout.svg";
 import * as style from "../components/common/common.styled";
+import { usePopup } from "../context/Popup";
 
 const Container = styled.div`
   position: relative;
@@ -85,6 +86,11 @@ const FooterContainer = styled.div`
 `;
 
 export default function Toolbar() {
+  const navigate = useNavigate()
+  const { openNewPost } = usePopup();
+
+  // 監控正在哪條路由下
+  const location = useLocation();
   const getActivePage = (pathname) => {
     if (pathname === "/main") {
       return "home";
@@ -95,20 +101,23 @@ export default function Toolbar() {
     }
     return "default";
   };
-  const location = useLocation();
   const [activePage, setActivePage] = useState(
     getActivePage(location.pathname)
-  );
-
-  const navigate = useNavigate();
-
+  )
+  
+  // 登出功能
   const handleClick = () => {
     console.log(localStorage);
     localStorage.removeItem("UserToken");
     localStorage.removeItem("userID");
-
     navigate("/login");
   }
+
+  // 發文跳轉功能
+  const handlePost = () => {
+    navigate("/main");
+    openNewPost(); // 呼叫openNewPost來顯示彈出視窗
+  };
 
   return (
     <Container>
@@ -144,7 +153,7 @@ export default function Toolbar() {
             設定
           </div>
         </Nav>
-        <Btn onClick={() => navigate(`/main`)}>推文</Btn>
+        <Btn onClick={handlePost}>推文</Btn>
       </ToolContainer>
       <FooterContainer onClick={handleClick}>
         <div>

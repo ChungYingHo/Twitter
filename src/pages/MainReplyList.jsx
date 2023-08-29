@@ -10,10 +10,10 @@ import { ReactComponent as Like } from "../assets/like@30.svg";
 import { ReactComponent as LikeFill } from "../assets/like@30_fill.svg";
 import * as style from "../components/common/common.styled";
 import { displayTime } from "../components/reply/displayTime";
+import { usePopup } from "../context/Popup";
 // API
 import { getSingleTweet,
          getReplies,
-         postReply,
          likeTweet,
         dislikeTweet
     } from "../api/main";
@@ -146,6 +146,8 @@ const CardContainer = styled.div`
 export default function MainReplyList(){
     const { tweet_id } = useParams()
     const navigate = useNavigate()
+    const { isNewReplyOpen, openNewReply, closeNewReply, replies, setReplies } = usePopup()
+
     // 驗證 token
     useEffect(() => {
         const checkTokenIsValid = async () => {
@@ -158,9 +160,9 @@ export default function MainReplyList(){
             navigate('/login');
         }
         };
-
         checkTokenIsValid();
     }, [navigate])
+
     // 抓特定貼文
     const [tweet, setTweet] = useState(null)
     useEffect(() => {
@@ -174,8 +176,8 @@ export default function MainReplyList(){
             }
             fetchSingleTweet()
     }, [tweet_id])
+
     // 抓這篇貼文的全部回覆
-    const [replies, setReplies] = useState([])
     useEffect(() => {
         const fetchingReplies = async ()=>{
             try{
@@ -188,30 +190,7 @@ export default function MainReplyList(){
         }
         fetchingReplies()
     }, [tweet_id])
-    // 彈出回覆視窗
-    const [isNewPostOpen, setIsNewPostOpen] = useState(false)
-    const openNewPost = () => {
-        setIsNewPostOpen(true);
-    };
-    const closeNewPost = () => {
-        setIsNewPostOpen(false);
-    }
-    // 新增一筆回覆
-    const [replyContent, setReplyContent] = useState('')
-    const handleReplySubmit = async ()=>{
-        try{
-            await postReply({tweet_id, comment: replyContent})
-            console.log('Reply successful!')
-            // 發出去就清空 textarea
-            setReplyContent('')
-            const updatedReplies = await getReplies({ tweet_id: parseInt(tweet_id) })
-            const sortedUpdatedReplies = updatedReplies.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-            setReplies(sortedUpdatedReplies)
-            closeNewPost()
-        } catch (error){
-            console.error('Replying Tweet Failed:', error)
-        }
-    }
+
     // 喜愛這篇貼文
     const handleLike = async ()=>{
         try{
@@ -226,6 +205,7 @@ export default function MainReplyList(){
             console.error('Like Tweet failed:', error)
         }
     }
+    
     // 取消喜愛這篇貼文
     const handleDislike = async ()=>{
         try{
@@ -250,16 +230,14 @@ export default function MainReplyList(){
         </Header>
         {tweet && replies && (
             <>
-                <PopupModal isOpen={isNewPostOpen} closeModal={closeNewPost}>
+                <PopupModal isOpen={isNewReplyOpen} closeModal={closeNewReply}>
                     <NewReply
                         name={tweet.User.name}
+                        id={tweet.id}
                         account={tweet.User.account}
                         timestamp={tweet.createdAt}
                         avatar={tweet.User.avatar}
                         content={tweet.description}
-                        replyContent={replyContent}
-                        setReplyContent={setReplyContent}
-                        handleReplySubmit={handleReplySubmit}
                     />
                 </PopupModal>
                 <PostContainer>
@@ -285,7 +263,7 @@ export default function MainReplyList(){
                         </div>
                     </Counts>
                     <Interact>
-                        <Reply onClick={openNewPost}/>
+                        <Reply onClick={openNewReply}/>
                         {tweet.isLiked ? <LikeFill onClick={handleDislike}/> : <Like onClick={handleLike}/>}
                     </Interact>
                 </PostContainer>
