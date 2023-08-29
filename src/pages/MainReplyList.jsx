@@ -10,6 +10,7 @@ import { ReactComponent as Like } from "../assets/like@30.svg";
 import { ReactComponent as LikeFill } from "../assets/like@30_fill.svg";
 import * as style from "../components/common/common.styled";
 import { displayTime } from "../components/reply/displayTime";
+import { usePopup } from "../context/Popup";
 // API
 import { getSingleTweet,
          getReplies,
@@ -146,6 +147,8 @@ const CardContainer = styled.div`
 export default function MainReplyList(){
     const { tweet_id } = useParams()
     const navigate = useNavigate()
+    const { isNewPostOpen, openNewPost, closeNewPost } = usePopup()
+
     // 驗證 token
     useEffect(() => {
         const checkTokenIsValid = async () => {
@@ -158,9 +161,9 @@ export default function MainReplyList(){
             navigate('/login');
         }
         };
-
         checkTokenIsValid();
     }, [navigate])
+
     // 抓特定貼文
     const [tweet, setTweet] = useState(null)
     useEffect(() => {
@@ -174,6 +177,7 @@ export default function MainReplyList(){
             }
             fetchSingleTweet()
     }, [tweet_id])
+
     // 抓這篇貼文的全部回覆
     const [replies, setReplies] = useState([])
     useEffect(() => {
@@ -188,14 +192,7 @@ export default function MainReplyList(){
         }
         fetchingReplies()
     }, [tweet_id])
-    // 彈出回覆視窗
-    const [isNewPostOpen, setIsNewPostOpen] = useState(false)
-    const openNewPost = () => {
-        setIsNewPostOpen(true);
-    };
-    const closeNewPost = () => {
-        setIsNewPostOpen(false);
-    }
+
     // 新增一筆回覆
     const [replyContent, setReplyContent] = useState('')
     const handleReplySubmit = async ()=>{
@@ -212,6 +209,7 @@ export default function MainReplyList(){
             console.error('Replying Tweet Failed:', error)
         }
     }
+
     // 喜愛這篇貼文
     const handleLike = async ()=>{
         try{
@@ -226,6 +224,7 @@ export default function MainReplyList(){
             console.error('Like Tweet failed:', error)
         }
     }
+    
     // 取消喜愛這篇貼文
     const handleDislike = async ()=>{
         try{

@@ -92,7 +92,6 @@ const SubContainer = styled.div`
 `
 
 const Footer = styled.div`
-  outline: red solid 2px;
   position: absolute;
   bottom: 16px;
   right: 16px;

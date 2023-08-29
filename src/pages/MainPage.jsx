@@ -141,7 +141,7 @@ const MainPage = () => {
     } catch (error) {
       console.error("Posting Tweet Failed:", error);
     }
-  };
+  }
 
   return (
     <>
@@ -169,13 +169,11 @@ const MainPage = () => {
         <CardContainer>
           {posts.map((data) => {
             return (
-              <div
-                key={data.id}
-                onClick={() => navigate(`/main/${data.id}`)}
-                className="post-link"
-              >
+              <div key={data.id} className="post-link">
                 <PostCard
                   key={data.id}
+                  id={data.id}
+                  userId={data.User.id}
                   name={data.User.name}
                   account={data.User.account}
                   avatar={data.User.avatar}

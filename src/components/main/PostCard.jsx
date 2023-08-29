@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useNavigate } from "react-router-dom";
 import TimeDiff from './TimeDiff'
 import {ReactComponent as Like} from '../../assets/like.svg'
 import {ReactComponent as Reply} from '../../assets/reply.svg'
@@ -68,7 +69,8 @@ const Interact = styled.div`
     }
 `
 
-export default function PostCard({name, account, avatar, content, timestamp, reply, like}){
+export default function PostCard({id, name, account, avatar, content, timestamp, reply, like}){
+    const navigate = useNavigate();
     return(
         <Container>
             <img src={avatar} alt='avatar'/>
@@ -77,7 +79,7 @@ export default function PostCard({name, account, avatar, content, timestamp, rep
                     <p className='name'>{name}</p>
                     <p className='account'>@{account}・<TimeDiff timestamp={timestamp}/></p>
                 </Info>
-                <p className='content'>{content}</p>
+                <p className='content' onClick={()=>navigate(`/main/${id}`)}>{content}</p>
                 <Interact>
                     <div>
                         <Reply/>
