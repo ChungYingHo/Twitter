@@ -33,7 +33,7 @@ const StyledInput = styled.input`
 `;
 
 const StyledTextarea = styled.textarea`
-  /* outline: black solid 2px; */
+  outline: black solid 2px;
   width: calc(100% - 32px);
   margin: 0 0 0 16px;
   border: none;
