@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../../context/UserContext";
+import { ReactComponent as MailIcon } from "../../assets/mail.svg";
+import { ReactComponent as BellIcon } from "../../assets/bell.svg";
 
 const UserMainContainer = styled.div`
   width: 100%;
@@ -27,17 +28,33 @@ const UserPicBtnWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const UserEditBtn = styled.button`
-  width: 128px;
+const BtnWrapper = styled.div`
+  width: 208px;
+`;
+
+const IconBorder = styled.div`
+  width: 40px;
   height: 40px;
   border: 1px solid #ff6600;
-  background-color: white;
-  padding: 8px 16px;
+  border-radius: 50%;
+`;
+
+const FollowBtn = styled.button`
+  height: 40px;
   border-radius: 50px;
-  color: #ff6600;
-  font-size: 14px;
-  position: relative;
-  top: 85px;
+  ${({ $isFollowed }) =>
+    $isFollowed
+      ? `width: 96px;
+             background-color: #ff6600;
+             border: #ff6600 solid 1px;
+             color: #ffffff;`
+      : `width: 64px;
+             background-color: #ffffff;
+             border: #ff6600 solid 1px;
+             color: #ff6600;`}
+  &:active {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) inset;
+  }
 `;
 
 const UserPic = styled.img`
@@ -110,6 +127,7 @@ const UserInfo = ({
   followerCount,
   followingCount,
   isFollowed,
+  onClick,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -127,6 +145,18 @@ const UserInfo = ({
       <UserInfoWrapper>
         <UserPicBtnWrapper>
           <UserPic src={avatar} />
+          <BtnWrapper>
+            <IconBorder>
+              <MailIcon />
+            </IconBorder>
+            <IconBorder>
+              <BellIcon />
+            </IconBorder>
+            <MailIcon />
+            <FollowBtn $isFollowed={isFollowed} onClick={onClick}>
+              {isFollowed ? "正在跟隨" : "跟隨"}
+            </FollowBtn>
+          </BtnWrapper>
         </UserPicBtnWrapper>
 
         <UserAccountNameWrapper>
