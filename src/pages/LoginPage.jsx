@@ -29,31 +29,50 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
+  // error control
+  const [accountError, setAccountError] = useState("")
+  const [passwordError, setPasswordError] = useState("")
+  const handleInputClick = (errorState) => {
+    errorState('');
+  }
+
+  // login action
   const handleClick = async () => {
-    if (account.length === 0 || password.length === 0) {
+    if (account.trim().length === 0 || password.trim().length === 0) {
       Swal.fire("請輸入完整帳號密碼");
       return;
     }
+    try{
+      const {
+        success,
+        userToken,
+        errorMessage,
+        userData: userDataFromLogin,
+      } = await login({
+        account,
+        password,
+      });
+      if (success) {
+            localStorage.setItem("UserToken", userToken);
+            localStorage.setItem("userID", userDataFromLogin.id);
 
-    const {
-      success,
-      userToken,
-      errorMessage,
-      userData: userDataFromLogin,
-    } = await login({
-      account,
-      password,
-    });
-    if (success) {
-      localStorage.setItem("UserToken", userToken);
-      localStorage.setItem("userID", userDataFromLogin.id);
-
-      const userData = await getUser();
-      setUserData(userData);
-      console.log("userdata login", userData);
-      navigate("/main");
-    } else {
-      setError(errorMessage);
+            const userData = await getUser();
+            setUserData(userData);
+            console.log("Login Successful!");
+            navigate("/main");
+      }
+    } catch (error){
+      if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message;
+          if (errorMessage.includes("帳號")) {
+            setAccountError(errorMessage);
+          }else if (errorMessage.includes("密碼")) {
+            setPasswordError(errorMessage);
+          }
+          console.error('[Login error:', errorMessage);
+        } else {
+          console.error('An error occurred:', error);
+        }
     }
   };
 
@@ -84,17 +103,14 @@ const LoginPage = () => {
       >
         <AuthInput
           label={"帳號"}
-          maxlength="30"
+          maxLength={30}
+          minLength={1}
           value={account}
           placeholder={"請輸入帳號"}
           onChange={(accountInputValue) => setAccount(accountInputValue)}
+          error={accountError}
+          onClick={() => handleInputClick(setAccountError)}
         />
-        <InputLength>
-          <WarnMsg className={clsx("", { warn: account.length > 30 })}>
-            字數超過上限!!
-          </WarnMsg>
-          <div>{account.length}/30</div>
-        </InputLength>
       </AuthInputContainer>
 
       <AuthInputContainer
@@ -102,19 +118,15 @@ const LoginPage = () => {
       >
         <AuthInput
           label={"密碼"}
-          maxlength="20"
+          maxLength={20}
+          minLength={5}
           value={password}
           placeholder={"請輸入密碼"}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
+          error={passwordError}
+          onClick={() => handleInputClick(setPasswordError)}
         />
-        <InputLength>
-          <WarnMsg className={clsx("", { warn: password.length > 20 })}>
-            字數超過上限!!
-          </WarnMsg>
-          <div>{password.length}/20</div>
-        </InputLength>
       </AuthInputContainer>
-      {error && <div>{error}</div>}
       <AuthButton onClick={handleClick}>登入</AuthButton>
       <AuthLinkWrapper>
         <Link to="/register">
