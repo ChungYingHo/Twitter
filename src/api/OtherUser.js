@@ -20,11 +20,61 @@ axiosInstance.interceptors.request.use(
 );
 
 // 拿特定user資料
-export const getUser = async ({ id }) => {
+export const getOtherUser = async ({ id }) => {
   try {
     const res = await axiosInstance.get(`${apiURL}/users/${id}`);
     return res.data;
   } catch (error) {
     console.error("[Get Other User by Id failed]: ", error);
+  }
+};
+
+//  獲取user推文
+export const getUserTweets = async ({ id }) => {
+  try {
+    const res = await axiosInstance.get(`${apiURL}/users/${id}/tweets`);
+    return res.data;
+  } catch (error) {
+    console.error("[Get UserTweets failed]: ", error);
+  }
+};
+
+// 獲取user回覆
+export const getUserReplies = async ({ id }) => {
+  try {
+    const res = await axiosInstance.get(`${apiURL}/users/${id}/replied_tweets`);
+    return res.data;
+  } catch (error) {
+    console.error("[Get UserReplies failed]: ", error);
+  }
+};
+
+// 獲取user喜歡貼文
+export const getUserLikes = async ({ id }) => {
+  try {
+    const res = await axiosInstance.get(`${apiURL}/users/${id}/likes`);
+    return res.data;
+  } catch (error) {
+    console.error("[Get UserLikes failed]: ", error);
+  }
+};
+
+// 獲取user正在追蹤
+export const getUserFollowings = async ({ id }) => {
+  try {
+    const res = await axiosInstance.get(`${apiURL}/users/${id}/followings`);
+    return res.data;
+  } catch (error) {
+    console.error("[Get Userfollowings failed]: ", error);
+  }
+};
+
+// 獲取user的追隨者
+export const getUserFollowers = async ({ id }) => {
+  try {
+    const res = await axiosInstance.get(`${apiURL}/users/${id}/followers`);
+    return res.data;
+  } catch (error) {
+    console.error("[Get UserFollowerss failed]: ", error);
   }
 };
