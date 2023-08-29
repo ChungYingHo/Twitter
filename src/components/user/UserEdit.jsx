@@ -121,7 +121,8 @@ const UserEdit = ({
   onAvatarChange,
   uploadAvatar,
 }) => {
-  const inputRef = useRef(null);
+  const bannerInputRef = useRef(null);
+  const avatarInputRef = useRef(null);
 
   const { userData } = useContext(UserContext);
 
@@ -133,8 +134,12 @@ const UserEdit = ({
     onIntroChange(newIntro);
   };
 
-  const handleOpenFileInput = () => {
-    inputRef.current.click();
+  const handleOpenBannerInput = () => {
+    bannerInputRef.current.click();
+  };
+
+  const handleOpenAvatarInput = () => {
+    avatarInputRef.current.click();
   };
 
   const resetFileInput = () => {
@@ -151,11 +156,11 @@ const UserEdit = ({
         />
         <BannerIconWrapper>
           <IconLayoutWrapper>
-            {!uploadBanner && <PhotoIcon onClick={handleOpenFileInput} />}
+            {!uploadBanner && <PhotoIcon onClick={handleOpenBannerInput} />}
             {uploadBanner && <CloseIcon onClick={resetFileInput} />}
             <input
               type="file"
-              ref={inputRef}
+              ref={bannerInputRef}
               accept="image/*"
               style={{ display: "none" }}
               onChange={onBannerChange}
@@ -172,10 +177,10 @@ const UserEdit = ({
           />
         </PicWrapper>
         <PhotoIconWrapper>
-          <PhotoIcon style={{ zIndex: 999 }} onClick={handleOpenFileInput} />
+          <PhotoIcon style={{ zIndex: 999 }} onClick={handleOpenAvatarInput} />
           <input
             type="file"
-            ref={inputRef}
+            ref={avatarInputRef}
             accept="image/*"
             style={{ display: "none" }}
             onChange={onAvatarChange}

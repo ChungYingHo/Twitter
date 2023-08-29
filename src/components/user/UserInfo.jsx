@@ -121,7 +121,7 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledMsg = styled.p`
-  color: #5f5e5e;
+  color: #ff6600;
   font-size: 16px;
   font-weight: 700;
   position: relative;
