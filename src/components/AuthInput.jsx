@@ -31,7 +31,7 @@ const StyledTextarea = styled.textarea`
   font-size: 16px;
 `;
 
-const AuthInput = ({ label, type, placeholder, value, onChange, isLarge }) => {
+const AuthInput = ({ label, type, placeholder, value, onChange, isLarge, maxLength }) => {
   return (
     <StyledContainer>
       <StyledLabel>{label}</StyledLabel>
@@ -41,6 +41,7 @@ const AuthInput = ({ label, type, placeholder, value, onChange, isLarge }) => {
           defaultValue={value || ""}
           onChange={(event) => onChange?.(event.target.value)}
           rows="4"
+          maxLength={maxLength}
         />
       ) : (
         <StyledInput

@@ -3,6 +3,9 @@ import { useState } from "react";
 import * as style from '../common/common.styled'
 import TimeDiff from "../main/TimeDiff";
 import clsx from "clsx";
+import { usePopup } from "../../context/Popup";
+// api
+import { postReply, getReplies, getTweets, getSingleTweet } from "../../api/main";
 
 const Container = styled.div`
     margin-top: 16px;
@@ -92,7 +95,6 @@ const SubContainer = styled.div`
 `
 
 const Footer = styled.div`
-  outline: red solid 2px;
   position: absolute;
   bottom: 16px;
   right: 16px;
@@ -114,17 +116,36 @@ const Btn = styled(style.StyledBtn)`
   height: 40px;
 `;
 
-export default function NewReply({name, account, timestamp, avatar, content, replyContent, setReplyContent, handleReplySubmit}) {
+export default function NewReply({name, id, account, timestamp, avatar, content}) {
+  const { closeNewReply, setReplies, setPosts } = usePopup()
+  const [replyContent, setReplyContent] = useState('')
   const [isContentEmpty, setIsContentEmpty] = useState(false)
   const contentLength = replyContent.trim().length
 
-  const handleClick = () => {
+  const handleClick = async() => {
     if (contentLength === 0) {
       setIsContentEmpty(true)
       return;
     } else {
       setIsContentEmpty(false)
-      handleReplySubmit()
+      try{
+            await postReply({tweet_id: id, comment: replyContent})
+            console.log('Reply successful!')
+            // 發出去就清空 textarea
+            setReplyContent('')
+            const updatedReplies = await getReplies({ tweet_id: id })
+            const sortedUpdatedReplies = updatedReplies.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            setReplies(sortedUpdatedReplies)
+            closeNewReply()
+            // !下面這個是為了更新主頁，會出 error 先註解
+            const updatedTweets = await getTweets();
+            const sortedTweets = updatedTweets.sort(
+              (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            );
+            setPosts(sortedTweets)
+        } catch (error){
+            console.error('Replying Tweet Failed:', error)
+        }
     }
   }
 

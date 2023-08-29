@@ -177,6 +177,7 @@ const UserEdit = ({
             placeholder={"Egg Head"}
             onChange={handleChangeIntro}
             isLarge={true}
+            maxLength={'10'}
           />
         </IntroInputContainer>
       </MainWrapper>

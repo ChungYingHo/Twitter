@@ -22,14 +22,6 @@ const Container = styled.div`
   top: 56px;
   background-color: #ffffff;
   z-index: 2;
-  .header {
-    height: 41px;
-    border-bottom: #e6ecf0 solid 1px;
-    .icon {
-      margin-left: 16px;
-      cursor: pointer;
-    }
-  }
 `;
 
 const Header = styled.div`
@@ -37,9 +29,12 @@ const Header = styled.div`
   height: 49px;
   display: flex;
   align-items: center;
-  padding: 10px;
   border-bottom: ${style.styledBorder};
   margin-top: 8px;
+  .icon {
+      margin-left: 16px;
+      cursor: pointer;
+    }
 `;
 
 const HeaderWrapper = styled.div`
