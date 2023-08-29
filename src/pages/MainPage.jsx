@@ -6,6 +6,7 @@ import PopupModal from "../components/PopupModal";
 import NewPost from "../components/main/NewPost";
 import * as style from "../components/common/common.styled";
 import { UserContext } from "../context/UserContext";
+import { usePopup } from "../context/Popup";
 // 引用 api
 import { getTweets, postTweets } from "../api/main";
 import { checkPermission } from "../api/Permission";
@@ -71,14 +72,12 @@ const Btn = styled(style.StyledBtn)`
 `;
 
 const MainPage = () => {
-  const [isNewPostOpen, setIsNewPostOpen] = useState(false);
-
+  const { isNewPostOpen, openNewPost, closeNewPost } = usePopup()
+  const { userData, setUserData } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
   const [postContent, setPostContent] = useState("");
-  const { userData, setUserData } = useContext(UserContext);
   const navigate = useNavigate();
 
-  console.log("", userData);
 
   // 驗證 token
   useEffect(() => {
@@ -92,7 +91,6 @@ const MainPage = () => {
         navigate("/login");
       }
     };
-
     checkTokenIsValid();
   }, [navigate]);
 
@@ -109,13 +107,6 @@ const MainPage = () => {
     getUserData();
   }, [setUserData]);
 
-  // 控管彈出視窗
-  const openNewPost = () => {
-    setIsNewPostOpen(true);
-  };
-  const closeNewPost = () => {
-    setIsNewPostOpen(false);
-  };
   // 抓取所有貼文
   useEffect(() => {
     const fetchTweets = async () => {
@@ -131,6 +122,7 @@ const MainPage = () => {
     };
     fetchTweets();
   }, []);
+
   // 發送貼文
   const handlePostSubmit = async () => {
     try {
