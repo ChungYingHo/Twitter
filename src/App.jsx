@@ -40,6 +40,7 @@ function App() {
               <Route path="/user/following" element={<UserFollowing />}></Route>
 
               <Route path="/user/:id" element={<OtherUserPage />}></Route>
+              <Route path="user/:id/noti" element={<OtherUserPage />}></Route>
               <Route
                 path="/user/:id/followers"
                 element={<OtherUserFollowers />}
