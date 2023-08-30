@@ -119,7 +119,7 @@ const UserPage = () => {
   useEffect(() => {
     const getUserTweet = async () => {
       try {
-        const userTweet = await getUserTweets();
+        const userTweet = await getUserTweets(userId ? parseInt(userId) : null);
         setUserTweets(userTweet);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
@@ -132,7 +132,7 @@ const UserPage = () => {
   useEffect(() => {
     const getUserReply = async () => {
       try {
-        const reply = await getUserReplies();
+        const reply = await getUserReplies(userId ? parseInt(userId) : null);
         setUserReplies(reply);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
@@ -145,7 +145,7 @@ const UserPage = () => {
   useEffect(() => {
     const getUserLike = async () => {
       try {
-        const like = await getUserLikes();
+        const like = await getUserLikes(userId ? parseInt(userId) : null);
         setUserLikes(like);
         console.log(userLikes);
       } catch (error) {

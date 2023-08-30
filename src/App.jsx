@@ -12,9 +12,6 @@ import {
   MainReplyList,
   UserFollowing,
   UserFollowers,
-  OtherUserPage,
-  OtherUserFollowing,
-  OtherUserFollowers,
 } from "../src/pages/index";
 import { AdminLayout, MainLayout } from "./layout/layout";
 import { UserContextProvider } from "./context/UserContext";
