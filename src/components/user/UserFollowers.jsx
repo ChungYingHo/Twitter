@@ -2,14 +2,14 @@ import styled from "styled-components";
 import * as style from "../common/common.styled";
 import { ReactComponent as LeftArrow } from "../../assets/left-arrow.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 import FollowrSubTool from "./FollowSubTool";
 import FollowCard from "./FollowCard";
 // api
 import { checkPermission } from "../../api/Permission";
-import { getUserFollowers } from "../../api/user";
+import { getUserFollowers, getUser } from "../../api/user";
 import { followUser, disFollowUser } from "../../api/popular";
-
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -58,8 +58,9 @@ const StyledLink = styled(Link)`
 
 const UserFollowers = () => {
   const [userFollowers, setUserFollowers] = useState([]);
-
+  const { userData, setUserData } = useContext(UserContext);
   const navigate = useNavigate();
+
   // 驗證 token
   useEffect(() => {
     const checkTokenIsValid = async () => {
@@ -76,6 +77,21 @@ const UserFollowers = () => {
     checkTokenIsValid();
   }, [navigate]);
 
+  // 獲取user資料 (reload後UserContext值會不見，需要重取)
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const datas = await getUser();
+        setUserData(datas);
+      } catch (error) {
+        console.error("[getUserData Failed]", error);
+      }
+    };
+    getUserData();
+  }, [setUserData]);
+
+  console.log("userData", userData);
+
   // 獲取user追隨中
   useEffect(() => {
     const getUserFollower = async () => {
@@ -89,10 +105,15 @@ const UserFollowers = () => {
     getUserFollower();
   }, [userFollowers]);
 
+  console.log("userFollowers", userFollowers);
+
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {
     try {
-      if (userFollowers.find((user) => user.Follower.id === id).Follower.isFollowed) {
+      if (
+        userFollowers.find((user) => user.Follower.id === id).Follower
+          .isFollowed
+      ) {
         await disFollowUser({ followingId: id });
       } else {
         await followUser({ id });
@@ -101,14 +122,20 @@ const UserFollowers = () => {
       setUserFollowers((prevUsersData) =>
         prevUsersData.map((user) =>
           user.Follower.id === id
-            ? { ...user, Follower: { ...user.Follower, isFollowed: !user.Follower.isFollowed } }
+            ? {
+                ...user,
+                Follower: {
+                  ...user.Follower,
+                  isFollowed: !user.Follower.isFollowed,
+                },
+              }
             : user
         )
       );
     } catch (error) {
       console.error("Error occur:", error);
     }
-  }
+  };
 
   return (
     <>
@@ -117,23 +144,23 @@ const UserFollowers = () => {
           <Header>
             <LeftArrow />
             <HeaderTittleWrapper>
-              <h5>Egg Head</h5>
-              <p>25推文</p>
+              <h5>{userData.name}</h5>
+              <p>{userData.tweetsCount} 推文</p>
             </HeaderTittleWrapper>
           </Header>
         </StyledLink>
         <FollowrSubTool activePage="followers" />
         {userFollowers.map((data) => {
           return (
-              <FollowCard
-                key={data.followerId}
-                id={data.Follower.id}
-                name={data.Follower.name}
-                avatar={data.Follower.avatar}
-                introduction={data.Follower.introduction}
-                isFollowed={data.Follower.isFollowed}
-                onClick={() => handleFollow(data.Follower.id)}
-              />
+            <FollowCard
+              key={data.followerId}
+              id={data.Follower.id}
+              name={data.Follower.name}
+              avatar={data.Follower.avatar}
+              introduction={data.Follower.introduction}
+              isFollowed={data.Follower.isFollowed}
+              onClick={() => handleFollow(data.Follower.id)}
+            />
           );
         })}
       </Container>
