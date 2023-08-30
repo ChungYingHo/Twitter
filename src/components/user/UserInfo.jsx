@@ -69,6 +69,7 @@ const IconBorder = styled.button`
 const FollowBtn = styled.button`
   height: 40px;
   border-radius: 50px;
+  background-color: transparent;
   ${({ $isFollowed }) =>
     $isFollowed
       ? `width: 96px;
