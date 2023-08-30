@@ -51,16 +51,29 @@ const ErrorMessage = styled.p`
   margin: 0 0 0 16px;
 `;
 
-const AuthInput = ({ label, type, placeholder, value, onChange, isLarge, maxLength, minLength, error, onClick}) => {
-  const hasError = error && error !== ""
-  
+const AuthInput = ({
+  label,
+  type,
+  placeholder,
+  value,
+  onChange,
+  isLarge,
+  maxLength,
+  minLength,
+  error,
+  onClick,
+}) => {
+  const hasError = error && error !== "";
+
   const [isClicked, setIsClicked] = useState(false);
   const handleClick = () => {
     setIsClicked(true);
-    onClick();
+
+    // 若有使用AuthInput但沒有傳onClick這個prop,就不呼叫onClick()。避免出現error
+    onClick && onClick();
   };
 
-  const truncatedError = error?.substring(6)
+  const truncatedError = error?.substring(6);
   return (
     <>
       <StyledContainer $error={hasError}>
