@@ -12,9 +12,10 @@ import {
   SettingHr,
 } from "../components/common/setting.styled";
 import * as style from "../components/common/common.styled"
-// api
+// api and function
 import { getUser, editUser } from "../api/setting";
 import { useAuthValitate } from "../utils/authValidate";
+import {useErrorContext} from '../context/ErrorContext'
 
 const Container = styled.div`
   padding: 0;
@@ -30,19 +31,23 @@ const SettingPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
+    // error control
+    const {
+      accountError,
+      setAccountError,
+      nameError,
+      setNameError,
+      emailError,
+      setEmailError,
+      passwordError,
+      setPasswordError,
+      checkPasswordError,
+      setCheckPasswordError,
+      handleInputClick,
+      handleError
+    } = useErrorContext();
     // 驗證 token
     useAuthValitate('/login')
-
-    // 錯誤提示控管
-    const [accountError, setAccountError] = useState("")
-    const [nameError, setNameError] = useState("")
-    const [emailError, setEmailError] = useState("")
-    const [passwordError, setPasswordError] = useState("")
-    const [checkPasswordError, setCheckPasswordError] = useState("")
-    const handleInputClick = (errorState) => {
-      errorState('');
-    }
-    
     // 抓取用戶資料
     useEffect(() => {
       const fetchingUser = async () => {
@@ -81,23 +86,7 @@ const SettingPage = () => {
           icon: 'success'
         })
       } catch (error) {
-        if (error.response && error.response.data) {
-          const errorMessage = error.response.data.message;
-          if (errorMessage.includes("account")) {
-            setAccountError(errorMessage);
-          } else if (errorMessage.includes("暱稱")) {
-            setNameError(errorMessage);
-          } else if (errorMessage.includes("email")) {
-            setEmailError(errorMessage);
-          } else if (errorMessage.includes("密碼")) {
-            setPasswordError(errorMessage);
-          } else if (errorMessage.includes("確認密碼")) {
-            setCheckPasswordError(errorMessage);
-          }
-          console.error('[Edit error:', errorMessage);
-        } else {
-          console.error('An error occurred:', error);
-        }
+        handleError(error)
       }
     };
 
@@ -181,7 +170,7 @@ const SettingPage = () => {
             onChange={(checkPasswordInputValue) =>
               setCheckPassword(checkPasswordInputValue)
             }
-            error={passwordError}
+            error={checkPasswordError}
             onClick={() => handleInputClick(setCheckPasswordError)}
             required
           />

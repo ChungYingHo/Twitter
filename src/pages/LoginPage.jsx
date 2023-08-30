@@ -19,6 +19,7 @@ import { login } from "../api/auth";
 import { getUser } from "../api/user";
 import { UserContext } from "../context/UserContext";
 import { useAuthValitate } from "../utils/authValidate";
+import { useErrorContext } from "../context/ErrorContext";
 
 
 
@@ -31,11 +32,14 @@ const LoginPage = () => {
   useAuthValitate('/main')
 
   // error control
-  const [accountError, setAccountError] = useState("")
-  const [passwordError, setPasswordError] = useState("")
-  const handleInputClick = (errorState) => {
-    errorState('');
-  }
+  const {
+      accountError,
+      setAccountError,
+      passwordError,
+      setPasswordError,
+      handleInputClick,
+      handleError
+    } = useErrorContext();
 
   // login action
   const handleClick = async () => {
@@ -69,17 +73,7 @@ const LoginPage = () => {
             navigate("/main");
       }
     } catch (error){
-      if (error.response && error.response.data) {
-          const errorMessage = error.response.data.message;
-          if (errorMessage.includes("帳號")) {
-            setAccountError(errorMessage);
-          }else if (errorMessage.includes("密碼")) {
-            setPasswordError(errorMessage);
-          }
-          console.error('[Login error:', errorMessage);
-        } else {
-          console.error('An error occurred:', error);
-        }
+      handleError(error)
     }
   };
 

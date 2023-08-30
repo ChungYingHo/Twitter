@@ -16,6 +16,7 @@ import { Toast } from "../components/common/common.styled";
 // api and function
 import { adminLogin } from "../api/admin";
 import { useAdminAuthValitate } from "../utils/authValidate";
+import { useErrorContext } from "../context/ErrorContext";
 
 const AdminLoginPage = () => {
   const [account, setAccount] = useState("");
@@ -27,11 +28,14 @@ const AdminLoginPage = () => {
   useAdminAuthValitate('/admin_tweets')
 
   // error control
-  const [accountError, setAccountError] = useState("")
-  const [passwordError, setPasswordError] = useState("")
-  const handleInputClick = (errorState) => {
-    errorState('');
-  }
+  const {
+      accountError,
+      setAccountError,
+      passwordError,
+      setPasswordError,
+      handleInputClick,
+      handleError
+    } = useErrorContext();
   
   const handleClick = async () => {
     if (account.length === 0 || password.length === 0) {
@@ -55,17 +59,7 @@ const AdminLoginPage = () => {
         navigate("/admin_tweets");
       }
     } catch (error){
-      if (error.response && error.response.data) {
-        const errorMessage = error.response.data.message;
-        if (errorMessage.includes("帳號")) {
-          setAccountError(errorMessage);
-        }else if (errorMessage.includes("密碼")) {
-          setPasswordError(errorMessage);
-        }
-        console.error('[Login error:', errorMessage);
-      } else {
-        console.error('An error occurred:', error);
-      }
+      handleError(error)
     }
   };
 

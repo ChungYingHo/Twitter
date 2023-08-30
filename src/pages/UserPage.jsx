@@ -1,6 +1,6 @@
 // package
 import styled from "styled-components";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 // component and style
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";

@@ -15,6 +15,7 @@ import { Toast } from "../components/common/common.styled";
 // api and function
 import { register } from "../api/auth";
 import { useAuthValitate } from "../utils/authValidate";
+import { useErrorContext } from "../context/ErrorContext";
 
 const RegisterPage = () => {
   const [account, setAccount] = useState("");
@@ -27,14 +28,20 @@ const RegisterPage = () => {
   useAuthValitate('/main')
 
   // error control
-  const [accountError, setAccountError] = useState("")
-  const [nameError, setNameError] = useState("")
-  const [emailError, setEmailError] = useState("")
-  const [passwordError, setPasswordError] = useState("")
-  const [checkPasswordError, setCheckPasswordError] = useState("")
-  const handleInputClick = (errorState) => {
-    errorState('');
-  }
+  const {
+      accountError,
+      setAccountError,
+      nameError,
+      setNameError,
+      emailError,
+      setEmailError,
+      passwordError,
+      setPasswordError,
+      checkPasswordError,
+      setCheckPasswordError,
+      handleInputClick,
+      handleError
+    } = useErrorContext();
 
   const handleClick = async () => {
     if (
@@ -66,23 +73,7 @@ const RegisterPage = () => {
           navigate("/login");
       }
     } catch (error){
-        if (error.response && error.response.data) {
-          const errorMessage = error.response.data.message;
-          if (errorMessage.includes("account")) {
-            setAccountError(errorMessage);
-          } else if (errorMessage.includes("暱稱")) {
-            setNameError(errorMessage);
-          } else if (errorMessage.includes("email")) {
-            setEmailError(errorMessage);
-          } else if (errorMessage.includes("密碼")) {
-            setPasswordError(errorMessage);
-          } else if (errorMessage.includes("確認密碼")) {
-            setCheckPasswordError(errorMessage);
-          }
-          console.error('[Edit error:', errorMessage);
-        } else {
-          console.error('An error occurred:', error);
-        }
+        handleError(error)
     }
   };
 
