@@ -76,9 +76,7 @@ const SettingPage = () => {
       if (
         account.trim().length === 0 ||
         name.trim().length === 0 ||
-        email.trim().length === 0 ||
-        password.trim().length === 0 ||
-        checkPassword.trim().length === 0
+        email.trim().length === 0
       ) {
         console.log(`warning`)
         style.Toast.fire({
