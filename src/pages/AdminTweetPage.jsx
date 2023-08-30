@@ -1,11 +1,12 @@
+// package
 import styled from 'styled-components'
 import { useState, useEffect } from 'react'
-import { useNavigate } from "react-router-dom";
+// component and style
 import AdminPostCard from '../components/admin/AdminPostCard'
 import * as style from '../components/common/common.styled'
-// api
+// api and function
 import { adminGetTweets, adminDeleteTweet } from '../api/admin'
-import { checkAdminPermission } from '../api/Permission'
+import { useAdminAuthValitate } from '../utils/authValidate';
 
 const Container = styled.div`
   width: 83%;
@@ -36,21 +37,8 @@ const CardContainer = styled.div`
 
 export default function AdminTweetPage(){
     const [posts, setPosts] = useState([])
-    const navigate = useNavigate()
     // 驗證 token
-    useEffect(() => {
-      const checkTokenIsValid = async () => {
-        const authToken = localStorage.getItem('AdminToken');
-        if (!authToken) {
-          navigate('/admin_login');
-        }
-        const result = await checkAdminPermission(authToken);
-        if (!result) {
-          navigate('/admin_login');
-        }
-      }
-      checkTokenIsValid();
-    }, [navigate])
+    useAdminAuthValitate('/admin_login')
     // 取得所有貼文
     useEffect(() => {
     const fetchTweets = async () => {

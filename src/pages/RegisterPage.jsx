@@ -1,3 +1,7 @@
+// package
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+// component and style
 import {
   AuthContainer,
   AuthInputContainer,
@@ -7,12 +11,11 @@ import {
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { Toast } from "../components/common/common.styled";
-// api
-import { checkPermission } from "../api/Permission";
+// api and function
 import { register } from "../api/auth";
+import { useAuthValitate } from "../utils/authValidate";
+import { useErrorContext } from "../context/ErrorContext";
 
 const RegisterPage = () => {
   const [account, setAccount] = useState("");
@@ -20,18 +23,27 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
-
   const navigate = useNavigate();
+  // token validate
+  useAuthValitate('/main')
 
   // error control
-  const [accountError, setAccountError] = useState("")
-  const [nameError, setNameError] = useState("")
-  const [emailError, setEmailError] = useState("")
-  const [passwordError, setPasswordError] = useState("")
-  const [checkPasswordError, setCheckPasswordError] = useState("")
-  const handleInputClick = (errorState) => {
-    errorState('');
-  }
+  const {
+      accountError,
+      setAccountError,
+      nameError,
+      setNameError,
+      emailError,
+      setEmailError,
+      passwordError,
+      setPasswordError,
+      checkPasswordError,
+      setCheckPasswordError,
+      handleInputClick,
+      handleError,
+      useResetErrorsEffect
+    } = useErrorContext();
+  useResetErrorsEffect()
 
   const handleClick = async () => {
     if (
@@ -63,40 +75,9 @@ const RegisterPage = () => {
           navigate("/login");
       }
     } catch (error){
-        if (error.response && error.response.data) {
-          const errorMessage = error.response.data.message;
-          if (errorMessage.includes("account")) {
-            setAccountError(errorMessage);
-          } else if (errorMessage.includes("暱稱")) {
-            setNameError(errorMessage);
-          } else if (errorMessage.includes("email")) {
-            setEmailError(errorMessage);
-          } else if (errorMessage.includes("密碼")) {
-            setPasswordError(errorMessage);
-          } else if (errorMessage.includes("確認密碼")) {
-            setCheckPasswordError(errorMessage);
-          }
-          console.error('[Edit error:', errorMessage);
-        } else {
-          console.error('An error occurred:', error);
-        }
+        handleError(error)
     }
   };
-
-  useEffect(() => {
-    const checkTokenIsValid = async () => {
-      const authToken = localStorage.getItem('UserToken');
-      if (!authToken) {
-        return;
-      }
-      const result = await checkPermission(authToken);
-      if (result) {
-        navigate('/main');
-      }
-    };
-
-    checkTokenIsValid();
-  }, [navigate])
 
   return (
     <AuthContainer>
@@ -177,7 +158,7 @@ const RegisterPage = () => {
           onChange={(checkPasswordInputValue) =>
             setCheckPassword(checkPasswordInputValue)
           }
-          error={passwordError}
+          error={checkPasswordError}
           onClick={() => handleInputClick(setCheckPasswordError)}
           required
         />

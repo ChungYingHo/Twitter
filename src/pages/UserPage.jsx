@@ -1,21 +1,25 @@
-import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
-import { Link, useNavigate, useParams } from "react-router-dom";
+
+// package
+import styled from "styled-components";
+import { Link, useParams } from "react-router-dom";
+
 import { useState, useEffect, useContext } from "react";
+// component and style
+import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
 import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
 import PostCard from "../components/main/PostCard";
-import styled from "styled-components";
 import * as style from "../components/common/common.styled";
 import ReplyCard from "../components/reply/ReplyCard";
-import { UserContext } from "../context/UserContext";
-// api
-import { checkPermission } from "../api/Permission";
+// api and function
+import { useAuthValitate } from "../utils/authValidate";
 import {
   getUserTweets,
   getUserReplies,
   getUserLikes,
   getUser,
 } from "../api/user";
+import { UserContext } from "../context/UserContext";
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -84,24 +88,12 @@ const UserPage = () => {
   const [userTweets, setUserTweets] = useState([]);
   const [userReplies, setUserReplies] = useState([]);
   const [userLikes, setUserLikes] = useState([]);
-  const { userData, setUserData } = useContext(UserContext);
-  const navigate = useNavigate();
-  // 驗證 token
-  useEffect(() => {
-    const checkTokenIsValid = async () => {
-      const authToken = localStorage.getItem("UserToken");
-      if (!authToken) {
-        navigate("/login");
-      }
-      const result = await checkPermission(authToken);
-      if (!result) {
-        navigate("/login");
-      }
-    };
 
-    checkTokenIsValid();
-    setUserData([]);
-  }, [navigate, setUserData]);
+  const { userData, setUserData } = useContext(UserContext)
+
+  // 驗證 token
+  useAuthValitate('/login')
+
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
   useEffect(() => {

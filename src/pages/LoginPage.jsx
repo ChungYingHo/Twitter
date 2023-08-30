@@ -1,3 +1,7 @@
+// package
+import { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+// component and style
 import {
   AuthContainer,
   AuthInputContainer,
@@ -5,21 +9,17 @@ import {
   AuthLinkText,
   AuthLinkWrapper,
   AuthTittle,
-  AuthSpan,
-  InputLength,
-  WarnMsg,
+  AuthSpan
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
-import { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-// api
-import { checkPermission } from "../api/Permission";
+import { Toast } from "../components/common/common.styled";
+// api and function
 import { login } from "../api/auth";
 import { getUser } from "../api/user";
-import clsx from "clsx";
 import { UserContext } from "../context/UserContext";
-import { Toast } from "../components/common/common.styled";
+import { useLoginAuthValitate } from "../utils/authValidate";
+import { useErrorContext } from "../context/ErrorContext";
 
 
 
@@ -27,15 +27,21 @@ const LoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
   const { setUserData } = useContext(UserContext);
-
   const navigate = useNavigate();
+  // 驗證 token
+  useLoginAuthValitate('/main')
 
   // error control
-  const [accountError, setAccountError] = useState("")
-  const [passwordError, setPasswordError] = useState("")
-  const handleInputClick = (errorState) => {
-    errorState('');
-  }
+  const {
+      accountError,
+      setAccountError,
+      passwordError,
+      setPasswordError,
+      handleInputClick,
+      handleError,
+      useResetErrorsEffect
+    } = useErrorContext();
+  useResetErrorsEffect()
 
   // login action
   const handleClick = async () => {
@@ -69,35 +75,9 @@ const LoginPage = () => {
             navigate("/main");
       }
     } catch (error){
-      if (error.response && error.response.data) {
-          const errorMessage = error.response.data.message;
-          if (errorMessage.includes("帳號")) {
-            setAccountError(errorMessage);
-          }else if (errorMessage.includes("密碼")) {
-            setPasswordError(errorMessage);
-          }
-          console.error('[Login error:', errorMessage);
-        } else {
-          console.error('An error occurred:', error);
-        }
+      handleError(error)
     }
   };
-
-  // 驗證 token
-  useEffect(() => {
-    const checkTokenIsValid = async () => {
-      const authToken = localStorage.getItem("UserToken");
-      if (!authToken) {
-        return;
-      }
-      const result = await checkPermission(authToken);
-      if (result) {
-        navigate("/main");
-      }
-    };
-
-    checkTokenIsValid();
-  }, [navigate]);
 
   return (
     <AuthContainer>
@@ -105,9 +85,7 @@ const LoginPage = () => {
         <Logo />
       </div>
       <AuthTittle>登入Alphitter</AuthTittle>
-      <AuthInputContainer
-        className={clsx("", { redLine: account.length > 30 })}
-      >
+      <AuthInputContainer>
         <AuthInput
           label={"帳號"}
           maxLength={30}
@@ -120,9 +98,7 @@ const LoginPage = () => {
         />
       </AuthInputContainer>
 
-      <AuthInputContainer
-        className={clsx("", { redLine: password.length > 20 })}
-      >
+      <AuthInputContainer>
         <AuthInput
           label={"密碼"}
           type={'password'}

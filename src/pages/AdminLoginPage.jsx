@@ -1,3 +1,7 @@
+// package
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+// component and style
 import {
   AuthContainer,
   AuthInputContainer,
@@ -8,12 +12,11 @@ import {
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { Toast } from "../components/common/common.styled";
-// api
+// api and function
 import { adminLogin } from "../api/admin";
-import { checkAdminPermission } from "../api/Permission";
+import { useAdminLoginAuthValitate } from "../utils/authValidate";
+import { useErrorContext } from "../context/ErrorContext";
 
 const AdminLoginPage = () => {
   const [account, setAccount] = useState("");
@@ -22,27 +25,19 @@ const AdminLoginPage = () => {
 
   const navigate = useNavigate()
   // 驗證 token
-  useEffect(() => {
-    const checkTokenIsValid = async () => {
-      const authToken = localStorage.getItem('AdminToken');
-      if (!authToken) {
-        return;
-      }
-      const result = await checkAdminPermission(authToken);
-      if (result) {
-        navigate('/admin_tweets');
-      }
-    };
-
-    checkTokenIsValid();
-  }, [navigate])
+  useAdminLoginAuthValitate('/admin_tweets')
 
   // error control
-  const [accountError, setAccountError] = useState("")
-  const [passwordError, setPasswordError] = useState("")
-  const handleInputClick = (errorState) => {
-    errorState('');
-  }
+  const {
+      accountError,
+      setAccountError,
+      passwordError,
+      setPasswordError,
+      handleInputClick,
+      handleError,
+      useResetErrorsEffect
+    } = useErrorContext();
+  useResetErrorsEffect()
   
   const handleClick = async () => {
     if (account.length === 0 || password.length === 0) {
@@ -66,17 +61,7 @@ const AdminLoginPage = () => {
         navigate("/admin_tweets");
       }
     } catch (error){
-      if (error.response && error.response.data) {
-        const errorMessage = error.response.data.message;
-        if (errorMessage.includes("帳號")) {
-          setAccountError(errorMessage);
-        }else if (errorMessage.includes("密碼")) {
-          setPasswordError(errorMessage);
-        }
-        console.error('[Login error:', errorMessage);
-      } else {
-        console.error('An error occurred:', error);
-      }
+      handleError(error)
     }
   };
 
