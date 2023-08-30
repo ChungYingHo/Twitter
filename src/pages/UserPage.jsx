@@ -101,7 +101,7 @@ const UserPage = () => {
 
     checkTokenIsValid();
     setUserData([]);
-  }, [navigate]);
+  }, [navigate, setUserData]);
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
   useEffect(() => {
@@ -114,7 +114,7 @@ const UserPage = () => {
       }
     };
     getUserData();
-  }, [setUserData]);
+  }, [setUserData, userId]);
 
   // 獲取user推文
   useEffect(() => {
@@ -127,7 +127,7 @@ const UserPage = () => {
       }
     };
     getUserTweet();
-  }, [setUserTweets]);
+  }, [setUserTweets, userId]);
 
   // 獲取user回覆
   useEffect(() => {
@@ -140,7 +140,7 @@ const UserPage = () => {
       }
     };
     getUserReply();
-  }, [setUserReplies]);
+  }, [setUserReplies, userId]);
 
   // 獲取user喜歡貼文
   useEffect(() => {
@@ -148,13 +148,12 @@ const UserPage = () => {
       try {
         const like = await getUserLikes(userId ? parseInt(userId) : null);
         setUserLikes(like);
-        console.log(userLikes);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
     };
     getUserLike();
-  }, [setUserLikes]);
+  }, [setUserLikes, userId]);
 
   return userData ? (
     <>
