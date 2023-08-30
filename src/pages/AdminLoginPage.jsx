@@ -15,7 +15,7 @@ import AuthInput from "../components/AuthInput";
 import { Toast } from "../components/common/common.styled";
 // api and function
 import { adminLogin } from "../api/admin";
-import { useAdminAuthValitate } from "../utils/authValidate";
+import { useAdminLoginAuthValitate } from "../utils/authValidate";
 import { useErrorContext } from "../context/ErrorContext";
 
 const AdminLoginPage = () => {
@@ -25,7 +25,7 @@ const AdminLoginPage = () => {
 
   const navigate = useNavigate()
   // 驗證 token
-  useAdminAuthValitate('/admin_tweets')
+  useAdminLoginAuthValitate('/admin_tweets')
 
   // error control
   const {

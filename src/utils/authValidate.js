@@ -8,11 +8,7 @@ const useAuthValitate = (redirectTo)=>{
         const checkTokenIsValid = async () => {
         const authToken = localStorage.getItem('UserToken');
         if (!authToken) {
-            if(redirectTo === '/main'){
-                return
-            }else{
-                navigate(redirectTo);
-            }
+            navigate(redirectTo)
         }
         const result = await checkPermission(authToken);
         if (!result) {
@@ -44,6 +40,40 @@ const useAdminAuthValitate = (redirectTo)=>{
     }, [navigate])
 }
 
+// 登入用
+const useLoginAuthValitate = (redirectTo)=>{
+    const navigate = useNavigate()
+    useEffect(() => {
+        const checkTokenIsValid = async () => {
+        const authToken = localStorage.getItem('UserToken');
+        if (!authToken) {
+            return
+        }
+        const result = await checkPermission(authToken);
+        if (result) {
+            navigate(redirectTo);
+        }
+        };
+        checkTokenIsValid();
+    }, [navigate])
+}
+
+const useAdminLoginAuthValitate = (redirectTo)=>{
+    const navigate = useNavigate()
+    useEffect(() => {
+        const checkTokenIsValid = async () => {
+        const authToken = localStorage.getItem('AdminToken');
+        if (!authToken) {
+            return
+        }
+        const result = await checkAdminPermission(authToken);
+        if (result) {
+            navigate(redirectTo);
+        }
+        };
+        checkTokenIsValid();
+    }, [navigate])
+}
 
 
-export {useAuthValitate, useAdminAuthValitate}
+export {useAuthValitate, useAdminAuthValitate, useLoginAuthValitate, useAdminLoginAuthValitate}

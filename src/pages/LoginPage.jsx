@@ -18,7 +18,7 @@ import { Toast } from "../components/common/common.styled";
 import { login } from "../api/auth";
 import { getUser } from "../api/user";
 import { UserContext } from "../context/UserContext";
-import { useAuthValitate } from "../utils/authValidate";
+import { useLoginAuthValitate } from "../utils/authValidate";
 import { useErrorContext } from "../context/ErrorContext";
 
 
@@ -29,7 +29,7 @@ const LoginPage = () => {
   const { setUserData } = useContext(UserContext);
   const navigate = useNavigate();
   // 驗證 token
-  useAuthValitate('/main')
+  useLoginAuthValitate('/main')
 
   // error control
   const {
