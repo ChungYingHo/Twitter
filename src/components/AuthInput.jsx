@@ -53,13 +53,14 @@ const ErrorMessage = styled.p`
 
 const AuthInput = ({ label, type, placeholder, value, onChange, isLarge, maxLength, minLength, error, onClick}) => {
   const hasError = error && error !== ""
-
-
+  
   const [isClicked, setIsClicked] = useState(false);
   const handleClick = () => {
     setIsClicked(true);
     onClick();
   };
+
+  const truncatedError = error?.substring(6)
   return (
     <>
       <StyledContainer $error={hasError}>
@@ -85,7 +86,7 @@ const AuthInput = ({ label, type, placeholder, value, onChange, isLarge, maxLeng
           />
         )}
       </StyledContainer>
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {error && <ErrorMessage>{truncatedError}</ErrorMessage>}
     </>
   );
 };
