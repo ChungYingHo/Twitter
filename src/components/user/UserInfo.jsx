@@ -4,7 +4,10 @@ import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import PopupModal from "../PopupModal";
 import { UserContext } from "../../context/UserContext";
-import { editUser } from "../../api/user";
+import { editUser, getUser } from "../../api/user";
+import { ReactComponent as MailIcon } from "../../assets/mail.svg";
+import { ReactComponent as BellIcon } from "../../assets/bell.svg";
+import { followUser, disFollowUser } from "../../api/popular";
 
 const UserMainContainer = styled.div`
   width: 100%;
@@ -41,6 +44,43 @@ const UserEditBtn = styled.button`
   font-size: 14px;
   position: relative;
   top: 85px;
+`;
+
+const BtnWrapper = styled.div`
+  width: 208px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  top: 36px;
+`;
+
+const IconBorder = styled.button`
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ff6600;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+`;
+
+const FollowBtn = styled.button`
+  height: 40px;
+  border-radius: 50px;
+  ${({ $isFollowed }) =>
+    $isFollowed
+      ? `width: 96px;
+             background-color: #ff6600;
+             border: #ff6600 solid 1px;
+             color: #ffffff;`
+      : `width: 64px;
+             background-color: #ffffff;
+             border: #ff6600 solid 1px;
+             color: #ff6600;`}
+  &:active {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) inset;
+  }
 `;
 
 const UserPic = styled.img`
@@ -129,7 +169,7 @@ const StyledMsg = styled.p`
   top: 8px;
 `;
 
-const UserInfo = () => {
+const UserInfo = ({ userId, isFollowed }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState();
   const [introduction, setIntro] = useState();
@@ -198,6 +238,26 @@ const UserInfo = () => {
     }
   };
 
+  const handleFollow = async (userId) => {
+    console.log("userId in handleFollow", userId);
+
+    try {
+      if (isFollowed) {
+        await disFollowUser({ followingId: userId });
+        const updatedData = await getUser(userId);
+        setUserData(updatedData);
+      } else {
+        await followUser(userId);
+        const updatedData = await getUser(userId);
+        setUserData(updatedData);
+        console.log("data of followUser", userData);
+      }
+    } catch (error) {
+      console.error("Error occur:", error);
+      console.log("userId in handleFollow", userId);
+    }
+  };
+
   return (
     <UserMainContainer>
       <UserBanner src={userData.banner} />
@@ -205,7 +265,24 @@ const UserInfo = () => {
       <UserInfoWrapper>
         <UserPicBtnWrapper>
           <UserPic src={userData.avatar} />
-          <UserEditBtn onClick={openNewPost}>編輯個人資料</UserEditBtn>
+          {userId >= 0 ? (
+            <BtnWrapper>
+              <IconBorder>
+                <MailIcon />
+              </IconBorder>
+              <IconBorder>
+                <BellIcon />
+              </IconBorder>
+              <FollowBtn
+                $isFollowed={isFollowed}
+                onClick={() => handleFollow(userId)}
+              >
+                {isFollowed ? "正在跟隨" : "跟隨"}
+              </FollowBtn>
+            </BtnWrapper>
+          ) : (
+            <UserEditBtn onClick={openNewPost}>編輯個人資料</UserEditBtn>
+          )}
         </UserPicBtnWrapper>
 
         <PopupModal

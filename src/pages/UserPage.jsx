@@ -169,6 +169,7 @@ const UserPage = () => {
           </UserTittleWrapper>
         </StyledLink>
         <UserInfo
+          userId={userId}
           name={userData.name}
           account={userData.account}
           introduction={userData.introduction}
@@ -176,6 +177,7 @@ const UserPage = () => {
           followingsCount={userData.followingsCount}
           avatar={userData.avatar}
           banner={userData.banner}
+          isFollowed={userData.isFollowed}
         />
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
         {userTweets && userLikes && userReplies && (

@@ -31,10 +31,10 @@ export const getPopUsers = async () => {
 };
 
 // 跟隨
-export const followUser = async ({ id }) => {
+export const followUser = async (userId) => {
   try {
     const res = await axiosInstance.post(`${apiURL}/followships`, {
-      id,
+      userId,
     });
     return res.data;
   } catch (error) {
