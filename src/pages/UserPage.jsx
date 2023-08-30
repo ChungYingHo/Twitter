@@ -100,6 +100,7 @@ const UserPage = () => {
     };
 
     checkTokenIsValid();
+    setUserData([]);
   }, [navigate]);
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
