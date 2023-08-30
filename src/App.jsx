@@ -36,7 +36,6 @@ function App() {
               <Route path="/user/followers" element={<UserFollowers />}></Route>
               <Route path="/user/following" element={<UserFollowing />}></Route>
               <Route path="/user/:id" element={<UserPage />}></Route>
-              <Route path="/user/:id/noti" element={<UserPage />}></Route>
               <Route
                 path="/user/:id/followers"
                 element={<UserFollowers />}

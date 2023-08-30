@@ -92,8 +92,6 @@ const UserFollowers = () => {
     getUserData();
   }, [setUserData]);
 
-  console.log("userData", userData);
-
   // 獲取user追隨中
   useEffect(() => {
     const getUserFollower = async () => {
@@ -108,8 +106,6 @@ const UserFollowers = () => {
     };
     getUserFollower();
   }, [userFollowers]);
-
-  console.log("userFollowers", userFollowers);
 
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {

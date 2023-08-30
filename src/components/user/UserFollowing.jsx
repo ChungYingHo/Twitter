@@ -100,15 +100,12 @@ const UserFollowing = () => {
           userId ? parseInt(userId) : null
         );
         setUserFollowings(following);
-        console.log("Get UserFollowing", following);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
     };
     getUserFollowing();
   }, [userFollowings]);
-
-  console.log("userFollowings", userFollowings);
 
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {

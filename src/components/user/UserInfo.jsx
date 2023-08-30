@@ -7,6 +7,7 @@ import { UserContext } from "../../context/UserContext";
 import { editUser, getUser } from "../../api/user";
 import { ReactComponent as MailIcon } from "../../assets/mail.svg";
 import { ReactComponent as BellIcon } from "../../assets/bell.svg";
+import { ReactComponent as NotiBellIcon } from "../../assets/bell_noti.svg";
 import { followUser, disFollowUser } from "../../api/popular";
 
 const UserMainContainer = styled.div`
@@ -53,17 +54,6 @@ const BtnWrapper = styled.div`
   justify-content: space-between;
   position: relative;
   top: 86px;
-`;
-
-const IconBorder = styled.button`
-  width: 40px;
-  height: 40px;
-  border: 1px solid #ff6600;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent;
 `;
 
 const FollowBtn = styled.button`
@@ -180,6 +170,7 @@ const UserInfo = ({ userId, isFollowed }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const { userData, setUserData } = useContext(UserContext);
+  const [isNoti, setIsNoti] = useState(false);
 
   const openNewPost = () => {
     setIsModalOpen(true);
@@ -260,6 +251,14 @@ const UserInfo = ({ userId, isFollowed }) => {
     }
   };
 
+  const handleNotiClick = () => {
+    if (isNoti === false) {
+      setIsNoti(true);
+    } else {
+      setIsNoti(false);
+    }
+  };
+
   return (
     <UserMainContainer>
       <UserBanner src={userData.banner} />
@@ -269,12 +268,12 @@ const UserInfo = ({ userId, isFollowed }) => {
           <UserPic src={userData.avatar} />
           {userId >= 0 ? (
             <BtnWrapper>
-              <IconBorder>
-                <MailIcon />
-              </IconBorder>
-              <IconBorder>
-                <BellIcon />
-              </IconBorder>
+              <MailIcon />
+
+              <div onClick={handleNotiClick}>
+                {isNoti ? <NotiBellIcon /> : <BellIcon />}
+              </div>
+
               <FollowBtn
                 $isFollowed={isFollowed}
                 onClick={() => handleFollow(userId)}
