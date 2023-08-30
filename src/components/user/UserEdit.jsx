@@ -187,7 +187,7 @@ const UserEdit = ({
             value={userData.name}
             placeholder={userData.name}
             onChange={handleChangeName}
-            maxLength={20}
+            maxLength={50}
           />
         </NameInputContainer>
 

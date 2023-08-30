@@ -33,7 +33,6 @@ const StyledInput = styled.input`
 `;
 
 const StyledTextarea = styled.textarea`
-  outline: black solid 2px;
   width: calc(100% - 32px);
   margin: 0 0 0 16px;
   border: none;
@@ -42,6 +41,9 @@ const StyledTextarea = styled.textarea`
   resize: none;
   line-height: 26px;
   font-size: 16px;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const ErrorMessage = styled.p`
@@ -51,16 +53,29 @@ const ErrorMessage = styled.p`
   margin: 0 0 0 16px;
 `;
 
-const AuthInput = ({ label, type, placeholder, value, onChange, isLarge, maxLength, minLength, error, onClick}) => {
-  const hasError = error && error !== ""
-  
+const AuthInput = ({
+  label,
+  type,
+  placeholder,
+  value,
+  onChange,
+  isLarge,
+  maxLength,
+  minLength,
+  error,
+  onClick,
+}) => {
+  const hasError = error && error !== "";
+
   const [isClicked, setIsClicked] = useState(false);
   const handleClick = () => {
     setIsClicked(true);
-    onClick();
+
+    // 若有使用AuthInput但沒有傳onClick這個prop,就不呼叫onClick()。避免出現error
+    onClick && onClick();
   };
 
-  const truncatedError = error?.substring(6)
+  const truncatedError = error?.substring(6);
   return (
     <>
       <StyledContainer $error={hasError}>

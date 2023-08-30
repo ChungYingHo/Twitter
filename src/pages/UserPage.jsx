@@ -1,6 +1,6 @@
 // package
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 // component and style
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
@@ -81,6 +81,7 @@ const ReplyCardWrapper = styled.div`
   padding-bottom: 16px;
 `;
 const UserPage = () => {
+  const { id: userId } = useParams();
   const [activePage, setActivePage] = useState("post");
   const [userTweets, setUserTweets] = useState([]);
   const [userReplies, setUserReplies] = useState([]);
@@ -94,54 +95,53 @@ const UserPage = () => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const datas = await getUser();
+        const datas = await getUser(userId ? parseInt(userId) : null);
         setUserData(datas);
       } catch (error) {
         console.error("[getUserData Failed]", error);
       }
     };
     getUserData();
-  }, [setUserData]);
+  }, [setUserData, userId]);
 
   // 獲取user推文
   useEffect(() => {
     const getUserTweet = async () => {
       try {
-        const userTweet = await getUserTweets();
+        const userTweet = await getUserTweets(userId ? parseInt(userId) : null);
         setUserTweets(userTweet);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
     };
     getUserTweet();
-  }, [setUserTweets]);
+  }, [setUserTweets, userId]);
 
   // 獲取user回覆
   useEffect(() => {
     const getUserReply = async () => {
       try {
-        const reply = await getUserReplies();
+        const reply = await getUserReplies(userId ? parseInt(userId) : null);
         setUserReplies(reply);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
     };
     getUserReply();
-  }, [setUserReplies]);
+  }, [setUserReplies, userId]);
 
   // 獲取user喜歡貼文
   useEffect(() => {
     const getUserLike = async () => {
       try {
-        const like = await getUserLikes();
+        const like = await getUserLikes(userId ? parseInt(userId) : null);
         setUserLikes(like);
-        console.log(userLikes);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
     };
     getUserLike();
-  }, [setUserLikes]);
+  }, [setUserLikes, userId]);
 
   return userData ? (
     <>
@@ -155,15 +155,7 @@ const UserPage = () => {
             </UserNameWrapper>
           </UserTittleWrapper>
         </StyledLink>
-        <UserInfo
-          name={userData.name}
-          account={userData.account}
-          introduction={userData.introduction}
-          followersCount={userData.followersCount}
-          followingsCount={userData.followingsCount}
-          avatar={userData.avatar}
-          banner={userData.banner}
-        />
+        <UserInfo />
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
         {userTweets && userLikes && userReplies && (
           <SwitchZoneContainer>
@@ -212,6 +204,7 @@ const UserPage = () => {
                       timestamp={like.Tweet.createdAt}
                       reply={like.Tweet.repliesCount}
                       like={like.Tweet.likesCount}
+                      isLike={true}
                     />
                   </PostCardWrapper>
                 );

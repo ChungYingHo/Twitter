@@ -20,13 +20,13 @@ axiosInstance.interceptors.request.use(
 );
 
 // get user data
-export const getUser = async () => {
+export const getUser = async (userId) => {
   try {
-    const userId = localStorage.getItem("userID");
-    if (!userId) {
+    const userIdRequest = userId || localStorage.getItem("userID");
+    if (!userIdRequest) {
       throw Error("no user ID");
     }
-    const res = await axiosInstance.get(`${apiURL}/users/${userId}`);
+    const res = await axiosInstance.get(`${apiURL}/users/${userIdRequest}`);
     return res.data;
   } catch (error) {
     console.error("[Get User failed]: ", error);
@@ -64,11 +64,13 @@ export const editUser = async ({ name, introduction, banner, avatar }) => {
 };
 
 //  獲取user推文
-export const getUserTweets = async () => {
+export const getUserTweets = async (userId) => {
   try {
-    const userId = localStorage.getItem("userID");
+    const userIdRequest = userId || localStorage.getItem("userID");
 
-    const res = await axiosInstance.get(`${apiURL}/users/${userId}/tweets`);
+    const res = await axiosInstance.get(
+      `${apiURL}/users/${userIdRequest}/tweets`
+    );
     return res.data;
   } catch (error) {
     console.error("[Get UserTweets failed]: ", error);
@@ -76,12 +78,12 @@ export const getUserTweets = async () => {
 };
 
 // 獲取user回覆
-export const getUserReplies = async () => {
+export const getUserReplies = async (userId) => {
   try {
-    const userId = localStorage.getItem("userID");
+    const userIdRequest = userId || localStorage.getItem("userID");
 
     const res = await axiosInstance.get(
-      `${apiURL}/users/${userId}/replied_tweets`
+      `${apiURL}/users/${userIdRequest}/replied_tweets`
     );
     return res.data;
   } catch (error) {
@@ -90,11 +92,13 @@ export const getUserReplies = async () => {
 };
 
 // 獲取user喜歡貼文
-export const getUserLikes = async () => {
+export const getUserLikes = async (userId) => {
   try {
-    const userId = localStorage.getItem("userID");
+    const userIdRequest = userId || localStorage.getItem("userID");
 
-    const res = await axiosInstance.get(`${apiURL}/users/${userId}/likes`);
+    const res = await axiosInstance.get(
+      `${apiURL}/users/${userIdRequest}/likes`
+    );
     return res.data;
   } catch (error) {
     console.error("[Get UserLikes failed]: ", error);
@@ -102,11 +106,13 @@ export const getUserLikes = async () => {
 };
 
 // 獲取user正在追蹤
-export const getUserFollowings = async () => {
+export const getUserFollowings = async (userId) => {
   try {
-    const userId = localStorage.getItem("userID");
+    const userIdRequest = userId || localStorage.getItem("userID");
 
-    const res = await axiosInstance.get(`${apiURL}/users/${userId}/followings`);
+    const res = await axiosInstance.get(
+      `${apiURL}/users/${userIdRequest}/followings`
+    );
     return res.data;
   } catch (error) {
     console.error("[Get Userfollowings failed]: ", error);
@@ -114,11 +120,13 @@ export const getUserFollowings = async () => {
 };
 
 // 獲取user的追隨者
-export const getUserFollowers = async () => {
+export const getUserFollowers = async (userId) => {
   try {
-    const userId = localStorage.getItem("userID");
+    const userIdRequest = userId || localStorage.getItem("userID");
 
-    const res = await axiosInstance.get(`${apiURL}/users/${userId}/followers`);
+    const res = await axiosInstance.get(
+      `${apiURL}/users/${userIdRequest}/followers`
+    );
     return res.data;
   } catch (error) {
     console.error("[Get UserFollowerss failed]: ", error);
