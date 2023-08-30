@@ -86,7 +86,7 @@ const FooterContainer = styled.div`
 `;
 
 export default function Toolbar() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { openNewPost } = usePopup();
 
   // 監控正在哪條路由下
@@ -103,15 +103,15 @@ export default function Toolbar() {
   };
   const [activePage, setActivePage] = useState(
     getActivePage(location.pathname)
-  )
-  
+  );
+
   // 登出功能
   const handleClick = () => {
     console.log(localStorage);
     localStorage.removeItem("UserToken");
     localStorage.removeItem("userID");
     navigate("/login");
-  }
+  };
 
   // 發文跳轉功能
   const handlePost = () => {
