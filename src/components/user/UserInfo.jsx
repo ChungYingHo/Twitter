@@ -318,14 +318,14 @@ const UserInfo = ({ userId, isFollowed }) => {
           <UserIntroduction>{userData.introduction}</UserIntroduction>
 
           <UserFollowWrapper>
-            <StyledLink to="/user/following">
+            <StyledLink to={`/user/${userId}/following`}>
               <UserFollowbox>
                 <UserFollowNum>{userData.followingsCount}個</UserFollowNum>
                 <UserFollowTittle>跟隨中</UserFollowTittle>
               </UserFollowbox>
             </StyledLink>
 
-            <StyledLink to="/user/followers">
+            <StyledLink to={`/user/${userId}/followers`}>
               <UserFollowbox>
                 <UserFollowNum>{userData.followersCount}位</UserFollowNum>
                 <UserFollowTittle>跟隨者</UserFollowTittle>

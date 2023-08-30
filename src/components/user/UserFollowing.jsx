@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import * as style from "../common/common.styled";
 import { ReactComponent as LeftArrow } from "../../assets/left-arrow.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import FollowrSubTool from "./FollowSubTool";
@@ -57,6 +57,7 @@ const StyledLink = styled(Link)`
 `;
 
 const UserFollowing = () => {
+  const { id: userId } = useParams();
   const [userFollowings, setUserFollowings] = useState([]);
   const navigate = useNavigate();
   const { userData, setUserData } = useContext(UserContext);
@@ -75,13 +76,14 @@ const UserFollowing = () => {
     };
 
     checkTokenIsValid();
+    setUserData([]);
   }, [navigate]);
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const datas = await getUser();
+        const datas = await getUser(userId ? parseInt(userId) : null);
         setUserData(datas);
       } catch (error) {
         console.error("[getUserData Failed]", error);
@@ -94,7 +96,9 @@ const UserFollowing = () => {
   useEffect(() => {
     const getUserFollowing = async () => {
       try {
-        const following = await getUserFollowings();
+        const following = await getUserFollowings(
+          userId ? parseInt(userId) : null
+        );
         setUserFollowings(following);
         console.log("Get UserFollowing", following);
       } catch (error) {
