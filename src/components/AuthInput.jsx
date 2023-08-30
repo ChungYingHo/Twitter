@@ -53,6 +53,7 @@ const ErrorMessage = styled.p`
 
 const AuthInput = ({ label, type, placeholder, value, onChange, isLarge, maxLength, minLength, error, onClick}) => {
   const hasError = error && error !== ""
+>>>>>>>>> Temporary merge branch 2
 
   const [isClicked, setIsClicked] = useState(false);
   const handleClick = () => {
