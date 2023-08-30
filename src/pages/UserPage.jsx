@@ -147,7 +147,7 @@ const UserPage = () => {
       try {
         const like = await getUserLikes();
         setUserLikes(like);
-        console.log(userLikes)
+        console.log(userLikes);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
@@ -185,7 +185,7 @@ const UserPage = () => {
                   <PostCardWrapper key={tweet.id}>
                     <PostCard
                       name={tweet.User.name}
-                      account={tweet.User.name}
+                      account={tweet.User.account}
                       avatar={tweet.User.avatar}
                       content={tweet.description}
                       timestamp={tweet.createdAt}
@@ -218,7 +218,7 @@ const UserPage = () => {
                   <PostCardWrapper key={like.TweetId}>
                     <PostCard
                       name={like.Tweet.User.name}
-                      account={like.Tweet.User.name}
+                      account={like.Tweet.User.account}
                       avatar={like.Tweet.User.avatar}
                       content={like.Tweet.description}
                       timestamp={like.Tweet.createdAt}

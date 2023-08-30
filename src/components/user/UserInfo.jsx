@@ -16,7 +16,7 @@ const UserMainContainer = styled.div`
 const UserBanner = styled.img`
   width: 100%;
   height: 200px;
-  object-fit: cover;
+  object-fit: fill;
 `;
 
 const UserInfoWrapper = styled.div`
@@ -120,11 +120,23 @@ const StyledLink = styled(Link)`
   padding: 0;
 `;
 
+const StyledMsg = styled.p`
+  color: #ff6600;
+  font-size: 16px;
+  font-weight: 700;
+  position: relative;
+  right: 16px;
+  top: 8px;
+`;
+
 const UserInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [introduction, setIntro] = useState("");
-  const [banner, setBanner] = useState("");
+  const [name, setName] = useState();
+  const [introduction, setIntro] = useState();
+  const [uploadBanner, setUploadBanner] = useState(null);
+  const [uploadAvatar, setUploadAvatar] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
   const { userData, setUserData } = useContext(UserContext);
 
   const openNewPost = () => {
@@ -142,8 +154,18 @@ const UserInfo = () => {
     setIntro(newIntro);
   };
 
-  const handleChangeBanner = (event) => {
-    setBanner(event.target.value);
+  const handleBannerChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setUploadBanner(file);
+    }
+  };
+
+  const handleAvatarChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setUploadAvatar(file);
+    }
   };
 
   const handleClick = async () => {
@@ -151,16 +173,28 @@ const UserInfo = () => {
       const updateUserData = {
         name: name,
         introduction: introduction,
-        banner: banner,
+        banner: uploadBanner,
+        avatar: uploadAvatar,
       };
+      setIsLoading(true);
       const resData = await editUser(updateUserData);
+
       if (resData.status === "success") {
+        console.log("resData", resData);
+        setUploadBanner(null);
+        setUserData(resData.data.user);
+        setErrorMessage(null);
         console.log("EditUser updated successfully in UserInfo!");
+      } else if (resData.status === "error") {
+        setErrorMessage(resData.message);
       }
-      setUserData(resData.data.user);
-      setIsModalOpen(false);
     } catch (error) {
+      setErrorMessage(" Something went wrong ...");
       console.error("[editUser failed in UserPage]", error);
+    } finally {
+      setIsLoading(false);
+      setErrorMessage(null);
+      setIsModalOpen(false);
     }
   };
 
@@ -178,13 +212,24 @@ const UserInfo = () => {
           isOpen={isModalOpen}
           closeModal={closeNewPost}
           headerTitle={<HeaderTittle>編輯個人資料</HeaderTittle>}
-          headerButton={<HeaderBtn onClick={handleClick}>儲存</HeaderBtn>}
+          headerButton={
+            errorMessage ? (
+              <div style={{ border: " 2px solid red " }}>{errorMessage}</div>
+            ) : isLoading ? (
+              <StyledMsg>儲存中...</StyledMsg>
+            ) : (
+              <HeaderBtn onClick={handleClick}>儲存</HeaderBtn>
+            )
+          }
         >
           <UserEdit
-            bannerValue={banner}
-            onNamenChange={handleChangeName}
+            onNameChange={handleChangeName}
             onIntroChange={handleChangeIntro}
-            onBannerChange={handleChangeBanner}
+            onBannerChange={handleBannerChange}
+            uploadBanner={uploadBanner}
+            uploadAvatar={uploadAvatar}
+            setUploadBanner={setUploadBanner}
+            onAvatarChange={handleAvatarChange}
           />
         </PopupModal>
 
