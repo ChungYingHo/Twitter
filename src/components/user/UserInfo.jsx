@@ -48,10 +48,11 @@ const UserEditBtn = styled.button`
 
 const BtnWrapper = styled.div`
   width: 208px;
+  height: 40px;
   display: flex;
   justify-content: space-between;
   position: relative;
-  top: 36px;
+  top: 86px;
 `;
 
 const IconBorder = styled.button`
