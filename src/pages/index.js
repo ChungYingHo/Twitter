@@ -9,9 +9,6 @@ import UserPage from "./UserPage";
 import MainReplyList from "./MainReplyList";
 import UserFollowing from "../components/user/UserFollowing";
 import UserFollowers from "../components/user/UserFollowers";
-import OtherUserPage from "./OtherUserPage";
-import OtherUserFollowers from "../components/user/OtherUserFollowers";
-import OtherUserFollowing from "../components/user/OtherUserFollowing";
 
 export {
   LoginPage,
@@ -25,7 +22,4 @@ export {
   MainReplyList,
   UserFollowers,
   UserFollowing,
-  OtherUserPage,
-  OtherUserFollowers,
-  OtherUserFollowing,
 };
