@@ -92,7 +92,7 @@ export default function PostCard({
         alt="avatar"
         onClick={(event) => {
           if (localStorageUserId !== event.target.id) {
-            navigate(`/other-user/${userId}`);
+            navigate(`/user/${userId}`);
           } else {
             navigate("/user");
           }

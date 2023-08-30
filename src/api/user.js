@@ -20,13 +20,13 @@ axiosInstance.interceptors.request.use(
 );
 
 // get user data
-export const getUser = async () => {
+export const getUser = async (userId) => {
   try {
-    const userId = localStorage.getItem("userID");
-    if (!userId) {
+    const userIdRequest = userId || localStorage.getItem("userID");
+    if (!userIdRequest) {
       throw Error("no user ID");
     }
-    const res = await axiosInstance.get(`${apiURL}/users/${userId}`);
+    const res = await axiosInstance.get(`${apiURL}/users/${userIdRequest}`);
     return res.data;
   } catch (error) {
     console.error("[Get User failed]: ", error);

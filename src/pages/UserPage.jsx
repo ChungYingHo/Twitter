@@ -1,5 +1,5 @@
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import UserInfo from "../components/user/UserInfo";
 import SubToolBar from "../components/user/SubToolBar";
@@ -79,13 +79,13 @@ const ReplyCardWrapper = styled.div`
   padding-bottom: 16px;
 `;
 const UserPage = () => {
+  const { id: userId } = useParams();
   const [activePage, setActivePage] = useState("post");
   const [userTweets, setUserTweets] = useState([]);
   const [userReplies, setUserReplies] = useState([]);
   const [userLikes, setUserLikes] = useState([]);
   const { userData, setUserData } = useContext(UserContext);
   const navigate = useNavigate();
-
   // 驗證 token
   useEffect(() => {
     const checkTokenIsValid = async () => {
@@ -106,7 +106,7 @@ const UserPage = () => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const datas = await getUser();
+        const datas = await getUser(userId ? parseInt(userId) : null);
         setUserData(datas);
       } catch (error) {
         console.error("[getUserData Failed]", error);
