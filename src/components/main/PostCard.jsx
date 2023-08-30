@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import TimeDiff from "./TimeDiff";
 import { ReactComponent as Like } from "../../assets/like.svg";
 import { ReactComponent as Reply } from "../../assets/reply.svg";
+import { ReactComponent as FilledLike } from "../../assets/filledlike-xs.svg";
 import * as style from "../common/common.styled";
 
 const Container = styled.div`
@@ -80,6 +81,7 @@ export default function PostCard({
   like,
   onPostCardClick,
   userId,
+  isLike,
 }) {
   const navigate = useNavigate();
   const localStorageUserId = localStorage.getItem("userID");
@@ -114,7 +116,7 @@ export default function PostCard({
             <p>{reply}</p>
           </div>
           <div>
-            <Like />
+            {isLike ? <FilledLike /> : <Like />}
             <p>{like}</p>
           </div>
         </Interact>

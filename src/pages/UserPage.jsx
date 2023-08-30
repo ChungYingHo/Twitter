@@ -227,6 +227,7 @@ const UserPage = () => {
                       timestamp={like.Tweet.createdAt}
                       reply={like.Tweet.repliesCount}
                       like={like.Tweet.likesCount}
+                      isLike={true}
                     />
                   </PostCardWrapper>
                 );
