@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as MailIcon } from "../../assets/mail.svg";
 import { ReactComponent as BellIcon } from "../../assets/bell.svg";
+import { followUser, disFollowUser } from "../../api/popular";
+import { getOtherUser } from "../../api/OtherUser";
 
 const UserMainContainer = styled.div`
   width: 100%;
@@ -136,8 +138,25 @@ const UserInfo = ({
   followerCount,
   followingCount,
   isFollowed,
-  onClick,
+  setOthersData
 }) => {
+  const handleFollow = async (id) => {
+  try {
+    if (isFollowed) {
+      await disFollowUser({ followingId: id });
+      const updatedData = await getOtherUser({ id })
+      setOthersData(updatedData)
+    } else {
+      await followUser({ id });
+      const updatedData = await getOtherUser({id})
+      setOthersData(updatedData)
+    }
+  } catch (error) {
+    console.error("Error occur:", error);
+    console.log('id',id)
+  }
+};
+
   return (
     <UserMainContainer>
       <UserBanner src={userBanner} />
@@ -152,7 +171,7 @@ const UserInfo = ({
             <IconBorder>
               <BellIcon />
             </IconBorder>
-            <FollowBtn $isFollowed={isFollowed} onClick={onClick}>
+            <FollowBtn $isFollowed={isFollowed} onClick={()=>handleFollow(id)}>
               {isFollowed ? "正在跟隨" : "跟隨"}
             </FollowBtn>
           </BtnWrapper>

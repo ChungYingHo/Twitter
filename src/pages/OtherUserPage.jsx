@@ -113,7 +113,7 @@ const UserPage = () => {
       }
     };
     otherUserData();
-  }, [id]);
+  }, [othersData]);
 
   // 獲取user推文
   useEffect(() => {
@@ -176,6 +176,7 @@ const UserPage = () => {
           followerCount={othersData.followersCount}
           followingCount={othersData.followingsCount}
           isFollowed={othersData.isFollowed}
+          setOthersData={setOthersData}
         />
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
         {userTweets && userLikes && userReplies && (
