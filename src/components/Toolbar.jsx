@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { ReactComponent as acLogo } from "../assets/logo.svg";
 import { ReactComponent as Home } from "../assets/home.svg";
 import { ReactComponent as Info } from "../assets/personInfo.svg";
@@ -86,32 +86,21 @@ const FooterContainer = styled.div`
 `;
 
 export default function Toolbar() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { openNewPost } = usePopup();
 
   // 監控正在哪條路由下
   const location = useLocation();
-  const getActivePage = (pathname) => {
-    if (pathname === "/main") {
-      return "home";
-    } else if (pathname === "/user") {
-      return "user";
-    } else if (pathname === "/setting") {
-      return "setting";
-    }
-    return "default";
-  };
-  const [activePage, setActivePage] = useState(
-    getActivePage(location.pathname)
-  )
-  
+  console.log({ location });
+  const { id: userId } = useParams();
+
   // 登出功能
   const handleClick = () => {
     console.log(localStorage);
     localStorage.removeItem("UserToken");
     localStorage.removeItem("userID");
     navigate("/login");
-  }
+  };
 
   // 發文跳轉功能
   const handlePost = () => {
@@ -124,8 +113,7 @@ export default function Toolbar() {
       <Logo />
       <ToolContainer>
         <Nav
-          $isActive={location.pathname.startsWith("/main")}
-          onClick={() => setActivePage("home")}
+          $isActive={!userId && location.pathname.startsWith("/main")}
           to="/main"
         >
           <div>
@@ -134,8 +122,7 @@ export default function Toolbar() {
           </div>
         </Nav>
         <Nav
-          $isActive={location.pathname.startsWith("/user")}
-          onClick={() => setActivePage("user")}
+          $isActive={!userId && location.pathname.startsWith("/user")}
           to="/user"
         >
           <div>
@@ -144,8 +131,7 @@ export default function Toolbar() {
           </div>
         </Nav>
         <Nav
-          $isActive={location.pathname.startsWith("/setting")}
-          onClick={() => setActivePage("setting")}
+          $isActive={!userId && location.pathname.startsWith("/setting")}
           to="/setting"
         >
           <div>

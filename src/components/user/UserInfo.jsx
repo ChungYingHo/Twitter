@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import UserEdit from "./UserEdit";
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import PopupModal from "../PopupModal";
 import { UserContext } from "../../context/UserContext";
-import { editUser } from "../../api/user";
+import { editUser, getUser } from "../../api/user";
+import { ReactComponent as MailIcon } from "../../assets/mail.svg";
+import { ReactComponent as BellIcon } from "../../assets/bell.svg";
+import { ReactComponent as NotiBellIcon } from "../../assets/bell_noti.svg";
+import { followUser, disFollowUser } from "../../api/popular";
 
 const UserMainContainer = styled.div`
   width: 100%;
@@ -41,6 +45,34 @@ const UserEditBtn = styled.button`
   font-size: 14px;
   position: relative;
   top: 85px;
+`;
+
+const BtnWrapper = styled.div`
+  width: 208px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  top: 86px;
+`;
+
+const FollowBtn = styled.button`
+  height: 40px;
+  border-radius: 50px;
+  background-color: transparent;
+  ${({ $isFollowed }) =>
+    $isFollowed
+      ? `width: 96px;
+             background-color: #ff6600;
+             border: #ff6600 solid 1px;
+             color: #ffffff;`
+      : `width: 64px;
+             background-color: #ffffff;
+             border: #ff6600 solid 1px;
+             color: #ff6600;`}
+  &:active {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) inset;
+  }
 `;
 
 const UserPic = styled.img`
@@ -138,6 +170,9 @@ const UserInfo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const { userData, setUserData } = useContext(UserContext);
+  const [isNoti, setIsNoti] = useState(false);
+
+  const { id: userId } = useParams();
 
   const openNewPost = () => {
     setIsModalOpen(true);
@@ -198,6 +233,34 @@ const UserInfo = () => {
     }
   };
 
+  const handleFollow = async (userId) => {
+    console.log("userId in handleFollow", userId);
+
+    try {
+      if (userData?.isFollowed) {
+        await disFollowUser({ followingId: userId });
+        const updatedData = await getUser(userId);
+        setUserData(updatedData);
+      } else {
+        await followUser({ id: userId });
+        const updatedData = await getUser(userId);
+        setUserData(updatedData);
+        console.log("data of followUser", userData);
+      }
+    } catch (error) {
+      console.error("Error occur:", error);
+      console.log("userId in handleFollow", userId);
+    }
+  };
+
+  const handleNotiClick = () => {
+    if (isNoti === false) {
+      setIsNoti(true);
+    } else {
+      setIsNoti(false);
+    }
+  };
+
   return (
     <UserMainContainer>
       <UserBanner src={userData.banner} />
@@ -205,7 +268,24 @@ const UserInfo = () => {
       <UserInfoWrapper>
         <UserPicBtnWrapper>
           <UserPic src={userData.avatar} />
-          <UserEditBtn onClick={openNewPost}>編輯個人資料</UserEditBtn>
+          {userId >= 0 ? (
+            <BtnWrapper>
+              <MailIcon />
+
+              <div onClick={handleNotiClick}>
+                {isNoti ? <NotiBellIcon /> : <BellIcon />}
+              </div>
+
+              <FollowBtn
+                $isFollowed={userData?.isFollowed}
+                onClick={() => handleFollow(userId)}
+              >
+                {userData?.isFollowed ? "正在跟隨" : "跟隨"}
+              </FollowBtn>
+            </BtnWrapper>
+          ) : (
+            <UserEditBtn onClick={openNewPost}>編輯個人資料</UserEditBtn>
+          )}
         </UserPicBtnWrapper>
 
         <PopupModal
@@ -240,14 +320,18 @@ const UserInfo = () => {
           <UserIntroduction>{userData.introduction}</UserIntroduction>
 
           <UserFollowWrapper>
-            <StyledLink to="/user/following">
+            <StyledLink
+              to={userId ? `/user/${userId}/following` : `/user/following`}
+            >
               <UserFollowbox>
                 <UserFollowNum>{userData.followingsCount}個</UserFollowNum>
                 <UserFollowTittle>跟隨中</UserFollowTittle>
               </UserFollowbox>
             </StyledLink>
 
-            <StyledLink to="/user/followers">
+            <StyledLink
+              to={userId ? `/user/${userId}/followers` : `/user/followers`}
+            >
               <UserFollowbox>
                 <UserFollowNum>{userData.followersCount}位</UserFollowNum>
                 <UserFollowTittle>跟隨者</UserFollowTittle>

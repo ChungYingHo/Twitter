@@ -1,15 +1,15 @@
 import styled from "styled-components";
 import * as style from "../common/common.styled";
 import { ReactComponent as LeftArrow } from "../../assets/left-arrow.svg";
-import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 import FollowrSubTool from "./FollowSubTool";
 import FollowCard from "./FollowCard";
 // api
 import { checkPermission } from "../../api/Permission";
-import { getUserFollowings } from "../../api/user";
+import { getUserFollowings, getUser } from "../../api/user";
 import { followUser, disFollowUser } from "../../api/popular";
-
 
 const Container = styled.div`
   outline: green solid 2px;
@@ -57,8 +57,11 @@ const StyledLink = styled(Link)`
 `;
 
 const UserFollowing = () => {
+  const { id: userId } = useParams();
   const [userFollowings, setUserFollowings] = useState([]);
   const navigate = useNavigate();
+  const { userData, setUserData } = useContext(UserContext);
+
   // 驗證 token
   useEffect(() => {
     const checkTokenIsValid = async () => {
@@ -73,26 +76,44 @@ const UserFollowing = () => {
     };
 
     checkTokenIsValid();
+    setUserData([]);
   }, [navigate]);
+
+  // 獲取user資料 (reload後UserContext值會不見，需要重取)
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const datas = await getUser(userId ? parseInt(userId) : null);
+        setUserData(datas);
+      } catch (error) {
+        console.error("[getUserData Failed]", error);
+      }
+    };
+    getUserData();
+  }, [setUserData]);
 
   // 獲取use跟隨者
   useEffect(() => {
     const getUserFollowing = async () => {
       try {
-        const following = await getUserFollowings();
+        const following = await getUserFollowings(
+          userId ? parseInt(userId) : null
+        );
         setUserFollowings(following);
-        console.log("Get UserFollowing", following);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
     };
     getUserFollowing();
-  }, [userFollowings]);
+  }, [userFollowings, userId]);
 
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {
     try {
-      if (userFollowings.find((user) => user.Following.id === id).Following.isFollowed) {
+      if (
+        userFollowings.find((user) => user.Following.id === id).Following
+          .isFollowed
+      ) {
         await disFollowUser({ followingId: id });
       } else {
         await followUser({ id });
@@ -101,15 +122,20 @@ const UserFollowing = () => {
       setUserFollowings((prevUsersData) =>
         prevUsersData.map((user) =>
           user.Following.id === id
-            ? { ...user, Following: { ...user.Following, isFollowed: !user.Following.isFollowed } }
+            ? {
+                ...user,
+                Following: {
+                  ...user.Following,
+                  isFollowed: !user.Following.isFollowed,
+                },
+              }
             : user
         )
       );
     } catch (error) {
       console.error("Error occur:", error);
     }
-  }
-  
+  };
 
   return (
     <>
@@ -118,8 +144,8 @@ const UserFollowing = () => {
           <Header>
             <LeftArrow />
             <HeaderTittleWrapper>
-              <h5>Egg Head</h5>
-              <p>25推文</p>
+              <h5>{userData.name}</h5>
+              <p>{userData.tweetsCount} 推文</p>
             </HeaderTittleWrapper>
           </Header>
         </StyledLink>
