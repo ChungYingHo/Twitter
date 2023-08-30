@@ -1,6 +1,8 @@
+
 // package
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
+
 import { useState, useEffect, useContext } from "react";
 // component and style
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
@@ -86,10 +88,12 @@ const UserPage = () => {
   const [userTweets, setUserTweets] = useState([]);
   const [userReplies, setUserReplies] = useState([]);
   const [userLikes, setUserLikes] = useState([]);
+
   const { userData, setUserData } = useContext(UserContext)
 
   // 驗證 token
   useAuthValitate('/login')
+
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
   useEffect(() => {

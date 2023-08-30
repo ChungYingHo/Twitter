@@ -86,8 +86,10 @@ const MainPage = () => {
   } = usePopup();
   const { userData, setUserData } = useContext(UserContext);
   const [postContent, setPostContent] = useState("");
+  
   // 驗證 token
   useAuthValitate('/login')
+
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
   useEffect(() => {
