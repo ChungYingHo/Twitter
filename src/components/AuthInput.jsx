@@ -51,19 +51,9 @@ const ErrorMessage = styled.p`
   margin: 0 0 0 16px;
 `;
 
-const AuthInput = ({
-  label,
-  type,
-  placeholder,
-  value,
-  onChange,
-  isLarge,
-  maxLength,
-  minLength,
-  error,
-  onClick,
-}) => {
-  const hasError = error && error !== "";
+const AuthInput = ({ label, type, placeholder, value, onChange, isLarge, maxLength, minLength, error, onClick}) => {
+  const hasError = error && error !== ""
+
 
   const [isClicked, setIsClicked] = useState(false);
   const handleClick = () => {

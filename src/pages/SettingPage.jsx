@@ -10,8 +10,7 @@ import {
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import * as style from "../components/common/common.styled";
-import Swal from "sweetalert2";
+import * as style from "../components/common/common.styled"
 // api
 import { getUser, editUser } from "../api/setting";
 import { checkPermission } from "../api/Permission";
@@ -82,12 +81,20 @@ const SettingPage = () => {
         checkPassword.trim().length === 0
       ) {
         console.log(`warning`)
+        style.Toast.fire({
+          title: '請輸入完整資訊',
+          icon: 'error'
+        })
         return;
       }
 
       try {
         const resData = await editUser({ name, account, email, password, checkPassword });
         console.log("Editing User Successful!", resData);
+        style.Toast.fire({
+          title: '編輯成功！',
+          icon: 'success'
+        })
       } catch (error) {
         if (error.response && error.response.data) {
           const errorMessage = error.response.data.message;
@@ -121,7 +128,7 @@ const SettingPage = () => {
         <SettingInputContainer>
           <AuthInput
             label={"帳號"}
-            maxLength={10}
+            maxLength={30}
             minLength={1}
             name={account}
             value={user.account}
@@ -148,7 +155,7 @@ const SettingPage = () => {
 
         <SettingInputContainer>
           <AuthInput
-            type="email"
+            type={'email'}
             label={"Email"}
             maxLength={30}
             minLength={1}
@@ -164,6 +171,7 @@ const SettingPage = () => {
         <SettingInputContainer>
           <AuthInput
             label={"密碼"}
+            type={'password'}
             maxLength={20}
             minLength={5}
             name={password}
@@ -179,6 +187,7 @@ const SettingPage = () => {
         <SettingInputContainer>
           <AuthInput
             label={"密碼再確認"}
+            type={'password'}
             maxLength={20}
             minLength={5}
             name={checkPassword}

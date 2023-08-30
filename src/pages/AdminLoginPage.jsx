@@ -10,7 +10,7 @@ import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { Toast } from "../components/common/common.styled";
 // api
 import { adminLogin } from "../api/admin";
 import { checkAdminPermission } from "../api/Permission";
@@ -37,20 +37,46 @@ const AdminLoginPage = () => {
     checkTokenIsValid();
   }, [navigate])
 
+  // error control
+  const [accountError, setAccountError] = useState("")
+  const [passwordError, setPasswordError] = useState("")
+  const handleInputClick = (errorState) => {
+    errorState('');
+  }
+  
   const handleClick = async () => {
     if (account.length === 0 || password.length === 0) {
-      Swal.fire("請輸入完整帳號密碼");
+      Toast.fire({
+        title: '請輸入完整帳號密碼',
+        icon: 'error'
+      })
       return;
     }
-    const { success, adminToken, errorMessage } = await adminLogin({
-      account,
-      password,
-    });
-    if (success) {
-      localStorage.setItem("AdminToken", adminToken);
-      navigate("/admin_tweets");
-    } else {
-      setError(errorMessage);
+    try{
+      const { success, adminToken } = await adminLogin({
+        account,
+        password,
+      });
+      if (success) {
+        localStorage.setItem("AdminToken", adminToken);
+        Toast.fire({
+          title: '登入成功',
+          icon: 'success'
+        })
+        navigate("/admin_tweets");
+      }
+    } catch (error){
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.message;
+        if (errorMessage.includes("帳號")) {
+          setAccountError(errorMessage);
+        }else if (errorMessage.includes("密碼")) {
+          setPasswordError(errorMessage);
+        }
+        console.error('[Login error:', errorMessage);
+      } else {
+        console.error('An error occurred:', error);
+      }
     }
   };
 
@@ -66,14 +92,23 @@ const AdminLoginPage = () => {
           value={account}
           placeholder={"請輸入帳號"}
           onChange={(accountInputValue) => setAccount(accountInputValue)}
+          error={accountError}
+          onClick={() => handleInputClick(setAccountError)}
+          maxLength={30}
+          minLength={1}
         />
       </AuthInputContainer>
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
+          type={'password'}
           value={password}
           placeholder={"請輸入密碼"}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
+          error={passwordError}
+          onClick={() => handleInputClick(setPasswordError)}
+          maxLength={20}
+          minLength={5}
         />
       </AuthInputContainer>
       {error && <div>{error}</div>}

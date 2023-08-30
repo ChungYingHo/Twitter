@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Swal from 'sweetalert2'
 const colors = {
     orange: '#ff6600',
     white: '#ffffff',
@@ -56,6 +57,20 @@ const StyledBtn = styled.button`
   }
 `
 
+// sweet alert
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  reverseButtons: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
 
 
 export {
@@ -67,4 +82,5 @@ export {
     styledContentFont,
     styledIconFont,
     StyledBtn,
+    Toast
 }
