@@ -1,3 +1,7 @@
+// package
+import styled from "styled-components";
+import { useState, useEffect } from "react";
+// component and style
 import AuthInput from "../components/AuthInput";
 import {
   SettingInputContainer,
@@ -7,13 +11,10 @@ import {
   SettingButton,
   SettingHr,
 } from "../components/common/setting.styled";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import * as style from "../components/common/common.styled"
 // api
 import { getUser, editUser } from "../api/setting";
-import { checkPermission } from "../api/Permission";
+import { useAuthValitate } from "../utils/authValidate";
 
 const Container = styled.div`
   padding: 0;
@@ -23,39 +24,25 @@ const Container = styled.div`
 `;
 
 const SettingPage = () => {
-  const [user, setUser] = useState({});
-  const [account, setAccount] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [checkPassword, setCheckPassword] = useState("");
-  const navigate = useNavigate()
+    const [user, setUser] = useState({});
+    const [account, setAccount] = useState("");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [checkPassword, setCheckPassword] = useState("");
+    // 驗證 token
+    useAuthValitate('/login')
 
-  // 錯誤提示控管
-  const [accountError, setAccountError] = useState("")
-  const [nameError, setNameError] = useState("")
-  const [emailError, setEmailError] = useState("")
-  const [passwordError, setPasswordError] = useState("")
-  const [checkPasswordError, setCheckPasswordError] = useState("")
-  const handleInputClick = (errorState) => {
-    errorState('');
-  }
-
-  // 驗證 token
-    useEffect(() => {
-        const checkTokenIsValid = async () => {
-        const authToken = localStorage.getItem('UserToken');
-        if (!authToken) {
-            navigate('/login');
-        }
-        const result = await checkPermission(authToken);
-        if (!result) {
-            navigate('/login');
-        }
-        };
-
-        checkTokenIsValid();
-    }, [navigate])
+    // 錯誤提示控管
+    const [accountError, setAccountError] = useState("")
+    const [nameError, setNameError] = useState("")
+    const [emailError, setEmailError] = useState("")
+    const [passwordError, setPasswordError] = useState("")
+    const [checkPasswordError, setCheckPasswordError] = useState("")
+    const handleInputClick = (errorState) => {
+      errorState('');
+    }
+    
     // 抓取用戶資料
     useEffect(() => {
       const fetchingUser = async () => {

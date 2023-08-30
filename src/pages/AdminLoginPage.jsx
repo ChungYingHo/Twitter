@@ -1,3 +1,7 @@
+// package
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+// component and style
 import {
   AuthContainer,
   AuthInputContainer,
@@ -8,12 +12,10 @@ import {
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { Toast } from "../components/common/common.styled";
-// api
+// api and function
 import { adminLogin } from "../api/admin";
-import { checkAdminPermission } from "../api/Permission";
+import { useAdminAuthValitate } from "../utils/authValidate";
 
 const AdminLoginPage = () => {
   const [account, setAccount] = useState("");
@@ -22,20 +24,7 @@ const AdminLoginPage = () => {
 
   const navigate = useNavigate()
   // 驗證 token
-  useEffect(() => {
-    const checkTokenIsValid = async () => {
-      const authToken = localStorage.getItem('AdminToken');
-      if (!authToken) {
-        return;
-      }
-      const result = await checkAdminPermission(authToken);
-      if (result) {
-        navigate('/admin_tweets');
-      }
-    };
-
-    checkTokenIsValid();
-  }, [navigate])
+  useAdminAuthValitate('/admin_tweets')
 
   // error control
   const [accountError, setAccountError] = useState("")

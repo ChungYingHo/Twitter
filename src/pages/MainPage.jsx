@@ -1,17 +1,18 @@
+// package
 import styled from "styled-components";
 import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+// component and style
 import PostCard from "../components/main/PostCard";
 import PopupModal from "../components/PopupModal";
 import NewPost from "../components/main/NewPost";
 import NewReply from "../components/reply/NewReply";
 import * as style from "../components/common/common.styled";
+// 引用 api and function
+import { getTweets, postTweets } from "../api/main";
+import { getUser } from "../api/user";
 import { UserContext } from "../context/UserContext";
 import { usePopup } from "../context/Popup";
-// 引用 api
-import { getTweets, postTweets } from "../api/main";
-import { checkPermission } from "../api/Permission";
-import { getUser } from "../api/user";
+import { useAuthValitate } from "../utils/authValidate";
 
 const Container = styled.div`
   padding: 0;
@@ -76,23 +77,8 @@ const MainPage = () => {
   const { isNewPostOpen, openNewPost, closeNewPost, isNewReplyOpen, closeNewReply, openNewReply, posts, setPosts } = usePopup()
   const { userData, setUserData } = useContext(UserContext);
   const [postContent, setPostContent] = useState("");
-  const navigate = useNavigate();
-
-
   // 驗證 token
-  useEffect(() => {
-    const checkTokenIsValid = async () => {
-      const authToken = localStorage.getItem("UserToken");
-      if (!authToken) {
-        navigate("/login");
-      }
-      const result = await checkPermission(authToken);
-      if (!result) {
-        navigate("/login");
-      }
-    };
-    checkTokenIsValid();
-  }, [navigate]);
+  useAuthValitate('/login')
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
   useEffect(() => {

@@ -1,3 +1,7 @@
+// package
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+// component and style
 import {
   AuthContainer,
   AuthInputContainer,
@@ -7,12 +11,10 @@ import {
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { Toast } from "../components/common/common.styled";
-// api
-import { checkPermission } from "../api/Permission";
+// api and function
 import { register } from "../api/auth";
+import { useAuthValitate } from "../utils/authValidate";
 
 const RegisterPage = () => {
   const [account, setAccount] = useState("");
@@ -20,8 +22,9 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
-
   const navigate = useNavigate();
+  // token validate
+  useAuthValitate('/main')
 
   // error control
   const [accountError, setAccountError] = useState("")
@@ -82,21 +85,6 @@ const RegisterPage = () => {
         }
     }
   };
-
-  useEffect(() => {
-    const checkTokenIsValid = async () => {
-      const authToken = localStorage.getItem('UserToken');
-      if (!authToken) {
-        return;
-      }
-      const result = await checkPermission(authToken);
-      if (result) {
-        navigate('/main');
-      }
-    };
-
-    checkTokenIsValid();
-  }, [navigate])
 
   return (
     <AuthContainer>

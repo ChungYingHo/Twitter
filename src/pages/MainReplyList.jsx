@@ -1,23 +1,26 @@
+// package
 import styled from "styled-components";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+// component and style
 import ReplyCard from "../components/reply/ReplyCard";
 import PopupModal from "../components/PopupModal";
 import NewReply from "../components/reply/NewReply";
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import { ReactComponent as LeftArrow } from "../assets/left-arrow.svg";
 import { ReactComponent as Reply } from "../assets/reply@30.svg";
 import { ReactComponent as Like } from "../assets/like@30.svg";
 import { ReactComponent as LikeFill } from "../assets/like@30_fill.svg";
 import * as style from "../components/common/common.styled";
-import { displayTime } from "../components/reply/displayTime";
-import { usePopup } from "../context/Popup";
-// API
+// API and function
 import { getSingleTweet,
          getReplies,
          likeTweet,
         dislikeTweet
     } from "../api/main";
-import { checkPermission } from "../api/Permission";
+import { displayTime } from "../utils/displayTime";
+import { usePopup } from "../context/Popup";
+import { useAuthValitate } from "../utils/authValidate";
+
 
 const Container = styled.div`
   width: 56.2%;
@@ -149,19 +152,7 @@ export default function MainReplyList(){
     const { isNewReplyOpen, openNewReply, closeNewReply, replies, setReplies } = usePopup()
 
     // 驗證 token
-    useEffect(() => {
-        const checkTokenIsValid = async () => {
-        const authToken = localStorage.getItem('UserToken');
-        if (!authToken) {
-            navigate('/login');
-        }
-        const result = await checkPermission(authToken);
-        if (!result) {
-            navigate('/login');
-        }
-        };
-        checkTokenIsValid();
-    }, [navigate])
+    useAuthValitate('/login')
 
     // 抓特定貼文
     const [tweet, setTweet] = useState(null)
