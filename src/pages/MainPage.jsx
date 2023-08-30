@@ -73,11 +73,19 @@ const Btn = styled(style.StyledBtn)`
 `;
 
 const MainPage = () => {
-  const { isNewPostOpen, openNewPost, closeNewPost, isNewReplyOpen, closeNewReply, openNewReply, posts, setPosts } = usePopup()
+  const {
+    isNewPostOpen,
+    openNewPost,
+    closeNewPost,
+    isNewReplyOpen,
+    closeNewReply,
+    openNewReply,
+    posts,
+    setPosts,
+  } = usePopup();
   const { userData, setUserData } = useContext(UserContext);
   const [postContent, setPostContent] = useState("");
   const navigate = useNavigate();
-
 
   // 驗證 token
   useEffect(() => {
@@ -123,6 +131,8 @@ const MainPage = () => {
     fetchTweets();
   }, []);
 
+  console.log("posts", posts);
+
   // 發送貼文
   const handlePostSubmit = async () => {
     try {
@@ -139,20 +149,20 @@ const MainPage = () => {
       // 關閉發文彈出視窗
       closeNewPost();
       style.Toast.fire({
-        title: '發佈成功！',
-        icon: 'success'
-      })
+        title: "發佈成功！",
+        icon: "success",
+      });
     } catch (error) {
       console.error("Posting Tweet Failed:", error);
     }
-  }
+  };
 
   // 首頁回覆
-  const [selectedPost, setSelectedPost] = useState(null)
+  const [selectedPost, setSelectedPost] = useState(null);
   const handlePostCardClick = (post) => {
-    setSelectedPost(post)
+    setSelectedPost(post);
     openNewReply();
-  }
+  };
 
   return (
     <>
