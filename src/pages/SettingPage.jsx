@@ -31,6 +31,7 @@ const SettingPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
+    const id = localStorage.getItem('userID')
     // error control
     const {
       accountError,
@@ -54,7 +55,7 @@ const SettingPage = () => {
     useEffect(() => {
       const fetchingUser = async () => {
         try {
-          const userData = await getUser();
+          const userData = await getUser({id});
           setUser(userData);
           setAccount(userData.account);
           setName(userData.name);
