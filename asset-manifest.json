@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Twitter/static/css/main.100fb08b.css",
-    "main.js": "/Twitter/static/js/main.70a9e46a.js",
+    "main.js": "/Twitter/static/js/main.ffb265d0.js",
     "static/js/787.f649083d.chunk.js": "/Twitter/static/js/787.f649083d.chunk.js",
     "static/media/setting.svg": "/Twitter/static/media/setting.f816c687fe9a4bd78229ba4e78f87620.svg",
     "static/media/bell_noti.svg": "/Twitter/static/media/bell_noti.f81dced015d03b625be46414c293451a.svg",
@@ -25,11 +25,11 @@
     "static/media/filledlike-xs.svg": "/Twitter/static/media/filledlike-xs.816e9f378ab9de3bdafbba658f7bccf2.svg",
     "static/media/like@30_fill.svg": "/Twitter/static/media/like@30_fill.76e5b761d66f310187fa4fabc4d63544.svg",
     "main.100fb08b.css.map": "/Twitter/static/css/main.100fb08b.css.map",
-    "main.70a9e46a.js.map": "/Twitter/static/js/main.70a9e46a.js.map",
+    "main.ffb265d0.js.map": "/Twitter/static/js/main.ffb265d0.js.map",
     "787.f649083d.chunk.js.map": "/Twitter/static/js/787.f649083d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.100fb08b.css",
-    "static/js/main.70a9e46a.js"
+    "static/js/main.ffb265d0.js"
   ]
 }
