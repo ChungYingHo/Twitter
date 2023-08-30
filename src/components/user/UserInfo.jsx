@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import UserEdit from "./UserEdit";
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import PopupModal from "../PopupModal";
 import { UserContext } from "../../context/UserContext";
 import { editUser, getUser } from "../../api/user";
@@ -161,7 +161,7 @@ const StyledMsg = styled.p`
   top: 8px;
 `;
 
-const UserInfo = ({ userId, isFollowed }) => {
+const UserInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState();
   const [introduction, setIntro] = useState();
@@ -171,6 +171,8 @@ const UserInfo = ({ userId, isFollowed }) => {
   const [errorMessage, setErrorMessage] = useState(false);
   const { userData, setUserData } = useContext(UserContext);
   const [isNoti, setIsNoti] = useState(false);
+
+  const { id: userId } = useParams();
 
   const openNewPost = () => {
     setIsModalOpen(true);
@@ -235,12 +237,12 @@ const UserInfo = ({ userId, isFollowed }) => {
     console.log("userId in handleFollow", userId);
 
     try {
-      if (isFollowed) {
+      if (userData?.isFollowed) {
         await disFollowUser({ followingId: userId });
         const updatedData = await getUser(userId);
         setUserData(updatedData);
       } else {
-        await followUser(userId);
+        await followUser({ id: userId });
         const updatedData = await getUser(userId);
         setUserData(updatedData);
         console.log("data of followUser", userData);
@@ -275,10 +277,10 @@ const UserInfo = ({ userId, isFollowed }) => {
               </div>
 
               <FollowBtn
-                $isFollowed={isFollowed}
+                $isFollowed={userData?.isFollowed}
                 onClick={() => handleFollow(userId)}
               >
-                {isFollowed ? "正在跟隨" : "跟隨"}
+                {userData?.isFollowed ? "正在跟隨" : "跟隨"}
               </FollowBtn>
             </BtnWrapper>
           ) : (
@@ -318,14 +320,18 @@ const UserInfo = ({ userId, isFollowed }) => {
           <UserIntroduction>{userData.introduction}</UserIntroduction>
 
           <UserFollowWrapper>
-            <StyledLink to={`/user/${userId}/following`}>
+            <StyledLink
+              to={userId ? `/user/${userId}/following` : `/user/following`}
+            >
               <UserFollowbox>
                 <UserFollowNum>{userData.followingsCount}個</UserFollowNum>
                 <UserFollowTittle>跟隨中</UserFollowTittle>
               </UserFollowbox>
             </StyledLink>
 
-            <StyledLink to={`/user/${userId}/followers`}>
+            <StyledLink
+              to={userId ? `/user/${userId}/followers` : `/user/followers`}
+            >
               <UserFollowbox>
                 <UserFollowNum>{userData.followersCount}位</UserFollowNum>
                 <UserFollowTittle>跟隨者</UserFollowTittle>
