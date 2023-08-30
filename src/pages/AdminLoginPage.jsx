@@ -34,8 +34,10 @@ const AdminLoginPage = () => {
       passwordError,
       setPasswordError,
       handleInputClick,
-      handleError
+      handleError,
+      useResetErrorsEffect
     } = useErrorContext();
+  useResetErrorsEffect()
   
   const handleClick = async () => {
     if (account.length === 0 || password.length === 0) {

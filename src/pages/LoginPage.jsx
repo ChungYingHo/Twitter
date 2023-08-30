@@ -38,8 +38,10 @@ const LoginPage = () => {
       passwordError,
       setPasswordError,
       handleInputClick,
-      handleError
+      handleError,
+      useResetErrorsEffect
     } = useErrorContext();
+  useResetErrorsEffect()
 
   // login action
   const handleClick = async () => {

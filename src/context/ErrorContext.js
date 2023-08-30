@@ -1,5 +1,5 @@
 // ErrorContext.js
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const ErrorContext = createContext();
 export const useErrorContext = () => useContext(ErrorContext);
@@ -35,6 +35,20 @@ export const ErrorProvider = ({ children }) => {
     }
   };
 
+  const resetErrors = () => {
+    setAccountError('');
+    setNameError('');
+    setEmailError('');
+    setPasswordError('');
+    setCheckPasswordError('');
+  }
+
+  const useResetErrorsEffect = () => {
+    useEffect(() => {
+      resetErrors();
+    }, []);
+  }
+
   return (
     <ErrorContext.Provider
       value={{
@@ -49,7 +63,8 @@ export const ErrorProvider = ({ children }) => {
         checkPasswordError,
         setCheckPasswordError,
         handleInputClick,
-        handleError
+        handleError,
+        useResetErrorsEffect
       }}
     >
       {children}

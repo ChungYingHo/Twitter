@@ -40,8 +40,10 @@ const RegisterPage = () => {
       checkPasswordError,
       setCheckPasswordError,
       handleInputClick,
-      handleError
+      handleError,
+      useResetErrorsEffect
     } = useErrorContext();
+  useResetErrorsEffect()
 
   const handleClick = async () => {
     if (
@@ -156,7 +158,7 @@ const RegisterPage = () => {
           onChange={(checkPasswordInputValue) =>
             setCheckPassword(checkPasswordInputValue)
           }
-          error={passwordError}
+          error={checkPasswordError}
           onClick={() => handleInputClick(setCheckPasswordError)}
           required
         />

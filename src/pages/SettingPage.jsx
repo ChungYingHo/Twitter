@@ -44,8 +44,10 @@ const SettingPage = () => {
       checkPasswordError,
       setCheckPasswordError,
       handleInputClick,
-      handleError
+      handleError,
+      useResetErrorsEffect
     } = useErrorContext();
+    useResetErrorsEffect()
     // 驗證 token
     useAuthValitate('/login')
     // 抓取用戶資料
