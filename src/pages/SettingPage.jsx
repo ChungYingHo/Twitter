@@ -100,87 +100,90 @@ const SettingPage = () => {
         </SettingTittleContainer>
 
         <SettingHr />
+        {user && (
+          <>
+            <SettingInputContainer>
+              <AuthInput
+                label={"帳號"}
+                maxLength={30}
+                minLength={1}
+                name={account}
+                value={user.account}
+                placeholder={"請輸入帳號"}
+                onChange={(accountInputValue) => setAccount(accountInputValue)}
+                error={accountError}
+                onClick={() => handleInputClick(setAccountError)}
+              />
+            </SettingInputContainer>
 
-        <SettingInputContainer>
-          <AuthInput
-            label={"帳號"}
-            maxLength={30}
-            minLength={1}
-            name={account}
-            value={user.account}
-            placeholder={"請輸入帳號"}
-            onChange={(accountInputValue) => setAccount(accountInputValue)}
-            error={accountError}
-            onClick={() => handleInputClick(setAccountError)}
-          />
-        </SettingInputContainer>
+            <SettingInputContainer>
+              <AuthInput
+                label={"名稱"}
+                maxLength={50}
+                minLength={1}
+                name={name}
+                value={user.name}
+                placeholder={"請輸入使用者名稱"}
+                onChange={(nameInputValue) => setName(nameInputValue)}
+                error={nameError}
+                onClick={() => handleInputClick(setNameError)}
+              />
+            </SettingInputContainer>
 
-        <SettingInputContainer>
-          <AuthInput
-            label={"名稱"}
-            maxLength={50}
-            minLength={1}
-            name={name}
-            value={user.name}
-            placeholder={"請輸入使用者名稱"}
-            onChange={(nameInputValue) => setName(nameInputValue)}
-            error={nameError}
-            onClick={() => handleInputClick(setNameError)}
-          />
-        </SettingInputContainer>
+            <SettingInputContainer>
+              <AuthInput
+                type={'email'}
+                label={"Email"}
+                maxLength={30}
+                minLength={1}
+                name={email}
+                value={user.email}
+                placeholder={"請輸入Email"}
+                onChange={(emailInputValue) => setEmail(emailInputValue)}
+                error={emailError}
+                onClick={() => handleInputClick(setEmailError)}
+              />
+            </SettingInputContainer>
 
-        <SettingInputContainer>
-          <AuthInput
-            type={'email'}
-            label={"Email"}
-            maxLength={30}
-            minLength={1}
-            name={email}
-            value={user.email}
-            placeholder={"請輸入Email"}
-            onChange={(emailInputValue) => setEmail(emailInputValue)}
-            error={emailError}
-            onClick={() => handleInputClick(setEmailError)}
-          />
-        </SettingInputContainer>
+            <SettingInputContainer>
+              <AuthInput
+                label={"密碼"}
+                type={'password'}
+                maxLength={20}
+                minLength={5}
+                name={password}
+                value={user.password}
+                placeholder={"請設定密碼"}
+                onChange={(passwordInputValue) => setPassword(passwordInputValue)}
+                error={passwordError}
+                onClick={() => handleInputClick(setPasswordError)}
+                required
+              />
+            </SettingInputContainer>
 
-        <SettingInputContainer>
-          <AuthInput
-            label={"密碼"}
-            type={'password'}
-            maxLength={20}
-            minLength={5}
-            name={password}
-            value={user.password}
-            placeholder={"請設定密碼"}
-            onChange={(passwordInputValue) => setPassword(passwordInputValue)}
-            error={passwordError}
-            onClick={() => handleInputClick(setPasswordError)}
-            required
-          />
-        </SettingInputContainer>
+            <SettingInputContainer>
+              <AuthInput
+                label={"密碼再確認"}
+                type={'password'}
+                maxLength={20}
+                minLength={5}
+                name={checkPassword}
+                value={checkPassword}
+                placeholder={"請再次輸入密碼"}
+                onChange={(checkPasswordInputValue) =>
+                  setCheckPassword(checkPasswordInputValue)
+                }
+                error={checkPasswordError}
+                onClick={() => handleInputClick(setCheckPasswordError)}
+                required
+              />
+            </SettingInputContainer>
 
-        <SettingInputContainer>
-          <AuthInput
-            label={"密碼再確認"}
-            type={'password'}
-            maxLength={20}
-            minLength={5}
-            name={checkPassword}
-            value={checkPassword}
-            placeholder={"請再次輸入密碼"}
-            onChange={(checkPasswordInputValue) =>
-              setCheckPassword(checkPasswordInputValue)
-            }
-            error={checkPasswordError}
-            onClick={() => handleInputClick(setCheckPasswordError)}
-            required
-          />
-        </SettingInputContainer>
-
-        <SettingButtonWrapper>
-          <SettingButton onClick={handleClick}>儲存</SettingButton>
-        </SettingButtonWrapper>
+            <SettingButtonWrapper>
+              <SettingButton onClick={handleClick}>儲存</SettingButton>
+            </SettingButtonWrapper>
+          </>
+        )}
       </Container>
     </>
   );
