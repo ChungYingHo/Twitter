@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import PopularCard from "./PopularCard";
 // api
 import { getPopUsers, followUser, disFollowUser } from "../api/popular";
+import { useUserContext } from "../context/UserContext";
 
 const Container = styled.div`
     margin-top: 16px;
@@ -34,30 +35,30 @@ const CardContainer = styled.div`
 
 
 export default function PopularBar(){
-    const [usersData, setUsersData] = useState([])
+    const {followState, setFollowState} = useUserContext()
     // 獲取推薦使用者
     useEffect(()=>{
         const fetchUsers = async()=>{
             try{
                 const usersData = await getPopUsers()
-                setUsersData(usersData)
+                setFollowState(usersData)
             } catch(error){
                 console.error('Get Users Failed:', error)
             }
         }
         fetchUsers()
-    }, [usersData])
+    }, [])
 
 
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {
     try {
-      if (usersData.find((user) => user.id === id).isFollowed) {
+      if (followState.find((user) => user.id === id).isFollowed) {
         await disFollowUser({ followingId: id });
       } else {
         await followUser({ id });
       }
-      setUsersData((prevUsersData) =>
+      setFollowState((prevUsersData) =>
         prevUsersData.map((user) =>
           user.id === id ? { ...user, isFollowed: !user.isFollowed } : user
         )
@@ -73,7 +74,7 @@ export default function PopularBar(){
         <div>推薦跟隨</div>
       </Title>
       <CardContainer>
-        {usersData.map((user) => {
+        {followState.map((user) => {
           return (
             <PopularCard
               key={user.id}
