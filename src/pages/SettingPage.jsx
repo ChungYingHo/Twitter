@@ -58,7 +58,7 @@ const SettingPage = () => {
         console.log(typeof(userId))
         try {
           console.log(userId)
-          const userData = await getUser({id: localStorage.getItem('userID')});
+          const userData = await getUser({id: userId});
           setUser(prevUser=>userData);
           setAccount(prevAccount=>userData.account);
           setName(prevName=>userData.name);
