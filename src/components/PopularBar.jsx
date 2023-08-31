@@ -14,7 +14,7 @@ const Container = styled.div`
   height: 100vh;
   width: 100%;
   padding: 0;
-  position: sticky;
+  position: absolute;
   top: 16px;
 `;
 
