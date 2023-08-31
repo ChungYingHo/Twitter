@@ -1,5 +1,5 @@
 // package
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // component and style
 import {
@@ -9,7 +9,7 @@ import {
   AuthLinkText,
   AuthLinkWrapper,
   AuthTittle,
-  AuthSpan
+  AuthSpan,
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
@@ -21,38 +21,36 @@ import { UserContext } from "../context/UserContext";
 import { useLoginAuthValitate } from "../utils/authValidate";
 import { useErrorContext } from "../context/ErrorContext";
 
-
-
 const LoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
   const { setUserData } = useContext(UserContext);
   const navigate = useNavigate();
   // 驗證 token
-  useLoginAuthValitate('/main')
+  useLoginAuthValitate("/main");
 
   // error control
   const {
-      accountError,
-      setAccountError,
-      passwordError,
-      setPasswordError,
-      handleInputClick,
-      handleError,
-      useResetErrorsEffect
-    } = useErrorContext();
-  useResetErrorsEffect()
+    accountError,
+    setAccountError,
+    passwordError,
+    setPasswordError,
+    handleInputClick,
+    handleError,
+    useResetErrorsEffect,
+  } = useErrorContext();
+  useResetErrorsEffect();
 
   // login action
   const handleClick = async () => {
     if (account.trim().length === 0 || password.trim().length === 0) {
       Toast.fire({
-        title: '請輸入完整帳號密碼',
-        icon: 'error'
-      })
+        title: "請輸入完整帳號密碼",
+        icon: "error",
+      });
       return;
     }
-    try{
+    try {
       const {
         success,
         userToken,
@@ -62,20 +60,20 @@ const LoginPage = () => {
         password,
       });
       if (success) {
-            localStorage.setItem("UserToken", userToken);
-            localStorage.setItem("userID", userDataFromLogin.id);
+        localStorage.setItem("UserToken", userToken);
+        localStorage.setItem("userID", userDataFromLogin.id);
 
-            const userData = await getUser();
-            setUserData(userData);
-            console.log("Login Successful!");
-            Toast.fire({
-              title: '登入成功',
-              icon: 'success'
-            })
-            navigate("/main");
+        const userData = await getUser();
+        setUserData(userData);
+        console.log("Login Successful!");
+        Toast.fire({
+          title: "登入成功",
+          icon: "success",
+        });
+        navigate("/main");
       }
-    } catch (error){
-      handleError(error)
+    } catch (error) {
+      handleError(error);
     }
   };
 
@@ -101,7 +99,7 @@ const LoginPage = () => {
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
-          type={'password'}
+          type={"password"}
           maxLength={20}
           minLength={5}
           value={password}
