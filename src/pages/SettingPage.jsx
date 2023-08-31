@@ -19,7 +19,7 @@ import {useErrorContext} from '../context/ErrorContext'
 
 const Container = styled.div`
   padding: 0;
-  width: 56.2%;
+  width: 100%;
   border: ${style.styledBorder};
   position: relative;
 `;

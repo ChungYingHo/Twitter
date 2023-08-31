@@ -24,7 +24,7 @@ import { UserContext } from "../context/UserContext";
 const Container = styled.div`
   outline: green solid 2px;
   padding: 0;
-  width: 56.2%;
+  width: 100%;
   border: ${style.styledBorder};
   position: relative;
 `;

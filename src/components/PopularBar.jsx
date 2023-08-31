@@ -8,9 +8,11 @@ const Container = styled.div`
     margin-top: 16px;
     padding: 0;
     height: fit-content;
-    width: 23.9%;
+    width: 100%;
     background-color: #fafafb;
     border-radius: 16px;
+    position: absolute;
+    right: 0;
 `
 
 const Title = styled.div`

@@ -10,9 +10,11 @@ import * as style from "../components/common/common.styled";
 import { usePopup } from "../context/Popup";
 
 const Container = styled.div`
-  position: relative;
   height: 100vh;
-  width: 15.6%;
+  width: 100%;
+  padding: 0;
+  position: sticky;
+  top: 0;
 `;
 
 const Logo = styled(acLogo)`
