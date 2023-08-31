@@ -234,7 +234,7 @@ export default function MainReplyList(){
                 <PostContainer>
                     <PersonInfo>
                         <Title>
-                            <img src={tweet.User.avatar} alt="avatar" />
+                            <img src={tweet.User.avatar} alt="avatar" onClick={(e)=>navigate(`/user/${tweet.User.id}`)}/>
                             <div>
                                 <p className="name">{tweet.User.name}</p>
                                 <p className="account">@{tweet.User.account}</p>
