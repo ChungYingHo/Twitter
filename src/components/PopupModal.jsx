@@ -30,11 +30,11 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   border-bottom: ${style.styledBorder};
+  padding: 0 16px;
   margin-top: 8px;
   .icon {
-      margin-left: 16px;
-      cursor: pointer;
-    }
+    cursor: pointer;
+  }
 `;
 
 const HeaderWrapper = styled.div`
