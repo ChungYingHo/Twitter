@@ -62,8 +62,9 @@ const LoginPage = () => {
       if (success) {
         localStorage.setItem("UserToken", userToken);
         localStorage.setItem("userID", userDataFromLogin.id);
+        const id = localStorage.getItem('userID')
 
-        const userData = await getUser();
+        const userData = await getUser(id);
         setUserData(userData);
         console.log("Login Successful!");
         Toast.fire({

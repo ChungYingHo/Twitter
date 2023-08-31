@@ -32,6 +32,7 @@ const SettingPage = () => {
     const [email, setEmail] = useState(userData.email);
     const [password, setPassword] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
+    const id = localStorage.getItem('userID')
     // error control
     const {
       accountError,
@@ -67,7 +68,7 @@ const SettingPage = () => {
       }
 
       try {
-        const resData = await editUser({ name, account, email, password, checkPassword });
+        const resData = await editUser({ id, name, account, email, password, checkPassword });
         console.log("Editing User Successful!", resData);
         style.Toast.fire({
           title: '編輯成功！',
