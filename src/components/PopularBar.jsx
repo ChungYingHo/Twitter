@@ -61,8 +61,6 @@ export default function PopularBar(){
         await disFollowUser({ followingId: id });
         userFollowers.find((user) => user.followerId === id) && handleFollowers(id)
         userFollowings.find((user) => user.followingId === id) && handleFollowings(id)
-        const updatedData = await getUser(id);
-        setUserData(updatedData);
       } else {
         await followUser({ id });
         userFollowers.find((user) => user.followerId === id) && handleFollowers(id)
@@ -72,8 +70,6 @@ export default function PopularBar(){
           const updatedFollowings = await getUserFollowings()
           setUserFollowings(updatedFollowings);
         }
-        const updatedData = await getUser(id);
-        setUserData(updatedData);
       }
 
       setFollowState((prevUsersData) =>
