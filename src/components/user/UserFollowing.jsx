@@ -59,7 +59,7 @@ const StyledLink = styled(Link)`
 const UserFollowing = () => {
   const { id: userId } = useParams();
   const navigate = useNavigate();
-  const { userData, setUserData, handleFollowState, userFollowings, setUserFollowings } = useContext(UserContext);
+  const { userData, setUserData, handleFollowState, userFollowings, setUserFollowings, handleFollowings } = useContext(UserContext);
 
   // 驗證 token
   useEffect(() => {
@@ -91,7 +91,7 @@ const UserFollowing = () => {
     getUserData();
   }, [setUserData]);
 
-  // 獲取use跟隨者
+  // 獲取use跟隨中
   useEffect(() => {
     const getUserFollowing = async () => {
       try {
@@ -104,7 +104,7 @@ const UserFollowing = () => {
       }
     };
     getUserFollowing();
-  }, [userFollowings, userId]);
+  }, []);
 
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {
@@ -119,20 +119,7 @@ const UserFollowing = () => {
       }
       // 變更 popularbar
       handleFollowState(id)
-
-      setUserFollowings((prevUsersData) =>
-        prevUsersData.map((user) =>
-          user.Following.id === id
-            ? {
-                ...user,
-                Following: {
-                  ...user.Following,
-                  isFollowed: !user.Following.isFollowed,
-                },
-              }
-            : user
-        )
-      );
+      handleFollowings(id)
     } catch (error) {
       console.error("Error occur:", error);
     }

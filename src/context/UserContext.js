@@ -35,9 +35,24 @@ export const UserContextProvider = ({ children }) => {
   }
   // 跟隨中
   const [userFollowings, setUserFollowings] = useState([])
+  const handleFollowings = (id)=>{
+    setUserFollowings((prevUsersData) =>
+      prevUsersData.map((user) =>
+        user.Following.id === id
+          ? {
+              ...user,
+              Following: {
+                ...user.Following,
+                isFollowed: !user.Following.isFollowed,
+              },
+            }
+          : user
+      )
+    )
+  }
 
   return (
-    <UserContext.Provider value={{ userData, setUserData, followState, setFollowState, handleFollowState, userFollowers, setUserFollowers, userFollowings, setUserFollowings, handleFollowers }}>
+    <UserContext.Provider value={{ userData, setUserData, followState, setFollowState, handleFollowState, userFollowers, setUserFollowers, userFollowings, setUserFollowings, handleFollowers, handleFollowings }}>
       {children}
     </UserContext.Provider>
   );

@@ -4,6 +4,7 @@ import PopularCard from "./PopularCard";
 // api
 import { getPopUsers, followUser, disFollowUser } from "../api/popular";
 import { useUserContext } from "../context/UserContext";
+import { getUserFollowings } from "../api/user";
 
 const Container = styled.div`
     margin-top: 16px;
@@ -35,7 +36,7 @@ const CardContainer = styled.div`
 
 
 export default function PopularBar(){
-    const {followState, setFollowState, userFollowers, setUserFollowers, handleFollowers} = useUserContext()
+    const {followState, setFollowState, userFollowers, handleFollowers, userFollowings, setUserFollowings,handleFollowings} = useUserContext()
     // 獲取推薦使用者
     useEffect(()=>{
         const fetchUsers = async()=>{
@@ -56,10 +57,16 @@ export default function PopularBar(){
       if (followState.find((user) => user.id === id).isFollowed) {
         await disFollowUser({ followingId: id });
         userFollowers.find((user) => user.followerId === id) && handleFollowers(id)
-        
+        userFollowings.find((user) => user.followingId === id) && handleFollowings(id)
       } else {
         await followUser({ id });
         userFollowers.find((user) => user.followerId === id) && handleFollowers(id)
+        if(userFollowings.find((user) => user.followingId === id)){
+          handleFollowings(id)
+        } else {
+          const updatedFollowings = await getUserFollowings()
+          setUserFollowings(updatedFollowings);
+        }
       }
 
       setFollowState((prevUsersData) =>
