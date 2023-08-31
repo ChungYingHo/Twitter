@@ -55,11 +55,19 @@ const Info = styled.div`
     }
 `
 
-export default function ReplyCard({name, account, avatar, content, timestamp, replyAccount, userId}){
+export default function ReplyCard({name, account, avatar, content, timestamp, replyAccount, userId, disableLinks = false}){
     const navigate = useNavigate()
     return(
         <Container>
-            <img src={avatar} alt='avatar' onClick={()=>navigate(`/user/${userId}`)}/>
+            <img 
+            src={avatar} alt='avatar' 
+            onClick={(event) => {
+                if (!disableLinks) {
+                    navigate(`/user/${userId}`);
+                } 
+                }}
+                style={{ cursor: disableLinks ? "default" : "pointer" }}
+            />
             <Post>
                 <Info>
                     <p className='name'>{name}</p>
