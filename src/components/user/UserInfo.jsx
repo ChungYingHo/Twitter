@@ -169,7 +169,7 @@ const UserInfo = () => {
   const [uploadAvatar, setUploadAvatar] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
-  const { userData, setUserData, followState, setFollowState } = useContext(UserContext);
+  const { userData, setUserData, followState, setFollowState, handleFollowState } = useContext(UserContext);
   const [isNoti, setIsNoti] = useState(false);
 
   const { id: userId } = useParams();
@@ -248,13 +248,8 @@ const UserInfo = () => {
         console.log("data of followUser", userData);
       }
       // 變更popularbar
-      if(followState.find((user) => user.id === userId).isFollowed){
-        setFollowState((prevUsersData) =>
-          prevUsersData.map((user) =>
-            user.id === userId ? { ...user, isFollowed: !user.isFollowed } : user
-          )
-        )
-      }
+      handleFollowState(userId)
+      console.log(followState)
     } catch (error) {
       console.error("Error occur:", error);
       console.log("userId in handleFollow", userId);
