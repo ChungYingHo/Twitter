@@ -58,9 +58,8 @@ const StyledLink = styled(Link)`
 
 const UserFollowing = () => {
   const { id: userId } = useParams();
-  const [userFollowings, setUserFollowings] = useState([]);
   const navigate = useNavigate();
-  const { userData, setUserData, followState, setFollowState, handleFollowState } = useContext(UserContext);
+  const { userData, setUserData, handleFollowState, userFollowings, setUserFollowings } = useContext(UserContext);
 
   // 驗證 token
   useEffect(() => {

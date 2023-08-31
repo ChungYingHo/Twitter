@@ -35,7 +35,7 @@ const CardContainer = styled.div`
 
 
 export default function PopularBar(){
-    const {followState, setFollowState} = useUserContext()
+    const {followState, setFollowState, userFollowers, setUserFollowers, handleFollowers} = useUserContext()
     // 獲取推薦使用者
     useEffect(()=>{
         const fetchUsers = async()=>{
@@ -55,9 +55,13 @@ export default function PopularBar(){
     try {
       if (followState.find((user) => user.id === id).isFollowed) {
         await disFollowUser({ followingId: id });
+        userFollowers.find((user) => user.followerId === id) && handleFollowers(id)
+        
       } else {
         await followUser({ id });
+        userFollowers.find((user) => user.followerId === id) && handleFollowers(id)
       }
+
       setFollowState((prevUsersData) =>
         prevUsersData.map((user) =>
           user.id === id ? { ...user, isFollowed: !user.isFollowed } : user
