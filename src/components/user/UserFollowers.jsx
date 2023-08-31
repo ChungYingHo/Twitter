@@ -59,7 +59,7 @@ const StyledLink = styled(Link)`
 const UserFollowers = () => {
   const { id: userId } = useParams();
   const [userFollowers, setUserFollowers] = useState([]);
-  const { userData, setUserData, followState, setFollowState } = useContext(UserContext);
+  const { userData, setUserData, followState, setFollowState, handleFollowState } = useContext(UserContext);
   const navigate = useNavigate();
 
   // 驗證 token
@@ -119,13 +119,7 @@ const UserFollowers = () => {
         await followUser({ id });
       }
       // 變更 popularbar
-      if(followState.find((user) => user.id === id).isFollowed){
-        setFollowState((prevUsersData) =>
-          prevUsersData.map((user) =>
-            user.id === id ? { ...user, isFollowed: !user.isFollowed } : user
-          )
-        )
-      }
+      handleFollowState(id)
 
       setUserFollowers((prevUsersData) =>
         prevUsersData.map((user) =>

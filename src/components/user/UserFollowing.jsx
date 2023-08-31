@@ -60,7 +60,7 @@ const UserFollowing = () => {
   const { id: userId } = useParams();
   const [userFollowings, setUserFollowings] = useState([]);
   const navigate = useNavigate();
-  const { userData, setUserData, followState, setFollowState } = useContext(UserContext);
+  const { userData, setUserData, followState, setFollowState, handleFollowState } = useContext(UserContext);
 
   // 驗證 token
   useEffect(() => {
@@ -119,13 +119,7 @@ const UserFollowing = () => {
         await followUser({ id });
       }
       // 變更 popularbar
-      if(followState.find((user) => user.id === id).isFollowed){
-        setFollowState((prevUsersData) =>
-          prevUsersData.map((user) =>
-            user.id === id ? { ...user, isFollowed: !user.isFollowed } : user
-          )
-        )
-      }
+      handleFollowState(id)
 
       setUserFollowings((prevUsersData) =>
         prevUsersData.map((user) =>
