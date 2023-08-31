@@ -12,9 +12,10 @@ import { getUserFollowers, getUser } from "../../api/user";
 import { followUser, disFollowUser } from "../../api/popular";
 
 const Container = styled.div`
-  outline: green solid 2px;
+  outline: 1px solid #e6ecf0;
   padding: 0;
   width: 100%;
+  height: 100%;
   border: ${style.styledBorder};
   position: relative;
 `;
@@ -58,7 +59,9 @@ const StyledLink = styled(Link)`
 
 const UserFollowers = () => {
   const { id: userId } = useParams();
+
   const { userData, setUserData, handleFollowState, userFollowers, setUserFollowers, handleFollowers } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   // 驗證 token
@@ -75,7 +78,6 @@ const UserFollowers = () => {
     };
 
     checkTokenIsValid();
-    setUserData([]);
   }, [navigate]);
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
@@ -106,6 +108,7 @@ const UserFollowers = () => {
     getUserFollower();
   }, []);
 
+
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {
     try {
@@ -117,9 +120,11 @@ const UserFollowers = () => {
       } else {
         await followUser({ id });
       }
+      
       // 變更 popularbar
       handleFollowState(id)
       handleFollowers(id)
+
     } catch (error) {
       console.error("Error occur:", error);
     }

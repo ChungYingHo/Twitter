@@ -86,10 +86,9 @@ const MainPage = () => {
   } = usePopup();
   const { userData, setUserData } = useContext(UserContext);
   const [postContent, setPostContent] = useState("");
-  
-  // 驗證 token
-  useAuthValitate('/login')
 
+  // 驗證 token
+  useAuthValitate("/login");
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
   useEffect(() => {
@@ -120,7 +119,7 @@ const MainPage = () => {
     fetchTweets();
   }, []);
 
-  console.log("posts", posts);
+  // console.log("posts", posts);
 
   // 發送貼文
   const handlePostSubmit = async () => {

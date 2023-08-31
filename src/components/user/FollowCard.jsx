@@ -7,7 +7,7 @@ const Container = styled.div`
   max-width: 100%;
   border-bottom: ${style.styledBorder};
   display: flex;
-  margin: 16px 0;
+  padding: 16px 0;
   img {
     ${style.styledImg};
     margin-left: 24px;

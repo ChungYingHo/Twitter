@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import PopularCard from "./PopularCard";
 // api
 import { getPopUsers, followUser, disFollowUser } from "../api/popular";
@@ -7,15 +7,16 @@ import { useUserContext } from "../context/UserContext";
 import { getUserFollowings, getUser } from "../api/user";
 
 const Container = styled.div`
-    margin-top: 16px;
-    padding: 0;
-    height: fit-content;
-    width: 100%;
-    background-color: #fafafb;
-    border-radius: 16px;
-    position: absolute;
-    right: 0;
-`
+  background-color: #fafafb;
+  border-radius: 16px;
+
+  right: 0;
+  height: 100vh;
+  width: 100%;
+  padding: 0;
+  position: sticky;
+  top: 16px;
+`;
 
 const Title = styled.div`
   height: 74px;
@@ -35,6 +36,7 @@ const CardContainer = styled.div`
 `;
 
 
+
 export default function PopularBar(){
     const {followState, setFollowState, userFollowers, handleFollowers, userFollowings, setUserFollowings,handleFollowings, userData, setUserData} = useUserContext()
     // 獲取推薦使用者
@@ -49,6 +51,7 @@ export default function PopularBar(){
         }
         fetchUsers()
     }, [])
+
 
 
   // 點擊切換 isFollowed 狀態

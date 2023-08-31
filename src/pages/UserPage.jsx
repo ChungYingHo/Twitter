@@ -1,4 +1,3 @@
-
 // package
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
@@ -22,7 +21,6 @@ import {
 import { UserContext } from "../context/UserContext";
 
 const Container = styled.div`
-  outline: green solid 2px;
   padding: 0;
   width: 100%;
   border: ${style.styledBorder};
@@ -89,11 +87,10 @@ const UserPage = () => {
   const [userReplies, setUserReplies] = useState([]);
   const [userLikes, setUserLikes] = useState([]);
 
-  const { userData, setUserData } = useContext(UserContext)
+  const { userData, setUserData } = useContext(UserContext);
 
   // 驗證 token
-  useAuthValitate('/login')
-
+  useAuthValitate("/login");
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
   useEffect(() => {
