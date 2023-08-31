@@ -26,13 +26,12 @@ const Container = styled.div`
 `;
 
 const SettingPage = () => {
-    const [user, setUser] = useState({});
-    const [account, setAccount] = useState("");
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
+    const { userData, setUserData } = useContext(UserContext);
+    const [account, setAccount] = useState(userData.account);
+    const [name, setName] = useState(userData.name);
+    const [email, setEmail] = useState(userData.email);
     const [password, setPassword] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
-    const { userData, setUserData } = useContext(UserContext);
     // error control
     const {
       accountError,
