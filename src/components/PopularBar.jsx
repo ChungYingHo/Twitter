@@ -14,7 +14,7 @@ const Container = styled.div`
   min-height: 731px;
   width: 100%;
   padding: 0;
-  position: absolute;
+  position: sticky;
   top: 16px;
 `;
 
@@ -72,7 +72,6 @@ export default function PopularBar() {
           handleFollowings(id);
         const updatedData = await getUser(id);
         setUserData(updatedData);
-
       } else {
         await followUser({ id });
         userFollowers.find((user) => user.followerId === id) &&
