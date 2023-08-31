@@ -82,6 +82,7 @@ export default function PostCard({
   onPostCardClick,
   userId,
   isLike,
+  disableLinks = false
 }) {
   const navigate = useNavigate();
   const localStorageUserId = localStorage.getItem("userID");
@@ -93,12 +94,13 @@ export default function PostCard({
         src={avatar}
         alt="avatar"
         onClick={(event) => {
-          if (localStorageUserId !== event.target.id) {
+          if (!disableLinks && localStorageUserId !== event.target.id) {
             navigate(`/user/${userId}`);
-          } else {
+          } else if (!disableLinks) {
             navigate("/user");
           }
         }}
+        style={{ cursor: disableLinks ? "default" : "pointer" }}
       />
       <Post>
         <Info>
@@ -107,11 +109,21 @@ export default function PostCard({
             @{account}・<TimeDiff timestamp={timestamp} />
           </p>
         </Info>
-        <p className="content" onClick={() => navigate(`/main/${id}`)}>
+        <p className="content"
+          onClick={() => {
+              if (!disableLinks) {
+                navigate(`/main/${id}`);
+              }
+            }}
+            style={{ cursor: disableLinks ? "default" : "pointer" }}
+        >
           {content}
         </p>
         <Interact>
-          <div onClick={onPostCardClick}>
+          <div 
+            onClick={!disableLinks ? onPostCardClick : null}
+            style={{ cursor: disableLinks ? "default" : "pointer" }}
+          >
             <Reply />
             <p>{reply}</p>
           </div>

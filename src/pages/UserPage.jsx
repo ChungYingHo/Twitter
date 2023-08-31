@@ -175,6 +175,7 @@ const UserPage = () => {
                       timestamp={tweet.createdAt}
                       reply={tweet.repliesCount}
                       like={tweet.likesCount}
+                      disableLinks={true}
                     />
                   </PostCardWrapper>
                 );
@@ -191,6 +192,7 @@ const UserPage = () => {
                       content={reply.comment}
                       timestamp={reply.createdAt}
                       replyAccount={reply.Tweet.User.account}
+                      disableLinks={true}
                     />
                   </ReplyCardWrapper>
                 );
@@ -209,6 +211,7 @@ const UserPage = () => {
                       reply={like.Tweet.repliesCount}
                       like={like.Tweet.likesCount}
                       isLike={true}
+                      disableLinks={true}
                     />
                   </PostCardWrapper>
                 );

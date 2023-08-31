@@ -14,7 +14,7 @@ import AuthInput from "../components/AuthInput";
 import { Toast } from "../components/common/common.styled";
 // api and function
 import { register } from "../api/auth";
-import { useAuthValitate } from "../utils/authValidate";
+import { useLoginAuthValitate } from "../utils/authValidate";
 import { useErrorContext } from "../context/ErrorContext";
 
 const RegisterPage = () => {
@@ -25,7 +25,7 @@ const RegisterPage = () => {
   const [checkPassword, setCheckPassword] = useState("");
   const navigate = useNavigate();
   // token validate
-  useAuthValitate('/main')
+  useLoginAuthValitate('/main')
 
   // error control
   const {

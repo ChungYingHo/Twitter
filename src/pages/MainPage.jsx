@@ -205,6 +205,7 @@ const MainPage = () => {
                   timestamp={data.createdAt}
                   reply={data.repliesCount}
                   like={data.likesCount}
+                  isLike={data.isLiked}
                   onPostCardClick={() => handlePostCardClick(data)}
                 />
               </div>
