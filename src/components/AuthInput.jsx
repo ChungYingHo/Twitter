@@ -86,7 +86,7 @@ const AuthInput = ({
   minLength,
   error,
   onClick,
-  inputwarntext,
+  inputwarntext = null,
 }) => {
   const hasError = error && error !== "";
   const [inputValue, setInputValue] = useState(value || "");

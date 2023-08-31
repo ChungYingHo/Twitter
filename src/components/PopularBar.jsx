@@ -11,7 +11,7 @@ const Container = styled.div`
   border-radius: 16px;
 
   right: 0;
-  height: 100vh;
+  min-height: 731px;
   width: 100%;
   padding: 0;
   position: sticky;
@@ -35,41 +35,50 @@ const CardContainer = styled.div`
   width: 100%;
 `;
 
-
-
-export default function PopularBar(){
-    const {followState, setFollowState, userFollowers, handleFollowers, userFollowings, setUserFollowings,handleFollowings, userData, setUserData} = useUserContext()
-    // 獲取推薦使用者
-    useEffect(()=>{
-        const fetchUsers = async()=>{
-            try{
-                const usersData = await getPopUsers()
-                setFollowState(usersData)
-            } catch(error){
-                console.error('Get Users Failed:', error)
-            }
-        }
-        fetchUsers()
-    }, [])
-
-
+export default function PopularBar() {
+  const {
+    followState,
+    setFollowState,
+    userFollowers,
+    handleFollowers,
+    userFollowings,
+    setUserFollowings,
+    handleFollowings,
+    userData,
+    setUserData,
+  } = useUserContext();
+  // 獲取推薦使用者
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const usersData = await getPopUsers();
+        setFollowState(usersData);
+      } catch (error) {
+        console.error("Get Users Failed:", error);
+      }
+    };
+    fetchUsers();
+  }, []);
 
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {
     try {
       if (followState.find((user) => user.id === id).isFollowed) {
         await disFollowUser({ followingId: id });
-        userFollowers.find((user) => user.followerId === id) && handleFollowers(id)
-        userFollowings.find((user) => user.followingId === id) && handleFollowings(id)
+        userFollowers.find((user) => user.followerId === id) &&
+          handleFollowers(id);
+        userFollowings.find((user) => user.followingId === id) &&
+          handleFollowings(id);
         const updatedData = await getUser(id);
         setUserData(updatedData);
       } else {
         await followUser({ id });
-        userFollowers.find((user) => user.followerId === id) && handleFollowers(id)
-        if(userFollowings.find((user) => user.followingId === id)){
-          handleFollowings(id)
+        userFollowers.find((user) => user.followerId === id) &&
+          handleFollowers(id);
+        if (userFollowings.find((user) => user.followingId === id)) {
+          handleFollowings(id);
         } else {
-          const updatedFollowings = await getUserFollowings()
+          const updatedFollowings = await getUserFollowings();
           setUserFollowings(updatedFollowings);
         }
         const updatedData = await getUser(id);

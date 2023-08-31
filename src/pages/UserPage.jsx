@@ -68,9 +68,7 @@ const StyledLink = styled(Link)`
 
 const SwitchZoneContainer = styled.div`
   width: 100%;
-  height: 660px;
-  overflow-y: auto;
-  scroll-behavior: smooth;
+  height: fit-content;
 `;
 
 const PostCardWrapper = styled.div`
