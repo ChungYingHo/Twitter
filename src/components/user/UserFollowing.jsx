@@ -12,9 +12,10 @@ import { followUser, disFollowUser } from "../../api/popular";
 import { UserContext } from "../../context/UserContext";
 
 const Container = styled.div`
-  outline: green solid 2px;
+  outline: 1px solid #e6ecf0;
   padding: 0;
   width: 100%;
+  height: 100%;
   border: ${style.styledBorder};
   position: relative;
 `;
@@ -60,7 +61,8 @@ const UserFollowing = () => {
   const { id: userId } = useParams();
   const [userFollowings, setUserFollowings] = useState([]);
   const navigate = useNavigate();
-  const { userData, setUserData, followState, setFollowState } = useContext(UserContext);
+  const { userData, setUserData, followState, setFollowState } =
+    useContext(UserContext);
 
   // 驗證 token
   useEffect(() => {
@@ -76,7 +78,6 @@ const UserFollowing = () => {
     };
 
     checkTokenIsValid();
-    setUserData([]);
   }, [navigate]);
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
@@ -119,12 +120,12 @@ const UserFollowing = () => {
         await followUser({ id });
       }
       // 變更 popularbar
-      if(followState.find((user) => user.id === id).isFollowed){
+      if (followState.find((user) => user.id === id).isFollowed) {
         setFollowState((prevUsersData) =>
           prevUsersData.map((user) =>
             user.id === id ? { ...user, isFollowed: !user.isFollowed } : user
           )
-        )
+        );
       }
 
       setUserFollowings((prevUsersData) =>

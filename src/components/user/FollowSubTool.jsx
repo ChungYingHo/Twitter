@@ -4,8 +4,8 @@ import { Link, useParams } from "react-router-dom";
 const SubToolContainer = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #e6ecf0;
   height: 53px;
+  border-bottom: 1px solid #e6ecf0;
 `;
 
 const SubToolBtn = styled.button`
