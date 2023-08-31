@@ -175,6 +175,7 @@ const UserPage = () => {
                       timestamp={tweet.createdAt}
                       reply={tweet.repliesCount}
                       like={tweet.likesCount}
+                      disableLinks={true}
                     />
                   </PostCardWrapper>
                 );

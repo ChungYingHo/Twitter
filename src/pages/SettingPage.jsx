@@ -31,7 +31,6 @@ const SettingPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
-    const id = localStorage.getItem('userID')
     // error control
     const {
       accountError,
@@ -54,12 +53,17 @@ const SettingPage = () => {
     // 抓取用戶資料
     useEffect(() => {
       const fetchingUser = async () => {
+        const userId = localStorage.getItem('userID')
+        console.log('settingID', userId)
+        console.log(typeof(userId))
         try {
-          const userData = await getUser({id});
-          setUser(userData);
-          setAccount(userData.account);
-          setName(userData.name);
-          setEmail(userData.email);
+          console.log(userId)
+          const userData = await getUser({id: localStorage.getItem('userID')});
+          setUser(prevUser=>userData);
+          setAccount(prevAccount=>userData.account);
+          setName(prevName=>userData.name);
+          setEmail(prevEmail=>userData.email);
+          console.log('userdata',userData)
         } catch (error) {
           console.error("Get User Failed:", error);
         }
@@ -101,7 +105,7 @@ const SettingPage = () => {
         </SettingTittleContainer>
 
         <SettingHr />
-        {user && (
+        {user && user.account && user.name && user.email &&(
           <>
             <SettingInputContainer>
               <AuthInput
