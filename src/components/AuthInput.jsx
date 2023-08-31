@@ -63,8 +63,8 @@ const InputValueWrapper = styled.div`
   width: 100%;
   margin-top: 4px;
   display: flex;
-  justify-content: ${({ hasError }) =>
-    hasError ? "space-between" : "flex-end"};
+  justify-content: ${({ haserror }) =>
+    haserror ? "space-between" : "flex-end"};
 `;
 
 const InputValueMsg = styled.p`
@@ -132,7 +132,7 @@ const AuthInput = ({
           />
         )}
       </StyledContainer>
-      <InputValueWrapper hasError={!!error || inputValue.length >= maxLength}>
+      <InputValueWrapper haserror={!!error || inputValue.length >= maxLength}>
         {error && <ErrorMessage>{truncatedError}</ErrorMessage>}
         {inputValue.length >= maxLength && (
           <ErrorMessage>{inputwarntext}</ErrorMessage>
