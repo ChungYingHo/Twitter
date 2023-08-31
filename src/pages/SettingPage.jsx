@@ -1,6 +1,6 @@
 // package
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 // component and style
 import AuthInput from "../components/AuthInput";
 import {
@@ -16,6 +16,7 @@ import * as style from "../components/common/common.styled"
 import { getUser, editUser } from "../api/setting";
 import { useAuthValitate } from "../utils/authValidate";
 import {useErrorContext} from '../context/ErrorContext'
+import { UserContext } from "../context/UserContext";
 
 const Container = styled.div`
   padding: 0;
@@ -31,6 +32,7 @@ const SettingPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
+    const { userData, setUserData } = useContext(UserContext);
     // error control
     const {
       accountError,
@@ -51,25 +53,25 @@ const SettingPage = () => {
     // 驗證 token
     useAuthValitate('/login')
     // 抓取用戶資料
-    useEffect(() => {
-      const fetchingUser = async () => {
-        const userId = localStorage.getItem('userID')
-        console.log('settingID', userId)
-        console.log(typeof(userId))
-        try {
-          console.log(userId)
-          const userData = await getUser({id: userId});
-          setUser(prevUser=>userData);
-          setAccount(prevAccount=>userData.account);
-          setName(prevName=>userData.name);
-          setEmail(prevEmail=>userData.email);
-          console.log('userdata',userData)
-        } catch (error) {
-          console.error("Get User Failed:", error);
-        }
-      };
-      fetchingUser();
-    }, []);
+    // useEffect(() => {
+    //   const fetchingUser = async () => {
+    //     const userId = localStorage.getItem('userID')
+    //     console.log('settingID', userId)
+    //     console.log(typeof(userId))
+    //     try {
+    //       console.log(userId)
+    //       const userData = await getUser({id: userId});
+    //       setUser(prevUser=>userData);
+    //       setAccount(prevAccount=>userData.account);
+    //       setName(prevName=>userData.name);
+    //       setEmail(prevEmail=>userData.email);
+    //       console.log('userdata',userData)
+    //     } catch (error) {
+    //       console.error("Get User Failed:", error);
+    //     }
+    //   };
+    //   fetchingUser();
+    // }, []);
 
     const handleClick = async () => {
       if (
@@ -105,7 +107,7 @@ const SettingPage = () => {
         </SettingTittleContainer>
 
         <SettingHr />
-        {user && user.account && user.name && user.email &&(
+        {userData && (
           <>
             <SettingInputContainer>
               <AuthInput
@@ -113,7 +115,7 @@ const SettingPage = () => {
                 maxLength={30}
                 minLength={1}
                 name={account}
-                value={user.account}
+                value={userData.account}
                 placeholder={"請輸入帳號"}
                 onChange={(accountInputValue) => setAccount(accountInputValue)}
                 error={accountError}
@@ -127,7 +129,7 @@ const SettingPage = () => {
                 maxLength={50}
                 minLength={1}
                 name={name}
-                value={user.name}
+                value={userData.name}
                 placeholder={"請輸入使用者名稱"}
                 onChange={(nameInputValue) => setName(nameInputValue)}
                 error={nameError}
@@ -142,7 +144,7 @@ const SettingPage = () => {
                 maxLength={30}
                 minLength={1}
                 name={email}
-                value={user.email}
+                value={userData.email}
                 placeholder={"請輸入Email"}
                 onChange={(emailInputValue) => setEmail(emailInputValue)}
                 error={emailError}
@@ -157,7 +159,7 @@ const SettingPage = () => {
                 maxLength={20}
                 minLength={5}
                 name={password}
-                value={user.password}
+                value={userData.password}
                 placeholder={"請設定密碼"}
                 onChange={(passwordInputValue) => setPassword(passwordInputValue)}
                 error={passwordError}
