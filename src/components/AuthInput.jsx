@@ -86,7 +86,7 @@ const AuthInput = ({
   minLength,
   error,
   onClick,
-  inputwarntext,
+  inputwarntext = null,
 }) => {
   const hasError = error && error !== "";
   const [inputValue, setInputValue] = useState(value || "");
@@ -132,7 +132,7 @@ const AuthInput = ({
           />
         )}
       </StyledContainer>
-      <InputValueWrapper haserror={!!error || inputValue.length >= maxLength}>
+      <InputValueWrapper $haserror={!!error || inputValue.length >= maxLength}>
         {error && <ErrorMessage>{truncatedError}</ErrorMessage>}
         {inputValue.length >= maxLength && (
           <ErrorMessage>{inputwarntext}</ErrorMessage>
