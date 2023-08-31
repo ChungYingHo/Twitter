@@ -99,12 +99,13 @@ const PhotoIconWrapper = styled.div`
 `;
 
 const NameInputContainer = styled.div`
-  height: 54px;
-  margin-bottom: 20px;
+  height: 78px;
+  margin-bottom: 8px;
 `;
 
 const IntroInputContainer = styled.div`
-  margin-bottom: 20px;
+  height: 171px;
+  margin-bottom: 8px;
 `;
 
 const UserEdit = ({
@@ -184,10 +185,10 @@ const UserEdit = ({
           <AuthInput
             label={"名稱"}
             name={userData.name}
-            value={userData.name}
             placeholder={userData.name}
             onChange={handleChangeName}
             maxLength={50}
+            inputwarntext={"字數不可超過上限!"}
           />
         </NameInputContainer>
 
@@ -195,10 +196,11 @@ const UserEdit = ({
           <AuthInput
             label={"自我介紹"}
             name={userData.introduction}
-            placeholder={userData.name}
+            placeholder={userData.introduction}
             onChange={handleChangeIntro}
             isLarge={true}
             maxLength={160}
+            inputwarntext={"字數不可超過上限!"}
           />
         </IntroInputContainer>
       </MainWrapper>
