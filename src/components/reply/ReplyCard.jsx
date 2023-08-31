@@ -64,7 +64,9 @@ export default function ReplyCard({name, account, avatar, content, timestamp, re
             onClick={(event) => {
                 if (!disableLinks) {
                     navigate(`/user/${userId}`);
-                } 
+                } else if (!disableLinks) {
+                    navigate("/user");
+                }
                 }}
                 style={{ cursor: disableLinks ? "default" : "pointer" }}
             />
