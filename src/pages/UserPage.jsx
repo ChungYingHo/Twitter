@@ -24,7 +24,7 @@ import { UserContext } from "../context/UserContext";
 const Container = styled.div`
   outline: green solid 2px;
   padding: 0;
-  width: 56.2%;
+  width: 100%;
   border: ${style.styledBorder};
   position: relative;
 `;
@@ -175,7 +175,10 @@ const UserPage = () => {
                       timestamp={tweet.createdAt}
                       reply={tweet.repliesCount}
                       like={tweet.likesCount}
-                      disableLinks={true}
+                      id={tweet.id}
+                      userId={tweet.User.id}
+                      disableAvatar={true}
+                      disableReply={true}
                     />
                   </PostCardWrapper>
                 );
@@ -211,7 +214,11 @@ const UserPage = () => {
                       reply={like.Tweet.repliesCount}
                       like={like.Tweet.likesCount}
                       isLike={true}
-                      disableLinks={true}
+                      id={like.Tweet.id}
+                      userId={like.UserId}
+                      disableReply={true}
+                      // api未回傳發文者id
+                      disableAvatar={true}
                     />
                   </PostCardWrapper>
                 );

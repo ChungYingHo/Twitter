@@ -10,6 +10,7 @@ const Container = styled.div`
     width: 15.6%;
     position: sticky;
     height: 100vh;
+    top: 0;
 `
 
 const Logo = styled(acLogo)`

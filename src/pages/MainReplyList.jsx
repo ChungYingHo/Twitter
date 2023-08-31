@@ -23,7 +23,7 @@ import { useAuthValitate } from "../utils/authValidate";
 
 
 const Container = styled.div`
-  width: 56.2%;
+  width: 100%;
   padding: 0;
   border: ${style.styledBorder};
   position: relative;

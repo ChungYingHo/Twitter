@@ -3,18 +3,18 @@ import * as style from "../common/common.styled";
 import { ReactComponent as LeftArrow } from "../../assets/left-arrow.svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../../context/UserContext";
 import FollowrSubTool from "./FollowSubTool";
 import FollowCard from "./FollowCard";
 // api
 import { checkPermission } from "../../api/Permission";
 import { getUserFollowings, getUser } from "../../api/user";
 import { followUser, disFollowUser } from "../../api/popular";
+import { UserContext } from "../../context/UserContext";
 
 const Container = styled.div`
   outline: green solid 2px;
   padding: 0;
-  width: 56.2%;
+  width: 100%;
   border: ${style.styledBorder};
   position: relative;
 `;
@@ -60,7 +60,7 @@ const UserFollowing = () => {
   const { id: userId } = useParams();
   const [userFollowings, setUserFollowings] = useState([]);
   const navigate = useNavigate();
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData, setUserData, followState, setFollowState } = useContext(UserContext);
 
   // 驗證 token
   useEffect(() => {
@@ -117,6 +117,14 @@ const UserFollowing = () => {
         await disFollowUser({ followingId: id });
       } else {
         await followUser({ id });
+      }
+      // 變更 popularbar
+      if(followState.find((user) => user.id === id).isFollowed){
+        setFollowState((prevUsersData) =>
+          prevUsersData.map((user) =>
+            user.id === id ? { ...user, isFollowed: !user.isFollowed } : user
+          )
+        )
       }
 
       setUserFollowings((prevUsersData) =>

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { ReactComponent as acLogo } from "../assets/logo.svg";
 import { ReactComponent as Home } from "../assets/home.svg";
@@ -10,9 +9,11 @@ import * as style from "../components/common/common.styled";
 import { usePopup } from "../context/Popup";
 
 const Container = styled.div`
-  position: relative;
   height: 100vh;
-  width: 15.6%;
+  width: 100%;
+  padding: 0;
+  position: sticky;
+  top: 0;
 `;
 
 const Logo = styled(acLogo)`
