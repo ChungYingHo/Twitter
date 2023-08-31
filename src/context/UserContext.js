@@ -50,6 +50,8 @@ export const UserContextProvider = ({ children }) => {
       )
     )
   }
+  // userinfo
+  
 
   return (
     <UserContext.Provider value={{ userData, setUserData, followState, setFollowState, handleFollowState, userFollowers, setUserFollowers, userFollowings, setUserFollowings, handleFollowers, handleFollowings }}>
