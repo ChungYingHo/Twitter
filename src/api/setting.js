@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const apiURL = "https://sheltered-river-86590-4f6cb06448e2.herokuapp.com/api";
-const userId = localStorage.getItem("userID");
 
 const axiosInstance = axios.create({
   baseURL: apiURL,
@@ -21,9 +20,9 @@ axiosInstance.interceptors.request.use(
 );
 
 // 取得使用者資訊
-export const getUser = async () => {
+export const getUser = async (id) => {
   try {
-    const res = await axiosInstance.get(`${apiURL}/users/${userId}`);
+    const res = await axiosInstance.get(`${apiURL}/users/${id}`);
     return res.data;
   } catch (error) {
     console.error("[Get User failed]: ", error);
@@ -32,6 +31,7 @@ export const getUser = async () => {
 
 // 更改使用者資訊
 export const editUser = async ({
+  id,
   name,
   account,
   email,
@@ -40,7 +40,8 @@ export const editUser = async ({
 }) => {
   try {
     console.log("edit");
-    const res = await axiosInstance.put(`${apiURL}/users/${userId}`, {
+    const res = await axiosInstance.put(`${apiURL}/users/${id}`, {
+      id,
       name,
       account,
       email,
