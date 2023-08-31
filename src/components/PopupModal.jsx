@@ -3,6 +3,7 @@ import * as style from "./common/common.styled";
 import { ReactComponent as Close } from "../assets/close.svg";
 
 const Overlay = styled.div`
+  z-index: 100;
   position: fixed;
   top: 0;
   left: 0;
@@ -13,6 +14,7 @@ const Overlay = styled.div`
 `;
 
 const Container = styled.div`
+  z-index: 101;
   height: fit-content;
   width: 640px;
   border-radius: 14px;
@@ -21,7 +23,6 @@ const Container = styled.div`
   position: fixed;
   top: 56px;
   background-color: #ffffff;
-  z-index: 2;
 `;
 
 const Header = styled.div`
