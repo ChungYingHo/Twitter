@@ -18,9 +18,10 @@ const StyledContainer = styled.div`
 const StyledLabel = styled.label`
   width: 50%;
   font-size: 14;
-  color: "#696974";
+  color: #696974;
   text-align: start;
   margin: 0 0 0 16px;
+  font-family: "Noto Sans TC", "Montserrat";
 `;
 
 const StyledInput = styled.input`
@@ -29,7 +30,9 @@ const StyledInput = styled.input`
   margin: 0 0 0 16px;
   border: none;
   background-color: #f5f8fa;
+  color: #171725;
   border-radius: 0px;
+  font-family: "Noto Sans TC";
 `;
 
 const StyledTextarea = styled.textarea`
@@ -41,6 +44,8 @@ const StyledTextarea = styled.textarea`
   resize: none;
   line-height: 26px;
   font-size: 16px;
+  font-family: "Noto Sans TC";
+  color: #171725;
   &:focus {
     outline: none;
   }
@@ -50,7 +55,24 @@ const ErrorMessage = styled.p`
   font-size: 12px;
   font-weight: 500;
   color: #fc5a5a;
-  margin: 0 0 0 16px;
+  display: inline-block;
+  margin: 0;
+`;
+
+const InputValueWrapper = styled.div`
+  width: 100%;
+  margin-top: 4px;
+  display: flex;
+  justify-content: ${({ hasError }) =>
+    hasError ? "space-between" : "flex-end"};
+`;
+
+const InputValueMsg = styled.p`
+  color: #696974;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: "Noto Sans TC";
+  margin: 0;
 `;
 
 const AuthInput = ({
@@ -64,18 +86,25 @@ const AuthInput = ({
   minLength,
   error,
   onClick,
+  inputwarntext,
 }) => {
   const hasError = error && error !== "";
+  const [inputValue, setInputValue] = useState(value || "");
 
-  const [isClicked, setIsClicked] = useState(false);
+  const [setIsClicked] = useState(false);
   const handleClick = () => {
-    setIsClicked(true);
-
-    // 若有使用AuthInput但沒有傳onClick這個prop,就不呼叫onClick()。避免出現error
+    // 若有使用AuthInput但沒有傳onClick這個prop,就不呼叫onClick()。避免出現error。setIsClicked這個prop也有同樣狀況。
+    setIsClicked && setIsClicked(true);
     onClick && onClick();
   };
 
   const truncatedError = error?.substring(6);
+
+  const handleInputChange = (newValue) => {
+    setInputValue(newValue);
+    onChange?.(newValue);
+  };
+
   return (
     <>
       <StyledContainer $error={hasError}>
@@ -84,24 +113,34 @@ const AuthInput = ({
           <StyledTextarea
             placeholder={placeholder || ""}
             defaultValue={value || ""}
-            onChange={(event) => onChange?.(event.target.value)}
+            onChange={(event) => handleInputChange(event.target.value)}
             rows="4"
             maxLength={maxLength}
             minLength={minLength}
+            inputwarntext={inputwarntext}
           />
         ) : (
           <StyledInput
             type={type || "text"}
             placeholder={placeholder || ""}
             defaultValue={value || ""}
-            onChange={(event) => onChange?.(event.target.value)}
+            onChange={(event) => handleInputChange(event.target.value)}
             maxLength={maxLength}
             minLength={minLength}
             onClick={handleClick}
+            inputwarntext={inputwarntext}
           />
         )}
       </StyledContainer>
-      {error && <ErrorMessage>{truncatedError}</ErrorMessage>}
+      <InputValueWrapper hasError={!!error || inputValue.length >= maxLength}>
+        {error && <ErrorMessage>{truncatedError}</ErrorMessage>}
+        {inputValue.length >= maxLength && (
+          <ErrorMessage>{inputwarntext}</ErrorMessage>
+        )}
+        <InputValueMsg>
+          {inputValue.length}/{maxLength}
+        </InputValueMsg>
+      </InputValueWrapper>
     </>
   );
 };
