@@ -1,70 +1,55 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Twitter
+這是一個模擬 Twitter 社群平台的開發專案。專案展示在：**https://chungyingho.github.io/Twitter/**
+* 前台測試 (帳號 / 密碼)：user1 / 12345678
+* 後台測試 (帳號 / 密碼)：root / 12345678
+### 專案示意圖 (Diagram)
+![](./public/screenshot.png)
+### 功能 (Features)
+這個 Twitter 專案可以分成兩個主要部分：**一般用戶**與**管理員後台**。
+1. 一般用戶
+    * 註冊 / 登入 / 登出。
+    * 用戶可以追隨 / 取消追隨其他使用者。
+    * 首頁
+        * 瀏覽所有推文。
+        * 發布推文。
+        * 點擊單篇推文可以進入該推文頁面查看詳情以及回覆串。
+        * 點擊主頁推文的留言圖標，或是推文頁面的留言圖標都可以發布回覆。
+        * 點擊推文頁面的愛心圖標可以喜愛 / 取消喜愛該篇貼文。
+        * 主頁及推文頁點擊用戶頭像可以查看該用戶詳細資訊頁。
+    * 個人資料頁
+        * 用戶可以編輯自己的名稱 / 頭貼 / 背景 / 自我介紹。
+        * 用戶可以觀看自己發布過的貼文 / 回覆 / 喜愛的推文。
+        * 用戶可以觀看自己現正追隨的用戶以及追隨者。
+    * 設定頁
+        * 用戶可以更改帳號 / 名稱 / Email / 密碼。
+    * 推薦跟隨欄
+2. 管理員後台
+    * 登入 / 登出
+    * 推文清單
+        * 管理員可以看到目前 Twitter 上所有的推文。
+        * 管理員可以刪除推文。
+    * 使用者列表
+        * 管理員可以看到所有使用 Twitter 的用戶。
+### 專案開啟 (Installation)
+1. 複製專案
+```
+git clone https://github.com/ChungYingHo/Twitter.git
+```
+2. 進入專案路徑
+```
+cd Twitter
+```
+3. 安裝套件
+```
+npm install
+```
+4. 啟動專案
+```
+npm start
+```
+5. 前往 **http://localhost:3000/Twitter** 查看網頁
+### 環境建置與開發工具 (Prerequisites)
+1. **react** / 18.2.0
+2. **react-router-dom** / 6.15.0
+3. **axios** / 1.4.0
+4. **styled-components** / 6.0.7
