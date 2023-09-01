@@ -7,6 +7,7 @@ export const useUserContext = ()=> useContext(UserContext)
 export const UserContextProvider = ({ children }) => {
   // 現正登入使用者資料
   const [userData, setUserData] = useState({});
+  // 確保資料存在
   const handleUserData = async(id)=>{
     if(!userData){
       try{
@@ -16,6 +17,11 @@ export const UserContextProvider = ({ children }) => {
         console.log('[No user data:]', error)
       }
     }
+  }
+  // 更新使用者資料
+  const handleUpdatedUserData = async(id)=>{
+    const updatedData = await getUser(id)
+    setUserData(updatedData)
   }
 
   // 推薦跟隨
@@ -67,7 +73,7 @@ export const UserContextProvider = ({ children }) => {
   
 
   return (
-    <UserContext.Provider value={{ userData, setUserData, handleUserData,followState, setFollowState, handleFollowState, userFollowers, setUserFollowers, userFollowings, setUserFollowings, handleFollowers, handleFollowings }}>
+    <UserContext.Provider value={{ userData, setUserData, handleUserData, handleUpdatedUserData, followState, setFollowState, handleFollowState, userFollowers, setUserFollowers, userFollowings, setUserFollowings, handleFollowers, handleFollowings }}>
       {children}
     </UserContext.Provider>
   );
