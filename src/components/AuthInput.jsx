@@ -88,7 +88,7 @@ const AuthInput = ({
   minLength,
   error,
   onClick,
-  inputwarntext = null,
+  inputwarntext,
   required = false,
 }) => {
   const hasError = error && error !== "";
@@ -122,7 +122,7 @@ const AuthInput = ({
             rows="4"
             maxLength={maxLength}
             minLength={minLength}
-            inputwarntext={inputwarntext}
+            $inputwarntext={inputwarntext}
             required={required}
           />
         ) : (
@@ -135,7 +135,7 @@ const AuthInput = ({
             maxLength={maxLength}
             minLength={minLength}
             onClick={handleClick}
-            inputwarntext={inputwarntext}
+            $inputwarntext={inputwarntext}
             required={required}
           />
         )}

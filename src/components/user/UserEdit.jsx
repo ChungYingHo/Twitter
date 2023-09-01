@@ -19,9 +19,9 @@ const PopupBannerWrapper = styled.div`
   position: relative;
   display: inline-block;
 
-  ${({ ispreview }) => {
+  ${({ $ispreview }) => {
     return (
-      ispreview &&
+      $ispreview &&
       `
     &::after {
     content: "";
@@ -144,7 +144,7 @@ const UserEdit = ({
 
   return (
     <PopupContainer>
-      <PopupBannerWrapper ispreview={!uploadBanner}>
+      <PopupBannerWrapper $ispreview={!uploadBanner}>
         <PopupBanner
           src={
             uploadBanner ? URL.createObjectURL(uploadBanner) : userData.banner
@@ -190,7 +190,7 @@ const UserEdit = ({
             placeholder={userData.name}
             onChange={handleChangeName}
             maxLength={50}
-            inputwarntext={"字數不可超過上限!"}
+            $inputwarntext={"字數不可超過上限!"}
           />
         </NameInputContainer>
 
@@ -204,7 +204,7 @@ const UserEdit = ({
             onChange={handleChangeIntro}
             isLarge={true}
             maxLength={160}
-            inputwarntext={"字數不可超過上限!"}
+            $inputwarntext={"字數不可超過上限!"}
           />
         </IntroInputContainer>
       </MainWrapper>
