@@ -1,11 +1,24 @@
 import React, { createContext, useState, useContext } from "react";
+import { getUser } from "../api/user";
 
 export const UserContext = createContext();
 export const useUserContext = ()=> useContext(UserContext)
 
 export const UserContextProvider = ({ children }) => {
-  // 推薦跟隨
+  // 現正登入使用者資料
   const [userData, setUserData] = useState({});
+  const handleUserData = async(id)=>{
+    if(!userData){
+      try{
+        const user = await getUser(id)
+        setUserData(user)
+      } catch (error){
+        console.log('[No user data:]', error)
+      }
+    }
+  }
+
+  // 推薦跟隨
   const [followState, setFollowState] = useState([]);
   const handleFollowState = (id)=>{
     if(followState.find((user) => parseInt(user.id) === parseInt(id))){
@@ -54,7 +67,7 @@ export const UserContextProvider = ({ children }) => {
   
 
   return (
-    <UserContext.Provider value={{ userData, setUserData, followState, setFollowState, handleFollowState, userFollowers, setUserFollowers, userFollowings, setUserFollowings, handleFollowers, handleFollowings }}>
+    <UserContext.Provider value={{ userData, setUserData, handleUserData,followState, setFollowState, handleFollowState, userFollowers, setUserFollowers, userFollowings, setUserFollowings, handleFollowers, handleFollowings }}>
       {children}
     </UserContext.Provider>
   );

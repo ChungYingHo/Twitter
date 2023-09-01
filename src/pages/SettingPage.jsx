@@ -13,7 +13,7 @@ import {
 } from "../components/common/setting.styled";
 import * as style from "../components/common/common.styled"
 // api and function
-import { getUser, editUser } from "../api/setting";
+import { editUser } from "../api/user";
 import { useAuthValitate } from "../utils/authValidate";
 import {useErrorContext} from '../context/ErrorContext'
 import { UserContext } from "../context/UserContext";
@@ -26,13 +26,15 @@ const Container = styled.div`
 `;
 
 const SettingPage = () => {
-    const { userData, setUserData } = useContext(UserContext);
+    // 取得 userdata，並確保 userdata 存在
+    const { userData, handleUserData } = useContext(UserContext);
+    const id = localStorage.getItem('userID')
+    handleUserData(id)
     const [account, setAccount] = useState(userData.account);
     const [name, setName] = useState(userData.name);
     const [email, setEmail] = useState(userData.email);
     const [password, setPassword] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
-    const id = localStorage.getItem('userID')
     // error control
     const {
       accountError,
@@ -52,7 +54,7 @@ const SettingPage = () => {
     useResetErrorsEffect()
     // 驗證 token
     useAuthValitate('/login')
-
+    // edit user
     const handleClick = async () => {
       if (
         account.trim().length === 0 ||
@@ -95,7 +97,7 @@ const SettingPage = () => {
                 maxLength={30}
                 minLength={1}
                 name={account}
-                value={userData.account}
+                value={account}
                 placeholder={"請輸入帳號"}
                 onChange={(accountInputValue) => setAccount(accountInputValue)}
                 error={accountError}
@@ -109,7 +111,7 @@ const SettingPage = () => {
                 maxLength={50}
                 minLength={1}
                 name={name}
-                value={userData.name}
+                value={name}
                 placeholder={"請輸入使用者名稱"}
                 onChange={(nameInputValue) => setName(nameInputValue)}
                 error={nameError}
@@ -124,7 +126,7 @@ const SettingPage = () => {
                 maxLength={30}
                 minLength={1}
                 name={email}
-                value={userData.email}
+                value={email}
                 placeholder={"請輸入Email"}
                 onChange={(emailInputValue) => setEmail(emailInputValue)}
                 error={emailError}
@@ -139,7 +141,7 @@ const SettingPage = () => {
                 maxLength={20}
                 minLength={5}
                 name={password}
-                value={userData.password}
+                value={password}
                 placeholder={"請設定密碼"}
                 onChange={(passwordInputValue) => setPassword(passwordInputValue)}
                 error={passwordError}
