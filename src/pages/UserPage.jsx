@@ -38,16 +38,23 @@ const UserTittleWrapper = styled.div`
 `;
 
 const UserNameWrapper = styled.div`
+  max-width: 80%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding-top: 1px;
   margin-left: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const UserName = styled.h5`
   font-weight: 700;
   margin-bottom: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const UserPostCount = styled.p`

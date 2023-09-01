@@ -3,12 +3,11 @@ import styled from "styled-components";
 const SubToolContainer = styled.div`
   border-bottom: 1px solid #e6ecf0;
   height: 53px;
-  margin-top: 20px;
 `;
 
 const SubToolBtn = styled.button`
   width: 120px;
-  padding: 15px 0;
+  padding: 16px 0;
   border: none;
   background-color: transparent;
   color: ${({ $isActive }) => ($isActive ? "#ff6600" : "#657786")};

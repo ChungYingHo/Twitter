@@ -30,7 +30,6 @@ const Info = styled.div`
 `;
 
 const StyledNameWrapper = styled.div`
-  border: 1px solid green;
   max-width: 40%;
 
   p {
