@@ -9,7 +9,7 @@ import {
   SettingTittle,
   SettingButtonWrapper,
   SettingButton,
-  SettingHr,
+  SettingInputMainWrapper,
 } from "../components/common/setting.styled";
 import * as style from "../components/common/common.styled";
 // api and function
@@ -122,9 +122,8 @@ const SettingPage = () => {
           <SettingTittle>帳戶設定</SettingTittle>
         </SettingTittleContainer>
 
-        <SettingHr />
         {userData && (
-          <>
+          <SettingInputMainWrapper>
             <SettingInputContainer>
               <AuthInput
                 label={"帳號"}
@@ -207,7 +206,7 @@ const SettingPage = () => {
             <SettingButtonWrapper>
               <SettingButton onClick={handleClick}>儲存</SettingButton>
             </SettingButtonWrapper>
-          </>
+          </SettingInputMainWrapper>
         )}
       </Container>
     </>
