@@ -84,24 +84,16 @@ const MainPage = () => {
     posts,
     setPosts,
   } = usePopup();
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData, handleUserData } = useContext(UserContext);
   const [postContent, setPostContent] = useState("");
 
   // 驗證 token
   useAuthValitate("/login");
 
-  // 獲取user資料 (reload後UserContext值會不見，需要重取)
+  // 獲取user資料
   useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const datas = await getUser();
-        setUserData(datas);
-      } catch (error) {
-        console.error("[getUserData Failed]", error);
-      }
-    };
-    getUserData();
-  }, [setUserData]);
+    handleUserData()
+  }, []);
 
   // 抓取所有貼文
   useEffect(() => {
@@ -119,7 +111,6 @@ const MainPage = () => {
     fetchTweets();
   }, []);
 
-  // console.log("posts", posts);
 
   // 發送貼文
   const handlePostSubmit = async () => {

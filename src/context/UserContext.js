@@ -13,6 +13,7 @@ export const UserContextProvider = ({ children }) => {
       try{
         const user = await getUser(id)
         setUserData(user)
+        console.log('[ReFetching UserData]')
       } catch (error){
         console.log('[No user data:]', error)
       }
