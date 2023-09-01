@@ -7,7 +7,6 @@ import { ReactComponent as FilledLike } from "../../assets/filledlike-xs.svg";
 import * as style from "../common/common.styled";
 
 const Container = styled.div`
-  /* border: 1px solid green; */
   padding: 16px 0;
   height: fit-content;
   max-width: 100%;

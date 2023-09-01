@@ -32,14 +32,13 @@ const Info = styled.div`
 
 const StyledName = styled.p`
   font-size: 16px;
-  font-weight: 700px;
+  font-weight: 800;
   color: #171725;
   margin: 0;
 `;
 
 const StyledAccountTime = styled.p`
   font-size: 14px;
-  font-weight: 400;
   color: #6c757d;
   margin: 0 0 0 8px;
 `;
@@ -53,7 +52,6 @@ const StyledReplyWrapper = styled.div`
 const StlyedReply = styled.p`
   color: #6c757d;
   font-size: 14px;
-  font-weight: 400;
   margin-right: 4px;
 `;
 
@@ -65,7 +63,6 @@ const ReplyAccount = styled.p`
 
 const ReplyContext = styled.p`
   font-size: 16px;
-  font-weight: 400;
   color: #171725;
   margin: 0;
   word-wrap: break-word;
