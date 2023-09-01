@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import UserEdit from "./UserEdit";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import PopupModal from "../PopupModal";
 import { UserContext } from "../../context/UserContext";
@@ -169,10 +169,14 @@ const UserInfo = () => {
   const [uploadAvatar, setUploadAvatar] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
-  const { userData, setUserData, followState, setFollowState, handleFollowState } = useContext(UserContext);
+  const { userData, setUserData, followState, setFollowState, handleFollowState, otherUserData, setOtherUserData,handleStorage } = useContext(UserContext);
   const [isNoti, setIsNoti] = useState(false);
 
   const { id: userId } = useParams();
+  const localId = localStorage.getItem('userID')
+  useEffect(()=>{
+    handleStorage(userId)
+  }, [])
 
   const openNewPost = () => {
     setIsModalOpen(true);
@@ -202,7 +206,7 @@ const UserInfo = () => {
       setUploadAvatar(file);
     }
   };
-
+  // edit
   const handleClick = async () => {
     try {
       const updateUserData = {
@@ -232,20 +236,18 @@ const UserInfo = () => {
       setIsModalOpen(false);
     }
   };
-
+  // 跟隨
   const handleFollow = async (userId) => {
     console.log("userId in handleFollow", userId);
-
     try {
-      if (userData?.isFollowed) {
+      if (otherUserData?.isFollowed) {
         await disFollowUser({ followingId: userId });
         const updatedData = await getUser(userId);
-        setUserData(updatedData);
+        setOtherUserData(updatedData);
       } else {
         await followUser({ id: userId });
         const updatedData = await getUser(userId);
-        setUserData(updatedData);
-        console.log("data of followUser", userData);
+        setOtherUserData(updatedData);
       }
       // 變更popularbar
       handleFollowState(userId)
@@ -255,7 +257,7 @@ const UserInfo = () => {
       console.log("userId in handleFollow", userId);
     }
   };
-
+  // 通知
   const handleNotiClick = () => {
     if (isNoti === false) {
       setIsNoti(true);
@@ -266,12 +268,12 @@ const UserInfo = () => {
 
   return (
     <UserMainContainer>
-      <UserBanner src={userData.banner} />
+      <UserBanner src={parseInt(userId) === parseInt(localId) ? userData.banner : otherUserData.banner} />
 
       <UserInfoWrapper>
         <UserPicBtnWrapper>
-          <UserPic src={userData.avatar} />
-          {userId >= 0 ? (
+          <UserPic src={parseInt(userId) === parseInt(localId) ? userData.avatar : otherUserData.avatar} />
+          {userId !== localId ? (
             <BtnWrapper>
               <MailIcon />
 
@@ -280,10 +282,10 @@ const UserInfo = () => {
               </div>
 
               <FollowBtn
-                $isFollowed={userData?.isFollowed}
+                $isFollowed={otherUserData?.isFollowed}
                 onClick={() => handleFollow(userId)}
               >
-                {userData?.isFollowed ? "正在跟隨" : "跟隨"}
+                {otherUserData?.isFollowed ? "正在跟隨" : "跟隨"}
               </FollowBtn>
             </BtnWrapper>
           ) : (
@@ -317,17 +319,17 @@ const UserInfo = () => {
         </PopupModal>
 
         <UserAccountNameWrapper>
-          <UserName>{userData.name}</UserName>
-          <UserAccount>@{userData.account}</UserAccount>
+          <UserName>{parseInt(userId) === parseInt(localId) ? userData.name : otherUserData.name}</UserName>
+          <UserAccount>@{parseInt(userId) === parseInt(localId) ? userData.account : otherUserData.account}</UserAccount>
 
-          <UserIntroduction>{userData.introduction}</UserIntroduction>
+          <UserIntroduction>{parseInt(userId) === parseInt(localId) ? userData.introduction : otherUserData.introduction}</UserIntroduction>
 
           <UserFollowWrapper>
             <StyledLink
               to={userId ? `/user/${userId}/following` : `/user/following`}
             >
               <UserFollowbox>
-                <UserFollowNum>{userData.followingsCount}個</UserFollowNum>
+                <UserFollowNum>{parseInt(userId) === parseInt(localId) ? userData.followingsCount : otherUserData.followingsCount}個</UserFollowNum>
                 <UserFollowTittle>跟隨中</UserFollowTittle>
               </UserFollowbox>
             </StyledLink>
@@ -336,7 +338,7 @@ const UserInfo = () => {
               to={userId ? `/user/${userId}/followers` : `/user/followers`}
             >
               <UserFollowbox>
-                <UserFollowNum>{userData.followersCount}位</UserFollowNum>
+                <UserFollowNum>{parseInt(userId) === parseInt(localId) ? userData.followersCount : otherUserData.followersCount}位</UserFollowNum>
                 <UserFollowTittle>跟隨者</UserFollowTittle>
               </UserFollowbox>
             </StyledLink>

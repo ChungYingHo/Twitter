@@ -34,7 +34,7 @@ export const getUser = async (userId) => {
 };
 
 // 更改user data
-export const editUser = async ({ name, introduction, banner, avatar }) => {
+export const editUser = async ({ name, introduction, banner, avatar, account, email, password, checkPassword }) => {
   const userId = localStorage.getItem("userID");
 
   let formData = new FormData();
@@ -50,6 +50,10 @@ export const editUser = async ({ name, introduction, banner, avatar }) => {
   if (avatar) {
     formData.append("avatar", avatar);
   }
+  account && formData.append('account', account)
+  email && formData.append('email', email)
+  password && formData.append('password', password)
+  checkPassword && formData.append('checkPassword', checkPassword)
 
   try {
     const res = await axiosInstance.put(`${apiURL}/users/${userId}`, formData, {

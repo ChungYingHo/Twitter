@@ -35,9 +35,9 @@ function App() {
                   <Route element={<MainLayout />}>
                       <Route path="/main" element={<MainPage />}></Route>
 
-                      <Route path="/user" element={<UserPage />}></Route>
+                      {/* <Route path="/user" element={<UserPage />}></Route>
                       <Route path="/user/followers" element={<UserFollowers />}></Route>
-                      <Route path="/user/following" element={<UserFollowing />}></Route>
+                      <Route path="/user/following" element={<UserFollowing />}></Route> */}
                       <Route path="/user/:id" element={<UserPage />}></Route>
                       <Route
                         path="/user/:id/followers"

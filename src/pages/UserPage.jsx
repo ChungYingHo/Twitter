@@ -80,28 +80,22 @@ const ReplyCardWrapper = styled.div`
 `;
 const UserPage = () => {
   const { id: userId } = useParams();
+  const localId = localStorage.getItem('userID')
   const [activePage, setActivePage] = useState("post");
   const [userTweets, setUserTweets] = useState([]);
   const [userReplies, setUserReplies] = useState([]);
   const [userLikes, setUserLikes] = useState([]);
 
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData, otherUserData, handleStorage, handleUpdatedUserData, handleUserData } = useContext(UserContext);
 
   // 驗證 token
   useAuthValitate("/login");
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const datas = await getUser(userId ? parseInt(userId) : null);
-        setUserData(datas);
-      } catch (error) {
-        console.error("[getUserData Failed]", error);
-      }
-    };
-    getUserData();
-  }, [setUserData, userId]);
+  useEffect(()=>{
+    handleStorage(userId)
+  }, [])
+  
 
   // 獲取user推文
   useEffect(() => {
@@ -109,6 +103,8 @@ const UserPage = () => {
       try {
         const userTweet = await getUserTweets(userId ? parseInt(userId) : null);
         setUserTweets(userTweet);
+        console.log(parseInt(userId) === parseInt(localId))
+        console.log(userData)
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
@@ -149,8 +145,8 @@ const UserPage = () => {
           <UserTittleWrapper>
             <LeftArrow />
             <UserNameWrapper>
-              <UserName>{userData.name}</UserName>
-              <UserPostCount>{userData.tweetsCount} 推文</UserPostCount>
+              <UserName>{parseInt(userId) === parseInt(localId) ? userData.name : otherUserData.name}</UserName>
+              <UserPostCount>{parseInt(userId) === parseInt(localId) ? userData.tweetsCount : otherUserData.tweetsCount} 推文</UserPostCount>
             </UserNameWrapper>
           </UserTittleWrapper>
         </StyledLink>
@@ -184,9 +180,9 @@ const UserPage = () => {
                 return (
                   <ReplyCardWrapper key={reply.TweetId}>
                     <ReplyCard
-                      name={userData.name}
-                      account={userData.account}
-                      avatar={userData.avatar}
+                      name={parseInt(userId) === parseInt(localId) ? userData.name : otherUserData.name}
+                      account={parseInt(userId) === parseInt(localId) ? userData.account : otherUserData.account}
+                      avatar={parseInt(userId) === parseInt(localId) ? userData.avatar : otherUserData.avatar}
                       content={reply.comment}
                       timestamp={reply.createdAt}
                       replyAccount={reply.Tweet.User.account}

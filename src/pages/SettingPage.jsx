@@ -13,7 +13,7 @@ import {
 } from "../components/common/setting.styled";
 import * as style from "../components/common/common.styled"
 // api and function
-import { getUser, editUser } from "../api/setting";
+import { editUser } from "../api/user";
 import { useAuthValitate } from "../utils/authValidate";
 import {useErrorContext} from '../context/ErrorContext'
 import { UserContext } from "../context/UserContext";
@@ -26,13 +26,27 @@ const Container = styled.div`
 `;
 
 const SettingPage = () => {
-    const { userData, setUserData } = useContext(UserContext);
-    const [account, setAccount] = useState(userData.account);
-    const [name, setName] = useState(userData.name);
-    const [email, setEmail] = useState(userData.email);
+    const [account, setAccount] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
+    // 取得 userdata，並確保 userdata 存在
+    const { userData, handleUserData, handleUpdatedUserData } = useContext(UserContext);
     const id = localStorage.getItem('userID')
+    useEffect(() => {
+      handleUserData(id)
+    }, [id]);
+
+    useEffect(() => {
+    // 當 userData 獲取後，設定相關狀態
+    if (userData) {
+      setAccount(userData.account);
+      setName(userData.name);
+      setEmail(userData.email);
+    }
+  }, [userData])
+    
     // error control
     const {
       accountError,
@@ -52,7 +66,7 @@ const SettingPage = () => {
     useResetErrorsEffect()
     // 驗證 token
     useAuthValitate('/login')
-
+    // edit user
     const handleClick = async () => {
       if (
         account.trim().length === 0 ||
@@ -70,6 +84,7 @@ const SettingPage = () => {
       try {
         const resData = await editUser({ id, name, account, email, password, checkPassword });
         console.log("Editing User Successful!", resData);
+        handleUpdatedUserData(id)
         style.Toast.fire({
           title: '編輯成功！',
           icon: 'success'
@@ -139,7 +154,7 @@ const SettingPage = () => {
                 maxLength={20}
                 minLength={5}
                 name={password}
-                value={userData.password}
+                value={password}
                 placeholder={"請設定密碼"}
                 onChange={(passwordInputValue) => setPassword(passwordInputValue)}
                 error={passwordError}

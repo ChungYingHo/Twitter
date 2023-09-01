@@ -63,6 +63,7 @@ const LoginPage = () => {
         localStorage.setItem("UserToken", userToken);
         localStorage.setItem("userID", userDataFromLogin.id);
         const id = localStorage.getItem('userID')
+        console.log('login id', id)
 
         const userData = await getUser(id);
         setUserData(userData);

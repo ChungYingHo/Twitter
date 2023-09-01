@@ -9,7 +9,6 @@ import NewReply from "../components/reply/NewReply";
 import * as style from "../components/common/common.styled";
 // 引用 api and function
 import { getTweets, postTweets } from "../api/main";
-import { getUser } from "../api/user";
 import { UserContext } from "../context/UserContext";
 import { usePopup } from "../context/Popup";
 import { useAuthValitate } from "../utils/authValidate";
@@ -84,24 +83,17 @@ const MainPage = () => {
     posts,
     setPosts,
   } = usePopup();
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData, handleUserData } = useContext(UserContext);
   const [postContent, setPostContent] = useState("");
 
   // 驗證 token
   useAuthValitate("/login");
 
-  // 獲取user資料 (reload後UserContext值會不見，需要重取)
+  // 獲取user資料
+  const id = localStorage.getItem('userID')
   useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const datas = await getUser();
-        setUserData(datas);
-      } catch (error) {
-        console.error("[getUserData Failed]", error);
-      }
-    };
-    getUserData();
-  }, [setUserData]);
+    handleUserData(id)
+  }, []);
 
   // 抓取所有貼文
   useEffect(() => {
@@ -119,7 +111,6 @@ const MainPage = () => {
     fetchTweets();
   }, []);
 
-  // console.log("posts", posts);
 
   // 發送貼文
   const handlePostSubmit = async () => {
