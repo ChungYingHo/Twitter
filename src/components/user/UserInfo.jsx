@@ -169,7 +169,7 @@ const UserInfo = () => {
   const [uploadAvatar, setUploadAvatar] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
-  const { userData, setUserData, followState, setFollowState, handleFollowState, otherUserData, handleStorage } = useContext(UserContext);
+  const { userData, setUserData, followState, setFollowState, handleFollowState, otherUserData, setOtherUserData,handleStorage } = useContext(UserContext);
   const [isNoti, setIsNoti] = useState(false);
 
   const { id: userId } = useParams();
@@ -239,17 +239,15 @@ const UserInfo = () => {
   // 跟隨
   const handleFollow = async (userId) => {
     console.log("userId in handleFollow", userId);
-
     try {
-      if (userData?.isFollowed) {
+      if (otherUserData?.isFollowed) {
         await disFollowUser({ followingId: userId });
         const updatedData = await getUser(userId);
-        setUserData(updatedData);
+        setOtherUserData(updatedData);
       } else {
         await followUser({ id: userId });
         const updatedData = await getUser(userId);
-        setUserData(updatedData);
-        console.log("data of followUser", userData);
+        setOtherUserData(updatedData);
       }
       // 變更popularbar
       handleFollowState(userId)

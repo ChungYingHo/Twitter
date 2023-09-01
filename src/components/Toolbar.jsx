@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ReactComponent as acLogo } from "../assets/logo.svg";
 import { ReactComponent as Home } from "../assets/home.svg";
 import { ReactComponent as Info } from "../assets/personInfo.svg";
