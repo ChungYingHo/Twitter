@@ -184,6 +184,8 @@ const UserEdit = ({
         <NameInputContainer>
           <AuthInput
             label={"名稱"}
+            labelfor={"name"}
+            inputid={"name"}
             name={userData.name}
             placeholder={userData.name}
             onChange={handleChangeName}
@@ -195,6 +197,8 @@ const UserEdit = ({
         <IntroInputContainer>
           <AuthInput
             label={"自我介紹"}
+            labelfor={"introduction"}
+            inputid={"introduction"}
             name={userData.introduction}
             placeholder={userData.introduction}
             onChange={handleChangeIntro}
