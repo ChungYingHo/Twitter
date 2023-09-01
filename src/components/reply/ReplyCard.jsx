@@ -1,83 +1,120 @@
-import styled from 'styled-components'
-import TimeDiff from '../main/TimeDiff'
-import * as style from '../common/common.styled'
-import { useNavigate } from 'react-router-dom'
+import styled from "styled-components";
+import TimeDiff from "../main/TimeDiff";
+import * as style from "../common/common.styled";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
-    min-height: 133px;
-    height: fit-content;
-    width: 100%;
-    border-bottom: ${style.styledBorder};
-    display: flex;
+  max-height: 149px;
+  height: fit-content;
+  width: 100%;
+  border-bottom: ${style.styledBorder};
+  display: flex;
+  padding: 16px 24px;
 
-    img{
-        ${style.styledImg};
-        margin-left: 24px;
-    }
-`
+  img {
+    ${style.styledImg};
+  }
+  p {
+  }
+`;
 
 const Post = styled.div`
-    height: 100%;
-    width: calc(100% - 74px);
-    margin-left: 8px;
-    margin-right: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    overflow: hidden;
-    p{
-        margin: 0;
-    }
-    .reply-user{
-        display: flex;
-        align-items: center;
-        p{
-            color: ${style.colors.orange};
-            margin-left: 4px;
-        }
-    }
-    .content{
-        height: 78px;
-        ${style.styledContentFont}
-        overflow-wrap: break-word;
-    }
-`
+  width: calc(100% - 74px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-left: 8px;
+`;
 
 const Info = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    .name{
-        ${style.styledName}
-    }
-    .account{
-        ${style.styledAccount}
-    }
-`
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+`;
 
-export default function ReplyCard({name, account, avatar, content, timestamp, replyAccount, userId, disableLinks = false}){
-    const navigate = useNavigate()
-    return(
-        <Container>
-            <img 
-            src={avatar} alt='avatar' 
-            onClick={(event) => {
-                if (!disableLinks) {
-                    navigate(`/user/${userId}`);
-                } else if (!disableLinks) {
-                    navigate("/user");
-                }
-                }}
-                style={{ cursor: disableLinks ? "default" : "pointer" }}
-            />
-            <Post>
-                <Info>
-                    <p className='name'>{name}</p>
-                    <p className='account'>@{account}・<TimeDiff timestamp={timestamp}/></p>
-                </Info>
-                <div className='reply-user'>回覆 <p>@{replyAccount}</p></div>
-                <p className='content'>{content}</p>
-            </Post>
-        </Container>
-    )
+const StyledName = styled.p`
+  font-size: 16px;
+  font-weight: 700px;
+  color: #171725;
+  margin: 0;
+`;
+
+const StyledAccountTime = styled.p`
+  font-size: 14px;
+  font-weight: 400;
+  color: #6c757d;
+  margin: 0 0 0 8px;
+`;
+
+const StyledReplyWrapper = styled.div`
+  display: flex;
+  height: 22px;
+  margin-bottom: 8px;
+`;
+
+const StlyedReply = styled.p`
+  color: #6c757d;
+  font-size: 14px;
+  font-weight: 400;
+  margin-right: 4px;
+`;
+
+const ReplyAccount = styled.p`
+  color: #ff6600;
+  font-size: 14px;
+  font-weight: 400;
+`;
+
+const ReplyContextWrapper = styled.div``;
+
+const ReplyContext = styled.p`
+  font-size: 16px;
+  font-weight: 400;
+  color: #171725;
+  margin: 0;
+  word-wrap: break-word;
+`;
+
+export default function ReplyCard({
+  name,
+  account,
+  avatar,
+  content,
+  timestamp,
+  replyAccount,
+  userId,
+  disableLinks = false,
+}) {
+  const navigate = useNavigate();
+  return (
+    <Container>
+      <img
+        src={avatar}
+        alt="avatar"
+        onClick={(event) => {
+          if (!disableLinks) {
+            navigate(`/user/${userId}`);
+          } else if (!disableLinks) {
+            navigate("/user");
+          }
+        }}
+        style={{ cursor: disableLinks ? "default" : "pointer" }}
+      />
+      <Post>
+        <Info>
+          <StyledName>{name}</StyledName>
+          <StyledAccountTime>
+            @{account}・<TimeDiff timestamp={timestamp} />
+          </StyledAccountTime>
+        </Info>
+        <StyledReplyWrapper>
+          <StlyedReply>回覆</StlyedReply>
+          <ReplyAccount>@{replyAccount}</ReplyAccount>
+        </StyledReplyWrapper>
+        <ReplyContextWrapper>
+          <ReplyContext>{content}</ReplyContext>
+        </ReplyContextWrapper>
+      </Post>
+    </Container>
+  );
 }
