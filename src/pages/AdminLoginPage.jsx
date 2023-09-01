@@ -21,33 +21,33 @@ import { useErrorContext } from "../context/ErrorContext";
 const AdminLoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // 驗證 token
-  useAdminLoginAuthValitate('/admin_tweets')
+  useAdminLoginAuthValitate("/admin_tweets");
 
   // error control
   const {
-      accountError,
-      setAccountError,
-      passwordError,
-      setPasswordError,
-      handleInputClick,
-      handleError,
-      useResetErrorsEffect
-    } = useErrorContext();
-  useResetErrorsEffect()
-  
+    accountError,
+    setAccountError,
+    passwordError,
+    setPasswordError,
+    handleInputClick,
+    handleError,
+    useResetErrorsEffect,
+  } = useErrorContext();
+  useResetErrorsEffect();
+
   const handleClick = async () => {
     if (account.length === 0 || password.length === 0) {
       Toast.fire({
-        title: '請輸入完整帳號密碼',
-        icon: 'error'
-      })
+        title: "請輸入完整帳號密碼",
+        icon: "error",
+      });
       return;
     }
-    try{
+    try {
       const { success, adminToken } = await adminLogin({
         account,
         password,
@@ -55,13 +55,13 @@ const AdminLoginPage = () => {
       if (success) {
         localStorage.setItem("AdminToken", adminToken);
         Toast.fire({
-          title: '登入成功',
-          icon: 'success'
-        })
+          title: "登入成功",
+          icon: "success",
+        });
         navigate("/admin_tweets");
       }
-    } catch (error){
-      handleError(error)
+    } catch (error) {
+      handleError(error);
     }
   };
 
@@ -74,6 +74,8 @@ const AdminLoginPage = () => {
       <AuthInputContainer>
         <AuthInput
           label={"帳號"}
+          labelfor={"account"}
+          inputid={"account"}
           value={account}
           placeholder={"請輸入帳號"}
           onChange={(accountInputValue) => setAccount(accountInputValue)}
@@ -81,12 +83,15 @@ const AdminLoginPage = () => {
           onClick={() => handleInputClick(setAccountError)}
           maxLength={30}
           minLength={1}
+          required={true}
         />
       </AuthInputContainer>
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
-          type={'password'}
+          labelfor={"password"}
+          inputid={"password"}
+          type={"password"}
           value={password}
           placeholder={"請輸入密碼"}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
@@ -94,6 +99,7 @@ const AdminLoginPage = () => {
           onClick={() => handleInputClick(setPasswordError)}
           maxLength={20}
           minLength={5}
+          required={true}
         />
       </AuthInputContainer>
       {error && <div>{error}</div>}

@@ -62,8 +62,9 @@ const LoginPage = () => {
       if (success) {
         localStorage.setItem("UserToken", userToken);
         localStorage.setItem("userID", userDataFromLogin.id);
-        const id = localStorage.getItem('userID')
-        console.log('login id', id)
+
+        const id = localStorage.getItem("userID");
+        console.log("login id", id);
 
         const userData = await getUser(id);
         setUserData(userData);
@@ -88,6 +89,8 @@ const LoginPage = () => {
       <AuthInputContainer>
         <AuthInput
           label={"帳號"}
+          labelfor={"account"}
+          inputid={"account"}
           maxLength={30}
           minLength={1}
           value={account}
@@ -95,12 +98,15 @@ const LoginPage = () => {
           onChange={(accountInputValue) => setAccount(accountInputValue)}
           error={accountError}
           onClick={() => handleInputClick(setAccountError)}
+          required={true}
         />
       </AuthInputContainer>
 
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
+          labelfor={"password"}
+          inputid={"password"}
           type={"password"}
           maxLength={20}
           minLength={5}
@@ -109,6 +115,7 @@ const LoginPage = () => {
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
           error={passwordError}
           onClick={() => handleInputClick(setPasswordError)}
+          required={true}
         />
       </AuthInputContainer>
       <AuthButton onClick={handleClick}>登入</AuthButton>

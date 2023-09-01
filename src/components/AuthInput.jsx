@@ -76,7 +76,9 @@ const InputValueMsg = styled.p`
 `;
 
 const AuthInput = ({
+  inputid,
   label,
+  labefor,
   type,
   placeholder,
   value,
@@ -86,7 +88,8 @@ const AuthInput = ({
   minLength,
   error,
   onClick,
-  inputwarntext = null,
+  inputwarntext,
+  required = false,
 }) => {
   const hasError = error && error !== "";
   const [inputValue, setInputValue] = useState(value || "");
@@ -108,19 +111,23 @@ const AuthInput = ({
   return (
     <>
       <StyledContainer $error={hasError}>
-        <StyledLabel>{label}</StyledLabel>
+        <StyledLabel for={labefor}>{label}</StyledLabel>
         {isLarge ? (
           <StyledTextarea
+            id={inputid}
+            type={type || "text"}
             placeholder={placeholder || ""}
             defaultValue={value || ""}
             onChange={(event) => handleInputChange(event.target.value)}
             rows="4"
             maxLength={maxLength}
             minLength={minLength}
-            inputwarntext={inputwarntext}
+            $inputwarntext={inputwarntext}
+            required={required}
           />
         ) : (
           <StyledInput
+            id={inputid}
             type={type || "text"}
             placeholder={placeholder || ""}
             defaultValue={value || ""}
@@ -128,7 +135,8 @@ const AuthInput = ({
             maxLength={maxLength}
             minLength={minLength}
             onClick={handleClick}
-            inputwarntext={inputwarntext}
+            $inputwarntext={inputwarntext}
+            required={required}
           />
         )}
       </StyledContainer>

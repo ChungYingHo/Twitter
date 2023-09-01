@@ -1,5 +1,5 @@
 // package
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // component and style
 import {
@@ -7,7 +7,7 @@ import {
   AuthInputContainer,
   AuthButton,
   AuthLinkText,
-  AuthTittle
+  AuthTittle,
 } from "../components/common/auth.styled";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import AuthInput from "../components/AuthInput";
@@ -25,25 +25,25 @@ const RegisterPage = () => {
   const [checkPassword, setCheckPassword] = useState("");
   const navigate = useNavigate();
   // token validate
-  useLoginAuthValitate('/main')
+  useLoginAuthValitate("/main");
 
   // error control
   const {
-      accountError,
-      setAccountError,
-      nameError,
-      setNameError,
-      emailError,
-      setEmailError,
-      passwordError,
-      setPasswordError,
-      checkPasswordError,
-      setCheckPasswordError,
-      handleInputClick,
-      handleError,
-      useResetErrorsEffect
-    } = useErrorContext();
-  useResetErrorsEffect()
+    accountError,
+    setAccountError,
+    nameError,
+    setNameError,
+    emailError,
+    setEmailError,
+    passwordError,
+    setPasswordError,
+    checkPasswordError,
+    setCheckPasswordError,
+    handleInputClick,
+    handleError,
+    useResetErrorsEffect,
+  } = useErrorContext();
+  useResetErrorsEffect();
 
   const handleClick = async () => {
     if (
@@ -54,28 +54,40 @@ const RegisterPage = () => {
       checkPassword.length === 0
     ) {
       Toast.fire({
-        title: '請填寫完整資訊',
-        icon: 'error'
-      })
+        title: "請填寫完整資訊",
+        icon: "error",
+      });
       return;
     }
-    try{
+
+    const emaillRegex = new RegExp(
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+    );
+
+    if (!emaillRegex.test(email)) {
+      Toast.fire({
+        title: "請輸入完整Email",
+        icon: "error",
+      });
+      return;
+    }
+    try {
       const { success } = await register({
-          name,
-          account,
-          email,
-          password,
-          checkPassword,
+        name,
+        account,
+        email,
+        password,
+        checkPassword,
+      });
+      if (success) {
+        Toast.fire({
+          title: "註冊成功，請重新登入",
+          icon: "success",
         });
-        if (success) {
-          Toast.fire({
-            title: '註冊成功，請重新登入',
-            icon: 'success'
-          })
-          navigate("/login");
+        navigate("/login");
       }
-    } catch (error){
-        handleError(error)
+    } catch (error) {
+      handleError(error);
     }
   };
 
@@ -87,6 +99,8 @@ const RegisterPage = () => {
       <AuthInputContainer>
         <AuthInput
           label={"帳號"}
+          labelfor={"account"}
+          inputid={"account"}
           name={account}
           value={account}
           placeholder={"請輸入帳號"}
@@ -95,13 +109,15 @@ const RegisterPage = () => {
           minLength={1}
           error={accountError}
           onClick={() => handleInputClick(setAccountError)}
-          required
+          required={true}
         />
       </AuthInputContainer>
 
       <AuthInputContainer>
         <AuthInput
           label={"名稱"}
+          labelfor={"name"}
+          inputid={"name"}
           name={name}
           value={name}
           placeholder={"請輸入使用者名稱"}
@@ -110,14 +126,16 @@ const RegisterPage = () => {
           minLength={1}
           error={nameError}
           onClick={() => handleInputClick(setNameError)}
-          required
+          required={true}
         />
       </AuthInputContainer>
 
       <AuthInputContainer>
         <AuthInput
-          type={'email'}
+          type={"email"}
           label={"Email"}
+          labelfor={"email"}
+          inputid={"email"}
           name={email}
           value={email}
           placeholder={"請輸入Email"}
@@ -126,14 +144,16 @@ const RegisterPage = () => {
           minLength={1}
           error={emailError}
           onClick={() => handleInputClick(setEmailError)}
-          required
+          required={true}
         />
       </AuthInputContainer>
 
       <AuthInputContainer>
         <AuthInput
           label={"密碼"}
-          type={'password'}
+          labelfor={"password"}
+          inputid={"password"}
+          type={"password"}
           maxLength={20}
           minLength={5}
           name={password}
@@ -142,14 +162,16 @@ const RegisterPage = () => {
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
           error={passwordError}
           onClick={() => handleInputClick(setPasswordError)}
-          required
+          required={true}
         />
       </AuthInputContainer>
 
       <AuthInputContainer>
         <AuthInput
           label={"密碼確認"}
-          type={'password'}
+          labelfor={"checkPassword"}
+          inputid={"checkPassword"}
+          type={"password"}
           maxLength={20}
           minLength={5}
           name={checkPassword}
@@ -160,7 +182,7 @@ const RegisterPage = () => {
           }
           error={checkPasswordError}
           onClick={() => handleInputClick(setCheckPasswordError)}
-          required
+          required={true}
         />
       </AuthInputContainer>
       <AuthButton onClick={handleClick}>註冊</AuthButton>
