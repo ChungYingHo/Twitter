@@ -11,11 +11,11 @@ import {
   SettingButton,
   SettingHr,
 } from "../components/common/setting.styled";
-import * as style from "../components/common/common.styled"
+import * as style from "../components/common/common.styled";
 // api and function
 import { editUser } from "../api/user";
 import { useAuthValitate } from "../utils/authValidate";
-import {useErrorContext} from '../context/ErrorContext'
+import { useErrorContext } from "../context/ErrorContext";
 import { UserContext } from "../context/UserContext";
 
 const Container = styled.div`
@@ -26,73 +26,93 @@ const Container = styled.div`
 `;
 
 const SettingPage = () => {
-    const [account, setAccount] = useState('');
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState("");
-    const [checkPassword, setCheckPassword] = useState("");
-    // 取得 userdata，並確保 userdata 存在
-    const { userData, handleUserData, handleUpdatedUserData } = useContext(UserContext);
-    const id = localStorage.getItem('userID')
-    useEffect(() => {
-      handleUserData(id)
-    }, [id]);
+  const [account, setAccount] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [checkPassword, setCheckPassword] = useState("");
+  // 取得 userdata，並確保 userdata 存在
+  const { userData, handleUserData, handleUpdatedUserData } =
+    useContext(UserContext);
+  const id = localStorage.getItem("userID");
+  useEffect(() => {
+    handleUserData(id);
+  }, [id]);
 
-    useEffect(() => {
+  useEffect(() => {
     // 當 userData 獲取後，設定相關狀態
     if (userData) {
       setAccount(userData.account);
       setName(userData.name);
       setEmail(userData.email);
     }
-  }, [userData])
-    
-    // error control
-    const {
-      accountError,
-      setAccountError,
-      nameError,
-      setNameError,
-      emailError,
-      setEmailError,
-      passwordError,
-      setPasswordError,
-      checkPasswordError,
-      setCheckPasswordError,
-      handleInputClick,
-      handleError,
-      useResetErrorsEffect
-    } = useErrorContext();
-    useResetErrorsEffect()
-    // 驗證 token
-    useAuthValitate('/login')
-    // edit user
-    const handleClick = async () => {
-      if (
-        account.trim().length === 0 ||
-        name.trim().length === 0 ||
-        email.trim().length === 0
-      ) {
-        console.log(`warning`)
-        style.Toast.fire({
-          title: '請輸入完整資訊',
-          icon: 'error'
-        })
-        return;
-      }
+  }, [userData]);
 
-      try {
-        const resData = await editUser({ id, name, account, email, password, checkPassword });
-        console.log("Editing User Successful!", resData);
-        handleUpdatedUserData(id)
-        style.Toast.fire({
-          title: '編輯成功！',
-          icon: 'success'
-        })
-      } catch (error) {
-        handleError(error)
-      }
-    };
+  // error control
+  const {
+    accountError,
+    setAccountError,
+    nameError,
+    setNameError,
+    emailError,
+    setEmailError,
+    passwordError,
+    setPasswordError,
+    checkPasswordError,
+    setCheckPasswordError,
+    handleInputClick,
+    handleError,
+    useResetErrorsEffect,
+  } = useErrorContext();
+  useResetErrorsEffect();
+  // 驗證 token
+  useAuthValitate("/login");
+  // edit user
+  const handleClick = async () => {
+    if (
+      account.trim().length === 0 ||
+      name.trim().length === 0 ||
+      email.trim().length === 0
+    ) {
+      console.log(`warning`);
+      style.Toast.fire({
+        title: "請輸入完整資訊",
+        icon: "error",
+      });
+      return;
+    }
+
+    const emaillRegex = new RegExp(
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+    );
+
+    if (!emaillRegex.test(email)) {
+      style.Toast.fire({
+        title: "請輸入完整Email",
+        icon: "error",
+      });
+      return;
+    }
+
+    try {
+      const resData = await editUser({
+        id,
+        name,
+        account,
+        email,
+        password,
+        checkPassword,
+      });
+      console.log("Editing User Successful!", resData);
+      handleUpdatedUserData(id);
+      style.Toast.fire({
+        title: "編輯成功！",
+        icon: "success",
+      });
+    } catch (error) {
+      handleError(error);
+    }
+  };
 
   return (
     <>
@@ -134,7 +154,7 @@ const SettingPage = () => {
 
             <SettingInputContainer>
               <AuthInput
-                type={'email'}
+                type={"email"}
                 label={"Email"}
                 maxLength={30}
                 minLength={1}
@@ -150,13 +170,15 @@ const SettingPage = () => {
             <SettingInputContainer>
               <AuthInput
                 label={"密碼"}
-                type={'password'}
+                type={"password"}
                 maxLength={20}
                 minLength={5}
                 name={password}
                 value={password}
                 placeholder={"請設定密碼"}
-                onChange={(passwordInputValue) => setPassword(passwordInputValue)}
+                onChange={(passwordInputValue) =>
+                  setPassword(passwordInputValue)
+                }
                 error={passwordError}
                 onClick={() => handleInputClick(setPasswordError)}
                 required
@@ -166,7 +188,7 @@ const SettingPage = () => {
             <SettingInputContainer>
               <AuthInput
                 label={"密碼再確認"}
-                type={'password'}
+                type={"password"}
                 maxLength={20}
                 minLength={5}
                 name={checkPassword}
