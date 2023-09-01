@@ -7,6 +7,8 @@ import { ReactComponent as FilledLike } from "../../assets/filledlike-xs.svg";
 import * as style from "../common/common.styled";
 
 const Container = styled.div`
+  /* border: 1px solid green; */
+  padding: 16px 0;
   height: fit-content;
   max-width: 100%;
   border-bottom: ${style.styledBorder};
@@ -84,7 +86,7 @@ export default function PostCard({
   isLike,
   disableAvatar = false,
   disablePost = false,
-  disableReply = false
+  disableReply = false,
 }) {
   const navigate = useNavigate();
   const localStorageUserId = localStorage.getItem("userID");
@@ -96,11 +98,11 @@ export default function PostCard({
         src={avatar}
         alt="avatar"
         onClick={(event) => {
-          if (disableAvatar ) {
-            return
-          } else if(localStorageUserId !== event.target.id){
-            navigate(`/user/${userId}`)
-          }else if (localStorageUserId === event.target.id) {
+          if (disableAvatar) {
+            return;
+          } else if (localStorageUserId !== event.target.id) {
+            navigate(`/user/${userId}`);
+          } else if (localStorageUserId === event.target.id) {
             navigate("/user");
           }
         }}
@@ -113,18 +115,19 @@ export default function PostCard({
             @{account}・<TimeDiff timestamp={timestamp} />
           </p>
         </Info>
-        <p className="content"
+        <p
+          className="content"
           onClick={() => {
-              if (!disablePost) {
-                navigate(`/main/${id}`);
-              }
-            }}
-            style={{ cursor: disablePost ? "default" : "pointer" }}
+            if (!disablePost) {
+              navigate(`/main/${id}`);
+            }
+          }}
+          style={{ cursor: disablePost ? "default" : "pointer" }}
         >
           {content}
         </p>
         <Interact>
-          <div 
+          <div
             onClick={!disableReply ? onPostCardClick : null}
             style={{ cursor: disableReply ? "default" : "pointer" }}
           >

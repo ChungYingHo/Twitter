@@ -14,8 +14,6 @@ const Container = styled.div`
   img {
     ${style.styledImg};
   }
-  p {
-  }
 `;
 
 const Post = styled.div`
@@ -65,8 +63,6 @@ const ReplyAccount = styled.p`
   font-weight: 400;
 `;
 
-const ReplyContextWrapper = styled.div``;
-
 const ReplyContext = styled.p`
   font-size: 16px;
   font-weight: 400;
@@ -111,9 +107,7 @@ export default function ReplyCard({
           <StlyedReply>回覆</StlyedReply>
           <ReplyAccount>@{replyAccount}</ReplyAccount>
         </StyledReplyWrapper>
-        <ReplyContextWrapper>
-          <ReplyContext>{content}</ReplyContext>
-        </ReplyContextWrapper>
+        <ReplyContext>{content}</ReplyContext>
       </Post>
     </Container>
   );

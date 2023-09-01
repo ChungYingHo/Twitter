@@ -72,6 +72,7 @@ const SwitchZoneContainer = styled.div`
 `;
 
 const PostCardWrapper = styled.div`
+  /* border: 1px solid red; */
   padding-bottom: 16px;
 `;
 
