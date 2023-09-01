@@ -33,7 +33,7 @@ const ToolContainer = styled.div`
   gap: 8px;
 `;
 
-const Nav = styled(Link)`
+const Nav = styled.div`
   height: 58px;
   display: flex;
   align-items: center;
@@ -89,6 +89,7 @@ const FooterContainer = styled.div`
 export default function Toolbar() {
   const navigate = useNavigate();
   const { openNewPost } = usePopup();
+  const id = localStorage.getItem('userID')
 
   // 監控正在哪條路由下
   const location = useLocation();
@@ -114,8 +115,8 @@ export default function Toolbar() {
       <Logo />
       <ToolContainer>
         <Nav
-          $isActive={!userId && location.pathname.startsWith("/main")}
-          to="/main"
+          $isActive={location.pathname.startsWith("/main")}
+          onClick={()=>navigate('/main')}
         >
           <div>
             <Home />
@@ -123,8 +124,8 @@ export default function Toolbar() {
           </div>
         </Nav>
         <Nav
-          $isActive={!userId && location.pathname.startsWith("/user")}
-          to="/user"
+          $isActive={location.pathname.startsWith("/user")}
+          onClick={()=>navigate(`/user/${id}`)}
         >
           <div>
             <Info />
@@ -133,7 +134,7 @@ export default function Toolbar() {
         </Nav>
         <Nav
           $isActive={!userId && location.pathname.startsWith("/setting")}
-          to="/setting"
+          onClick={()=>navigate(`/setting`)}
         >
           <div>
             <Setting />

@@ -9,7 +9,6 @@ import NewReply from "../components/reply/NewReply";
 import * as style from "../components/common/common.styled";
 // 引用 api and function
 import { getTweets, postTweets } from "../api/main";
-import { getUser } from "../api/user";
 import { UserContext } from "../context/UserContext";
 import { usePopup } from "../context/Popup";
 import { useAuthValitate } from "../utils/authValidate";
@@ -91,8 +90,9 @@ const MainPage = () => {
   useAuthValitate("/login");
 
   // 獲取user資料
+  const id = localStorage.getItem('userID')
   useEffect(() => {
-    handleUserData()
+    handleUserData(id)
   }, []);
 
   // 抓取所有貼文

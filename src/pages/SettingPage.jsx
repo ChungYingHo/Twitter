@@ -26,15 +26,27 @@ const Container = styled.div`
 `;
 
 const SettingPage = () => {
-    // 取得 userdata，並確保 userdata 存在
-    const { userData, handleUserData } = useContext(UserContext);
-    const id = localStorage.getItem('userID')
-    handleUserData(id)
-    const [account, setAccount] = useState(userData.account);
-    const [name, setName] = useState(userData.name);
-    const [email, setEmail] = useState(userData.email);
+    const [account, setAccount] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
+    // 取得 userdata，並確保 userdata 存在
+    const { userData, handleUserData, handleUpdatedUserData } = useContext(UserContext);
+    const id = localStorage.getItem('userID')
+    useEffect(() => {
+      handleUserData(id)
+    }, [id]);
+
+    useEffect(() => {
+    // 當 userData 獲取後，設定相關狀態
+    if (userData) {
+      setAccount(userData.account);
+      setName(userData.name);
+      setEmail(userData.email);
+    }
+  }, [userData])
+    
     // error control
     const {
       accountError,
@@ -72,6 +84,7 @@ const SettingPage = () => {
       try {
         const resData = await editUser({ id, name, account, email, password, checkPassword });
         console.log("Editing User Successful!", resData);
+        handleUpdatedUserData(id)
         style.Toast.fire({
           title: '編輯成功！',
           icon: 'success'
@@ -97,7 +110,7 @@ const SettingPage = () => {
                 maxLength={30}
                 minLength={1}
                 name={account}
-                value={account}
+                value={userData.account}
                 placeholder={"請輸入帳號"}
                 onChange={(accountInputValue) => setAccount(accountInputValue)}
                 error={accountError}
@@ -111,7 +124,7 @@ const SettingPage = () => {
                 maxLength={50}
                 minLength={1}
                 name={name}
-                value={name}
+                value={userData.name}
                 placeholder={"請輸入使用者名稱"}
                 onChange={(nameInputValue) => setName(nameInputValue)}
                 error={nameError}
@@ -126,7 +139,7 @@ const SettingPage = () => {
                 maxLength={30}
                 minLength={1}
                 name={email}
-                value={email}
+                value={userData.email}
                 placeholder={"請輸入Email"}
                 onChange={(emailInputValue) => setEmail(emailInputValue)}
                 error={emailError}
