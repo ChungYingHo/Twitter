@@ -5,21 +5,28 @@ const StyledSettingWrapper = styled.div`
   border: 1px solid #e6ecf0;
 `;
 
+const StyledSettingMainWrapper = styled.div`
+  margin-top: 24px;
+`;
+
 const StyledSettingInputContainer = styled.div`
   width: auto;
-  margin-top: 30px;
-  padding: 10px 20px;
+  padding: 0 24px;
+  margin-bottom: 8px;
+  height: 78px;
 `;
 
 const StyledSettingTittleContainer = styled.div`
-  margin-bottom: 20px;
+  margin-top: 24px;
   width: auto;
   height: 51px;
-  padding: 20px;
+  padding: 0 24px;
+  border-bottom: 1px solid #e6ecf0;
 `;
 
 const StyledSettingTittle = styled.h4`
   font-weight: 700;
+  margin: 0;
 `;
 
 const StyledSettingButtonWrapper = styled.div`
@@ -38,16 +45,11 @@ const StyledSettingButton = styled.button`
   font-weight: bold;
   font-size: 18px;
   padding: 6px 0;
-  margin: 1rem 0;
+  margin-top: 16px;
 
   &.hover {
     cursor: pointer;
   }
-`;
-
-const StyledSettingHr = styled.hr`
-  width: 100%x;
-  color: #e6ecf0;
 `;
 
 export {
@@ -57,5 +59,5 @@ export {
   StyledSettingTittle as SettingTittle,
   StyledSettingButton as SettingButton,
   StyledSettingButtonWrapper as SettingButtonWrapper,
-  StyledSettingHr as SettingHr,
+  StyledSettingMainWrapper as SettingInputMainWrapper,
 };

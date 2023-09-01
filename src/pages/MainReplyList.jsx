@@ -137,7 +137,6 @@ const Interact = styled.div`
 `;
 
 const CardContainer = styled.div`
-  margin-top: 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;

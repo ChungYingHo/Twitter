@@ -75,27 +75,29 @@ const PostCardWrapper = styled.div`
   padding-bottom: 16px;
 `;
 
-const ReplyCardWrapper = styled.div`
-  padding-bottom: 16px;
-`;
 const UserPage = () => {
   const { id: userId } = useParams();
-  const localId = localStorage.getItem('userID')
+  const localId = localStorage.getItem("userID");
   const [activePage, setActivePage] = useState("post");
   const [userTweets, setUserTweets] = useState([]);
   const [userReplies, setUserReplies] = useState([]);
   const [userLikes, setUserLikes] = useState([]);
 
-  const { userData, otherUserData, handleStorage, handleUpdatedUserData, handleUserData } = useContext(UserContext);
+  const {
+    userData,
+    otherUserData,
+    handleStorage,
+    handleUpdatedUserData,
+    handleUserData,
+  } = useContext(UserContext);
 
   // 驗證 token
   useAuthValitate("/login");
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
-  useEffect(()=>{
-    handleStorage(userId)
-  }, [])
-  
+  useEffect(() => {
+    handleStorage(userId);
+  }, []);
 
   // 獲取user推文
   useEffect(() => {
@@ -103,8 +105,8 @@ const UserPage = () => {
       try {
         const userTweet = await getUserTweets(userId ? parseInt(userId) : null);
         setUserTweets(userTweet);
-        console.log(parseInt(userId) === parseInt(localId))
-        console.log(userData)
+        console.log(parseInt(userId) === parseInt(localId));
+        console.log(userData);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
@@ -145,8 +147,17 @@ const UserPage = () => {
           <UserTittleWrapper>
             <LeftArrow />
             <UserNameWrapper>
-              <UserName>{parseInt(userId) === parseInt(localId) ? userData.name : otherUserData.name}</UserName>
-              <UserPostCount>{parseInt(userId) === parseInt(localId) ? userData.tweetsCount : otherUserData.tweetsCount} 推文</UserPostCount>
+              <UserName>
+                {parseInt(userId) === parseInt(localId)
+                  ? userData.name
+                  : otherUserData.name}
+              </UserName>
+              <UserPostCount>
+                {parseInt(userId) === parseInt(localId)
+                  ? userData.tweetsCount
+                  : otherUserData.tweetsCount}{" "}
+                推文
+              </UserPostCount>
             </UserNameWrapper>
           </UserTittleWrapper>
         </StyledLink>
@@ -159,6 +170,7 @@ const UserPage = () => {
                 return (
                   <PostCardWrapper key={tweet.id}>
                     <PostCard
+                      key={tweet.id}
                       name={tweet.User.name}
                       account={tweet.User.account}
                       avatar={tweet.User.avatar}
@@ -178,17 +190,28 @@ const UserPage = () => {
             {activePage === "reply" &&
               userReplies.map((reply) => {
                 return (
-                  <ReplyCardWrapper key={reply.TweetId}>
-                    <ReplyCard
-                      name={parseInt(userId) === parseInt(localId) ? userData.name : otherUserData.name}
-                      account={parseInt(userId) === parseInt(localId) ? userData.account : otherUserData.account}
-                      avatar={parseInt(userId) === parseInt(localId) ? userData.avatar : otherUserData.avatar}
-                      content={reply.comment}
-                      timestamp={reply.createdAt}
-                      replyAccount={reply.Tweet.User.account}
-                      disableLinks={true}
-                    />
-                  </ReplyCardWrapper>
+                  <ReplyCard
+                    key={reply.TweetId}
+                    name={
+                      parseInt(userId) === parseInt(localId)
+                        ? userData.name
+                        : otherUserData.name
+                    }
+                    account={
+                      parseInt(userId) === parseInt(localId)
+                        ? userData.account
+                        : otherUserData.account
+                    }
+                    avatar={
+                      parseInt(userId) === parseInt(localId)
+                        ? userData.avatar
+                        : otherUserData.avatar
+                    }
+                    content={reply.comment}
+                    timestamp={reply.createdAt}
+                    replyAccount={reply.Tweet.User.account}
+                    disableLinks={true}
+                  />
                 );
               })}
 
