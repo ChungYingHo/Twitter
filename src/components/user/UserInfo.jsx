@@ -9,6 +9,7 @@ import { ReactComponent as MailIcon } from "../../assets/mail.svg";
 import { ReactComponent as BellIcon } from "../../assets/bell.svg";
 import { ReactComponent as NotiBellIcon } from "../../assets/bell_noti.svg";
 import { followUser, disFollowUser } from "../../api/popular";
+import { Toast } from "../common/common.styled";
 
 const UserMainContainer = styled.div`
   width: 100%;
@@ -241,6 +242,13 @@ const UserInfo = () => {
         setUserData(resData.data.user);
         setErrorMessage(null);
         console.log("EditUser updated successfully in UserInfo!");
+        Toast.fire({
+          html: `
+          <div style="display:flex; align-items:center">
+          <strong style="margin-right: 160px; font-size:16px">編輯成功</strong>
+          <img style="width: 40px" src="/Twitter/success.svg">
+          </div>`,
+        });
       } else if (resData.status === "error") {
         setErrorMessage(resData.message);
       }
