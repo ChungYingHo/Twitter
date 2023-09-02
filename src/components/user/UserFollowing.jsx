@@ -26,7 +26,6 @@ const Header = styled.div`
   width: 100%;
   height: 59px;
   margin-top: 16px;
-  margin-bottom: 16px;
   border-bottom: ${style.styledBorder};
   display: flex;
   align-items: center;
