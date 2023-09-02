@@ -46,8 +46,11 @@ const LoginPage = () => {
   const handleClick = async () => {
     if (account.trim().length === 0 || password.trim().length === 0) {
       Toast.fire({
-        title: "請輸入完整帳號密碼",
-        icon: "error",
+        html: `
+          <div style="display:flex; align-items:center">
+          <strong style="margin-right: 85px; font-size:16px">請輸入完整帳號密碼</strong>
+          <img style="width: 40px" src="/Twitter/error.svg">
+          </div>`,
       });
       return;
     }
