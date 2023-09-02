@@ -39,9 +39,19 @@ const Info = styled.div`
     gap: 8px;
     position: relative;
     .name{
+        max-width: 40%;
+        width: fit-content;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         ${style.styledName}
     }
     .account{
+        max-width: 40%;
+        width: fit-content;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         ${style.styledAccount}
     }
     .close{
