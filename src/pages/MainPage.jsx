@@ -128,7 +128,7 @@ const MainPage = () => {
       style.Toast.fire({
         html: `
           <div style="display:flex; align-items:center">
-          <strong style="margin-right: 160px; font-size:16px">發佈成功！</strong>
+          <strong style="margin-right: 135px; font-size:16px">發佈成功！</strong>
           <img style="width: 40px" src="/Twitter/success.svg">
           </div>`,
       });
