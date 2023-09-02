@@ -54,8 +54,11 @@ const RegisterPage = () => {
       checkPassword.length === 0
     ) {
       Toast.fire({
-        title: "請填寫完整資訊",
-        icon: "error",
+        html: `
+          <div style="display:flex; align-items:center">
+          <strong style="margin-right: 110px; font-size:16px">請填寫完整資訊</strong>
+          <img style="width: 40px" src="/Twitter/error.svg">
+          </div>`,
       });
       return;
     }
@@ -66,8 +69,11 @@ const RegisterPage = () => {
 
     if (!emaillRegex.test(email)) {
       Toast.fire({
-        title: "請輸入完整Email",
-        icon: "error",
+        html: `
+          <div style="display:flex; align-items:center">
+          <strong style="margin-right: 95px; font-size:16px">請輸入完整Email</strong>
+          <img style="width: 40px" src="/Twitter/error.svg">
+          </div>`,
       });
       return;
     }
@@ -81,8 +87,11 @@ const RegisterPage = () => {
       });
       if (success) {
         Toast.fire({
-          title: "註冊成功，請重新登入",
-          icon: "success",
+          html: `
+          <div style="display:flex; align-items:center">
+          <strong style="margin-right: 65px; font-size:16px">註冊成功，請重新登入</strong>
+          <img style="width: 40px" src="/Twitter/success.svg">
+          </div>`,
         });
         navigate("/login");
       }

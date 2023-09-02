@@ -77,8 +77,11 @@ const SettingPage = () => {
     ) {
       console.log(`warning`);
       style.Toast.fire({
-        title: "請輸入完整資訊",
-        icon: "error",
+        html: `
+          <div style="display:flex; align-items:center">
+          <strong style="margin-right: 110px; font-size:16px">請填寫完整資訊</strong>
+          <img style="width: 40px" src="/Twitter/error.svg">
+          </div>`,
       });
       return;
     }
@@ -89,8 +92,11 @@ const SettingPage = () => {
 
     if (!emaillRegex.test(email)) {
       style.Toast.fire({
-        title: "請輸入完整Email",
-        icon: "error",
+        html: `
+          <div style="display:flex; align-items:center">
+          <strong style="margin-right: 95px; font-size:16px">請輸入完整Email</strong>
+          <img style="width: 40px" src="/Twitter/error.svg">
+          </div>`,
       });
       return;
     }
@@ -107,8 +113,11 @@ const SettingPage = () => {
       console.log("Editing User Successful!", resData);
       handleUpdatedUserData(id);
       style.Toast.fire({
-        title: "編輯成功！",
-        icon: "success",
+        html: `
+          <div style="display:flex; align-items:center">
+          <strong style="margin-right: 160px; font-size:16px">編輯成功</strong>
+          <img style="width: 40px" src="/Twitter/success.svg">
+          </div>`,
       });
     } catch (error) {
       handleError(error);
