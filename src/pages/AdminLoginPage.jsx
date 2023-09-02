@@ -43,8 +43,11 @@ const AdminLoginPage = () => {
   const handleClick = async () => {
     if (account.length === 0 || password.length === 0) {
       Toast.fire({
-        title: "請輸入完整帳號密碼",
-        icon: "error",
+        html: `
+          <div style="display:flex; align-items:center">
+          <strong style="margin-right: 85px; font-size:16px">請輸入完整帳號密碼</strong>
+          <img style="width: 40px" src="/Twitter/error.svg">
+          </div>`,
       });
       return;
     }
@@ -56,8 +59,11 @@ const AdminLoginPage = () => {
       if (success) {
         localStorage.setItem("AdminToken", adminToken);
         Toast.fire({
-          title: "登入成功",
-          icon: "success",
+          html: `
+          <div style="display:flex; align-items:center">
+          <strong style="margin-right: 160px; font-size:16px">登入成功</strong>
+          <img style="width: 40px" src="/Twitter/success.svg">
+          </div>`,
         });
         navigate("/admin_tweets");
       }

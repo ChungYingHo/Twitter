@@ -127,8 +127,11 @@ const MainPage = () => {
       // 關閉發文彈出視窗
       closeNewPost();
       style.Toast.fire({
-        title: "發佈成功！",
-        icon: "success",
+        html: `
+          <div style="display:flex; align-items:center">
+          <strong style="margin-right: 135px; font-size:16px">發佈成功！</strong>
+          <img style="width: 40px" src="/Twitter/success.svg">
+          </div>`,
       });
     } catch (error) {
       console.error("Posting Tweet Failed:", error);

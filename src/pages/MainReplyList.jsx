@@ -74,12 +74,11 @@ const Title = styled.div`
     cursor: pointer;
   }
   div {
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     p {
-      width: 100%;
+      width: 90%;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -135,7 +134,7 @@ const Interact = styled.div`
   width: 188px;
   display: flex;
   justify-content: space-between;
-  .icon{
+  .icon {
     cursor: pointer;
   }
 `;
@@ -264,11 +263,11 @@ export default function MainReplyList() {
                 </div>
               </Counts>
               <Interact>
-                <Reply onClick={openNewReply} className="icon"/>
+                <Reply onClick={openNewReply} className="icon" />
                 {tweet.isLiked ? (
-                  <LikeFill onClick={handleDislike} className="icon"/>
+                  <LikeFill onClick={handleDislike} className="icon" />
                 ) : (
-                  <Like onClick={handleLike} className="icon"/>
+                  <Like onClick={handleLike} className="icon" />
                 )}
               </Interact>
             </PostContainer>
