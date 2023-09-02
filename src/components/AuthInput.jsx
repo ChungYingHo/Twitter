@@ -75,6 +75,7 @@ const InputValueMsg = styled.p`
   margin: 0;
 `;
 
+// component
 const AuthInput = ({
   inputid,
   label,

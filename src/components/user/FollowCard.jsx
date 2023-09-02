@@ -78,21 +78,26 @@ const UserIntro = styled.p`
 `;
 
 export default function FollowCard({
+  id,
   name,
   avatar,
   introduction,
   isFollowed,
   onClick,
 }) {
+  const localId = localStorage.getItem('userID')
   return (
     <Container>
       <Avatar src={avatar} alt="avatar" />
       <MainWrapper>
         <TopWrapper>
           <Name>{name}</Name>
-          <Btn $isFollowed={isFollowed} onClick={onClick}>
+          {parseInt(id) !== parseInt(localId) ? 
+          (<Btn $isFollowed={isFollowed} onClick={onClick}>
             {isFollowed ? "正在跟隨" : "跟隨"}
-          </Btn>
+          </Btn>)
+          :
+          ''}
         </TopWrapper>
         <UserIntroWrapper>
           <UserIntro>{introduction}</UserIntro>

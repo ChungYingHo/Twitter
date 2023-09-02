@@ -1,14 +1,16 @@
+// package
 import styled from "styled-components";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useContext } from "react";
+// component and style
 import * as style from "../common/common.styled";
 import { ReactComponent as LeftArrow } from "../../assets/left-arrow.svg";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../../context/UserContext";
 import FollowrSubTool from "./FollowSubTool";
 import FollowCard from "./FollowCard";
-// api
-import { checkPermission } from "../../api/Permission";
-import { getUserFollowers, getUser } from "../../api/user";
+// api and function
+import { UserContext } from "../../context/UserContext";
+import { useAuthValitate } from "../../utils/authValidate";
+import { getUserFollowers} from "../../api/user";
 import { followUser, disFollowUser } from "../../api/popular";
 
 const Container = styled.div`
@@ -47,51 +49,25 @@ const HeaderTittleWrapper = styled.div`
   margin-left: 16px;
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
+const StyledLink = styled.div`
   margin: 0;
   padding: 0;
-  color: #171725;
-  &:hover {
-    color: #171725;
-  }
 `;
 
+// component
 const UserFollowers = () => {
   const { id: userId } = useParams();
-
-  const { userData, setUserData, handleFollowState, userFollowers, setUserFollowers, handleFollowers } = useContext(UserContext);
-
-  const navigate = useNavigate();
+  const localId = localStorage.getItem("userID");
+  const { userData, otherUserData, handleFollowState, userFollowers, setUserFollowers, handleFollowers, handleStorage, handleUpdatedOtherUserData, handleUpdatedUserData, otherUserFollowers, setOtherUserFollowers } = useContext(UserContext);
+  const navigate = useNavigate()
 
   // 驗證 token
-  useEffect(() => {
-    const checkTokenIsValid = async () => {
-      const authToken = localStorage.getItem("UserToken");
-      if (!authToken) {
-        navigate("/login");
-      }
-      const result = await checkPermission(authToken);
-      if (!result) {
-        navigate("/login");
-      }
-    };
-
-    checkTokenIsValid();
-  }, [navigate]);
+  useAuthValitate("/login");
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
   useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const datas = await getUser(userId ? parseInt(userId) : null);
-        setUserData(datas);
-      } catch (error) {
-        console.error("[getUserData Failed]", error);
-      }
-    };
-    getUserData();
-  }, [setUserData]);
+    handleStorage(userId)
+  }, []);
 
   // 獲取user追隨中
   useEffect(() => {
@@ -100,7 +76,12 @@ const UserFollowers = () => {
         const follower = await getUserFollowers(
           userId ? parseInt(userId) : null
         );
-        setUserFollowers(follower);
+        if(parseInt(userId) === parseInt(localId)){
+          setUserFollowers(follower);
+        } else {
+          setOtherUserFollowers(follower)
+        }
+        
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
@@ -117,10 +98,19 @@ const UserFollowers = () => {
           .isFollowed
       ) {
         await disFollowUser({ followingId: id });
+        if(parseInt(userId) === parseInt(localId)){
+          handleUpdatedUserData()
+        } else {
+          handleUpdatedOtherUserData(id)
+        }
       } else {
         await followUser({ id });
+        if(parseInt(userId) === parseInt(localId)){
+          handleUpdatedUserData()
+        } else {
+          handleUpdatedOtherUserData(id)
+        }
       }
-      
       // 變更 popularbar
       handleFollowState(id)
       handleFollowers(id)
@@ -133,29 +123,39 @@ const UserFollowers = () => {
   return (
     <>
       <Container>
-        <StyledLink to="/user">
+        <StyledLink onClick={()=>navigate(`/user/${userId}`)}>
           <Header>
             <LeftArrow />
             <HeaderTittleWrapper>
-              <h5>{userData.name}</h5>
-              <p>{userData.tweetsCount} 推文</p>
+              <h5>{parseInt(userId) === parseInt(localId) ? userData.name : otherUserData.name}</h5>
+              <p>{parseInt(userId) === parseInt(localId) ? userData.tweetsCount : otherUserData.tweetsCount} 推文</p>
             </HeaderTittleWrapper>
           </Header>
         </StyledLink>
         <FollowrSubTool activePage="followers" />
-        {userFollowers.map((data) => {
-          return (
-            <FollowCard
-              key={data.followerId}
-              id={data.Follower.id}
-              name={data.Follower.name}
-              avatar={data.Follower.avatar}
-              introduction={data.Follower.introduction}
-              isFollowed={data.Follower.isFollowed}
-              onClick={() => handleFollow(data.Follower.id)}
-            />
-          );
-        })}
+        {parseInt(userId) === parseInt(localId)
+          ? userFollowers.map((data) => (
+              <FollowCard
+                key={data.followerId}
+                id={data.Follower.id}
+                name={data.Follower.name}
+                avatar={data.Follower.avatar}
+                introduction={data.Follower.introduction}
+                isFollowed={data.Follower.isFollowed}
+                onClick={() => handleFollow(data.Follower.id)}
+              />
+            ))
+          : otherUserFollowers.map((data) => (
+              <FollowCard
+                key={data.followerId}
+                id={data.Follower.id}
+                name={data.Follower.name}
+                avatar={data.Follower.avatar}
+                introduction={data.Follower.introduction}
+                isFollowed={data.Follower.isFollowed}
+                onClick={() => handleFollow(data.Follower.id)}
+              />
+            ))}
       </Container>
     </>
   );

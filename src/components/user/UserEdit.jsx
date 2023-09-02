@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useEffect } from "react";
 import AuthInput from "../AuthInput";
 import { ReactComponent as PhotoIcon } from "../../assets/photo.svg";
 import { ReactComponent as CloseIcon } from "../../assets/close-white.svg";
@@ -108,6 +108,7 @@ const IntroInputContainer = styled.div`
   margin-bottom: 8px;
 `;
 
+// component
 const UserEdit = ({
   onNameChange,
   onIntroChange,
@@ -119,8 +120,12 @@ const UserEdit = ({
 }) => {
   const bannerInputRef = useRef(null);
   const avatarInputRef = useRef(null);
-
-  const { userData } = useContext(UserContext);
+  // 確保資料存在
+  const { userData, handleUserData } = useContext(UserContext);
+  const id = localStorage.getItem("userID");
+  useEffect(() => {
+    handleUserData(id);
+  }, []);
 
   const handleChangeName = (newName) => {
     onNameChange(newName);

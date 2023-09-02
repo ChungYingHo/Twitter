@@ -1,7 +1,7 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import TimeDiff from "../main/TimeDiff";
 import * as style from "../common/common.styled";
-import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   max-height: 200px;

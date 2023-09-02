@@ -17,6 +17,7 @@ import { register } from "../api/auth";
 import { useLoginAuthValitate } from "../utils/authValidate";
 import { useErrorContext } from "../context/ErrorContext";
 
+// component
 const RegisterPage = () => {
   const [account, setAccount] = useState("");
   const [name, setName] = useState("");
@@ -45,6 +46,7 @@ const RegisterPage = () => {
   } = useErrorContext();
   useResetErrorsEffect();
 
+  // edit summit
   const handleClick = async () => {
     if (
       account.length === 0 ||
@@ -63,7 +65,6 @@ const RegisterPage = () => {
     const emaillRegex = new RegExp(
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
     );
-
     if (!emaillRegex.test(email)) {
       Toast.fire({
         title: "請輸入完整Email",
@@ -71,6 +72,7 @@ const RegisterPage = () => {
       });
       return;
     }
+    
     try {
       const { success } = await register({
         name,

@@ -33,7 +33,6 @@ export const getPopUsers = async () => {
 // 跟隨
 export const followUser = async ({ id }) => {
   try {
-    console.log("userId", id);
     const res = await axiosInstance.post(`${apiURL}/followships`, {
       id,
     });
