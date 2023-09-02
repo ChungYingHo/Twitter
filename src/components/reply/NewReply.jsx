@@ -142,7 +142,7 @@ export default function NewReply({
   const { userData, handleUserData } = useContext(UserContext);
   // 確保資料存在
   useEffect(() => {
-    handleUserData()
+    handleUserData();
   }, []);
 
   const handleClick = async () => {
@@ -163,8 +163,11 @@ export default function NewReply({
         setReplies(sortedUpdatedReplies);
         closeNewReply();
         style.Toast.fire({
-          title: "回覆成功！",
-          icon: "success",
+          html: `
+          <div style="display:flex; align-items:center">
+          <strong style="margin-right: 160px; font-size:16px">回覆成功!</strong>
+          <img style="width: 40px" src="/Twitter/success.svg">
+          </div>`,
         });
         // 下面這個是為了更新主頁
         const updatedTweets = await getTweets();
