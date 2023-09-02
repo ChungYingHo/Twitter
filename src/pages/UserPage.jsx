@@ -165,7 +165,7 @@ const UserPage = () => {
             )}
           </UserTittleWrapper>
         </StyledLink>
-        <UserInfo />
+        <UserInfo setUserLikes={setUserLikes}/>
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
         {userTweets && userLikes && userReplies && (
           <SwitchZoneContainer>
@@ -175,9 +175,13 @@ const UserPage = () => {
                   <PostCardWrapper key={tweet.id}>
                     <PostCard
                       key={tweet.id}
-                      name={userData.name}
+                      name={parseInt(userId) === parseInt(localId)
+                            ? userData.name
+                            : otherUserData.name}
                       account={tweet.User.account}
-                      avatar={userData.avatar}
+                      avatar={parseInt(userId) === parseInt(localId)
+                            ? userData.avatar
+                            : otherUserData.avatar}
                       content={tweet.description}
                       timestamp={tweet.createdAt}
                       reply={tweet.repliesCount}
@@ -224,9 +228,9 @@ const UserPage = () => {
                 return (
                   <PostCardWrapper key={like.id}>
                     <PostCard
-                      name={userData.name}
+                      name={like.Tweet.User.account.name}
                       account={like.Tweet.User.account}
-                      avatar={userData.avatar}
+                      avatar={like.Tweet.User.avatar}
                       content={like.Tweet.description}
                       timestamp={like.Tweet.createdAt}
                       reply={like.Tweet.repliesCount}

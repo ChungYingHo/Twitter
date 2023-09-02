@@ -10,7 +10,7 @@ import { ReactComponent as NotiBellIcon } from "../../assets/bell_noti.svg";
 import PopupModal from "../PopupModal";
 // api and function
 import { UserContext } from "../../context/UserContext";
-import { editUser, getUser } from "../../api/user";
+import { editUser, getUser, getUserLikes } from "../../api/user";
 import { followUser, disFollowUser } from "../../api/popular";
 import { Toast } from "../common/common.styled";
 
@@ -174,7 +174,7 @@ const StyledMsg = styled.p`
 `;
 
 // component
-const UserInfo = () => {
+const UserInfo = ({setUserLikes}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState();
   const [introduction, setIntro] = useState();
@@ -253,6 +253,8 @@ const UserInfo = () => {
           <img style="width: 40px" src="/Twitter/success.svg">
           </div>`,
         });
+        const updatedLike = await getUserLikes(parseInt(userId));
+        setUserLikes(updatedLike);
       } else if (resData.status === "error") {
         setErrorMessage(resData.message);
       }
