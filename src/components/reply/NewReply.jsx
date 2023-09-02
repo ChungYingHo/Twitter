@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import * as style from "../common/common.styled";
 import TimeDiff from "../main/TimeDiff";
 import clsx from "clsx";
@@ -56,9 +56,19 @@ const Info = styled.div`
   align-items: center;
   gap: 8px;
   .name {
+    width: fit-content;
+    max-width: 50%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     ${style.styledName}
   }
   .account {
+    width: fit-content;
+    max-width: 50%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     ${style.styledAccount}
   }
 `;
@@ -129,7 +139,11 @@ export default function NewReply({
   const [replyContent, setReplyContent] = useState("");
   const [isContentEmpty, setIsContentEmpty] = useState(false);
   const contentLength = replyContent.trim().length;
-  const { userData } = useContext(UserContext);
+  const { userData, handleUserData } = useContext(UserContext);
+  // 確保資料存在
+  useEffect(() => {
+    handleUserData()
+  }, []);
 
   const handleClick = async () => {
     if (contentLength === 0) {

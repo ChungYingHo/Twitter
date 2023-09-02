@@ -63,8 +63,8 @@ const InputValueWrapper = styled.div`
   width: 100%;
   margin-top: 4px;
   display: flex;
-  justify-content: ${({ haserror }) =>
-    haserror ? "space-between" : "flex-end"};
+  justify-content: ${({ $haserror }) =>
+    $haserror ? "space-between" : "flex-end"};
 `;
 
 const InputValueMsg = styled.p`
