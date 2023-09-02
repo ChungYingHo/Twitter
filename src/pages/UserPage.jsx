@@ -175,9 +175,9 @@ const UserPage = () => {
                   <PostCardWrapper key={tweet.id}>
                     <PostCard
                       key={tweet.id}
-                      name={tweet.User.name}
+                      name={userData.name}
                       account={tweet.User.account}
-                      avatar={tweet.User.avatar}
+                      avatar={userData.avatar}
                       content={tweet.description}
                       timestamp={tweet.createdAt}
                       reply={tweet.repliesCount}
@@ -224,9 +224,9 @@ const UserPage = () => {
                 return (
                   <PostCardWrapper key={like.id}>
                     <PostCard
-                      name={like.Tweet.User.name}
+                      name={userData.name}
                       account={like.Tweet.User.account}
-                      avatar={like.Tweet.User.avatar}
+                      avatar={userData.avatar}
                       content={like.Tweet.description}
                       timestamp={like.Tweet.createdAt}
                       reply={like.Tweet.repliesCount}
