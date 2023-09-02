@@ -1,6 +1,6 @@
 // package
 import styled from "styled-components";
-import { Link, useParams } from "react-router-dom";
+import { Link, redirect, useParams } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 // component and style
 import UserEdit from "./UserEdit";

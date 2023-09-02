@@ -177,7 +177,7 @@ const UserPage = () => {
                       key={tweet.id}
                       name={tweet.User.name}
                       account={tweet.User.account}
-                      avatar={tweet.User.avatar}
+                      avatar={userData.avatar}
                       content={tweet.description}
                       timestamp={tweet.createdAt}
                       reply={tweet.repliesCount}
