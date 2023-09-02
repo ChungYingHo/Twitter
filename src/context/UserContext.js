@@ -13,7 +13,7 @@ export const UserContextProvider = ({ children }) => {
     if(Object.keys(userData).length === 0){
       try{
         const user = await getUser(parseInt(id))
-        console.log("Fetched user data:", user);
+        console.log("Fetched user data");
         setUserData(user)
         console.log('[ReFetching UserData]')
       } catch (error){

@@ -114,7 +114,6 @@ const UserPage = () => {
       try {
         const userTweet = await getUserTweets(userId ? parseInt(userId) : null);
         setUserTweets(userTweet);
-        console.log(parseInt(userId) === parseInt(localId))
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }

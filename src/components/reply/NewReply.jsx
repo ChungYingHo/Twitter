@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { useState, useContext, useEffect } from "react";
+import clsx from "clsx";
+// component and style
 import * as style from "../common/common.styled";
 import TimeDiff from "../main/TimeDiff";
-import clsx from "clsx";
+// api and function
+import { postReply, getReplies, getTweets } from "../../api/main";
 import { usePopup } from "../../context/Popup";
 import { UserContext } from "../../context/UserContext";
-// api
-import { postReply, getReplies, getTweets } from "../../api/main";
 
 const Container = styled.div`
   margin-top: 16px;

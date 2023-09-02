@@ -1,11 +1,14 @@
+// package
 import styled from "styled-components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+// component and style
 import { ReactComponent as acLogo } from "../assets/logo.svg";
 import { ReactComponent as Home } from "../assets/home.svg";
 import { ReactComponent as Info } from "../assets/personInfo.svg";
 import { ReactComponent as Setting } from "../assets/setting.svg";
 import { ReactComponent as Logout } from "../assets/logout.svg";
 import * as style from "../components/common/common.styled";
+// api and function
 import { usePopup } from "../context/Popup";
 
 const Container = styled.div`
@@ -86,6 +89,8 @@ const FooterContainer = styled.div`
   }
 `;
 
+
+// component
 export default function Toolbar() {
   const navigate = useNavigate();
   const { openNewPost } = usePopup();
@@ -93,12 +98,10 @@ export default function Toolbar() {
 
   // 監控正在哪條路由下
   const location = useLocation();
-  console.log({ location });
   const { id: userId } = useParams();
 
   // 登出功能
   const handleClick = () => {
-    console.log(localStorage);
     localStorage.removeItem("UserToken");
     localStorage.removeItem("userID");
     navigate("/login");

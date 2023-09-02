@@ -46,6 +46,7 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
 `;
 
+// component
 const PopupModal = ({
   isOpen,
   closeModal,
