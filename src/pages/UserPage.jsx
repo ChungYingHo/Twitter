@@ -81,7 +81,10 @@ const SwitchZoneContainer = styled.div`
 `;
 
 const PostCardWrapper = styled.div`
-  padding-bottom: 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
 
 const UserPage = () => {

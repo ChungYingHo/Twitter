@@ -18,6 +18,7 @@ const Container = styled.div`
 const Post = styled.div`
   width: calc(100% - 74px);
   display: flex;
+  flex: 1;
   flex-direction: column;
   overflow: hidden;
   margin-left: 8px;
@@ -67,15 +68,12 @@ const ReplyAccount = styled.p`
   font-weight: 400;
 `;
 
-const ReplyContextWrapper = styled.div`
-  border: 1px solid red;
-`;
-
 const ReplyContext = styled.p`
   font-size: 16px;
   color: #171725;
   margin: 0;
   word-wrap: break-word;
+  height: fit-content;
 `;
 
 export default function ReplyCard({
@@ -116,9 +114,7 @@ export default function ReplyCard({
           <StlyedReply>回覆</StlyedReply>
           <ReplyAccount>@{replyAccount}</ReplyAccount>
         </StyledReplyWrapper>
-        <ReplyContextWrapper>
-          <ReplyContext>{content}</ReplyContext>
-        </ReplyContextWrapper>
+        <ReplyContext>{content}</ReplyContext>
       </Post>
     </Container>
   );

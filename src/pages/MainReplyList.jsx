@@ -71,6 +71,7 @@ const Title = styled.div`
   img {
     ${style.styledImg}
     margin-right: 8px;
+    cursor: pointer;
   }
   div {
     width: 100%;
@@ -134,6 +135,9 @@ const Interact = styled.div`
   width: 188px;
   display: flex;
   justify-content: space-between;
+  .icon{
+    cursor: pointer;
+  }
 `;
 
 const CardContainer = styled.div`
@@ -181,7 +185,7 @@ export default function MainReplyList() {
       }
     };
     fetchingReplies();
-  }, [tweet_id]);
+  }, []);
 
   // 喜愛這篇貼文
   const handleLike = async () => {
@@ -259,11 +263,11 @@ export default function MainReplyList() {
                 </div>
               </Counts>
               <Interact>
-                <Reply onClick={openNewReply} />
+                <Reply onClick={openNewReply} className="icon"/>
                 {tweet.isLiked ? (
-                  <LikeFill onClick={handleDislike} />
+                  <LikeFill onClick={handleDislike} className="icon"/>
                 ) : (
-                  <Like onClick={handleLike} />
+                  <Like onClick={handleLike} className="icon"/>
                 )}
               </Interact>
             </PostContainer>
