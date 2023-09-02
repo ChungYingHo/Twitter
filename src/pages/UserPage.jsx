@@ -112,6 +112,7 @@ const UserPage = () => {
   useEffect(() => {
     const getUserTweet = async () => {
       try {
+        setUserTweets([])
         const userTweet = await getUserTweets(userId ? parseInt(userId) : null);
         setUserTweets(userTweet);
       } catch (error) {
@@ -125,6 +126,7 @@ const UserPage = () => {
   useEffect(() => {
     const getUserReply = async () => {
       try {
+        setUserReplies([])
         const reply = await getUserReplies(userId ? parseInt(userId) : null);
         setUserReplies(reply);
       } catch (error) {
@@ -138,6 +140,7 @@ const UserPage = () => {
   useEffect(() => {
     const getUserLike = async () => {
       try {
+        setUserLikes([])
         const like = await getUserLikes(userId ? parseInt(userId) : null);
         setUserLikes(like);
       } catch (error) {
