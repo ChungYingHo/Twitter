@@ -64,6 +64,7 @@ export const editUser = async ({ name, introduction, banner, avatar, account, em
     return res.data;
   } catch (error) {
     console.error("[Edit User in UserPage failed]: ", error);
+    throw error
   }
 };
 
