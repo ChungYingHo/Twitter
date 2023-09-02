@@ -38,7 +38,7 @@ const UserTittleWrapper = styled.div`
 `;
 
 const UserNameWrapper = styled.div`
-  max-width: 80%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -79,7 +79,6 @@ const SwitchZoneContainer = styled.div`
 `;
 
 const PostCardWrapper = styled.div`
-  /* border: 1px solid red; */
   padding-bottom: 16px;
 `;
 
