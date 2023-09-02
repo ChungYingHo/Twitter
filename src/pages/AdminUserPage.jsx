@@ -36,6 +36,7 @@ const CardContainer = styled.div`
   flex-wrap: wrap;
 `
 
+// component
 export default function AdminUserPage(){
     const [users, setUsers] = useState([])
     // 驗證 token

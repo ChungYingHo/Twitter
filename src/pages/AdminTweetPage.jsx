@@ -35,6 +35,7 @@ const CardContainer = styled.div`
   gap: 8px;
 `
 
+// component
 export default function AdminTweetPage(){
     const [posts, setPosts] = useState([])
     // 驗證 token
@@ -53,6 +54,7 @@ export default function AdminTweetPage(){
       fetchTweets();
     }, [])
 
+    // delete the post
     const handleDelete = async (id)=>{
       try{
         const success = await adminDeleteTweet({ id });
