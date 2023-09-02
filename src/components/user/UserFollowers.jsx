@@ -41,7 +41,6 @@ const UserNameWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-left: 16px;
-  margin-bottom: 16px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
