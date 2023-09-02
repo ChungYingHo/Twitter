@@ -143,7 +143,7 @@ export default function NewReply({
   // 確保資料存在
   useEffect(() => {
     handleUserData();
-  }, []);
+  });
 
   const handleClick = async () => {
     if (contentLength === 0) {
