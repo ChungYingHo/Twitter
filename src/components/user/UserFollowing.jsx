@@ -26,11 +26,14 @@ const Header = styled.div`
   width: 100%;
   height: 59px;
   margin-top: 16px;
-
+  margin-bottom: 16px;
   border-bottom: ${style.styledBorder};
   display: flex;
   align-items: center;
   padding: 0 30px;
+  .icon{
+    cursor: pointer;
+  }
 `;
 
 const UserNameWrapper = styled.div`
@@ -39,7 +42,6 @@ const UserNameWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-left: 16px;
-  margin-bottom: 16px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -133,12 +135,12 @@ const UserFollowing = () => {
       <Container>
         <StyledLink onClick={()=>navigate(`/user/${userId}`)}>
           <Header>
-            <LeftArrow />
+            <LeftArrow className="icon"/>
 
-            <HeaderTittleWrapper>
-              <h5>{parseInt(userId) === parseInt(localId) ? userData.name : otherUserData.name}</h5>
-              <p>{parseInt(userId) === parseInt(localId) ? userData.tweetsCount : otherUserData.tweetsCount} 推文</p>
-            </HeaderTittleWrapper>
+            <UserNameWrapper>
+              <UserName>{parseInt(userId) === parseInt(localId) ? userData.name : otherUserData.name}</UserName>
+              <UserPostCount>{parseInt(userId) === parseInt(localId) ? userData.tweetsCount : otherUserData.tweetsCount} 推文</UserPostCount>
+            </UserNameWrapper>
 
           </Header>
         </StyledLink>

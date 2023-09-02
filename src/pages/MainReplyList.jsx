@@ -74,11 +74,13 @@ const Title = styled.div`
     cursor: pointer;
   }
   div {
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
     p {
-      width: 90%;
+      width: 100%;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
