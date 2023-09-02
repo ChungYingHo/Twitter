@@ -72,8 +72,8 @@ const LoginPage = () => {
         Toast.fire({
           html: `
           <div style="display:flex; align-items:center">
-          <strong style="margin-right: 100px">登入成功</strong>
-          <img style="width: 35c:\Users\chou1\Downloads\error.svgpx" src="/Twitter/success.svg">
+          <strong style="margin-right: 160px; font-size:16px">登入成功</strong>
+          <img style="width: 40px" src="/Twitter/success.svg">
           </div>`,
         });
         navigate("/main");
