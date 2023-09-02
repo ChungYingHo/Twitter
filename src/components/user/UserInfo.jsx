@@ -1,13 +1,16 @@
+// package
 import styled from "styled-components";
-import UserEdit from "./UserEdit";
-import { useState, useContext, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import PopupModal from "../PopupModal";
-import { UserContext } from "../../context/UserContext";
-import { editUser, getUser } from "../../api/user";
+import { useState, useContext, useEffect } from "react";
+// component and style
+import UserEdit from "./UserEdit";
 import { ReactComponent as MailIcon } from "../../assets/mail.svg";
 import { ReactComponent as BellIcon } from "../../assets/bell.svg";
 import { ReactComponent as NotiBellIcon } from "../../assets/bell_noti.svg";
+import PopupModal from "../PopupModal";
+// api and function
+import { UserContext } from "../../context/UserContext";
+import { editUser, getUser } from "../../api/user";
 import { followUser, disFollowUser } from "../../api/popular";
 import { Toast } from "../common/common.styled";
 
@@ -170,6 +173,7 @@ const StyledMsg = styled.p`
   top: 8px;
 `;
 
+// component
 const UserInfo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState();
@@ -182,7 +186,6 @@ const UserInfo = () => {
     userData,
     setUserData,
     followState,
-    setFollowState,
     handleFollowState,
     otherUserData,
     setOtherUserData,
@@ -192,6 +195,7 @@ const UserInfo = () => {
 
   const { id: userId } = useParams();
   const localId = localStorage.getItem("userID");
+  // 確保用戶資料存在
   useEffect(() => {
     handleStorage(userId);
   }, []);

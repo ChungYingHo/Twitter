@@ -1,5 +1,5 @@
 // package
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // component and style
 import {
@@ -18,10 +18,11 @@ import { adminLogin } from "../api/admin";
 import { useAdminLoginAuthValitate } from "../utils/authValidate";
 import { useErrorContext } from "../context/ErrorContext";
 
+
+// component
 const AdminLoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
   // 驗證 token
@@ -108,7 +109,6 @@ const AdminLoginPage = () => {
           required={true}
         />
       </AuthInputContainer>
-      {error && <div>{error}</div>}
       <AuthButton onClick={handleClick}>登入</AuthButton>
       <AuthLinkWrapper>
         <Link to="/login">

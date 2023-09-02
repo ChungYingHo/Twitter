@@ -26,6 +26,7 @@ const Container = styled.div`
   position: relative;
 `;
 
+// component
 const SettingPage = () => {
   const [account, setAccount] = useState("");
   const [name, setName] = useState("");
@@ -66,8 +67,10 @@ const SettingPage = () => {
     useResetErrorsEffect,
   } = useErrorContext();
   useResetErrorsEffect();
+
   // 驗證 token
   useAuthValitate("/login");
+
   // edit user
   const handleClick = async () => {
     if (
@@ -89,7 +92,6 @@ const SettingPage = () => {
     const emaillRegex = new RegExp(
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
     );
-
     if (!emaillRegex.test(email)) {
       style.Toast.fire({
         html: `
@@ -110,7 +112,7 @@ const SettingPage = () => {
         password,
         checkPassword,
       });
-      console.log("Editing User Successful!", resData);
+      console.log("Editing User Successful!");
       handleUpdatedUserData(id);
       style.Toast.fire({
         html: `

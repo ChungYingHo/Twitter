@@ -35,6 +35,7 @@ const CardContainer = styled.div`
   width: 100%;
 `;
 
+// component
 export default function PopularBar() {
   const {
     followState,
@@ -44,8 +45,8 @@ export default function PopularBar() {
     userFollowings,
     setUserFollowings,
     handleFollowings,
-    otherUserData, 
-    setOtherUserData
+    handleUpdatedUserData,
+    handleUpdatedOtherUserData
   } = useUserContext();
   // 獲取推薦使用者
   useEffect(() => {
@@ -58,7 +59,7 @@ export default function PopularBar() {
       }
     };
     fetchUsers();
-  }, []);
+  }, [setFollowState]);
 
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {
@@ -70,8 +71,8 @@ export default function PopularBar() {
           handleFollowers(id);
         userFollowings.find((user) => user.followingId === id) &&
           handleFollowings(id);
-        const updatedData = await getUser(id);
-        setOtherUserData(updatedData);
+        handleUpdatedUserData()
+        handleUpdatedOtherUserData(id)
       } else {
         await followUser({ id });
         userFollowers.find((user) => user.followerId === id) &&
@@ -82,8 +83,8 @@ export default function PopularBar() {
           const updatedFollowings = await getUserFollowings();
           setUserFollowings(updatedFollowings);
         }
-        const updatedData = await getUser(id);
-        setOtherUserData(updatedData);
+        handleUpdatedUserData()
+        handleUpdatedOtherUserData(id)
       }
 
       setFollowState((prevUsersData) =>

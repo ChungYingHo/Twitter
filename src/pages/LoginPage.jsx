@@ -21,6 +21,7 @@ import { UserContext } from "../context/UserContext";
 import { useLoginAuthValitate } from "../utils/authValidate";
 import { useErrorContext } from "../context/ErrorContext";
 
+// component
 const LoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
@@ -66,8 +67,7 @@ const LoginPage = () => {
         localStorage.setItem("UserToken", userToken);
         localStorage.setItem("userID", userDataFromLogin.id);
 
-        const id = localStorage.getItem("userID");
-        console.log("login id", id);
+        const id = localStorage.getItem("userID")
 
         const userData = await getUser(id);
         setUserData(userData);

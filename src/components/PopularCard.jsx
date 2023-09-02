@@ -60,7 +60,7 @@ const Btn = styled.button`
     }
 `
 
-
+// component
 export default function PopularCard({avatar, name, account, isFollowed, onClick}){
 
     return(

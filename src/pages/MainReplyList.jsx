@@ -145,6 +145,7 @@ const CardContainer = styled.div`
   gap: 8px;
 `;
 
+// component
 export default function MainReplyList() {
   const { tweet_id } = useParams();
   const navigate = useNavigate();

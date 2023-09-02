@@ -71,6 +71,7 @@ const Btn = styled(style.StyledBtn)`
   right: 24px;
 `;
 
+// component
 const MainPage = () => {
   const {
     isNewPostOpen,
@@ -113,8 +114,8 @@ const MainPage = () => {
   // 發送貼文
   const handlePostSubmit = async () => {
     try {
-      const response = await postTweets({ description: postContent });
-      console.log("Post successful:", response);
+      await postTweets({ description: postContent });
+      console.log("Post successful");
       // 清空 textarea 內容
       setPostContent("");
       // 刷新主畫面上的貼文列表

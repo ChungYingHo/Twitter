@@ -15,8 +15,7 @@ import { useAuthValitate } from "../utils/authValidate";
 import {
   getUserTweets,
   getUserReplies,
-  getUserLikes,
-  getUser,
+  getUserLikes
 } from "../api/user";
 import { UserContext } from "../context/UserContext";
 
@@ -87,6 +86,7 @@ const PostCardWrapper = styled.div`
   gap: 8px;
 `;
 
+// component
 const UserPage = () => {
   const { id: userId } = useParams();
   const localId = localStorage.getItem("userID");
@@ -94,13 +94,10 @@ const UserPage = () => {
   const [userTweets, setUserTweets] = useState([]);
   const [userReplies, setUserReplies] = useState([]);
   const [userLikes, setUserLikes] = useState([]);
-
   const {
     userData,
     otherUserData,
-    handleStorage,
-    handleUpdatedUserData,
-    handleUserData,
+    handleStorage
   } = useContext(UserContext);
 
   // 驗證 token
@@ -117,8 +114,6 @@ const UserPage = () => {
       try {
         const userTweet = await getUserTweets(userId ? parseInt(userId) : null);
         setUserTweets(userTweet);
-        console.log(parseInt(userId) === parseInt(localId));
-        console.log(userData);
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
@@ -158,19 +153,22 @@ const UserPage = () => {
         <StyledLink to="/main">
           <UserTittleWrapper>
             <LeftArrow />
-            <UserNameWrapper>
-              <UserName>
-                {parseInt(userId) === parseInt(localId)
-                  ? userData.name
-                  : otherUserData.name}
-              </UserName>
-              <UserPostCount>
-                {parseInt(userId) === parseInt(localId)
-                  ? userData.tweetsCount
-                  : otherUserData.tweetsCount}{" "}
-                推文
-              </UserPostCount>
-            </UserNameWrapper>
+            {userData && otherUserData && (
+              <UserNameWrapper>
+                <UserName>
+                  {parseInt(userId) === parseInt(localId)
+                    ? userData.name
+                    : otherUserData.name}
+                </UserName>
+                <UserPostCount>
+                  {parseInt(userId) === parseInt(localId)
+                    ? userData.tweetsCount
+                    : otherUserData.tweetsCount}{" "}
+                  推文
+                </UserPostCount>
+              </UserNameWrapper>
+            )}
+            
           </UserTittleWrapper>
         </StyledLink>
         <UserInfo />
@@ -243,7 +241,6 @@ const UserPage = () => {
                       id={like.Tweet.id}
                       userId={like.UserId}
                       disableReply={true}
-                      // api未回傳發文者id
                       disableAvatar={true}
                     />
                   </PostCardWrapper>
