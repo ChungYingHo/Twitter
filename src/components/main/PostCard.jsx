@@ -37,7 +37,6 @@ const Post = styled.div`
 const Info = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
   p {
     overflow: hidden;
     white-space: nowrap;
@@ -45,11 +44,15 @@ const Info = styled.div`
   }
   .name {
     ${style.styledName}
-    max-width: 40%;
+    max-width: 30%;
   }
   .account {
     ${style.styledAccount}
-    max-width: 60%;
+    max-width: 20%;
+    margin-left: 8px;
+  }
+  div {
+    ${style.styledAccount}
   }
 `;
 
@@ -110,9 +113,10 @@ export default function PostCard({
       <Post>
         <Info>
           <p className="name">{name}</p>
-          <p className="account">
-            @{account}・<TimeDiff timestamp={timestamp} />
-          </p>
+          <p className="account">@{account}</p>
+          <div className="time">
+            ・<TimeDiff timestamp={timestamp} />
+          </div>
         </Info>
         <p
           className="content"
