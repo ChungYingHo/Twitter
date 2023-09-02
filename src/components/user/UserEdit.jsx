@@ -190,7 +190,7 @@ const UserEdit = ({
             placeholder={userData.name}
             onChange={handleChangeName}
             maxLength={50}
-            $inputwarntext={"字數不可超過上限!"}
+            inputwarntext={"字數不可超過上限!"}
           />
         </NameInputContainer>
 
@@ -204,7 +204,7 @@ const UserEdit = ({
             onChange={handleChangeIntro}
             isLarge={true}
             maxLength={160}
-            $inputwarntext={"字數不可超過上限!"}
+            inputwarntext={"字數不可超過上限!"}
           />
         </IntroInputContainer>
       </MainWrapper>
