@@ -24,27 +24,38 @@ const Header = styled.div`
   width: 100%;
   height: 59px;
   margin-top: 16px;
+
   border-bottom: ${style.styledBorder};
   display: flex;
   align-items: center;
   padding: 0 30px;
-
-  h5 {
-    font-weight: 700;
-    font-size: 18px;
-    margin: 0 0 2px 0;
-  }
-  p {
-    font-size: 13px;
-    color: #6c757d;
-  }
 `;
 
-const HeaderTittleWrapper = styled.div`
+const UserNameWrapper = styled.div`
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-left: 16px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+
+const UserName = styled.h5`
+  width: 100%;
+  font-weight: 700;
+  margin-bottom: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+
+const UserPostCount = styled.p`
+  font-size: 13px;
+  color: #6c757d;
+  margin: 0;
 `;
 
 const StyledLink = styled(Link)`
@@ -60,8 +71,14 @@ const StyledLink = styled(Link)`
 const UserFollowing = () => {
   const { id: userId } = useParams();
   const navigate = useNavigate();
-  const { userData, setUserData, handleFollowState, userFollowings, setUserFollowings, handleFollowings } = useContext(UserContext);
-
+  const {
+    userData,
+    setUserData,
+    handleFollowState,
+    userFollowings,
+    setUserFollowings,
+    handleFollowings,
+  } = useContext(UserContext);
 
   // 驗證 token
   useEffect(() => {
@@ -119,9 +136,8 @@ const UserFollowing = () => {
         await followUser({ id });
       }
       // 變更 popularbar
-      handleFollowState(id)
-      handleFollowings(id)
-
+      handleFollowState(id);
+      handleFollowings(id);
     } catch (error) {
       console.error("Error occur:", error);
     }
@@ -133,10 +149,10 @@ const UserFollowing = () => {
         <StyledLink to="/user">
           <Header>
             <LeftArrow />
-            <HeaderTittleWrapper>
-              <h5>{userData.name}</h5>
-              <p>{userData.tweetsCount} 推文</p>
-            </HeaderTittleWrapper>
+            <UserNameWrapper>
+              <UserName>{userData.name}</UserName>
+              <UserPostCount>{userData.tweetsCount} 推文</UserPostCount>
+            </UserNameWrapper>
           </Header>
         </StyledLink>
         <FollowrSubTool activePage="following" />

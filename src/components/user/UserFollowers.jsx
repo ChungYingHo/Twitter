@@ -28,23 +28,33 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   padding: 0 30px;
-
-  h5 {
-    font-weight: 700;
-    font-size: 18px;
-    margin: 0 0 2px 0;
-  }
-  p {
-    font-size: 13px;
-    color: #6c757d;
-  }
 `;
 
-const HeaderTittleWrapper = styled.div`
+const UserNameWrapper = styled.div`
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-left: 16px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+
+const UserName = styled.h5`
+  width: 100%;
+  font-weight: 700;
+  margin-bottom: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+
+const UserPostCount = styled.p`
+  font-size: 13px;
+  color: #6c757d;
+  margin: 0;
 `;
 
 const StyledLink = styled(Link)`
@@ -60,7 +70,14 @@ const StyledLink = styled(Link)`
 const UserFollowers = () => {
   const { id: userId } = useParams();
 
-  const { userData, setUserData, handleFollowState, userFollowers, setUserFollowers, handleFollowers } = useContext(UserContext);
+  const {
+    userData,
+    setUserData,
+    handleFollowState,
+    userFollowers,
+    setUserFollowers,
+    handleFollowers,
+  } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -108,7 +125,6 @@ const UserFollowers = () => {
     getUserFollower();
   }, []);
 
-
   // 點擊切換 isFollowed 狀態
   const handleFollow = async (id) => {
     try {
@@ -120,11 +136,10 @@ const UserFollowers = () => {
       } else {
         await followUser({ id });
       }
-      
-      // 變更 popularbar
-      handleFollowState(id)
-      handleFollowers(id)
 
+      // 變更 popularbar
+      handleFollowState(id);
+      handleFollowers(id);
     } catch (error) {
       console.error("Error occur:", error);
     }
@@ -136,10 +151,10 @@ const UserFollowers = () => {
         <StyledLink to="/user">
           <Header>
             <LeftArrow />
-            <HeaderTittleWrapper>
-              <h5>{userData.name}</h5>
-              <p>{userData.tweetsCount} 推文</p>
-            </HeaderTittleWrapper>
+            <UserNameWrapper>
+              <UserName>{userData.name}</UserName>
+              <UserPostCount>{userData.tweetsCount} 推文</UserPostCount>
+            </UserNameWrapper>
           </Header>
         </StyledLink>
         <FollowrSubTool activePage="followers" />
