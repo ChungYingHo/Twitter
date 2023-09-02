@@ -1,6 +1,6 @@
 // package
 import styled from "styled-components";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useContext } from "react";
 // component and style
 import * as style from "../common/common.styled";
@@ -49,21 +49,17 @@ const HeaderTittleWrapper = styled.div`
   margin-left: 16px;
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
+const StyledLink = styled.div`
   margin: 0;
   padding: 0;
-  color: #171725;
-  &:hover {
-    color: #171725;
-  }
 `;
 
 // component
 const UserFollowers = () => {
   const { id: userId } = useParams();
   const localId = localStorage.getItem("userID");
-  const { userData, otherUserData, handleFollowState, userFollowers, setUserFollowers, handleFollowers, handleStorage } = useContext(UserContext);
+  const { userData, otherUserData, handleFollowState, userFollowers, setUserFollowers, handleFollowers, handleStorage, handleUpdatedOtherUserData, handleUpdatedUserData } = useContext(UserContext);
+  const navigate = useNavigate()
 
   // 驗證 token
   useAuthValitate("/login");
@@ -97,10 +93,19 @@ const UserFollowers = () => {
           .isFollowed
       ) {
         await disFollowUser({ followingId: id });
+        if(parseInt(userId) === parseInt(localId)){
+          handleUpdatedUserData()
+        } else {
+          handleUpdatedOtherUserData(id)
+        }
       } else {
         await followUser({ id });
+        if(parseInt(userId) === parseInt(localId)){
+          handleUpdatedUserData()
+        } else {
+          handleUpdatedOtherUserData(id)
+        }
       }
-      
       // 變更 popularbar
       handleFollowState(id)
       handleFollowers(id)
@@ -113,7 +118,7 @@ const UserFollowers = () => {
   return (
     <>
       <Container>
-        <StyledLink to="/user">
+        <StyledLink onClick={()=>navigate(`/user/${userId}`)}>
           <Header>
             <LeftArrow />
             <HeaderTittleWrapper>

@@ -153,19 +153,22 @@ const UserPage = () => {
         <StyledLink to="/main">
           <UserTittleWrapper>
             <LeftArrow />
-            <UserNameWrapper>
-              <UserName>
-                {parseInt(userId) === parseInt(localId)
-                  ? userData.name
-                  : otherUserData.name}
-              </UserName>
-              <UserPostCount>
-                {parseInt(userId) === parseInt(localId)
-                  ? userData.tweetsCount
-                  : otherUserData.tweetsCount}{" "}
-                推文
-              </UserPostCount>
-            </UserNameWrapper>
+            {userData && otherUserData && (
+              <UserNameWrapper>
+                <UserName>
+                  {parseInt(userId) === parseInt(localId)
+                    ? userData.name
+                    : otherUserData.name}
+                </UserName>
+                <UserPostCount>
+                  {parseInt(userId) === parseInt(localId)
+                    ? userData.tweetsCount
+                    : otherUserData.tweetsCount}{" "}
+                  推文
+                </UserPostCount>
+              </UserNameWrapper>
+            )}
+            
           </UserTittleWrapper>
         </StyledLink>
         <UserInfo />
