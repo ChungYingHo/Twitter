@@ -12,11 +12,7 @@ import * as style from "../components/common/common.styled";
 import ReplyCard from "../components/reply/ReplyCard";
 // api and function
 import { useAuthValitate } from "../utils/authValidate";
-import {
-  getUserTweets,
-  getUserReplies,
-  getUserLikes
-} from "../api/user";
+import { getUserTweets, getUserReplies, getUserLikes } from "../api/user";
 import { UserContext } from "../context/UserContext";
 
 const Container = styled.div`
@@ -94,11 +90,7 @@ const UserPage = () => {
   const [userTweets, setUserTweets] = useState([]);
   const [userReplies, setUserReplies] = useState([]);
   const [userLikes, setUserLikes] = useState([]);
-  const {
-    userData,
-    otherUserData,
-    handleStorage
-  } = useContext(UserContext);
+  const { userData, otherUserData, handleStorage } = useContext(UserContext);
 
   // 驗證 token
   useAuthValitate("/login");
@@ -112,7 +104,7 @@ const UserPage = () => {
   useEffect(() => {
     const getUserTweet = async () => {
       try {
-        setUserTweets([])
+        setUserTweets([]);
         const userTweet = await getUserTweets(userId ? parseInt(userId) : null);
         setUserTweets(userTweet);
       } catch (error) {
@@ -126,7 +118,7 @@ const UserPage = () => {
   useEffect(() => {
     const getUserReply = async () => {
       try {
-        setUserReplies([])
+        setUserReplies([]);
         const reply = await getUserReplies(userId ? parseInt(userId) : null);
         setUserReplies(reply);
       } catch (error) {
@@ -140,7 +132,7 @@ const UserPage = () => {
   useEffect(() => {
     const getUserLike = async () => {
       try {
-        setUserLikes([])
+        setUserLikes([]);
         const like = await getUserLikes(userId ? parseInt(userId) : null);
         setUserLikes(like);
       } catch (error) {
@@ -171,7 +163,6 @@ const UserPage = () => {
                 </UserPostCount>
               </UserNameWrapper>
             )}
-            
           </UserTittleWrapper>
         </StyledLink>
         <UserInfo />
@@ -204,7 +195,7 @@ const UserPage = () => {
               userReplies.map((reply) => {
                 return (
                   <ReplyCard
-                    key={reply.TweetId}
+                    key={reply.id}
                     name={
                       parseInt(userId) === parseInt(localId)
                         ? userData.name
@@ -231,7 +222,7 @@ const UserPage = () => {
             {activePage === "like" &&
               userLikes.map((like) => {
                 return (
-                  <PostCardWrapper key={like.TweetId}>
+                  <PostCardWrapper key={like.id}>
                     <PostCard
                       name={like.Tweet.User.name}
                       account={like.Tweet.User.account}
