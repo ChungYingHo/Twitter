@@ -58,7 +58,7 @@ const StyledLink = styled.div`
 const UserFollowing = () => {
   const { id: userId } = useParams();
   const localId = localStorage.getItem("userID");
-  const { userData, otherUserData, handleFollowState, userFollowings, setUserFollowings, handleFollowings, handleStorage, handleUpdatedUserData, handleUpdatedOtherUserData } = useContext(UserContext);
+  const { userData, otherUserData, handleFollowState, userFollowings, setUserFollowings, handleFollowings, handleStorage, handleUpdatedUserData, handleUpdatedOtherUserData, otherUserFollowings, setOtherUserFollowings } = useContext(UserContext);
   const navigate = useNavigate()
 
 
@@ -77,7 +77,11 @@ const UserFollowing = () => {
         const following = await getUserFollowings(
           userId ? parseInt(userId) : null
         );
-        setUserFollowings(following);
+        if(parseInt(userId) === parseInt(localId)){
+          setUserFollowings(following);
+        } else {
+          setOtherUserFollowings(following)
+        }
       } catch (error) {
         console.error("[GetUserData Failed]", error);
       }
@@ -128,19 +132,29 @@ const UserFollowing = () => {
           </Header>
         </StyledLink>
         <FollowrSubTool activePage="following" />
-        {userFollowings.map((data) => {
-          return (
-            <FollowCard
-              key={data.Following.id}
-              id={data.Following.id}
-              name={data.Following.name}
-              avatar={data.Following.avatar}
-              introduction={data.Following.introduction}
-              isFollowed={data.Following.isFollowed}
-              onClick={() => handleFollow(data.Following.id)}
-            />
-          );
-        })}
+        {parseInt(userId) === parseInt(localId)
+          ? userFollowings.map((data) => (
+              <FollowCard
+                key={data.Following.id}
+                id={data.Following.id}
+                name={data.Following.name}
+                avatar={data.Following.avatar}
+                introduction={data.Following.introduction}
+                isFollowed={data.Following.isFollowed}
+                onClick={() => handleFollow(data.Following.id)}
+              />
+            ))
+          : otherUserFollowings.map((data) => (
+              <FollowCard
+                key={data.Following.id}
+                id={data.Following.id}
+                name={data.Following.name}
+                avatar={data.Following.avatar}
+                introduction={data.Following.introduction}
+                isFollowed={data.Following.isFollowed}
+                onClick={() => handleFollow(data.Following.id)}
+              />
+            ))}
       </Container>
     </>
   );

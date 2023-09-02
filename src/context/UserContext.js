@@ -57,6 +57,7 @@ export const UserContextProvider = ({ children }) => {
   }
   // 跟隨者
   const [userFollowers, setUserFollowers] = useState([])
+  const [otherUserFollowers, setOtherUserFollowers] = useState([])
   const handleFollowers = (id)=>{
     setUserFollowers((prevUsersData) =>
       prevUsersData.map((user) =>
@@ -74,6 +75,7 @@ export const UserContextProvider = ({ children }) => {
   }
   // 跟隨中
   const [userFollowings, setUserFollowings] = useState([])
+  const [otherUserFollowings, setOtherUserFollowings] = useState([])
   const handleFollowings = (id)=>{
     setUserFollowings((prevUsersData) =>
       prevUsersData.map((user) =>
@@ -93,7 +95,7 @@ export const UserContextProvider = ({ children }) => {
   
 
   return (
-    <UserContext.Provider value={{ userData, setUserData, otherUserData, setOtherUserData, handleUserData, handleStorage, handleUpdatedUserData, handleUpdatedOtherUserData, followState, setFollowState, handleFollowState, userFollowers, setUserFollowers, userFollowings, setUserFollowings, handleFollowers, handleFollowings }}>
+    <UserContext.Provider value={{ userData, setUserData, otherUserData, setOtherUserData, handleUserData, handleStorage, handleUpdatedUserData, handleUpdatedOtherUserData, followState, setFollowState, handleFollowState, userFollowers, setUserFollowers, userFollowings, setUserFollowings, handleFollowers, handleFollowings, otherUserFollowers, otherUserFollowings, setOtherUserFollowers, setOtherUserFollowings }}>
       {children}
     </UserContext.Provider>
   );
