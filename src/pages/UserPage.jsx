@@ -31,8 +31,8 @@ const UserTittleWrapper = styled.div`
   padding: 0 30px;
   width: 100%;
   height: 51px;
-  margin-top: 24px;
-
+  margin-top: 16px;
+  margin-bottom: 16px;
   display: flex;
   align-items: center;
 `;
@@ -50,6 +50,7 @@ const UserNameWrapper = styled.div`
 `;
 
 const UserName = styled.h5`
+  width: 100%;
   font-weight: 700;
   margin-bottom: 0;
   overflow: hidden;
@@ -60,6 +61,7 @@ const UserName = styled.h5`
 const UserPostCount = styled.p`
   font-size: 13px;
   color: #6c757d;
+  margin: 0;
 `;
 
 const StyledLink = styled(Link)`
