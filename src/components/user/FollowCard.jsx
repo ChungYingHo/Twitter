@@ -2,9 +2,9 @@ import styled from "styled-components";
 import * as style from "../common/common.styled";
 
 const Container = styled.div`
-  min-height: 143px;
+  max-height: 159px;
   height: fit-content;
-  max-width: 100%;
+  width: 100%;
   border-bottom: ${style.styledBorder};
   display: flex;
   padding: 16px 0;

@@ -58,7 +58,6 @@ const PostTitle = styled.div`
 
 const CardContainer = styled.div`
   width: 100%;
-  margin-top: 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -90,9 +89,9 @@ const MainPage = () => {
   useAuthValitate("/login");
 
   // 獲取user資料
-  const id = localStorage.getItem('userID')
+  const id = localStorage.getItem("userID");
   useEffect(() => {
-    handleUserData(id)
+    handleUserData(id);
   }, []);
 
   // 抓取所有貼文
@@ -110,7 +109,6 @@ const MainPage = () => {
     };
     fetchTweets();
   }, []);
-
 
   // 發送貼文
   const handlePostSubmit = async () => {

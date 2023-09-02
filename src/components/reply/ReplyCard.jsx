@@ -4,17 +4,14 @@ import * as style from "../common/common.styled";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
-  max-height: 149px;
+  max-height: 200px;
   height: fit-content;
-  width: 100%;
   border-bottom: ${style.styledBorder};
   display: flex;
   padding: 16px 24px;
 
   img {
     ${style.styledImg};
-  }
-  p {
   }
 `;
 
@@ -32,18 +29,24 @@ const Info = styled.div`
   align-items: center;
 `;
 
-const StyledName = styled.p`
-  font-size: 16px;
-  font-weight: 700px;
-  color: #171725;
-  margin: 0;
+const StyledNameWrapper = styled.div`
+  max-width: 40%;
+
+  p {
+    font-size: 16px;
+    font-weight: 800;
+    color: #171725;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 `;
 
 const StyledAccountTime = styled.p`
   font-size: 14px;
-  font-weight: 400;
   color: #6c757d;
-  margin: 0 0 0 8px;
+  margin: 0 0 0 4px;
 `;
 
 const StyledReplyWrapper = styled.div`
@@ -55,7 +58,6 @@ const StyledReplyWrapper = styled.div`
 const StlyedReply = styled.p`
   color: #6c757d;
   font-size: 14px;
-  font-weight: 400;
   margin-right: 4px;
 `;
 
@@ -65,11 +67,12 @@ const ReplyAccount = styled.p`
   font-weight: 400;
 `;
 
-const ReplyContextWrapper = styled.div``;
+const ReplyContextWrapper = styled.div`
+  border: 1px solid red;
+`;
 
 const ReplyContext = styled.p`
   font-size: 16px;
-  font-weight: 400;
   color: #171725;
   margin: 0;
   word-wrap: break-word;
@@ -102,7 +105,9 @@ export default function ReplyCard({
       />
       <Post>
         <Info>
-          <StyledName>{name}</StyledName>
+          <StyledNameWrapper>
+            <p>{name}</p>
+          </StyledNameWrapper>
           <StyledAccountTime>
             @{account}・<TimeDiff timestamp={timestamp} />
           </StyledAccountTime>
