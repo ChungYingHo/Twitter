@@ -78,7 +78,6 @@ const SettingPage = () => {
       name.trim().length === 0 ||
       email.trim().length === 0
     ) {
-      console.log(`warning`);
       style.Toast.fire({
         html: `
           <div style="display:flex; align-items:center">
@@ -112,7 +111,6 @@ const SettingPage = () => {
         password,
         checkPassword,
       });
-      console.log("Editing User Successful!");
       handleUpdatedUserData(id);
       style.Toast.fire({
         html: `

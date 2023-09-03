@@ -29,9 +29,6 @@ export const ErrorProvider = ({ children }) => {
       } else if (errorMessage.includes('確認密碼')) {
         setCheckPasswordError(errorMessage);
       }
-      console.error('[Edit error:', errorMessage);
-    } else {
-      console.error('An error occurred:', error);
     }
   };
 

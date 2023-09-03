@@ -241,11 +241,9 @@ const UserInfo = ({setUserLikes, setUserReplies, setUserTweets}) => {
       const resData = await editUser(updateUserData);
 
       if (resData.status === "success") {
-        console.log("resData", resData);
         setUploadBanner(null);
         setUserData(resData.data.user);
         setErrorMessage(null);
-        console.log("EditUser updated successfully in UserInfo!");
         Toast.fire({
           html: `
           <div style="display:flex; align-items:center">
@@ -264,7 +262,7 @@ const UserInfo = ({setUserLikes, setUserReplies, setUserTweets}) => {
       }
     } catch (error) {
       setErrorMessage(" Something went wrong ...");
-      console.error("[editUser failed in UserPage]", error);
+      throw error
     } finally {
       setIsLoading(false);
       setErrorMessage(null);
@@ -273,7 +271,6 @@ const UserInfo = ({setUserLikes, setUserReplies, setUserTweets}) => {
   };
   // 跟隨
   const handleFollow = async (userId) => {
-    console.log("userId in handleFollow", userId);
     try {
       if (otherUserData?.isFollowed) {
         await disFollowUser({ followingId: userId });
@@ -286,10 +283,8 @@ const UserInfo = ({setUserLikes, setUserReplies, setUserTweets}) => {
       }
       // 變更popularbar
       handleFollowState(userId);
-      console.log(followState);
     } catch (error) {
-      console.error("Error occur:", error);
-      console.log("userId in handleFollow", userId);
+      throw error
     }
   };
   // 通知

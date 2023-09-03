@@ -115,7 +115,6 @@ const MainPage = () => {
   const handlePostSubmit = async () => {
     try {
       await postTweets({ description: postContent });
-      console.log("Post successful");
       // 清空 textarea 內容
       setPostContent("");
       // 刷新主畫面上的貼文列表
@@ -134,7 +133,7 @@ const MainPage = () => {
           </div>`,
       });
     } catch (error) {
-      console.error("Posting Tweet Failed:", error);
+      throw error
     }
   };
 

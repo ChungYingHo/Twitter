@@ -71,7 +71,6 @@ const LoginPage = () => {
 
         const userData = await getUser(id);
         setUserData(userData);
-        console.log("Login Successful!");
         Toast.fire({
           html: `
           <div style="display:flex; align-items:center">

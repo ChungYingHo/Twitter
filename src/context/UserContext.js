@@ -13,11 +13,9 @@ export const UserContextProvider = ({ children }) => {
     if(Object.keys(userData).length === 0){
       try{
         const user = await getUser(parseInt(id))
-        console.log("Fetched user data");
         setUserData(user)
-        console.log('[ReFetching UserData]')
       } catch (error){
-        console.log('[No user data:]', error)
+        throw error
       }
     }
   }
@@ -28,10 +26,8 @@ export const UserContextProvider = ({ children }) => {
       setOtherUserData([])
       const otherData = await getUser(id)
       setOtherUserData(otherData)
-      console.log('Storage in Other')
     } else {
       handleUserData(id)
-      console.log('Storage in User')
     }
   }
   // 更新使用者資料

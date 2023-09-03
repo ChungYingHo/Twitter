@@ -55,7 +55,7 @@ export default function PopularBar() {
         const usersData = await getPopUsers();
         setFollowState(usersData);
       } catch (error) {
-        console.error("Get Users Failed:", error);
+        throw error
       }
     };
     fetchUsers();
@@ -93,7 +93,7 @@ export default function PopularBar() {
         )
       );
     } catch (error) {
-      console.error("Error occur:", error);
+      throw error
     }
   };
 
