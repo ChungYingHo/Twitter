@@ -105,7 +105,7 @@ const MainPage = () => {
         );
         setPosts(sortedTweets);
       } catch (error) {
-        console.error("Fetching Tweets Failed:", error);
+        throw error;
       }
     };
     fetchTweets();
@@ -133,7 +133,7 @@ const MainPage = () => {
           </div>`,
       });
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 

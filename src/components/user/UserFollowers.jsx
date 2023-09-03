@@ -138,7 +138,7 @@ const UserFollowers = () => {
       handleFollowState(id);
       handleFollowers(id);
     } catch (error) {
-      console.error("Error occur:", error);
+      throw error;
     }
   };
 
