@@ -110,7 +110,7 @@ export default function PopularBar() {
               id={user.id}
               avatar={user.avatar}
               name={user.name}
-              account={user.name}
+              account={user.account}
               isFollowed={user.isFollowed}
               onClick={() => handleFollow(user.id)}
             />
