@@ -55,7 +55,7 @@ export default function PopularBar() {
         const usersData = await getPopUsers();
         setFollowState(usersData);
       } catch (error) {
-        console.error("Get Users Failed:", error);
+        throw error
       }
     };
     fetchUsers();
@@ -93,7 +93,7 @@ export default function PopularBar() {
         )
       );
     } catch (error) {
-      console.error("Error occur:", error);
+      throw error
     }
   };
 
@@ -110,7 +110,7 @@ export default function PopularBar() {
               id={user.id}
               avatar={user.avatar}
               name={user.name}
-              account={user.name}
+              account={user.account}
               isFollowed={user.isFollowed}
               onClick={() => handleFollow(user.id)}
             />

@@ -108,7 +108,7 @@ const UserPage = () => {
         const userTweet = await getUserTweets(userId ? parseInt(userId) : null);
         setUserTweets(userTweet);
       } catch (error) {
-        console.error("[GetUserData Failed]", error);
+        throw error
       }
     };
     getUserTweet();
@@ -122,7 +122,7 @@ const UserPage = () => {
         const reply = await getUserReplies(userId ? parseInt(userId) : null);
         setUserReplies(reply);
       } catch (error) {
-        console.error("[GetUserData Failed]", error);
+        throw error
       }
     };
     getUserReply();
@@ -136,7 +136,7 @@ const UserPage = () => {
         const like = await getUserLikes(userId ? parseInt(userId) : null);
         setUserLikes(like);
       } catch (error) {
-        console.error("[GetUserData Failed]", error);
+        throw error
       }
     };
     getUserLike();

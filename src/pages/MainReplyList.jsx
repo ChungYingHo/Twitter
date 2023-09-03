@@ -167,7 +167,7 @@ export default function MainReplyList() {
         });
         setTweet(tweetData);
       } catch (error) {
-        console.error("Fetching Single Tweet Failed:", error);
+        throw error
       }
     };
     fetchSingleTweet();
@@ -183,7 +183,7 @@ export default function MainReplyList() {
         );
         setReplies(sortedReplies);
       } catch (error) {
-        console.error("Fetching Replies Failed:", error);
+        throw error
       }
     };
     fetchingReplies();
@@ -193,14 +193,13 @@ export default function MainReplyList() {
   const handleLike = async () => {
     try {
       await likeTweet({ tweet_id });
-      console.log("Like Successful!");
       setTweet((prevTweet) => ({
         ...prevTweet,
         isLiked: true,
         likesCount: prevTweet.likesCount + 1,
       }));
     } catch (error) {
-      console.error("Like Tweet failed:", error);
+      throw error
     }
   };
 
@@ -208,14 +207,13 @@ export default function MainReplyList() {
   const handleDislike = async () => {
     try {
       await dislikeTweet({ tweet_id });
-      console.log("Dislike Successful!");
       setTweet((prevTweet) => ({
         ...prevTweet,
         isLiked: false,
         likesCount: prevTweet.likesCount - 1,
       }));
     } catch (error) {
-      console.error("Dislike Tweet failed:", error);
+      throw error
     }
   };
 

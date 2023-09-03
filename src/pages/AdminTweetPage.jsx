@@ -48,7 +48,7 @@ export default function AdminTweetPage(){
           const sortedTweets = tweetData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           setPosts(sortedTweets)
         } catch (error) {
-          console.error("Admin fetching Tweets Failed:", error);
+          throw error
         }
       };
       fetchTweets();
@@ -62,12 +62,9 @@ export default function AdminTweetPage(){
           setPosts((prevPosts) =>
             prevPosts.filter((post) =>
               post.id !== id));
-          console.log('Delete successful');
-        } else {
-          console.log('Delete failed');
         }
       } catch (error){
-        console.error("Delete Tweet Failed:", error)
+        throw error
       }
     }
 
