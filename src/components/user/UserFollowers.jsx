@@ -30,9 +30,7 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   padding: 0 30px;
-  .icon {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
 
 const UserNameWrapper = styled.div`
