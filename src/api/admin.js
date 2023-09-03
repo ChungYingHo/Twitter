@@ -30,55 +30,54 @@ export const adminLogin = async ({ account, password }) => {
 
     return { success: true, adminData, adminToken };
   } catch (error) {
-    console.error("[Login Failed]:", error);
-    throw error
+    throw error;
   }
-}
+};
 
 // 後臺操作部分
 const axiosInstance = axios.create({
-  baseURL: apiURL
-})
+  baseURL: apiURL,
+});
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('AdminToken');
+    const token = localStorage.getItem("AdminToken");
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
   (error) => {
-    console.error(error);
-  },
+    throw error;
+  }
 );
 
 // 顯示全部貼文
 export const adminGetTweets = async () => {
   try {
     const res = await axiosInstance.get(`${apiURL}/admin/tweets`);
-    return res.data
+    return res.data;
   } catch (error) {
-    console.error('[Admin get Tweets failed]: ', error);
+    throw error;
   }
-}
+};
 
 // 顯示全部使用者
 export const adminGetUsers = async () => {
   try {
     const res = await axiosInstance.get(`${apiURL}/admin/users`);
-    return res.data
+    return res.data;
   } catch (error) {
-    console.error('[Admin get Users failed]: ', error);
+    throw error;
   }
-}
+};
 
 // 刪除特定貼文
-export const adminDeleteTweet = async ({id}) => {
+export const adminDeleteTweet = async ({ id }) => {
   try {
     const res = await axiosInstance.delete(`${apiURL}/admin/tweets/${id}`);
-    return res.data
+    return res.data;
   } catch (error) {
-    console.error('[Admin delete Users failed]: ', error);
+    throw error;
   }
-}
+};

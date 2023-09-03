@@ -30,7 +30,7 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   padding: 0 30px;
-  .icon{
+  .icon {
     cursor: pointer;
   }
 `;
@@ -70,15 +70,27 @@ const StyledLink = styled.div`
 const UserFollowing = () => {
   const { id: userId } = useParams();
   const localId = localStorage.getItem("userID");
-  const { userData, otherUserData, handleFollowState, userFollowings, setUserFollowings, handleFollowings, handleStorage, handleUpdatedUserData, handleUpdatedOtherUserData, otherUserFollowings, setOtherUserFollowings } = useContext(UserContext);
-  const navigate = useNavigate()
+  const {
+    userData,
+    otherUserData,
+    handleFollowState,
+    userFollowings,
+    setUserFollowings,
+    handleFollowings,
+    handleStorage,
+    handleUpdatedUserData,
+    handleUpdatedOtherUserData,
+    otherUserFollowings,
+    setOtherUserFollowings,
+  } = useContext(UserContext);
+  const navigate = useNavigate();
 
   // 驗證 token
-  useAuthValitate('/login')
+  useAuthValitate("/login");
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
   useEffect(() => {
-    handleStorage(userId)
+    handleStorage(userId);
   }, []);
 
   // 獲取use跟隨中
@@ -88,13 +100,13 @@ const UserFollowing = () => {
         const following = await getUserFollowings(
           userId ? parseInt(userId) : null
         );
-        if(parseInt(userId) === parseInt(localId)){
+        if (parseInt(userId) === parseInt(localId)) {
           setUserFollowings(following);
         } else {
-          setOtherUserFollowings(following)
+          setOtherUserFollowings(following);
         }
       } catch (error) {
-        console.error("[GetUserData Failed]", error);
+        throw error;
       }
     };
     getUserFollowing();
@@ -108,39 +120,47 @@ const UserFollowing = () => {
           .isFollowed
       ) {
         await disFollowUser({ followingId: id });
-        if(parseInt(userId) === parseInt(localId)){
-          handleUpdatedUserData()
+        if (parseInt(userId) === parseInt(localId)) {
+          handleUpdatedUserData();
         } else {
-          handleUpdatedOtherUserData(id)
+          handleUpdatedOtherUserData(id);
         }
       } else {
         await followUser({ id });
-        if(parseInt(userId) === parseInt(localId)){
-          handleUpdatedUserData()
+        if (parseInt(userId) === parseInt(localId)) {
+          handleUpdatedUserData();
         } else {
-          handleUpdatedOtherUserData(id)
+          handleUpdatedOtherUserData(id);
         }
       }
       // 變更 popularbar
       handleFollowState(id);
       handleFollowings(id);
     } catch (error) {
-      console.error("Error occur:", error);
+      throw error;
     }
   };
 
   return (
     <>
       <Container>
-        <StyledLink onClick={()=>navigate(`/user/${userId}`)}>
+        <StyledLink onClick={() => navigate(`/user/${userId}`)}>
           <Header>
-            <LeftArrow className="icon"/>
+            <LeftArrow className="icon" />
 
             <UserNameWrapper>
-              <UserName>{parseInt(userId) === parseInt(localId) ? userData.name : otherUserData.name}</UserName>
-              <UserPostCount>{parseInt(userId) === parseInt(localId) ? userData.tweetsCount : otherUserData.tweetsCount} 推文</UserPostCount>
+              <UserName>
+                {parseInt(userId) === parseInt(localId)
+                  ? userData.name
+                  : otherUserData.name}
+              </UserName>
+              <UserPostCount>
+                {parseInt(userId) === parseInt(localId)
+                  ? userData.tweetsCount
+                  : otherUserData.tweetsCount}{" "}
+                推文
+              </UserPostCount>
             </UserNameWrapper>
-
           </Header>
         </StyledLink>
         <FollowrSubTool activePage="following" />

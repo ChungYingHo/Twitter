@@ -46,7 +46,7 @@ export default function PopularBar() {
     setUserFollowings,
     handleFollowings,
     handleUpdatedUserData,
-    handleUpdatedOtherUserData
+    handleUpdatedOtherUserData,
   } = useUserContext();
   // 獲取推薦使用者
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function PopularBar() {
         const usersData = await getPopUsers();
         setFollowState(usersData);
       } catch (error) {
-        throw error
+        throw error;
       }
     };
     fetchUsers();
@@ -71,8 +71,8 @@ export default function PopularBar() {
           handleFollowers(id);
         userFollowings.find((user) => user.followingId === id) &&
           handleFollowings(id);
-        handleUpdatedUserData()
-        handleUpdatedOtherUserData(id)
+        handleUpdatedUserData();
+        handleUpdatedOtherUserData(id);
       } else {
         await followUser({ id });
         userFollowers.find((user) => user.followerId === id) &&
@@ -83,8 +83,8 @@ export default function PopularBar() {
           const updatedFollowings = await getUserFollowings();
           setUserFollowings(updatedFollowings);
         }
-        handleUpdatedUserData()
-        handleUpdatedOtherUserData(id)
+        handleUpdatedUserData();
+        handleUpdatedOtherUserData(id);
       }
 
       setFollowState((prevUsersData) =>
@@ -93,7 +93,7 @@ export default function PopularBar() {
         )
       );
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 

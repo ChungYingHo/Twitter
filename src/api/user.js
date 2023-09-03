@@ -15,7 +15,7 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.error(error);
+    throw error;
   }
 );
 
@@ -29,12 +29,21 @@ export const getUser = async (userId) => {
     const res = await axiosInstance.get(`${apiURL}/users/${userIdRequest}`);
     return res.data;
   } catch (error) {
-    console.error("[Get User failed]: ", error);
+    throw error;
   }
 };
 
 // 更改user data
-export const editUser = async ({ name, introduction, banner, avatar, account, email, password, checkPassword }) => {
+export const editUser = async ({
+  name,
+  introduction,
+  banner,
+  avatar,
+  account,
+  email,
+  password,
+  checkPassword,
+}) => {
   const userId = localStorage.getItem("userID");
 
   let formData = new FormData();
@@ -50,10 +59,10 @@ export const editUser = async ({ name, introduction, banner, avatar, account, em
   if (avatar) {
     formData.append("avatar", avatar);
   }
-  account && formData.append('account', account)
-  email && formData.append('email', email)
-  password && formData.append('password', password)
-  checkPassword && formData.append('checkPassword', checkPassword)
+  account && formData.append("account", account);
+  email && formData.append("email", email);
+  password && formData.append("password", password);
+  checkPassword && formData.append("checkPassword", checkPassword);
 
   try {
     const res = await axiosInstance.put(`${apiURL}/users/${userId}`, formData, {
@@ -63,8 +72,7 @@ export const editUser = async ({ name, introduction, banner, avatar, account, em
     });
     return res.data;
   } catch (error) {
-    console.error("[Edit User in UserPage failed]: ", error);
-    throw error
+    throw error;
   }
 };
 
@@ -78,7 +86,7 @@ export const getUserTweets = async (userId) => {
     );
     return res.data;
   } catch (error) {
-    console.error("[Get UserTweets failed]: ", error);
+    throw error;
   }
 };
 
@@ -92,7 +100,7 @@ export const getUserReplies = async (userId) => {
     );
     return res.data;
   } catch (error) {
-    console.error("[Get UserReplies failed]: ", error);
+    throw error;
   }
 };
 
@@ -106,7 +114,7 @@ export const getUserLikes = async (userId) => {
     );
     return res.data;
   } catch (error) {
-    console.error("[Get UserLikes failed]: ", error);
+    throw error;
   }
 };
 
@@ -120,7 +128,7 @@ export const getUserFollowings = async (userId) => {
     );
     return res.data;
   } catch (error) {
-    console.error("[Get Userfollowings failed]: ", error);
+    throw error;
   }
 };
 
@@ -134,6 +142,6 @@ export const getUserFollowers = async (userId) => {
     );
     return res.data;
   } catch (error) {
-    console.error("[Get UserFollowerss failed]: ", error);
+    throw error;
   }
 };

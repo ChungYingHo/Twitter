@@ -167,7 +167,7 @@ export default function MainReplyList() {
         });
         setTweet(tweetData);
       } catch (error) {
-        throw error
+        throw error;
       }
     };
     fetchSingleTweet();
@@ -183,7 +183,7 @@ export default function MainReplyList() {
         );
         setReplies(sortedReplies);
       } catch (error) {
-        throw error
+        throw error;
       }
     };
     fetchingReplies();
@@ -199,7 +199,7 @@ export default function MainReplyList() {
         likesCount: prevTweet.likesCount + 1,
       }));
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 
@@ -213,7 +213,7 @@ export default function MainReplyList() {
         likesCount: prevTweet.likesCount - 1,
       }));
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 
