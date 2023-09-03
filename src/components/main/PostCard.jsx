@@ -5,6 +5,8 @@ import { ReactComponent as Like } from "../../assets/like.svg";
 import { ReactComponent as Reply } from "../../assets/reply.svg";
 import { ReactComponent as FilledLike } from "../../assets/filledlike-xs.svg";
 import * as style from "../common/common.styled";
+import { likeTweet, dislikeTweet, getTweets } from "../../api/main";
+import { usePopup } from "../../context/Popup";
 
 const Container = styled.div`
   padding: 16px 0;
@@ -88,9 +90,32 @@ export default function PostCard({
   isLike,
   disableAvatar = false,
   disablePost = false,
-  disableReply = false,
+  disableReply = false
 }) {
   const navigate = useNavigate();
+  const {setPosts} = usePopup()
+
+  // 喜愛這篇貼文
+  const handleLike = async () => {
+    try {
+      await likeTweet({ tweet_id: id });
+      const updatedPost = await getTweets()
+      setPosts(updatedPost);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  // 取消喜愛這篇貼文
+  const handleDislike = async () => {
+    try {
+      await dislikeTweet({ tweet_id: id });
+      const updatedPost = await getTweets()
+      setPosts(updatedPost);
+    } catch (error) {
+      throw error;
+    }
+  }
 
   return (
     <Container>
@@ -135,7 +160,7 @@ export default function PostCard({
             <p>{reply}</p>
           </div>
           <div>
-            {isLike ? <FilledLike /> : <Like />}
+            {isLike ? <FilledLike onClick={handleDislike}/> : <Like onClick={handleLike}/>}
             <p>{like}</p>
           </div>
         </Interact>
