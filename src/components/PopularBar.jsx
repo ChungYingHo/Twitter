@@ -107,6 +107,7 @@ export default function PopularBar() {
           return (
             <PopularCard
               key={user.id}
+              id={user.id}
               avatar={user.avatar}
               name={user.name}
               account={user.name}

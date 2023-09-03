@@ -25,6 +25,7 @@ export const UserContextProvider = ({ children }) => {
   const handleStorage = async(id)=>{
     const userId = localStorage.getItem('userID')
     if(parseInt(id) !== parseInt(userId)){
+      setOtherUserData([])
       const otherData = await getUser(id)
       setOtherUserData(otherData)
       console.log('Storage in Other')

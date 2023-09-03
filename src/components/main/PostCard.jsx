@@ -91,7 +91,6 @@ export default function PostCard({
   disableReply = false,
 }) {
   const navigate = useNavigate();
-  const localStorageUserId = localStorage.getItem("userID");
 
   return (
     <Container>
@@ -102,11 +101,9 @@ export default function PostCard({
         onClick={(event) => {
           if (disableAvatar) {
             return;
-          } else if (localStorageUserId !== event.target.id) {
+          } else {
             navigate(`/user/${userId}`);
-          } else if (localStorageUserId === event.target.id) {
-            navigate("/user");
-          }
+          } 
         }}
         style={{ cursor: disableAvatar ? "default" : "pointer" }}
       />
