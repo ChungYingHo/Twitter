@@ -13,10 +13,9 @@ export const UserContextProvider = ({ children }) => {
     if (Object.keys(userData).length === 0) {
       try {
         const user = await getUser(parseInt(id));
-
         setUserData(user);
       } catch (error) {
-        throw error("[No user data:]", error);
+        throw error;
       }
     }
   };
@@ -24,6 +23,7 @@ export const UserContextProvider = ({ children }) => {
   const handleStorage = async (id) => {
     const userId = localStorage.getItem("userID");
     if (parseInt(id) !== parseInt(userId)) {
+      setOtherUserData([]);
       const otherData = await getUser(id);
       setOtherUserData(otherData);
     } else {

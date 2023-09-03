@@ -10,7 +10,13 @@ import { ReactComponent as NotiBellIcon } from "../../assets/bell_noti.svg";
 import PopupModal from "../PopupModal";
 // api and function
 import { UserContext } from "../../context/UserContext";
-import { editUser, getUser, getUserLikes } from "../../api/user";
+import {
+  editUser,
+  getUser,
+  getUserLikes,
+  getUserReplies,
+  getUserTweets,
+} from "../../api/user";
 import { followUser, disFollowUser } from "../../api/popular";
 import { Toast } from "../common/common.styled";
 
@@ -174,7 +180,7 @@ const StyledMsg = styled.p`
 `;
 
 // component
-const UserInfo = ({ setUserLikes }) => {
+const UserInfo = ({ setUserLikes, setUserReplies, setUserTweets }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState();
   const [introduction, setIntro] = useState();
@@ -244,7 +250,6 @@ const UserInfo = ({ setUserLikes }) => {
         setUploadBanner(null);
         setUserData(resData.data.user);
         setErrorMessage(null);
-
         Toast.fire({
           html: `
           <div style="display:flex; align-items:center">
@@ -254,12 +259,16 @@ const UserInfo = ({ setUserLikes }) => {
         });
         const updatedLike = await getUserLikes(parseInt(userId));
         setUserLikes(updatedLike);
+        const updatedReplies = await getUserReplies(parseInt(userId));
+        setUserReplies(updatedReplies);
+        const updatedTweets = await getUserTweets(parseInt(userId));
+        setUserTweets(updatedTweets);
       } else if (resData.status === "error") {
         setErrorMessage(resData.message);
       }
     } catch (error) {
       setErrorMessage(" Something went wrong ...");
-      console.error("[editUser failed in UserPage]", error);
+      throw error;
     } finally {
       setIsLoading(false);
       setErrorMessage(null);
@@ -281,7 +290,7 @@ const UserInfo = ({ setUserLikes }) => {
       // 變更popularbar
       handleFollowState(userId);
     } catch (error) {
-      console.error("Error occur:", error);
+      throw error;
     }
   };
   // 通知

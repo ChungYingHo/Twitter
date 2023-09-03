@@ -98,7 +98,7 @@ const UserPage = () => {
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
   useEffect(() => {
     handleStorage(userId);
-  }, []);
+  }, [userId]);
 
   // 獲取user推文
   useEffect(() => {
@@ -108,7 +108,7 @@ const UserPage = () => {
         const userTweet = await getUserTweets(userId ? parseInt(userId) : null);
         setUserTweets(userTweet);
       } catch (error) {
-        console.error("[GetUserData Failed]", error);
+        throw error
       }
     };
     getUserTweet();
@@ -122,7 +122,7 @@ const UserPage = () => {
         const reply = await getUserReplies(userId ? parseInt(userId) : null);
         setUserReplies(reply);
       } catch (error) {
-        console.error("[GetUserData Failed]", error);
+        throw error
       }
     };
     getUserReply();
@@ -136,7 +136,7 @@ const UserPage = () => {
         const like = await getUserLikes(userId ? parseInt(userId) : null);
         setUserLikes(like);
       } catch (error) {
-        console.error("[GetUserData Failed]", error);
+        throw error
       }
     };
     getUserLike();
@@ -165,7 +165,7 @@ const UserPage = () => {
             )}
           </UserTittleWrapper>
         </StyledLink>
-        <UserInfo setUserLikes={setUserLikes}/>
+        <UserInfo setUserLikes={setUserLikes} setUserReplies={setUserReplies} setUserTweets={setUserTweets}/>
         <SubToolBar activePage={activePage} setActivePage={setActivePage} />
         {userTweets && userLikes && userReplies && (
           <SwitchZoneContainer>
@@ -175,13 +175,9 @@ const UserPage = () => {
                   <PostCardWrapper key={tweet.id}>
                     <PostCard
                       key={tweet.id}
-                      name={parseInt(userId) === parseInt(localId)
-                            ? userData.name
-                            : otherUserData.name}
+                      name={tweet.User.name}
                       account={tweet.User.account}
-                      avatar={parseInt(userId) === parseInt(localId)
-                            ? userData.avatar
-                            : otherUserData.avatar}
+                      avatar={tweet.User.avatar}
                       content={tweet.description}
                       timestamp={tweet.createdAt}
                       reply={tweet.repliesCount}
@@ -200,21 +196,15 @@ const UserPage = () => {
                 return (
                   <ReplyCard
                     key={reply.id}
-                    name={
-                      parseInt(userId) === parseInt(localId)
-                        ? userData.name
-                        : otherUserData.name
-                    }
-                    account={
-                      parseInt(userId) === parseInt(localId)
-                        ? userData.account
-                        : otherUserData.account
-                    }
-                    avatar={
-                      parseInt(userId) === parseInt(localId)
-                        ? userData.avatar
-                        : otherUserData.avatar
-                    }
+                    name={parseInt(userId) === parseInt(localId)
+                    ? userData.name
+                    : otherUserData.name}
+                    account={parseInt(userId) === parseInt(localId)
+                    ? userData.account
+                    : otherUserData.account}
+                    avatar={parseInt(userId) === parseInt(localId)
+                    ? userData.avatar
+                    : otherUserData.avatar}
                     content={reply.comment}
                     timestamp={reply.createdAt}
                     replyAccount={reply.Tweet.User.account}

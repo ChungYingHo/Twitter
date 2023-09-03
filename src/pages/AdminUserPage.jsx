@@ -48,7 +48,7 @@ export default function AdminUserPage(){
             const tweetData = await adminGetUsers();
             setUsers(tweetData)
         } catch (error) {
-            console.error("Fetching Tweets Failed:", error);
+            throw error
         }
         };
         fetchUsers();
