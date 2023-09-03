@@ -15,7 +15,7 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.error(error);
+    throw error;
   }
 );
 
@@ -25,7 +25,6 @@ export const getPopUsers = async () => {
     const res = await axiosInstance.get(`${apiURL}/users/top`);
     return res.data;
   } catch (error) {
-    console.error("[Get Users failed]: ", error);
     throw error;
   }
 };
@@ -38,7 +37,6 @@ export const followUser = async ({ id }) => {
     });
     return res.data;
   } catch (error) {
-    console.error("[Follow User failed]: ", error);
     throw error;
   }
 };
@@ -54,7 +52,6 @@ export const disFollowUser = async ({ followingId }) => {
     );
     return res.data;
   } catch (error) {
-    console.error("[DisFollow User failed]: ", error);
     throw error;
   }
 };

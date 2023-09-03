@@ -154,7 +154,6 @@ export default function NewReply({
       setIsContentEmpty(false);
       try {
         await postReply({ tweet_id: id, comment: replyContent });
-        console.log("Reply successful!");
         // 發出去就清空 textarea
         setReplyContent("");
         const updatedReplies = await getReplies({ tweet_id: id });
@@ -177,7 +176,7 @@ export default function NewReply({
         );
         setPosts(sortedTweets);
       } catch (error) {
-        console.error("Replying Tweet Failed:", error);
+        throw error;
       }
     }
   };

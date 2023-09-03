@@ -10,7 +10,7 @@ import FollowCard from "./FollowCard";
 // api and function
 import { UserContext } from "../../context/UserContext";
 import { useAuthValitate } from "../../utils/authValidate";
-import { getUserFollowers} from "../../api/user";
+import { getUserFollowers } from "../../api/user";
 import { followUser, disFollowUser } from "../../api/popular";
 
 const Container = styled.div`
@@ -30,7 +30,7 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   padding: 0 30px;
-  .icon{
+  .icon {
     cursor: pointer;
   }
 `;
@@ -70,15 +70,27 @@ const StyledLink = styled.div`
 const UserFollowers = () => {
   const { id: userId } = useParams();
   const localId = localStorage.getItem("userID");
-  const { userData, otherUserData, handleFollowState, userFollowers, setUserFollowers, handleFollowers, handleStorage, handleUpdatedOtherUserData, handleUpdatedUserData, otherUserFollowers, setOtherUserFollowers } = useContext(UserContext);
-  const navigate = useNavigate()
+  const {
+    userData,
+    otherUserData,
+    handleFollowState,
+    userFollowers,
+    setUserFollowers,
+    handleFollowers,
+    handleStorage,
+    handleUpdatedOtherUserData,
+    handleUpdatedUserData,
+    otherUserFollowers,
+    setOtherUserFollowers,
+  } = useContext(UserContext);
+  const navigate = useNavigate();
 
   // 驗證 token
   useAuthValitate("/login");
 
   // 獲取user資料 (reload後UserContext值會不見，需要重取)
   useEffect(() => {
-    handleStorage(userId)
+    handleStorage(userId);
   }, []);
 
   // 獲取user追隨中
@@ -88,14 +100,13 @@ const UserFollowers = () => {
         const follower = await getUserFollowers(
           userId ? parseInt(userId) : null
         );
-        if(parseInt(userId) === parseInt(localId)){
+        if (parseInt(userId) === parseInt(localId)) {
           setUserFollowers(follower);
         } else {
-          setOtherUserFollowers(follower)
+          setOtherUserFollowers(follower);
         }
-        
       } catch (error) {
-        console.error("[GetUserData Failed]", error);
+        throw error;
       }
     };
     getUserFollower();
@@ -109,17 +120,17 @@ const UserFollowers = () => {
           .isFollowed
       ) {
         await disFollowUser({ followingId: id });
-        if(parseInt(userId) === parseInt(localId)){
-          handleUpdatedUserData()
+        if (parseInt(userId) === parseInt(localId)) {
+          handleUpdatedUserData();
         } else {
-          handleUpdatedOtherUserData(id)
+          handleUpdatedOtherUserData(id);
         }
       } else {
         await followUser({ id });
-        if(parseInt(userId) === parseInt(localId)){
-          handleUpdatedUserData()
+        if (parseInt(userId) === parseInt(localId)) {
+          handleUpdatedUserData();
         } else {
-          handleUpdatedOtherUserData(id)
+          handleUpdatedOtherUserData(id);
         }
       }
 
@@ -134,15 +145,23 @@ const UserFollowers = () => {
   return (
     <>
       <Container>
-        <StyledLink onClick={()=>navigate(`/user/${userId}`)}>
+        <StyledLink onClick={() => navigate(`/user/${userId}`)}>
           <Header>
-            <LeftArrow className="icon"/>
+            <LeftArrow className="icon" />
 
             <UserNameWrapper>
-              <UserName>{parseInt(userId) === parseInt(localId) ? userData.name : otherUserData.name}</UserName>
-              <UserPostCount>{parseInt(userId) === parseInt(localId) ? userData.tweetsCount : otherUserData.tweetsCount} 推文</UserPostCount>
+              <UserName>
+                {parseInt(userId) === parseInt(localId)
+                  ? userData.name
+                  : otherUserData.name}
+              </UserName>
+              <UserPostCount>
+                {parseInt(userId) === parseInt(localId)
+                  ? userData.tweetsCount
+                  : otherUserData.tweetsCount}{" "}
+                推文
+              </UserPostCount>
             </UserNameWrapper>
-
           </Header>
         </StyledLink>
         <FollowrSubTool activePage="followers" />

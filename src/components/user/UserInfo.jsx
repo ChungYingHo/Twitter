@@ -174,7 +174,7 @@ const StyledMsg = styled.p`
 `;
 
 // component
-const UserInfo = ({setUserLikes}) => {
+const UserInfo = ({ setUserLikes }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState();
   const [introduction, setIntro] = useState();
@@ -241,11 +241,10 @@ const UserInfo = ({setUserLikes}) => {
       const resData = await editUser(updateUserData);
 
       if (resData.status === "success") {
-        console.log("resData", resData);
         setUploadBanner(null);
         setUserData(resData.data.user);
         setErrorMessage(null);
-        console.log("EditUser updated successfully in UserInfo!");
+
         Toast.fire({
           html: `
           <div style="display:flex; align-items:center">
@@ -269,7 +268,6 @@ const UserInfo = ({setUserLikes}) => {
   };
   // 跟隨
   const handleFollow = async (userId) => {
-    console.log("userId in handleFollow", userId);
     try {
       if (otherUserData?.isFollowed) {
         await disFollowUser({ followingId: userId });
@@ -282,10 +280,8 @@ const UserInfo = ({setUserLikes}) => {
       }
       // 變更popularbar
       handleFollowState(userId);
-      console.log(followState);
     } catch (error) {
       console.error("Error occur:", error);
-      console.log("userId in handleFollow", userId);
     }
   };
   // 通知
