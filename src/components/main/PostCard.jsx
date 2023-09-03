@@ -74,6 +74,9 @@ const Interact = styled.div`
       color: ${style.colors.darkGray};
     }
   }
+  .icon{
+    cursor: pointer;
+  }
 `;
 
 export default function PostCard({
@@ -160,7 +163,7 @@ export default function PostCard({
             <p>{reply}</p>
           </div>
           <div>
-            {isLike ? <FilledLike onClick={handleDislike}/> : <Like onClick={handleLike}/>}
+            {isLike ? <FilledLike onClick={handleDislike} className="icon"/> : <Like onClick={handleLike} className="icon"/>}
             <p>{like}</p>
           </div>
         </Interact>
