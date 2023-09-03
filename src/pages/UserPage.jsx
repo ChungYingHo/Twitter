@@ -186,6 +186,7 @@ const UserPage = () => {
                       userId={tweet.User.id}
                       disableAvatar={true}
                       disableReply={true}
+                      disableLike={true}
                     />
                   </PostCardWrapper>
                 );
@@ -230,6 +231,7 @@ const UserPage = () => {
                       userId={like.UserId}
                       disableReply={true}
                       disableAvatar={true}
+                      disableLike={true}
                     />
                   </PostCardWrapper>
                 );

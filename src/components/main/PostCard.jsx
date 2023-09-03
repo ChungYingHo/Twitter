@@ -93,7 +93,8 @@ export default function PostCard({
   isLike,
   disableAvatar = false,
   disablePost = false,
-  disableReply = false
+  disableReply = false,
+  disableLike = false
 }) {
   const navigate = useNavigate();
   const {setPosts} = usePopup()
@@ -163,7 +164,17 @@ export default function PostCard({
             <p>{reply}</p>
           </div>
           <div>
-            {isLike ? <FilledLike onClick={handleDislike} className="icon"/> : <Like onClick={handleLike} className="icon"/>}
+            {isLike ? 
+            <FilledLike 
+            onClick={!disableLike ? handleDislike : null}
+            className="icon"
+            style={{ cursor: disableLike ? "default" : "pointer" }}
+            /> 
+            : 
+            <Like 
+            onClick={!disableLike ? handleLike : null}
+            style={{ cursor: disableLike ? "default" : "pointer" }}
+            className="icon"/>}
             <p>{like}</p>
           </div>
         </Interact>
