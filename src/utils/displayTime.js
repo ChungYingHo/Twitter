@@ -1,6 +1,6 @@
 function displayTime(timestamp) {
   const localDate = new Date(timestamp);
-  const localTimeString = localDate.toLocaleString()
+  const localTimeString = localDate.toLocaleString('zh-TW')
   const parts = localTimeString.split(' ');
 
   const dateString = parts[0];
