@@ -218,7 +218,7 @@ const UserPage = () => {
                 return (
                   <PostCardWrapper key={like.id}>
                     <PostCard
-                      name={like.Tweet.User.account.name}
+                      name={like.Tweet.User.name}
                       account={like.Tweet.User.account}
                       avatar={like.Tweet.User.avatar}
                       content={like.Tweet.description}
