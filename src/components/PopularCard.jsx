@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
 const Container = styled.div`
     width: 100%;
@@ -14,6 +15,7 @@ const Img = styled.img`
     border-radius: 100%;
     margin-left: 16px;
     margin-right: 8px;
+    cursor: pointer;
 `
 
 const InfoContainer = styled.div`
@@ -61,11 +63,11 @@ const Btn = styled.button`
 `
 
 // component
-export default function PopularCard({avatar, name, account, isFollowed, onClick}){
-
+export default function PopularCard({id, avatar, name, account, isFollowed, onClick}){
+    const navigate = useNavigate()
     return(
         <Container>
-            <Img src={avatar}/>
+            <Img src={avatar} onClick={()=>navigate(`/user/${id}`)}/>
             <InfoContainer>
                 <p className='name'>{name}</p>
                 <p className='account'>@{account}</p>
