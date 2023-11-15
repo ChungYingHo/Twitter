@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiURL = "https://sheltered-river-86590-4f6cb06448e2.herokuapp.com/api";
+const apiURL = "https://simple-twitter-zmso.onrender.com/api";
 
 const axiosInstance = axios.create({
   baseURL: apiURL,
