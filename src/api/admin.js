@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const apiURL = "https://sheltered-river-86590-4f6cb06448e2.herokuapp.com/api";
+const apiURL =
+  "http://twitter-api-dev2.ap-northeast-1.elasticbeanstalk.com/api";
 
 // 登入後台
 export const adminLogin = async ({ account, password }) => {
@@ -55,7 +56,7 @@ axiosInstance.interceptors.request.use(
 // 顯示全部貼文
 export const adminGetTweets = async () => {
   try {
-    const res = await axiosInstance.get(`${apiURL}/admin/tweets`);
+    const res = await axiosInstance.get(`/admin/tweets`);
     return res.data;
   } catch (error) {
     throw error;
@@ -65,7 +66,7 @@ export const adminGetTweets = async () => {
 // 顯示全部使用者
 export const adminGetUsers = async () => {
   try {
-    const res = await axiosInstance.get(`${apiURL}/admin/users`);
+    const res = await axiosInstance.get(`/admin/users`);
     return res.data;
   } catch (error) {
     throw error;
@@ -75,7 +76,7 @@ export const adminGetUsers = async () => {
 // 刪除特定貼文
 export const adminDeleteTweet = async ({ id }) => {
   try {
-    const res = await axiosInstance.delete(`${apiURL}/admin/tweets/${id}`);
+    const res = await axiosInstance.delete(`/admin/tweets/${id}`);
     return res.data;
   } catch (error) {
     throw error;

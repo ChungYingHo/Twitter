@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const apiURL = "https://sheltered-river-86590-4f6cb06448e2.herokuapp.com/api";
+const apiURL =
+  "http://twitter-api-dev2.ap-northeast-1.elasticbeanstalk.com/api";
 
 export const login = async ({ account, password }) => {
   try {
