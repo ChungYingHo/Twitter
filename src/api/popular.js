@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const apiURL = "https://sheltered-river-86590-4f6cb06448e2.herokuapp.com/api";
+const apiURL =
+  "http://twitter-api-dev2.ap-northeast-1.elasticbeanstalk.com/api";
 
 const axiosInstance = axios.create({
   baseURL: apiURL,
@@ -22,7 +23,7 @@ axiosInstance.interceptors.request.use(
 // 顯示推薦追隨
 export const getPopUsers = async () => {
   try {
-    const res = await axiosInstance.get(`${apiURL}/users/top`);
+    const res = await axiosInstance.get(`/users/top`);
     return res.data;
   } catch (error) {
     throw error;
@@ -32,7 +33,7 @@ export const getPopUsers = async () => {
 // 跟隨
 export const followUser = async ({ id }) => {
   try {
-    const res = await axiosInstance.post(`${apiURL}/followships`, {
+    const res = await axiosInstance.post(`/followships`, {
       id,
     });
     return res.data;
@@ -44,12 +45,9 @@ export const followUser = async ({ id }) => {
 // 取消跟隨
 export const disFollowUser = async ({ followingId }) => {
   try {
-    const res = await axiosInstance.delete(
-      `${apiURL}/followships/${followingId}`,
-      {
-        followingId,
-      }
-    );
+    const res = await axiosInstance.delete(`/followships/${followingId}`, {
+      followingId,
+    });
     return res.data;
   } catch (error) {
     throw error;

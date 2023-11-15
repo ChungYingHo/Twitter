@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const apiURL = "https://sheltered-river-86590-4f6cb06448e2.herokuapp.com/api";
+const apiURL =
+  "http://twitter-api-dev2.ap-northeast-1.elasticbeanstalk.com/api";
 
 const axiosInstance = axios.create({
   baseURL: apiURL,
@@ -26,7 +27,7 @@ export const getUser = async (userId) => {
     if (!userIdRequest) {
       throw Error("no user ID");
     }
-    const res = await axiosInstance.get(`${apiURL}/users/${userIdRequest}`);
+    const res = await axiosInstance.get(`/users/${userIdRequest}`);
     return res.data;
   } catch (error) {
     throw error;
@@ -65,7 +66,7 @@ export const editUser = async ({
   checkPassword && formData.append("checkPassword", checkPassword);
 
   try {
-    const res = await axiosInstance.put(`${apiURL}/users/${userId}`, formData, {
+    const res = await axiosInstance.put(`/users/${userId}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -81,9 +82,7 @@ export const getUserTweets = async (userId) => {
   try {
     const userIdRequest = userId || localStorage.getItem("userID");
 
-    const res = await axiosInstance.get(
-      `${apiURL}/users/${userIdRequest}/tweets`
-    );
+    const res = await axiosInstance.get(`/users/${userIdRequest}/tweets`);
     return res.data;
   } catch (error) {
     throw error;
@@ -96,7 +95,7 @@ export const getUserReplies = async (userId) => {
     const userIdRequest = userId || localStorage.getItem("userID");
 
     const res = await axiosInstance.get(
-      `${apiURL}/users/${userIdRequest}/replied_tweets`
+      `/users/${userIdRequest}/replied_tweets`
     );
     return res.data;
   } catch (error) {
@@ -109,9 +108,7 @@ export const getUserLikes = async (userId) => {
   try {
     const userIdRequest = userId || localStorage.getItem("userID");
 
-    const res = await axiosInstance.get(
-      `${apiURL}/users/${userIdRequest}/likes`
-    );
+    const res = await axiosInstance.get(`/users/${userIdRequest}/likes`);
     return res.data;
   } catch (error) {
     throw error;
@@ -123,9 +120,7 @@ export const getUserFollowings = async (userId) => {
   try {
     const userIdRequest = userId || localStorage.getItem("userID");
 
-    const res = await axiosInstance.get(
-      `${apiURL}/users/${userIdRequest}/followings`
-    );
+    const res = await axiosInstance.get(`/users/${userIdRequest}/followings`);
     return res.data;
   } catch (error) {
     throw error;
@@ -137,9 +132,7 @@ export const getUserFollowers = async (userId) => {
   try {
     const userIdRequest = userId || localStorage.getItem("userID");
 
-    const res = await axiosInstance.get(
-      `${apiURL}/users/${userIdRequest}/followers`
-    );
+    const res = await axiosInstance.get(`/users/${userIdRequest}/followers`);
     return res.data;
   } catch (error) {
     throw error;

@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const apiURL = "https://sheltered-river-86590-4f6cb06448e2.herokuapp.com/api";
+const apiURL =
+  "http://twitter-api-dev2.ap-northeast-1.elasticbeanstalk.com/api";
 
 // 一般頁面
 const axiosInstance = axios.create({
@@ -22,7 +23,7 @@ axiosInstance.interceptors.request.use(
 
 export const checkPermission = async () => {
   try {
-    const res = await axiosInstance.get(`${apiURL}/auth/test-token`);
+    const res = await axiosInstance.get(`/auth/test-token`);
     return res.data.status;
   } catch (error) {
     throw error;
@@ -49,7 +50,7 @@ axiosAdminInstance.interceptors.request.use(
 
 export const checkAdminPermission = async () => {
   try {
-    const res = await axiosAdminInstance.get(`${apiURL}/auth/test-token-admin`);
+    const res = await axiosAdminInstance.get(`/auth/test-token-admin`);
     return res.data.status;
   } catch (error) {
     throw error;
