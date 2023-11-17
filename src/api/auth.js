@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiURL =
-  "http://twitter-api-dev2.ap-northeast-1.elasticbeanstalk.com/api";
+  "https://www.apiscloud.click/api";
 
 export const login = async ({ account, password }) => {
   try {

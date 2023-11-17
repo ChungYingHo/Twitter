@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiURL =
-  "http://twitter-api-dev2.ap-northeast-1.elasticbeanstalk.com/api";
+  "https://www.apiscloud.click/api";
 
 // 一般頁面
 const axiosInstance = axios.create({
